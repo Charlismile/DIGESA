@@ -1,0 +1,43 @@
+﻿@page "/register"
+@using DIGESA.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+<h3>Registro de Usuario</h3>
+
+<InputText @bind-Value="email" placeholder="Correo electrónico" />
+<InputText @bind-Value="password" placeholder="Contraseña" type="password" />
+<InputSelect @bind-Value="selectedRole">
+    <option value="Paciente">Paciente</option>
+    <option value="Medico">Médico</option>
+    <option value="Administrador">Administrador</option>
+</InputSelect>
+<button @onclick="Register">Registrar</button>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string selectedRole = "Paciente";
+    
+
+    private async Task Register()
+    {
+        var user = new ApplicationUser
+        {
+            UserName = email,
+            Email = email,
+            Nombre = "Nombre",
+            Apellido = "Apellido",
+            Rol = selectedRole
+        };
+
+        var result = await UserManager.CreateAsync(user, password);
+        if (result.Succeeded)
+        {
+            await UserManager.AddToRoleAsync(user, selectedRole);
+            await SignInManager.SignInAsync(user, isPersistent: false);
+        }
+    }
+}

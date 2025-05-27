@@ -1,0 +1,38 @@
+﻿@page "/dashboard"
+@using DIGESA.Models.Entities.DIGESA
+@using DIGESA.Services
+@inject AuthService AuthService
+
+<PageTitle>Dashboard</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        @if (authState != null && authState.IsAuthenticated)
+        {
+            <h3>Bienvenido, @authState.Email</h3>
+            <p>Rol: @authState.Role</p>
+
+            @if (authState.Role == "Paciente")
+            {
+                <NavLink href="/registro">Registrar Solicitud</NavLink>
+            }
+
+            @if (authState.Role == "Administrador" || authState.Role == "Medico")
+            {
+                <NavLink href="/revisiones">Ver Solicitudes Pendientes</NavLink>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>No tienes permiso para acceder a esta página.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private AuthState? authState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await AuthService.GetAuthState();
+    }
+}
