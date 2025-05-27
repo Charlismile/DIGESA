@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "Name=ConnectionStrings:DefaultConnection"     Microsoft.EntityFrameworkCore.SqlServer --output-dir Models/Entities/DIGESA --context DbContextDigesa -t Acompanante -t Certificacion -t Diagnostico -t DocumentoAdjunto -t Medico -t Paciente -t RevisionMedica -t Solicitud -t SolicitudDiagnostico -t Tratamiento -t Usuario --force
