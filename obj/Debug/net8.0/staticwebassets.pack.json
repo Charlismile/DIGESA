@@ -1,24 +1,44 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
-      "PackagePath": "staticwebassets\\DIGESA.bundle.scp.css"
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "PackagePath": "staticwebassets\\DIGESA.vl6rg70dns.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\app.css",
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Imagen1.png",
+      "PackagePath": "staticwebassets\\Imagen1.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Screenshot 2025-05-21 145940.png",
+      "PackagePath": "staticwebassets\\Screenshot 2025-05-21 145940.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\logo-gob.png",
+      "PackagePath": "staticwebassets\\logo-gob.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\logo-minsa.png",
+      "PackagePath": "staticwebassets\\logo-minsa.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssets.props",

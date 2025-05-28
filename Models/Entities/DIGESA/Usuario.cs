@@ -13,13 +13,23 @@ public partial class Usuario
 
     public string Email { get; set; } = null!;
 
-    public string Contraseña { get; set; } = null!;
+    public byte[] ContraseñaHash { get; set; } = null!;
+
+    public byte[] Salt { get; set; } = null!;
 
     public string Rol { get; set; } = null!;
 
     public DateTime? FechaRegistro { get; set; }
 
+    public virtual ICollection<AuditoriaAccion> AuditoriaAccions { get; set; } = new List<AuditoriaAccion>();
+
+    public virtual ICollection<DocumentoAdjunto> DocumentoAdjuntos { get; set; } = new List<DocumentoAdjunto>();
+
+    public virtual Medico? Medico { get; set; }
+
     public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
-    public virtual ICollection<RevisionMedica> RevisionMedicas { get; set; } = new List<RevisionMedica>();
+    public virtual ICollection<Revision> Revisions { get; set; } = new List<Revision>();
+
+    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
 }

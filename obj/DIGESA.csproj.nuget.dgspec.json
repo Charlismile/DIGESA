@@ -76,13 +76,13 @@
               "target": "Package",
               "version": "[8.0.16, )"
             },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[8.6.0, )"
+            },
             "QuestPDF": {
               "target": "Package",
               "version": "[2025.5.0, )"
-            },
-            "ZXing.Net": {
-              "target": "Package",
-              "version": "[0.16.10, )"
             }
           },
           "imports": [

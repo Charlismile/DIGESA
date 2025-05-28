@@ -21,11 +21,13 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="MudBlazor" Version="8.6.0" />
         <PackageReference Include="QuestPDF" Version="2025.5.0" />
-        <PackageReference Include="ZXing.Net" Version="0.16.10" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\" />
+      <Folder Include="Services\" />
       <Folder Include="Services\Interfaces\" />
     </ItemGroup>
 

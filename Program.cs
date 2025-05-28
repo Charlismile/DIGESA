@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
-using DIGESA.Models.Entities.DIGESA;
-using DIGESA.Services;
+using MudBlazor.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +16,10 @@ builder.Services.AddRazorComponents()
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<AuthService>();
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -33,8 +33,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDbContext<DbContextDigesa>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
+// builder.Services.AddDbContext<DbContextDigesa>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
     {
@@ -63,19 +63,6 @@ else
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-}
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "Paciente", "Medico", "Administrador" };
-
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new IdentityRole(role));
-        }
-    }
 }
 app.UseHttpsRedirection();
 

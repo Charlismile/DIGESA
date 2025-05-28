@@ -1,7 +1,69 @@
 ﻿@page "/"
+@using MudBlazor
 
-<PageTitle>Home</PageTitle>
+<PageTitle>DIGESA</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<MudContainer Class="mt-16">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Portal DIGESA</MudText>
+    <MudText Align="Align.Center">Plataforma de Gestión de Carnet para Pacientes de Cannabis</MudText>
+    <MudGrid Class="mt-8">
+        <MudItem xs="12" sm="6" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Beneficiario</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h3">Paciente</MudText>
+                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Tutor</MudText>
+                    </div>
+                    <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            Unlimited something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            10 something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            No something
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Href="Formulario-Paciente" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Solicitud de certificacion</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudImage Fluid="true" Src="logo-minsa.png" Alt="logo" Class="d-flex align-content-start rounded-lg" Width="50"/>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h3">Admin.</MudText>
+                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/colab.</MudText>
+                    </div>
+                    <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            Unlimited something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            10 something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            No something
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Href="FormularioMinsa" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Ingesar</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

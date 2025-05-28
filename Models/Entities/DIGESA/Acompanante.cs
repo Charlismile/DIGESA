@@ -20,4 +20,6 @@ public partial class Acompanante
     public string Parentesco { get; set; } = null!;
 
     public virtual Paciente Paciente { get; set; } = null!;
+
+    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
 }

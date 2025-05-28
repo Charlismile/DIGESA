@@ -11,11 +11,19 @@ public partial class DocumentoAdjunto
 
     public string NombreArchivo { get; set; } = null!;
 
-    public string? TipoContenido { get; set; }
+    public string TipoDocumento { get; set; } = null!;
 
-    public string? RutaAlmacenamiento { get; set; }
+    public string? TipoContenidoMime { get; set; }
+
+    public string RutaAlmacenamiento { get; set; } = null!;
 
     public DateTime? FechaSubida { get; set; }
 
+    public int? SubidoPorUsuarioId { get; set; }
+
+    public string? Descripcion { get; set; }
+
     public virtual Solicitud Solicitud { get; set; } = null!;
+
+    public virtual Usuario? SubidoPorUsuario { get; set; }
 }
