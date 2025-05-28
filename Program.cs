@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
+using DIGESA.Models.Entities.DIGESA;
 using DIGESA.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContext<DbContextDigesa>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
     {
