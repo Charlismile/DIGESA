@@ -1,0 +1,89 @@
+﻿@page "/AprobacionSolicitudes"
+@using DIGESA.Models.Entities.DIGESA
+@using DIGESA.Services.Interfaces
+@using Microsoft.AspNetCore.Authorization
+@inject ISolicitudService solicitudService
+@inject NavigationManager Navigation
+@using MudBlazor
+
+
+@attribute [Authorize(Roles = "Medico, Funcionario")]
+
+<MudContainer>
+    <MudPaper Elevation="3" Class="pa-4">
+        <MudText Typo="Typo.h4">Aprobación de Solicitudes Médicas</MudText>
+
+        <!-- Tabla de solicitudes pendientes -->
+        <MudTable Items="@solicitudesPendientes">
+            <HeaderContent>
+                <MudTh>Paciente</MudTh>
+                <MudTh>Fecha Solicitud</MudTh>
+                <MudTh>Estado</MudTh>
+                <MudTh>Acciones</MudTh>
+            </HeaderContent>
+            <RowTemplate Context="solicitud">
+                <MudTd>@solicitud.Paciente.NombreCompleto</MudTd>
+                <MudTd>@solicitud.FechaSolicitud?.ToString("dd/MM/yyyy")</MudTd>
+                <MudTd><MudChip Color="@(solicitud.Estado == "Pendiente" ? Color.Warning : Color.Success)">@solicitud.Estado</MudChip></MudTd>
+                <MudTd>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => RevisarSolicitud(solicitud.Id))">Revisar</MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+
+    </MudPaper>
+
+    @if (solicitudSeleccionada != null)
+    {
+        <MudPaper Elevation="3" Class="pa-4 mt-4">
+            <MudText Typo="Typo.h5">Detalles de la Solicitud</MudText>
+            <MudText><b>Paciente:</b> @solicitudSeleccionada.Paciente.NombreCompleto</MudText>
+            <MudText><b>Motivo:</b> @solicitudSeleccionada.MotivoSolicitud</MudText>
+
+            <MudSelect Label="Estado de la Solicitud" T="string" @bind-Value="nuevoEstado">
+                @foreach (var estado in new[] { "Pendiente", "Aprobada", "Rechazada", "Requiere Modificación" })
+                {
+                    <MudSelectItem Value="@estado">@estado</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudTextField Label="Observaciones" T="string" @bind-Value="observacionesRevision" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="ActualizarEstado">Guardar Cambios</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="CerrarRevision">Cancelar</MudButton>
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    private List<Solicitud> solicitudesPendientes = new();
+    private Solicitud solicitudSeleccionada;
+    private string nuevoEstado;
+    private string observacionesRevision;
+
+    protected override async Task OnInitializedAsync()
+    {
+        solicitudesPendientes = await solicitudService.ObtenerSolicitudesPendientes();
+    }
+
+    private async Task RevisarSolicitud(int solicitudId)
+    {
+        solicitudSeleccionada = await solicitudService.ObtenerSolicitudPorId(solicitudId);
+    }
+
+    private async Task ActualizarEstado()
+    {
+        solicitudSeleccionada.Estado = nuevoEstado;
+        solicitudSeleccionada.ObservacionesRevision = observacionesRevision;
+        await solicitudService.ActualizarSolicitud(solicitudSeleccionada);
+
+        // Recargar lista de solicitudes
+        solicitudesPendientes = await solicitudService.ObtenerSolicitudesPendientes();
+        solicitudSeleccionada = null;
+    }
+
+    private void CerrarRevision()
+    {
+        solicitudSeleccionada = null;
+    }
+}

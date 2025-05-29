@@ -1,0 +1,24 @@
+﻿@using DIGESA.Models.Entities.DIGESA
+@page "/DatosSalud"
+@using MudBlazor
+
+@if (Paciente.RequiereAcompanante)
+{
+    <MudCard>
+        <MudCardHeader Title="Información del Acompañante" />
+        <MudCardContent>
+            <MudTextField Label="Nombre Completo" T="string" @bind-Value="Acompanantes.NombreCompleto" />
+            <MudTextField Label="Tipo de Documento" T="string" @bind-Value="Acompanantes.TipoDocumento" />
+            <MudTextField Label="Número de Documento" T="string" @bind-Value="Acompanantes.NumeroDocumento" />
+            <MudTextField Label="Nacionalidad" T="string" @bind-Value="Acompanantes.Nacionalidad" />
+            <MudTextField Label="Parentesco" T="string" @bind-Value="Acompanantes.Parentesco" />
+            <MudTextField Label="Motivo del requerimiento" T="string" @bind-Value="Paciente.MotivoRequerimientoAcompanante" />
+            <MudTextField Label="Tipo de discapacidad" T="string" @bind-Value="Paciente.TipoDiscapacidad" />
+        </MudCardContent>
+    </MudCard>
+}
+
+@code {
+    [Parameter] public Acompanante Acompanantes { get; set; }
+    [Parameter] public Paciente Paciente { get; set; }
+}

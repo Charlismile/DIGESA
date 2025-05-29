@@ -17,9 +17,9 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<Acompanante> Acompanantes { get; set; }
 
-    public virtual DbSet<AuditoriaAccion> AuditoriaAccions { get; set; }
+    public virtual DbSet<AuditoriaAccion> AuditoriaAcciones { get; set; }
 
-    public virtual DbSet<Certificacion> Certificacions { get; set; }
+    public virtual DbSet<Certificacion> Certificaciones { get; set; }
 
     public virtual DbSet<Diagnostico> Diagnosticos { get; set; }
 
@@ -31,9 +31,9 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<PacienteDiagnostico> PacienteDiagnosticos { get; set; }
 
-    public virtual DbSet<Revision> Revisions { get; set; }
+    public virtual DbSet<Revision> Revisiones { get; set; }
 
-    public virtual DbSet<Solicitud> Solicituds { get; set; }
+    public virtual DbSet<Solicitud> Solicitudes { get; set; }
 
     public virtual DbSet<SolicitudDiagnostico> SolicitudDiagnosticos { get; set; }
 
@@ -81,7 +81,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreTablaAfectada).HasMaxLength(128);
             entity.Property(e => e.UserAgent).HasMaxLength(255);
 
-            entity.HasOne(d => d.Usuario).WithMany(p => p.AuditoriaAccions)
+            entity.HasOne(d => d.Usuario).WithMany(p => p.AuditoriaAcciones)
                 .HasForeignKey(d => d.UsuarioId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_AuditoriaAccion_Usuario");
@@ -238,7 +238,8 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasIndex(e => e.PacienteId, "IX_PacienteDiagnostico_PacienteId");
 
-            entity.HasIndex(e => new { e.PacienteId, e.DiagnosticoId }, "UQ_PacienteDiagnostico_Paciente_Diagnostico").IsUnique();
+            entity.HasIndex(e => new { e.PacienteId, e.DiagnosticoId }, "UQ_PacienteDiagnostico_Paciente_Diagnostico")
+                .IsUnique();
 
             entity.Property(e => e.Observaciones).HasMaxLength(300);
 
@@ -267,12 +268,12 @@ public partial class DbContextDigesa : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.TipoRevision).HasMaxLength(50);
 
-            entity.HasOne(d => d.Revisor).WithMany(p => p.Revisions)
+            entity.HasOne(d => d.Revisor).WithMany(p => p.Revisiones)
                 .HasForeignKey(d => d.RevisorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Revision_Revisor");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Revisions)
+            entity.HasOne(d => d.Solicitud).WithMany(p => p.Revisiones)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_Revision_Solicitud");
         });
@@ -300,20 +301,20 @@ public partial class DbContextDigesa : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            entity.HasOne(d => d.Acompanante).WithMany(p => p.Solicituds)
+            entity.HasOne(d => d.Acompanante).WithMany(p => p.Solicitudes)
                 .HasForeignKey(d => d.AcompananteId)
                 .HasConstraintName("FK_Solicitud_Acompanante");
 
-            entity.HasOne(d => d.FuncionarioRecibe).WithMany(p => p.Solicituds)
+            entity.HasOne(d => d.FuncionarioRecibe).WithMany(p => p.Solicitudes)
                 .HasForeignKey(d => d.FuncionarioRecibeId)
                 .HasConstraintName("FK_Solicitud_Funcionario");
 
-            entity.HasOne(d => d.Medico).WithMany(p => p.Solicituds)
+            entity.HasOne(d => d.Medico).WithMany(p => p.Solicitudes)
                 .HasForeignKey(d => d.MedicoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Solicitud_Medico");
 
-            entity.HasOne(d => d.Paciente).WithMany(p => p.Solicituds)
+            entity.HasOne(d => d.Paciente).WithMany(p => p.Solicitudes)
                 .HasForeignKey(d => d.PacienteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Solicitud_Paciente");
@@ -391,9 +392,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Rol).HasMaxLength(50);
             entity.Property(e => e.Salt).HasMaxLength(16);
         });
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
+
+  

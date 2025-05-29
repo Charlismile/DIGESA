@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
+using DIGESA.Models.Entities.DIGESA;
+using DIGESA.Services.Clases;
+using DIGESA.Services.Interfaces;
 using MudBlazor.Services;
 
 
@@ -19,7 +22,9 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddScoped<QRCodeService>();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -33,8 +38,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-// builder.Services.AddDbContext<DbContextDigesa>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
+builder.Services.AddDbContext<DbContextDigesa>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DeffaultConnection")));
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
     {
@@ -45,9 +50,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequiredLength = 6;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
+
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
@@ -65,6 +72,12 @@ else
     app.UseHsts();
 }
 app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["X-Frame-Options"] = "DENY";
+    context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+    await next();
+});
 
 app.UseStaticFiles();
 app.UseAntiforgery();

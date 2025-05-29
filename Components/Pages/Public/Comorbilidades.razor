@@ -1,0 +1,20 @@
+﻿@using DIGESA.Models.Entities.DIGESA
+@page "/Cormobilidades"
+@using MudBlazor
+
+<MudCard>
+    <MudCardHeader Title="Comorbilidades del Paciente" />
+    <MudCardContent>
+        @foreach (var diagnostico in PacienteDiagnosticos)
+        {
+            <MudExpansionPanel Text="@diagnostico.Diagnostico.Nombre">
+                <MudText Typo="Typo.body1">Fecha Diagnóstico: @diagnostico.FechaDiagnostico?.ToString("dd/MM/yyyy")</MudText>
+                <MudText Typo="Typo.body1">Observaciones: @diagnostico.Observaciones</MudText>
+            </MudExpansionPanel>
+        }
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public List<PacienteDiagnostico> PacienteDiagnosticos { get; set; }
+}

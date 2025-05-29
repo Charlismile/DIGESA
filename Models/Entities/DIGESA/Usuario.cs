@@ -21,7 +21,7 @@ public partial class Usuario
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<AuditoriaAccion> AuditoriaAccions { get; set; } = new List<AuditoriaAccion>();
+    public virtual ICollection<AuditoriaAccion> AuditoriaAcciones { get; set; } = new List<AuditoriaAccion>();
 
     public virtual ICollection<DocumentoAdjunto> DocumentoAdjuntos { get; set; } = new List<DocumentoAdjunto>();
 
@@ -29,7 +29,7 @@ public partial class Usuario
 
     public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
-    public virtual ICollection<Revision> Revisions { get; set; } = new List<Revision>();
+    public virtual ICollection<Revision> Revisiones { get; set; } = new List<Revision>();
 
-    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
+    public virtual ICollection<Solicitud> Solicitudes { get; set; } = new List<Solicitud>();
 }

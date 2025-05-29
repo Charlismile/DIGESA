@@ -1,0 +1,15 @@
+﻿@page "/FirmaResponsable"
+@using MudBlazor
+@using DIGESA.Models.Entities.DIGESA
+
+<MudCard>
+    <MudCardHeader Title="Firma y Consentimiento" />
+    <MudCardContent>
+        <MudCheckBox Label="Declaro que la información es correcta y acepto los términos" @bind-Checked="Solicitudes.AceptaTerminos" />
+        <MudTextField Label="Nombre del Responsable" T="string" Required="true" @bind-Value="Solicitudes.NombreFirmante" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public Solicitud Solicitudes { get; set; }
+}

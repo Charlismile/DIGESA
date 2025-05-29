@@ -23,7 +23,7 @@ public partial class Medico
 
     public string InstalacionSalud { get; set; } = null!;
 
-    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
+    public virtual ICollection<Solicitud> Solicitudes { get; set; } = new List<Solicitud>();
 
     public virtual Usuario? Usuario { get; set; }
 }

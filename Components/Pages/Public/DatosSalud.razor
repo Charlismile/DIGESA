@@ -1,0 +1,21 @@
+﻿@using DIGESA.Models.Entities.DIGESA
+@page "/DatosSalud"
+@using MudBlazor
+
+<MudCard>
+    <MudCardHeader Title="Información de salud" />
+    <MudCardContent>
+        <MudSelect Label="Diagnóstico Médico" T="string" @bind-Value="Diagnosticos">
+            @foreach (var diagnostico in Diagnosticos)
+            {
+                <MudSelectItem Value="@diagnostico.Nombre">@diagnostico.Nombre</MudSelectItem>
+            }
+        </MudSelect>
+        <MudCheckBox Label="Requiere Acompañante" @bind-Checked="Pacientes.RequiereAcompanante" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public Paciente Pacientes { get; set; }
+    [Parameter] public List<Diagnostico> Diagnosticos { get; set; }
+}

@@ -195,6 +195,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/DatosContacto.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRGF0b3NDb250YWN0by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/DatosPaciente.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRGF0b3NQYWNpZW50ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/DatosSalud.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRGF0b3NTYWx1ZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/FormularioPaciente.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRm9ybXVsYXJpb1BhY2llbnRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

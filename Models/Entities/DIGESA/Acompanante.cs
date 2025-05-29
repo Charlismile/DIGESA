@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 
 namespace DIGESA.Models.Entities.DIGESA;
 
@@ -21,5 +20,5 @@ public partial class Acompanante
 
     public virtual Paciente Paciente { get; set; } = null!;
 
-    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
+    public virtual ICollection<Solicitud> Solicitudes { get; set; } = new List<Solicitud>();
 }
