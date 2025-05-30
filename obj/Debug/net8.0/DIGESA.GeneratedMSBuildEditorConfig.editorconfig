@@ -179,6 +179,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Admin/AprobacionSolicitudes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBcHJvYmFjaW9uU29saWNpdHVkZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Admin/FormularioMinsa.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxGb3JtdWxhcmlvTWluc2EucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -195,8 +199,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/DatosContacto.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRGF0b3NDb250YWN0by5yYXpvcg==
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/Acompanante.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcQWNvbXBhbmFudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/CentroSalud.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcQ2VudHJvU2FsdWQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/Comorbilidades.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcQ29tb3JiaWxpZGFkZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/ContactoPaciente.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcQ29udGFjdG9QYWNpZW50ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/DatosPaciente.razor]
@@ -207,8 +223,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRGF0b3NTYWx1ZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/FirmaResponsable.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRmlybWFSZXNwb25zYWJsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/FormularioPaciente.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcRm9ybXVsYXJpb1BhY2llbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/InformacionMedica.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcSW5mb3JtYWNpb25NZWRpY2EucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Public/TratamientoCannabis.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcVHJhdGFtaWVudG9DYW5uYWJpcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Weather.razor]
