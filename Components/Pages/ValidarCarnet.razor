@@ -1,0 +1,64 @@
+﻿@page "/validar/{SolicitudId:int}/{Tipo}"
+@inject DbContextDigesa _db
+
+@using DIGESA.Models.Entities.DIGESA
+@using QRCoder
+@using Microsoft.AspNetCore.Components
+@using Microsoft.EntityFrameworkCore
+@using MudBlazor
+
+<PageTitle>Validación de Carnet</PageTitle>
+
+<MudPaper Class="p-6 max-w-xl mx-auto mt-4">
+    @if (certificacion != null)
+    {
+        <MudText Typo="Typo.h5" Class="mb-2">Carnet @tipoValido.ToUpper()</MudText>
+        <MudText><b>Nombre:</b> @nombreCompleto</MudText>
+        <MudText><b>Estado del Certificado:</b> <MudChip T="string" Color="@colorEstado">@certificacion.EstadoCertificado</MudChip></MudText>
+        <MudText><b>Fecha de Emisión:</b> @certificacion.FechaEmision.ToShortDateString()</MudText>
+        <MudText><b>Fecha de Vencimiento:</b> @certificacion.FechaVencimiento.ToShortDateString()</MudText>
+        <MudDivider Class="my-3" />
+
+        <MudText Typo="Typo.h6">Código QR</MudText>
+        <img src="data:image/png;base64,@qrBase64" alt="QR de validación" />
+    }
+    else
+    {
+        <MudText Color="Color.Error">Certificado no encontrado o inválido.</MudText>
+    }
+</MudPaper>
+
+@code {
+    [Parameter] public int SolicitudId { get; set; }
+    [Parameter] public string Tipo { get; set; } = "";
+
+    Certificacion? certificacion;
+    string? nombreCompleto;
+    string? tipoValido;
+    string qrBase64 = "";
+    Color colorEstado = Color.Default;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tipoValido = Tipo.ToLowerInvariant() == "acompanante" ? "Acompañante" : "Paciente";
+
+        var solicitud = await _db.Solicitudes
+            .Include(s => s.Paciente)
+            .Include(s => s.Acompanante)
+            .Include(s => s.Certificacion)
+            .FirstOrDefaultAsync(s => s.Id == SolicitudId);
+
+        if (solicitud?.Certificacion != null)
+        {
+            certificacion = solicitud.Certificacion;
+            nombreCompleto = tipoValido == "Paciente" ? solicitud.Paciente?.NombreCompleto : solicitud.Acompanante?.NombreCompleto;
+            colorEstado = certificacion.EstadoCertificado == "Activa" ? Color.Success : Color.Warning;
+
+            // Generar QR para mostrar en la pantalla (opcional)
+            var qrGenerator = new QRCodeGenerator();
+            var qrData = qrGenerator.CreateQrCode($"https://tusitio.com/validar/{SolicitudId}/{Tipo}", QRCodeGenerator.ECCLevel.Q);
+            var qrCode = new Base64QRCode(qrData);
+            qrBase64 = qrCode.GetGraphic(10);
+        }
+    }
+}

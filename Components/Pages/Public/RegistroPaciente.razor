@@ -1,0 +1,187 @@
+﻿@page "/registropaciente"
+@using DIGESA.Models.Entities.DIGESA
+@using Microsoft.EntityFrameworkCore
+@using MudBlazor
+@inject DbContextDigesa _db
+@inject IDialogService DialogService
+@inject NavigationManager Nav
+@inject PdfCarnetService PdfService
+@inject CorreoService CorreoService
+
+<MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
+    <MudText Typo="Typo.h5">Formulario de Registro de Pacientes</MudText>
+
+    <MudDivider Class="my-2" />
+
+    <MudDatePicker @bind-Date="fechaSolicitud" Label="Fecha de Solicitud" Required="true" />
+
+    <MudText Typo="Typo.h6" Class="mt-4">Datos del Paciente</MudText>
+    <MudTextField @bind-Value="paciente.NombreCompleto" Label="Nombre completo" Required="true" />
+    <MudSelect T="string" @bind-Value="paciente.TipoDocumento" Label="Tipo Documento" Required="true">
+        @foreach (var tipo in new[] { "Cédula", "Pasaporte" })
+        {
+            <MudSelectItem Value="@tipo">@tipo</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField @bind-Value="paciente.NumeroDocumento" Label="Número Documento" Required="true" />
+    <MudTextField @bind-Value="paciente.Nacionalidad" Label="Nacionalidad" />
+    <MudDatePicker @bind-Date="fechaNacimiento" Label="Fecha de Nacimiento" />
+    <MudRadioGroup T="string" @bind-SelectedOption="paciente.Sexo">
+        <MudRadio T="string" Option="Femenino" Label="Femenino" />
+        <MudRadio T="string" Option="Masculino" Label="Masculino" />
+    </MudRadioGroup>
+    <MudTextField @bind-Value="paciente.DireccionResidencia" Label="Dirección de Residencia" Lines="3" />
+    <MudTextField @bind-Value="paciente.TelefonoResidencial" Label="Teléfono residencial" />
+    <MudTextField @bind-Value="paciente.TelefonoPersonal" Label="Teléfono personal" />
+    <MudTextField @bind-Value="paciente.TelefonoLaboral" Label="Teléfono laboral" />
+    <MudTextField @bind-Value="paciente.CorreoElectronico" Label="Correo electrónico" />
+    <MudTextField @bind-Value="paciente.InstalacionSalud" Label="Instalación de salud" />
+    <MudTextField @bind-Value="paciente.RegionSalud" Label="Región de salud" />
+
+    <MudCheckBox T="bool" @bind-Checked="requiereAcompanante" Label="¿Requiere acompañante autorizado?" />
+    @if (requiereAcompanante == true)
+    {
+        <MudText Typo="Typo.h6" Class="mt-4">Datos del Acompañante</MudText>
+        <MudTextField @bind-Value="acompanante.NombreCompleto" Label="Nombre completo" />
+        <MudSelect T="string" @bind-Value="acompanante.TipoDocumento" Label="Tipo Documento">
+            @foreach (var tipo in new[] { "Cédula", "Pasaporte" })
+            {
+                <MudSelectItem Value="@tipo">@tipo</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="acompanante.NumeroDocumento" Label="Número Documento" />
+        <MudTextField @bind-Value="acompanante.Nacionalidad" Label="Nacionalidad" />
+        <MudSelect T="string" @bind-Value="acompanante.Parentesco" Label="Parentesco">
+            @foreach (var parentesco in new[] { "Padre con patria potestad", "Madre con patria potestad", "Tutor Designado" })
+            {
+                <MudSelectItem Value="@parentesco">@parentesco</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="paciente.TipoDiscapacidad" Label="Discapacidad (si aplica)" />
+    }
+
+    <MudText Typo="Typo.h6" Class="mt-4">Médico Tratante</MudText>
+    <MudTextField @bind-Value="medico.NombreCompleto" Label="Nombre completo" />
+    <MudSelect T="string" @bind-Value="medico.Disciplina" Label="Disciplina">
+        @foreach (var disciplina in new[] { "Médico General", "Odontólogo", "Especialista" })
+        {
+            <MudSelectItem Value="@disciplina">@disciplina</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField @bind-Value="medico.NumeroRegistroIdoneidad" Label="Registro de Idoneidad" />
+    <MudTextField @bind-Value="medico.InstalacionSalud" Label="Instalación de salud" />
+    <MudTextField @bind-Value="medico.NumeroTelefono" Label="Teléfono del médico" />
+
+    <MudText Typo="Typo.h6" Class="mt-4">Diagnóstico y Tratamiento</MudText>
+    <MudSelect T="int" @bind-Value="diagnosticoSeleccionado" Label="Diagnóstico">
+        @foreach (var d in diagnosticos)
+        {
+            <MudSelectItem Value="@d.Id">@d.Nombre</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField @bind-Value="tratamiento.NombreGenericoProducto" Label="Nombre genérico del producto" />
+    <MudTextField @bind-Value="tratamiento.ConcentracionCbd" Label="Concentración CBD" />
+    <MudTextField @bind-Value="tratamiento.ConcentracionThc" Label="Concentración THC" />
+    <MudTextField @bind-Value="tratamiento.ViaAdministracion" Label="Vía de administración" />
+    <MudTextField @bind-Value="tratamiento.FrecuenciaAdministracion" Label="Frecuencia" />
+
+    <MudText Typo="Typo.h6" Class="mt-4">Documentos Adjuntos</MudText>
+    <InputFile OnChange="OnFileSelected" />
+    <MudGrid Class="mt-6">
+        <MudItem xs="6">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="EnviarFormulario" >
+                Enviar Solicitud
+            </MudButton>
+        </MudItem>
+        <MudItem xs="6" Class="d-flex justify-end">
+            <BotonVolver Ruta="/" Texto="Volver al inicio" />
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@code {
+    Paciente paciente = new();
+    Acompanante acompanante = new();
+    Medico medico = new();
+    Tratamiento tratamiento = new();
+
+    DateTime? fechaSolicitud = DateTime.Today;
+    DateTime? fechaNacimiento;
+
+    bool requiereAcompanante = false;
+    List<Diagnostico> diagnosticos = new();
+    int diagnosticoSeleccionado;
+    IBrowserFile documentoAdjunto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        diagnosticos = await _db.Diagnosticos.OrderBy(d => d.Nombre).ToListAsync();
+    }
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        documentoAdjunto = e.File;
+    }
+
+    private async Task EnviarFormulario()
+    {
+        if (requiereAcompanante)
+        {
+            _db.Acompanantes.Add(acompanante);
+            paciente.Acompanantes = new List<Acompanante> { acompanante };
+        }
+
+        paciente.FechaNacimiento = (DateTime)fechaNacimiento!;
+        _db.Pacientes.Add(paciente);
+        _db.Medicos.Add(medico);
+        await _db.SaveChangesAsync();
+
+        var solicitud = new Solicitud
+        {
+            PacienteId = paciente.Id,
+            MedicoId = medico.Id,
+            FechaSolicitud = fechaSolicitud ?? DateTime.Now,
+            Estado = "Aprobada"
+        };
+        _db.Solicitudes.Add(solicitud);
+        await _db.SaveChangesAsync();
+
+        var solicitudDiag = new SolicitudDiagnostico
+        {
+            SolicitudId = solicitud.Id,
+            DiagnosticoId = diagnosticoSeleccionado,
+            EsPrimario = true
+        };
+        _db.SolicitudDiagnosticos.Add(solicitudDiag);
+
+        tratamiento.SolicitudId = solicitud.Id;
+        _db.Tratamientos.Add(tratamiento);
+
+        if (documentoAdjunto != null)
+        {
+            var filePath = Path.Combine("wwwroot/documentos", documentoAdjunto.Name);
+            await using var fs = new FileStream(filePath, FileMode.Create);
+            await documentoAdjunto.OpenReadStream().CopyToAsync(fs);
+
+            var doc = new DocumentoAdjunto
+            {
+                SolicitudId = solicitud.Id,
+                NombreArchivo = documentoAdjunto.Name,
+                RutaAlmacenamiento = filePath,
+                TipoContenidoMime = documentoAdjunto.ContentType
+            };
+            _db.DocumentoAdjuntos.Add(doc);
+        }
+
+        // Guardar cambios
+        await _db.SaveChangesAsync();
+
+        // Crear certificado y PDF
+        var certificado = await PdfService.GenerarCarnetPacienteAsync(solicitud.Id);
+        await CorreoService.EnviarCarnetAsync(paciente.CorreoElectronico, certificado);
+
+        await DialogService.ShowMessageBox("Éxito", "Solicitud enviada correctamente y carnet generado.");
+        Nav.NavigateTo("/");
+    }
+}

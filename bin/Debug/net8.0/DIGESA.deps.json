@@ -15,6 +15,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.16",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.16",
           "MudBlazor": "8.6.0",
+          "QRCoder": "1.6.0",
           "QuestPDF": "2025.5.0"
         },
         "runtime": {
@@ -872,6 +873,14 @@
           "lib/net8.0/MudBlazor.dll": {
             "assemblyVersion": "8.6.0.0",
             "fileVersion": "8.6.0.0"
+          }
+        }
+      },
+      "QRCoder/1.6.0": {
+        "runtime": {
+          "lib/net6.0/QRCoder.dll": {
+            "assemblyVersion": "1.6.0.0",
+            "fileVersion": "1.6.0.0"
           }
         }
       },
@@ -1773,6 +1782,13 @@
       "sha512": "sha512-vJROmWdTjiBmyiZBSbD8RcYVFfLbNMEQpKoCOMfY2628KbOLGVcnH1RBziHGyJH9pqc99UoCQS81XLm8X+49ug==",
       "path": "mudblazor/8.6.0",
       "hashPath": "mudblazor.8.6.0.nupkg.sha512"
+    },
+    "QRCoder/1.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XmPA81eo+oRxBuyVdswsSkTGTE1d3thfF11Z1PdD7oB56A6HU4G4AAOdySmGRMb/cljwlFTMWUtosGEnwpS6GA==",
+      "path": "qrcoder/1.6.0",
+      "hashPath": "qrcoder.1.6.0.nupkg.sha512"
     },
     "QuestPDF/2025.5.0": {
       "type": "package",

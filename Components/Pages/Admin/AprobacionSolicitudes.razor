@@ -1,19 +1,24 @@
 ﻿@page "/AprobacionSolicitudes"
+@attribute [Authorize(Roles = "Medico, Funcionario")]
+
+@inject ISolicitudService solicitudService
+@inject PdfCarnetService pdfService
+@inject CorreoService correoService
+@inject NavigationManager Navigation
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 @using DIGESA.Models.Entities.DIGESA
 @using DIGESA.Services.Interfaces
 @using Microsoft.AspNetCore.Authorization
-@inject ISolicitudService solicitudService
-@inject NavigationManager Navigation
 @using MudBlazor
+@using Microsoft.AspNetCore.Components.Authorization
 
-
-@attribute [Authorize(Roles = "Medico, Funcionario")]
-
-<MudContainer>
+<MudContainer MaxWidth="MaxWidth.Large">
     <MudPaper Elevation="3" Class="pa-4">
         <MudText Typo="Typo.h4">Aprobación de Solicitudes Médicas</MudText>
 
-        <!-- Tabla de solicitudes pendientes -->
         <MudTable Items="@solicitudesPendientes">
             <HeaderContent>
                 <MudTh>Paciente</MudTh>
@@ -22,37 +27,44 @@
                 <MudTh>Acciones</MudTh>
             </HeaderContent>
             <RowTemplate Context="solicitud">
-                <MudTd>@solicitud.Paciente.NombreCompleto</MudTd>
+                <MudTd>@solicitud.Paciente?.NombreCompleto</MudTd>
                 <MudTd>@solicitud.FechaSolicitud?.ToString("dd/MM/yyyy")</MudTd>
-                <MudTd><MudChip Color="@(solicitud.Estado == "Pendiente" ? Color.Warning : Color.Success)">@solicitud.Estado</MudChip></MudTd>
+                <MudTd>
+                    <MudChip T="string" Color="@(solicitud.Estado == "Aprobada" ? Color.Success : 
+                                      solicitud.Estado == "Rechazada" ? Color.Error : 
+                                      Color.Info)">
+                        @solicitud.Estado
+                    </MudChip>
+                </MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => RevisarSolicitud(solicitud.Id))">Revisar</MudButton>
                 </MudTd>
             </RowTemplate>
         </MudTable>
-
     </MudPaper>
 
     @if (solicitudSeleccionada != null)
     {
-        <MudPaper Elevation="3" Class="pa-4 mt-4">
+        <MudPaper Class="pa-4 mt-4">
             <MudText Typo="Typo.h5">Detalles de la Solicitud</MudText>
-            <MudText><b>Paciente:</b> @solicitudSeleccionada.Paciente.NombreCompleto</MudText>
-            <MudText><b>Motivo:</b> @solicitudSeleccionada.MotivoSolicitud</MudText>
+            <MudText><b>Paciente:</b> @solicitudSeleccionada.Paciente?.NombreCompleto</MudText>
+            <MudText><b>Fecha de solicitud:</b> @solicitudSeleccionada.FechaSolicitud?.ToShortDateString()</MudText>
 
-            <MudSelect Label="Estado de la Solicitud" T="string" @bind-Value="nuevoEstado">
-                @foreach (var estado in new[] { "Pendiente", "Aprobada", "Rechazada", "Requiere Modificación" })
+            <MudSelect Label="Nuevo estado" T="string" @bind-Value="nuevoEstado">
+                @foreach (var estado in new[] { "Aprobada", "Rechazada" })
                 {
                     <MudSelectItem Value="@estado">@estado</MudSelectItem>
                 }
             </MudSelect>
 
-            <MudTextField Label="Observaciones" T="string" @bind-Value="observacionesRevision" />
+            <MudTextField Label="Observaciones" @bind-Value="observacionesRevision" Lines="3" />
 
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="ActualizarEstado">Guardar Cambios</MudButton>
-            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="CerrarRevision">Cancelar</MudButton>
+            <MudButton Color="Color.Success" OnClick="ActualizarEstado">Guardar</MudButton>
+            <MudButton Class="ml-2" Color="Color.Secondary" OnClick="Cancelar">Cancelar</MudButton>
         </MudPaper>
     }
+    <BotonVolver Ruta="/" Texto="Volver al inicio" />
+
 </MudContainer>
 
 @code {
@@ -60,29 +72,50 @@
     private Solicitud solicitudSeleccionada;
     private string nuevoEstado;
     private string observacionesRevision;
+    private int? revisorId;
 
     protected override async Task OnInitializedAsync()
     {
         solicitudesPendientes = await solicitudService.ObtenerSolicitudesPendientes();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userEmail = authState.User.Identity?.Name;
+        var usuario = await solicitudService.ObtenerUsuarioPorEmail(userEmail);
+        revisorId = usuario?.Id;
     }
 
-    private async Task RevisarSolicitud(int solicitudId)
+    private async Task RevisarSolicitud(int id)
     {
-        solicitudSeleccionada = await solicitudService.ObtenerSolicitudPorId(solicitudId);
+        solicitudSeleccionada = await solicitudService.ObtenerSolicitudPorId(id);
+        nuevoEstado = solicitudSeleccionada.Estado;
     }
 
     private async Task ActualizarEstado()
     {
+        if (solicitudSeleccionada == null)
+            return;
+
         solicitudSeleccionada.Estado = nuevoEstado;
+        solicitudSeleccionada.FechaAprobacionRechazo = DateTime.Now;
+        solicitudSeleccionada.FuncionarioRecibeId = revisorId;
         solicitudSeleccionada.ObservacionesRevision = observacionesRevision;
+
         await solicitudService.ActualizarSolicitud(solicitudSeleccionada);
 
-        // Recargar lista de solicitudes
+        if (nuevoEstado == "Aprobada")
+        {
+            var pdf = await pdfService.GenerarCarnetPacienteAsync(solicitudSeleccionada.Id);
+            var correoPaciente = solicitudSeleccionada.Paciente?.CorreoElectronico;
+            if (!string.IsNullOrWhiteSpace(correoPaciente))
+                await correoService.EnviarCarnetAsync(correoPaciente, pdf);
+        }
+
+        Snackbar.Add("Solicitud actualizada con éxito", Severity.Success);
+
         solicitudesPendientes = await solicitudService.ObtenerSolicitudesPendientes();
         solicitudSeleccionada = null;
     }
 
-    private void CerrarRevision()
+    private void Cancelar()
     {
         solicitudSeleccionada = null;
     }

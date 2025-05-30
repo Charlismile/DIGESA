@@ -5,7 +5,7 @@ using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
 using DIGESA.Models.Entities.DIGESA;
-using DIGESA.Services.Clases;
+using DIGESA.Services;
 using DIGESA.Services.Interfaces;
 using MudBlazor.Services;
 
@@ -22,9 +22,10 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<QRCodeService>();
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<PdfCarnetService>();
+builder.Services.AddScoped<CorreoService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;

@@ -1,0 +1,20 @@
+﻿@using MudBlazor
+@inject NavigationManager Navigation
+
+<MudButton Color="Color.Secondary" Variant="Variant.Outlined" OnClick="@Volver">
+    <MudIcon Icon="@Icons.Material.Filled.ArrowBack" />
+    @Texto
+</MudButton>
+
+@code {
+    [Parameter]
+    public string Ruta { get; set; } = "/"; // Ruta por defecto
+
+    [Parameter]
+    public string Texto { get; set; } = "Volver";
+
+    private void Volver()
+    {
+        Navigation.NavigateTo(Ruta);
+    }
+}

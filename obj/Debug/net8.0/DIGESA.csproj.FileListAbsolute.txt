@@ -370,3 +370,4 @@ C:\Users\cabernalo\RiderProjects\DIGESA\bin\Debug\net8.0\Microsoft.Extensions.Lo
 C:\Users\cabernalo\RiderProjects\DIGESA\bin\Debug\net8.0\Microsoft.Extensions.Localization.Abstractions.dll
 C:\Users\cabernalo\RiderProjects\DIGESA\bin\Debug\net8.0\Microsoft.JSInterop.dll
 C:\Users\cabernalo\RiderProjects\DIGESA\bin\Debug\net8.0\MudBlazor.dll
+C:\Users\cabernalo\RiderProjects\DIGESA\bin\Debug\net8.0\QRCoder.dll

@@ -1,45 +1,45 @@
-﻿using DIGESA.Data;
-using DIGESA.Models.Entities.DIGESA;
+﻿using DIGESA.Models.Entities.DIGESA;
 using DIGESA.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-public class SolicitudService : ISolicitudService
+namespace DIGESA.Services
 {
-    private readonly DbContextDigesa _context;
-
-    public SolicitudService(DbContextDigesa context)
+    public class SolicitudService : ISolicitudService
     {
-        _context = context;
-    }
+        private readonly DbContextDigesa _db;
 
-    public async Task GuardarSolicitud(Solicitud solicitud)
-    {
-        _context.Solicitudes.Add(solicitud);
-        await _context.SaveChangesAsync();
-    }
+        public SolicitudService(DbContextDigesa db)
+        {
+            _db = db;
+        }
 
-    public async Task<Solicitud?> ObtenerSolicitudPorId(int id)
-    {
-        return await _context.Solicitudes
-            .Include(s => s.Paciente)
-            .Include(s => s.Medico)
-            .Include(s => s.Acompanante)
-            .Include(s => s.Certificacion)
-            .Include(s => s.DocumentoAdjuntos)
-            .Include(s => s.Revisiones)
-            .Include(s => s.SolicitudDiagnosticos)
-            .Include(s => s.Tratamientos)
-            .FirstOrDefaultAsync(s => s.Id == id);
-    }
-    public async Task<List<Solicitud>> ObtenerSolicitudesPendientes()
-    {
-        return await _context.Solicitudes.Where(s => s.Estado == "Pendiente").ToListAsync();
-    }
+        public async Task<List<Solicitud>> ObtenerSolicitudesPendientes()
+        {
+            return await _db.Solicitudes
+                .Include(s => s.Paciente)
+                .Where(s => s.Estado == "Pendiente")
+                .OrderByDescending(s => s.FechaSolicitud)
+                .ToListAsync();
+        }
 
-    public async Task ActualizarSolicitud(Solicitud solicitud)
-    {
-        _context.Solicitudes.Update(solicitud);
-        await _context.SaveChangesAsync();
-    }
+        public async Task<Solicitud?> ObtenerSolicitudPorId(int id)
+        {
+            return await _db.Solicitudes
+                .Include(s => s.Paciente)
+                .Include(s => s.Medico)
+                .Include(s => s.Acompanante)
+                .FirstOrDefaultAsync(s => s.Id == id);
+        }
 
+        public async Task ActualizarSolicitud(Solicitud solicitud)
+        {
+            _db.Solicitudes.Update(solicitud);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Usuario?> ObtenerUsuarioPorEmail(string email)
+        {
+            return await _db.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+        }
+    }
 }

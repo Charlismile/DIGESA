@@ -23,7 +23,7 @@ public class Paciente
     public string Nacionalidad { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
-    public DateOnly FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; }
 
     [Required(ErrorMessage = "El sexo es obligatorio.")]
     public string Sexo { get; set; } = string.Empty;

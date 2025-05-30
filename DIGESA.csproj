@@ -30,4 +30,17 @@
       <Folder Include="Models\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\CentroSalud.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\Comorbilidades.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\ContactoPaciente.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\DatosPaciente.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\DatosSalud.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\FirmaResponsable.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\FormularioPaciente.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\InformacionMedica.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\TratamientoCannabis.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Public\Tutor.razor" />
+    </ItemGroup>
+
 </Project>
