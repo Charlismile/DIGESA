@@ -1,4 +1,5 @@
-﻿using DIGESA.Models.Entities.DIGESA;
+﻿using DIGESA.Data;
+using DIGESA.Models.Entities.DIGESA;
 using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Utils;

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lW2s9oS0HIdkcsdwudxCydgLNkmK1dcREpj8268kxjo=",
+  "Hash": "XIzEImlt6QEKCGZYH98MJ4spwgdHqSCxyaw3Png3gOs=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -1277,10 +1277,10 @@
       "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\8.0.16\\staticwebassets\\V5\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.css",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.css",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.css",
       "AssetKind": "All",
@@ -1291,17 +1291,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "qmvjbof2tn",
-      "Integrity": "Hh7BRmiYuRD1Lq8ZF9jVWOOJuN3tWPS5M2lLZzuayjw=",
+      "Fingerprint": "f7451o6lak",
+      "Integrity": "dbrztyw7cpD/dvGeaqylyRiNofbn9I08NpD/6iCdbjA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.css"
     },
     {
-      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.js",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.js",
       "AssetKind": "All",
@@ -1312,11 +1312,11 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "jrqzp895hu",
-      "Integrity": "weSY1+xC2IWsc4ncUHtQhWp3H5eek/LVHZEDlWdgryY=",
+      "Fingerprint": "shgs22i5w1",
+      "Integrity": "gCxH2RI5xXVkxLFgcHgDuyoXu7IWZwdvZ5USM+27dIk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.js"
     },
     {
       "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
@@ -1382,6 +1382,48 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
+      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\banner.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "banner#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "80qvfhejsb",
+      "Integrity": "mHd6y+fjakW38sRtAH3WshvqXdPxmsC8q7Q5toNJLX4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\banner.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Bannerinsa.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "Bannerinsa#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "euo2fca90f",
+      "Integrity": "Rukkz3snaJAquW/o511Ie1eViC4utAxYtpWVn8jl7aM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Bannerinsa.png"
+    },
+    {
       "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
@@ -1443,6 +1485,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\huana.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "huana#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9xm9fip4is",
+      "Integrity": "TWPqkjH0jzMWNPybEZ3clDPhTMO0i3vp2thJWRIqhj4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\huana.png"
     },
     {
       "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Imagen1.png",
@@ -1508,12 +1571,12 @@
       "OriginalItemSpec": "wwwroot\\logo-minsa.png"
     },
     {
-      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Screenshot 2025-05-21 145940.png",
+      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\mari.png",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "Screenshot 2025-05-21 145940#[.{fingerprint}]?.png",
+      "RelativePath": "mari#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1522,17 +1585,38 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "9rgprt9ier",
-      "Integrity": "6z8Dbz5u1WXVsOcGnk/9YrM3T5Bp1SdxD7uFnhegVsQ=",
+      "Fingerprint": "qnmtso87l8",
+      "Integrity": "CqwMBX6OvWjlYnZo2hyLXmqbq2y8NEwhJjqG+LJtccE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Screenshot 2025-05-21 145940.png"
+      "OriginalItemSpec": "wwwroot\\mari.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\SQLQuery3.sql",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "SQLQuery3#[.{fingerprint}]?.sql",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5bioc72pay",
+      "Integrity": "sdrD/QRT7sVf9i/s1tvbUlwnEaJIY83jnH5g4tX7tgI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\SQLQuery3.sql"
     }
   ],
   "Endpoints": [
     {
       "Route": "_content/MudBlazor/MudBlazor.min.css",
-      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1545,7 +1629,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "599316"
+          "Value": "604382"
         },
         {
           "Name": "Content-Type",
@@ -1553,23 +1637,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Hh7BRmiYuRD1Lq8ZF9jVWOOJuN3tWPS5M2lLZzuayjw=\""
+          "Value": "\"dbrztyw7cpD/dvGeaqylyRiNofbn9I08NpD/6iCdbjA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 29 Apr 2025 15:51:24 GMT"
+          "Value": "Fri, 30 May 2025 08:29:34 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Hh7BRmiYuRD1Lq8ZF9jVWOOJuN3tWPS5M2lLZzuayjw="
+          "Value": "sha256-dbrztyw7cpD/dvGeaqylyRiNofbn9I08NpD/6iCdbjA="
         }
       ]
     },
     {
-      "Route": "_content/MudBlazor/MudBlazor.min.jrqzp895hu.js",
-      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.js",
+      "Route": "_content/MudBlazor/MudBlazor.min.f7451o6lak.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1582,39 +1666,39 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "67660"
+          "Value": "604382"
         },
         {
           "Name": "Content-Type",
-          "Value": "text/javascript"
+          "Value": "text/css"
         },
         {
           "Name": "ETag",
-          "Value": "\"weSY1+xC2IWsc4ncUHtQhWp3H5eek/LVHZEDlWdgryY=\""
+          "Value": "\"dbrztyw7cpD/dvGeaqylyRiNofbn9I08NpD/6iCdbjA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 29 Apr 2025 15:51:24 GMT"
+          "Value": "Fri, 30 May 2025 08:29:34 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "jrqzp895hu"
+          "Value": "f7451o6lak"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-weSY1+xC2IWsc4ncUHtQhWp3H5eek/LVHZEDlWdgryY="
+          "Value": "sha256-dbrztyw7cpD/dvGeaqylyRiNofbn9I08NpD/6iCdbjA="
         },
         {
           "Name": "label",
-          "Value": "_content/MudBlazor/MudBlazor.min.js"
+          "Value": "_content/MudBlazor/MudBlazor.min.css"
         }
       ]
     },
     {
       "Route": "_content/MudBlazor/MudBlazor.min.js",
-      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1627,7 +1711,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "67660"
+          "Value": "73018"
         },
         {
           "Name": "Content-Type",
@@ -1635,23 +1719,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"weSY1+xC2IWsc4ncUHtQhWp3H5eek/LVHZEDlWdgryY=\""
+          "Value": "\"gCxH2RI5xXVkxLFgcHgDuyoXu7IWZwdvZ5USM+27dIk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 29 Apr 2025 15:51:24 GMT"
+          "Value": "Fri, 30 May 2025 08:29:34 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-weSY1+xC2IWsc4ncUHtQhWp3H5eek/LVHZEDlWdgryY="
+          "Value": "sha256-gCxH2RI5xXVkxLFgcHgDuyoXu7IWZwdvZ5USM+27dIk="
         }
       ]
     },
     {
-      "Route": "_content/MudBlazor/MudBlazor.min.qmvjbof2tn.css",
-      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\staticwebassets\\MudBlazor.min.css",
+      "Route": "_content/MudBlazor/MudBlazor.min.shgs22i5w1.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\staticwebassets\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1664,33 +1748,33 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "599316"
+          "Value": "73018"
         },
         {
           "Name": "Content-Type",
-          "Value": "text/css"
+          "Value": "text/javascript"
         },
         {
           "Name": "ETag",
-          "Value": "\"Hh7BRmiYuRD1Lq8ZF9jVWOOJuN3tWPS5M2lLZzuayjw=\""
+          "Value": "\"gCxH2RI5xXVkxLFgcHgDuyoXu7IWZwdvZ5USM+27dIk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 29 Apr 2025 15:51:24 GMT"
+          "Value": "Fri, 30 May 2025 08:29:34 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "qmvjbof2tn"
+          "Value": "shgs22i5w1"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Hh7BRmiYuRD1Lq8ZF9jVWOOJuN3tWPS5M2lLZzuayjw="
+          "Value": "sha256-gCxH2RI5xXVkxLFgcHgDuyoXu7IWZwdvZ5USM+27dIk="
         },
         {
           "Name": "label",
-          "Value": "_content/MudBlazor/MudBlazor.min.css"
+          "Value": "_content/MudBlazor/MudBlazor.min.js"
         }
       ]
     },
@@ -1773,6 +1857,170 @@
         {
           "Name": "integrity",
           "Value": "sha256-u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE="
+        }
+      ]
+    },
+    {
+      "Route": "banner.80qvfhejsb.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\banner.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762211"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mHd6y+fjakW38sRtAH3WshvqXdPxmsC8q7Q5toNJLX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:31:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "80qvfhejsb"
+        },
+        {
+          "Name": "label",
+          "Value": "banner.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mHd6y+fjakW38sRtAH3WshvqXdPxmsC8q7Q5toNJLX4="
+        }
+      ]
+    },
+    {
+      "Route": "banner.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\banner.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762211"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mHd6y+fjakW38sRtAH3WshvqXdPxmsC8q7Q5toNJLX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:31:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-mHd6y+fjakW38sRtAH3WshvqXdPxmsC8q7Q5toNJLX4="
+        }
+      ]
+    },
+    {
+      "Route": "Bannerinsa.euo2fca90f.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Bannerinsa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "101244"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Rukkz3snaJAquW/o511Ie1eViC4utAxYtpWVn8jl7aM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:30:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "euo2fca90f"
+        },
+        {
+          "Name": "label",
+          "Value": "Bannerinsa.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Rukkz3snaJAquW/o511Ie1eViC4utAxYtpWVn8jl7aM="
+        }
+      ]
+    },
+    {
+      "Route": "Bannerinsa.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Bannerinsa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "101244"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Rukkz3snaJAquW/o511Ie1eViC4utAxYtpWVn8jl7aM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:30:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Rukkz3snaJAquW/o511Ie1eViC4utAxYtpWVn8jl7aM="
         }
       ]
     },
@@ -2183,6 +2431,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc="
+        }
+      ]
+    },
+    {
+      "Route": "huana.9xm9fip4is.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\huana.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "747363"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWPqkjH0jzMWNPybEZ3clDPhTMO0i3vp2thJWRIqhj4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:24:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9xm9fip4is"
+        },
+        {
+          "Name": "label",
+          "Value": "huana.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWPqkjH0jzMWNPybEZ3clDPhTMO0i3vp2thJWRIqhj4="
+        }
+      ]
+    },
+    {
+      "Route": "huana.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\huana.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "747363"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWPqkjH0jzMWNPybEZ3clDPhTMO0i3vp2thJWRIqhj4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:24:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWPqkjH0jzMWNPybEZ3clDPhTMO0i3vp2thJWRIqhj4="
         }
       ]
     },
@@ -4653,8 +4983,8 @@
       ]
     },
     {
-      "Route": "Screenshot 2025-05-21 145940.9rgprt9ier.png",
-      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Screenshot 2025-05-21 145940.png",
+      "Route": "mari.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\mari.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4663,7 +4993,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "505914"
+          "Value": "467242"
         },
         {
           "Name": "Content-Type",
@@ -4671,56 +5001,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"6z8Dbz5u1WXVsOcGnk/9YrM3T5Bp1SdxD7uFnhegVsQ=\""
+          "Value": "\"CqwMBX6OvWjlYnZo2hyLXmqbq2y8NEwhJjqG+LJtccE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 21 May 2025 19:59:40 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "9rgprt9ier"
-        },
-        {
-          "Name": "label",
-          "Value": "Screenshot 2025-05-21 145940.png"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-6z8Dbz5u1WXVsOcGnk/9YrM3T5Bp1SdxD7uFnhegVsQ="
-        }
-      ]
-    },
-    {
-      "Route": "Screenshot 2025-05-21 145940.png",
-      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Screenshot 2025-05-21 145940.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "505914"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"6z8Dbz5u1WXVsOcGnk/9YrM3T5Bp1SdxD7uFnhegVsQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 21 May 2025 19:59:40 GMT"
+          "Value": "Wed, 04 Jun 2025 18:31:43 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4730,7 +5015,134 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-6z8Dbz5u1WXVsOcGnk/9YrM3T5Bp1SdxD7uFnhegVsQ="
+          "Value": "sha256-CqwMBX6OvWjlYnZo2hyLXmqbq2y8NEwhJjqG+LJtccE="
+        }
+      ]
+    },
+    {
+      "Route": "mari.qnmtso87l8.png",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\mari.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "467242"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CqwMBX6OvWjlYnZo2hyLXmqbq2y8NEwhJjqG+LJtccE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 18:31:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qnmtso87l8"
+        },
+        {
+          "Name": "label",
+          "Value": "mari.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CqwMBX6OvWjlYnZo2hyLXmqbq2y8NEwhJjqG+LJtccE="
+        }
+      ]
+    },
+    {
+      "Route": "SQLQuery3.5bioc72pay.sql",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\SQLQuery3.sql",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1316"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sdrD/QRT7sVf9i/s1tvbUlwnEaJIY83jnH5g4tX7tgI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 20:25:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5bioc72pay"
+        },
+        {
+          "Name": "label",
+          "Value": "SQLQuery3.sql"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sdrD/QRT7sVf9i/s1tvbUlwnEaJIY83jnH5g4tX7tgI="
+        }
+      ]
+    },
+    {
+      "Route": "SQLQuery3.sql",
+      "AssetFile": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\SQLQuery3.sql",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1316"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sdrD/QRT7sVf9i/s1tvbUlwnEaJIY83jnH5g4tX7tgI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 20:25:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sdrD/QRT7sVf9i/s1tvbUlwnEaJIY83jnH5g4tX7tgI="
         }
       ]
     }

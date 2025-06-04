@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
 namespace DIGESA.Models.Entities.DIGESA;
 

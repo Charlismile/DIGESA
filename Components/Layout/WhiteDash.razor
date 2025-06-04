@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <div class="d-flex flex-column justify-center" style="height:300px">
+        <MudImage Src="/Bannerinsa.png"/>
+    </div>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge" > 
+        @Body
+        </MudContainer > 
+    </MudMainContent>
+</MudLayout>

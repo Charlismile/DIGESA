@@ -1,31 +1,27 @@
-﻿@using MudBlazor
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="container-fluid">
-        <img alt="image" src="logo-gob.png" width="300"/>
-        <NavMenu/>
-    </div>
-</div>
-<div class="container">
-    <div>
-        @* Required *@
-        <MudThemeProvider />
-        <MudPopoverProvider />
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-        @* Needed for dialogs *@
-        <MudDialogProvider />
+<MudLayout>
+    <MudAppBar>
+        DIGESA
+        <MudImage Src="/logo-minsa.png" Alt="logo minsa" Width="35"/>
+        <MudSpacer />
+    </MudAppBar>
+    <MudMainContent MaxWidth="MaxWidth.ExtraLarge">
+        <MudImage Src="/logo-gob.png" Alt="logogob" Width="300" Class="rounded-lg ma-4" FallbackSrc="/logo-minsa.png"/>
+        @Body
+    </MudMainContent>
+</MudLayout>
 
-        @* Needed for snackbars *@
-        <MudSnackbarProvider />
-        <article class="content px-4">
-            @Body
-        </article>
-    </div>
-</div>
+@code {
+    bool _drawerOpen = true;
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

@@ -14,7 +14,7 @@
           "Microsoft.AspNetCore.Identity.UI": "8.0.16",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.16",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.16",
-          "MudBlazor": "8.6.0",
+          "MudBlazor": "8.7.0",
           "QRCoder": "1.6.0",
           "QuestPDF": "2025.5.0"
         },
@@ -863,7 +863,7 @@
           }
         }
       },
-      "MudBlazor/8.6.0": {
+      "MudBlazor/8.7.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Components": "8.0.12",
           "Microsoft.AspNetCore.Components.Web": "8.0.12",
@@ -871,8 +871,8 @@
         },
         "runtime": {
           "lib/net8.0/MudBlazor.dll": {
-            "assemblyVersion": "8.6.0.0",
-            "fileVersion": "8.6.0.0"
+            "assemblyVersion": "8.7.0.0",
+            "fileVersion": "8.7.0.0"
           }
         }
       },
@@ -1776,12 +1776,12 @@
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
     },
-    "MudBlazor/8.6.0": {
+    "MudBlazor/8.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vJROmWdTjiBmyiZBSbD8RcYVFfLbNMEQpKoCOMfY2628KbOLGVcnH1RBziHGyJH9pqc99UoCQS81XLm8X+49ug==",
-      "path": "mudblazor/8.6.0",
-      "hashPath": "mudblazor.8.6.0.nupkg.sha512"
+      "sha512": "sha512-dgQ2MsgJAA1y6S0KmaOcGQWIHkJKA6XedC8X4VKXGRRcS3CFtgcytzT4LAxNoklNBqeveOyiHNEk6CG8a7YHYQ==",
+      "path": "mudblazor/8.7.0",
+      "hashPath": "mudblazor.8.7.0.nupkg.sha512"
     },
     "QRCoder/1.6.0": {
       "type": "package",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bDGVjC4Ca+s=",
+  "dgSpecHash": "/6ilgeeJdvo=",
   "success": true,
   "projectFilePath": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA.csproj",
   "expectedPackageFiles": [
@@ -67,7 +67,7 @@
     "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\cabernalo\\.nuget\\packages\\mimekit\\4.12.0\\mimekit.4.12.0.nupkg.sha512",
     "C:\\Users\\cabernalo\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
-    "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.6.0\\mudblazor.8.6.0.nupkg.sha512",
+    "C:\\Users\\cabernalo\\.nuget\\packages\\mudblazor\\8.7.0\\mudblazor.8.7.0.nupkg.sha512",
     "C:\\Users\\cabernalo\\.nuget\\packages\\qrcoder\\1.6.0\\qrcoder.1.6.0.nupkg.sha512",
     "C:\\Users\\cabernalo\\.nuget\\packages\\questpdf\\2025.5.0\\questpdf.2025.5.0.nupkg.sha512",
     "C:\\Users\\cabernalo\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",

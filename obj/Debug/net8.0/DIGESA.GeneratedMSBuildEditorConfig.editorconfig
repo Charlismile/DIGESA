@@ -179,12 +179,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Admin/AprobacionSolicitudes.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBcHJvYmFjaW9uU29saWNpdHVkZXMucmF6b3I=
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Layout/WhiteDash.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcV2hpdGVEYXNoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Admin/FormularioMinsa.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxGb3JtdWxhcmlvTWluc2EucmF6b3I=
+[C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Admin/AprobacionSolicitudes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBcHJvYmFjaW9uU29saWNpdHVkZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/RiderProjects/DIGESA/Components/Pages/Auth.razor]

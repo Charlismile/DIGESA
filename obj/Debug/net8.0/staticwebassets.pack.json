@@ -5,16 +5,24 @@
       "PackagePath": "staticwebassets\\DIGESA.vl6rg70dns.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Bannerinsa.png",
+      "PackagePath": "staticwebassets\\Bannerinsa.png"
+    },
+    {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Imagen1.png",
       "PackagePath": "staticwebassets\\Imagen1.png"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\Screenshot 2025-05-21 145940.png",
-      "PackagePath": "staticwebassets\\Screenshot 2025-05-21 145940.png"
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\SQLQuery3.sql",
+      "PackagePath": "staticwebassets\\SQLQuery3.sql"
     },
     {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\banner.png",
+      "PackagePath": "staticwebassets\\banner.png"
     },
     {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
@@ -29,12 +37,20 @@
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\huana.png",
+      "PackagePath": "staticwebassets\\huana.png"
+    },
+    {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\logo-gob.png",
       "PackagePath": "staticwebassets\\logo-gob.png"
     },
     {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\logo-minsa.png",
       "PackagePath": "staticwebassets\\logo-minsa.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\wwwroot\\mari.png",
+      "PackagePath": "staticwebassets\\mari.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

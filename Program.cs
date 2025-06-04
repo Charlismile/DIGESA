@@ -19,13 +19,12 @@ builder.Services.AddRazorComponents()
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<PdfCarnetService>();
 builder.Services.AddScoped<CorreoService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
-
+builder.Services.AddMudServices();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;

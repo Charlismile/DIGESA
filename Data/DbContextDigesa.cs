@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DIGESA.Models.Entities.DIGESA;
 using Microsoft.EntityFrameworkCore;
 
-namespace DIGESA.Models.Entities.DIGESA;
+namespace DIGESA.Data;
 
 public partial class DbContextDigesa : DbContext
 {
@@ -38,6 +37,8 @@ public partial class DbContextDigesa : DbContext
     public virtual DbSet<SolicitudDiagnostico> SolicitudDiagnosticos { get; set; }
 
     public virtual DbSet<Tratamiento> Tratamientos { get; set; }
+
+    public virtual DbSet<TratamientoCannabinoide> TratamientoCannabinoides { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
@@ -238,13 +239,15 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasIndex(e => e.PacienteId, "IX_PacienteDiagnostico_PacienteId");
 
-            entity.HasIndex(e => new { e.PacienteId, e.DiagnosticoId }, "UQ_PacienteDiagnostico_Paciente_Diagnostico")
-                .IsUnique();
+            entity.HasIndex(e => new { e.PacienteId, e.DiagnosticoId }, "UQ_PacienteDiagnostico_Paciente_Diagnostico").IsUnique();
 
+            entity.Property(e => e.DiagnosticoLibre).HasMaxLength(150);
             entity.Property(e => e.Observaciones).HasMaxLength(300);
+            entity.Property(e => e.TratamientoRecibido).HasMaxLength(300);
 
             entity.HasOne(d => d.Diagnostico).WithMany(p => p.PacienteDiagnosticos)
                 .HasForeignKey(d => d.DiagnosticoId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PacienteDiagnostico_Diagnostico");
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.PacienteDiagnosticos)
@@ -300,6 +303,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.FechaSolicitud)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.NombreFirmante).HasMaxLength(150);
 
             entity.HasOne(d => d.Acompanante).WithMany(p => p.Solicitudes)
                 .HasForeignKey(d => d.AcompananteId)
@@ -346,6 +350,7 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasIndex(e => e.SolicitudId, "IX_Tratamiento_SolicitudId");
 
+            entity.Property(e => e.CannabinoidesSeleccionados).HasMaxLength(300);
             entity.Property(e => e.CantidadPrescrita).HasMaxLength(100);
             entity.Property(e => e.ConcentracionCbd)
                 .HasColumnType("decimal(10, 2)")
@@ -355,6 +360,7 @@ public partial class DbContextDigesa : DbContext
                 .HasColumnName("ConcentracionTHC");
             entity.Property(e => e.Dosis).HasMaxLength(100);
             entity.Property(e => e.FormaFarmaceutica).HasMaxLength(100);
+            entity.Property(e => e.FormaFarmaceuticaExtra).HasMaxLength(100);
             entity.Property(e => e.FrecuenciaAdministracion).HasMaxLength(100);
             entity.Property(e => e.NombreComercialProducto).HasMaxLength(150);
             entity.Property(e => e.NombreGenericoProducto).HasMaxLength(150);
@@ -370,6 +376,20 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.Solicitud).WithMany(p => p.Tratamientos)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_Tratamiento_Solicitud");
+        });
+
+        modelBuilder.Entity<TratamientoCannabinoide>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC0795FBC710");
+
+            entity.ToTable("TratamientoCannabinoide");
+
+            entity.Property(e => e.Observacion).HasMaxLength(100);
+            entity.Property(e => e.Tipo).HasMaxLength(50);
+
+            entity.HasOne(d => d.Tratamiento).WithMany(p => p.TratamientoCannabinoides)
+                .HasForeignKey(d => d.TratamientoId)
+                .HasConstraintName("FK_TratamientoCannabinoide_Tratamiento");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -392,7 +412,9 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Rol).HasMaxLength(50);
             entity.Property(e => e.Salt).HasMaxLength(16);
         });
-    }
-}
 
-  
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

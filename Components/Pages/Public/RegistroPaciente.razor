@@ -1,16 +1,16 @@
 ﻿@page "/registropaciente"
+@using DIGESA.Components.Layout
+@using DIGESA.Data
 @using DIGESA.Models.Entities.DIGESA
 @using Microsoft.EntityFrameworkCore
-@using MudBlazor
-@inject DbContextDigesa _db
+@inject DbContextDigesa Db
 @inject IDialogService DialogService
 @inject NavigationManager Nav
 @inject PdfCarnetService PdfService
 @inject CorreoService CorreoService
-
-<MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
-    <MudText Typo="Typo.h5">Formulario de Registro de Pacientes</MudText>
-
+@layout WhiteDash 
+<MudContainer Class="mt-16" MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Typo="Typo.h5">FORMULARIO DE REGISTRO DE PACIENTES USUARIOS DE CANNABIS MEDICINAL</MudText>
     <MudDivider Class="my-2" />
 
     <MudDatePicker @bind-Date="fechaSolicitud" Label="Fecha de Solicitud" Required="true" />
@@ -31,14 +31,14 @@
         <MudRadio T="string" Option="Masculino" Label="Masculino" />
     </MudRadioGroup>
     <MudTextField @bind-Value="paciente.DireccionResidencia" Label="Dirección de Residencia" Lines="3" />
-    <MudTextField @bind-Value="paciente.TelefonoResidencial" Label="Teléfono residencial" />
-    <MudTextField @bind-Value="paciente.TelefonoPersonal" Label="Teléfono personal" />
+    <MudTextField @bind-Value="paciente.TelefonoResidencial" Label="Teléfono" />
+    <MudTextField @bind-Value="paciente.TelefonoPersonal" Label="Celular" />
     <MudTextField @bind-Value="paciente.TelefonoLaboral" Label="Teléfono laboral" />
     <MudTextField @bind-Value="paciente.CorreoElectronico" Label="Correo electrónico" />
-    <MudTextField @bind-Value="paciente.InstalacionSalud" Label="Instalación de salud" />
+    <MudTextField @bind-Value="paciente.InstalacionSalud" Label="Instalación de salud donde suele atenderse" />
     <MudTextField @bind-Value="paciente.RegionSalud" Label="Región de salud" />
 
-    <MudCheckBox T="bool" @bind-Checked="requiereAcompanante" Label="¿Requiere acompañante autorizado?" />
+    <MudCheckBox T="bool" @bind-Value="requiereAcompanante" Label="¿Requiere acompañante autorizado?" />
     @if (requiereAcompanante == true)
     {
         <MudText Typo="Typo.h6" Class="mt-4">Datos del Acompañante</MudText>
@@ -61,16 +61,16 @@
     }
 
     <MudText Typo="Typo.h6" Class="mt-4">Médico Tratante</MudText>
-    <MudTextField @bind-Value="medico.NombreCompleto" Label="Nombre completo" />
-    <MudSelect T="string" @bind-Value="medico.Disciplina" Label="Disciplina">
+    <MudTextField @bind-Value="medico.NombreCompleto" Label="Médico tratante responsable de la prescripción de Cannabis medicinal o derivados" />
+    <MudSelect T="string" @bind-Value="medico.Disciplina" Label="Disciplina del médico" Required="true">
         @foreach (var disciplina in new[] { "Médico General", "Odontólogo", "Especialista" })
         {
             <MudSelectItem Value="@disciplina">@disciplina</MudSelectItem>
         }
     </MudSelect>
-    <MudTextField @bind-Value="medico.NumeroRegistroIdoneidad" Label="Registro de Idoneidad" />
-    <MudTextField @bind-Value="medico.InstalacionSalud" Label="Instalación de salud" />
-    <MudTextField @bind-Value="medico.NumeroTelefono" Label="Teléfono del médico" />
+    <MudTextField @bind-Value="medico.NumeroRegistroIdoneidad" Label="Numero de Registro de Idoneidad" />
+    <MudTextField @bind-Value="medico.InstalacionSalud" Label="Instalación de salud donde labora el médico" />
+    <MudTextField @bind-Value="medico.NumeroTelefono" Label="Número de teléfono donde localizar al médico" />
 
     <MudText Typo="Typo.h6" Class="mt-4">Diagnóstico y Tratamiento</MudText>
     <MudSelect T="int" @bind-Value="diagnosticoSeleccionado" Label="Diagnóstico">
@@ -79,44 +79,98 @@
             <MudSelectItem Value="@d.Id">@d.Nombre</MudSelectItem>
         }
     </MudSelect>
-    <MudTextField @bind-Value="tratamiento.NombreGenericoProducto" Label="Nombre genérico del producto" />
-    <MudTextField @bind-Value="tratamiento.ConcentracionCbd" Label="Concentración CBD" />
-    <MudTextField @bind-Value="tratamiento.ConcentracionThc" Label="Concentración THC" />
-    <MudTextField @bind-Value="tratamiento.ViaAdministracion" Label="Vía de administración" />
+    @* <MudChipSet @bind-SelectedChips="tratamiento.NombreGenericoProducto" MultiSelection="true" Class="mb-2"/> *@
+    @*     <MudChip T="string" Value="CBD (Cannabidiol)" /> *@
+    @*     <MudChip T="string" Value="THC (delta-9-tetrahidrocannabinol)" /> *@
+    @*     <MudChip T="string" Value="Otro" /> *@
+    <MudTextField @bind-Value="tratamiento.OtrosCannabinoides" Label="Otro cannabinoide (especifique)" />
+    <MudSelect T="string" Label="Forma farmacéutica" @bind-Value="tratamiento.FormaFarmaceutica" MultiSelection="true">
+        @foreach (var forma in formasFarmaceuticas)
+        {
+            <MudSelectItem Value="@forma">@forma</MudSelectItem>
+        }
+    </MudSelect>
+    <MudGrid>
+        <MudItem xs="6">
+            <MudNumericField T="decimal?" @bind-Value="tratamiento.ConcentracionCbd" Label="CBD" />
+            <MudSelect T="string" @bind-Value="tratamiento.UnidadCbd" Label="Unidad CBD">
+                @foreach (var unidad in unidades)
+                {
+                    <MudSelectItem Value="@unidad">@unidad</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="6">
+            <MudNumericField T="decimal?" @bind-Value="tratamiento.ConcentracionThc" Label="THC" />
+            <MudSelect T="string" @bind-Value="tratamiento.UnidadThc" Label="Unidad THC">
+                @foreach (var unidad in unidades)
+                {
+                    <MudSelectItem Value="@unidad">@unidad</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+    <MudSelect T="string" @bind-Value="tratamiento.ViaAdministracion" Label="Vía de administración">
+        @foreach (var via in viasAdministracion)
+        {
+            <MudSelectItem Value="@via">@via</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField @bind-Value="tratamiento.Dosis" Label="Dosis (cantidad o indicación del médico)" Lines="2" />
     <MudTextField @bind-Value="tratamiento.FrecuenciaAdministracion" Label="Frecuencia" />
+    <MudNumericField T="int" @bind-Value="tratamiento.DuracionTratamientoDias" Label="Duración (en días)" />
+    <MudText Typo="Typo.h6" Class="mt-4">Otras enfermedades que padece el paciente (Comorbilidades)</MudText>
+    <MudTable Items="comorbilidades" Hover="true">
+        <HeaderContent>
+            <MudTh>Diagnóstico</MudTh>
+            <MudTh>Tratamiento recibido</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd><MudTextField @bind-Value="context.Diagnostico" /></MudTd>
+            @* <MudTd><MudTextField @bind-Value="context.tratamiento" /></MudTd> *@
+        </RowTemplate>
+    </MudTable>
+    <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Secondary" Variant="Variant.Outlined" OnClick="@AgregarComorbilidad">Agregar comorbilidad</MudButton>
 
     <MudText Typo="Typo.h6" Class="mt-4">Documentos Adjuntos</MudText>
     <InputFile OnChange="OnFileSelected" />
-    <MudGrid Class="mt-6">
+    <div class="d-flex justify-content-between mt-4">
         <MudItem xs="6">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="EnviarFormulario" >
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="EnviarFormulario">
                 Enviar Solicitud
             </MudButton>
         </MudItem>
         <MudItem xs="6" Class="d-flex justify-end">
             <BotonVolver Ruta="/" Texto="Volver al inicio" />
         </MudItem>
-    </MudGrid>
+    </div>
 </MudContainer>
-
 
 @code {
     Paciente paciente = new();
     Acompanante acompanante = new();
     Medico medico = new();
     Tratamiento tratamiento = new();
-
     DateTime? fechaSolicitud = DateTime.Today;
     DateTime? fechaNacimiento;
-
     bool requiereAcompanante = false;
     List<Diagnostico> diagnosticos = new();
     int diagnosticoSeleccionado;
     IBrowserFile documentoAdjunto;
+    List<PacienteDiagnostico> comorbilidades = new();
+
+    List<string> formasFarmaceuticas = new() { "Aceites", "Cápsulas de gel", "Comprimido", "Crema", "Extractos", "Flor procesada", "Inhaladores orales", "Parche transdérmico", "Píldoras", "Ungüento", "Supositorio", "Tinturas/gotas orales", "Otro" };
+    List<string> unidades = new() { "g", "mg", "ml", "mg/ml", "%", "Otra" };
+    List<string> viasAdministracion = new() { "Oral (deglutida)", "Sublingual", "Inhalada", "Rectal", "Tópica (piel, oftálmica, ótica)", "Subcutánea", "Intravenosa", "Intramuscular", "Intradérmica", "Otro" };
 
     protected override async Task OnInitializedAsync()
     {
-        diagnosticos = await _db.Diagnosticos.OrderBy(d => d.Nombre).ToListAsync();
+        diagnosticos = await Db.Diagnosticos.OrderBy(d => d.Nombre).ToListAsync();
+    }
+
+    private void AgregarComorbilidad()
+    {
+        comorbilidades.Add(new PacienteDiagnostico());
     }
 
     private async Task OnFileSelected(InputFileChangeEventArgs e)
@@ -128,14 +182,14 @@
     {
         if (requiereAcompanante)
         {
-            _db.Acompanantes.Add(acompanante);
+            Db.Acompanantes.Add(acompanante);
             paciente.Acompanantes = new List<Acompanante> { acompanante };
         }
 
         paciente.FechaNacimiento = (DateTime)fechaNacimiento!;
-        _db.Pacientes.Add(paciente);
-        _db.Medicos.Add(medico);
-        await _db.SaveChangesAsync();
+        Db.Pacientes.Add(paciente);
+        Db.Medicos.Add(medico);
+        await Db.SaveChangesAsync();
 
         var solicitud = new Solicitud
         {
@@ -144,19 +198,24 @@
             FechaSolicitud = fechaSolicitud ?? DateTime.Now,
             Estado = "Aprobada"
         };
-        _db.Solicitudes.Add(solicitud);
-        await _db.SaveChangesAsync();
+        Db.Solicitudes.Add(solicitud);
+        await Db.SaveChangesAsync();
 
-        var solicitudDiag = new SolicitudDiagnostico
+        Db.SolicitudDiagnosticos.Add(new SolicitudDiagnostico
         {
             SolicitudId = solicitud.Id,
             DiagnosticoId = diagnosticoSeleccionado,
             EsPrimario = true
-        };
-        _db.SolicitudDiagnosticos.Add(solicitudDiag);
+        });
 
         tratamiento.SolicitudId = solicitud.Id;
-        _db.Tratamientos.Add(tratamiento);
+        Db.Tratamientos.Add(tratamiento);
+
+        foreach (var com in comorbilidades)
+        {
+            com.PacienteId = paciente.Id;
+            Db.PacienteDiagnosticos.Add(com);
+        }
 
         if (documentoAdjunto != null)
         {
@@ -164,23 +223,18 @@
             await using var fs = new FileStream(filePath, FileMode.Create);
             await documentoAdjunto.OpenReadStream().CopyToAsync(fs);
 
-            var doc = new DocumentoAdjunto
+            Db.DocumentoAdjuntos.Add(new DocumentoAdjunto
             {
                 SolicitudId = solicitud.Id,
                 NombreArchivo = documentoAdjunto.Name,
                 RutaAlmacenamiento = filePath,
                 TipoContenidoMime = documentoAdjunto.ContentType
-            };
-            _db.DocumentoAdjuntos.Add(doc);
+            });
         }
 
-        // Guardar cambios
-        await _db.SaveChangesAsync();
-
-        // Crear certificado y PDF
+        await Db.SaveChangesAsync();
         var certificado = await PdfService.GenerarCarnetPacienteAsync(solicitud.Id);
         await CorreoService.EnviarCarnetAsync(paciente.CorreoElectronico, certificado);
-
         await DialogService.ShowMessageBox("Éxito", "Solicitud enviada correctamente y carnet generado.");
         Nav.NavigateTo("/");
     }

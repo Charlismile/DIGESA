@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace DIGESA.Models.Entities.DIGESA;
 
-public class Paciente
+public partial class Paciente
 {
     public int Id { get; set; }
 
     public int? UsuarioId { get; set; }
 
-    [Required(ErrorMessage = "El nombre completo es obligatorio.")]
-    public string NombreCompleto { get; set; } = string.Empty;
+    public string NombreCompleto { get; set; } = null!;
 
-    [Required(ErrorMessage = "El tipo de documento es obligatorio.")]
-    public string TipoDocumento { get; set; } = string.Empty;
+    public string TipoDocumento { get; set; } = null!;
 
-    [Required(ErrorMessage = "El número de documento es obligatorio.")]
-    public string NumeroDocumento { get; set; } = string.Empty;
+    public string NumeroDocumento { get; set; } = null!;
 
-    [Required(ErrorMessage = "La nacionalidad es obligatoria.")]
-    public string Nacionalidad { get; set; } = string.Empty;
+    public string Nacionalidad { get; set; } = null!;
 
-    [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
     public DateTime FechaNacimiento { get; set; }
 
-    [Required(ErrorMessage = "El sexo es obligatorio.")]
-    public string Sexo { get; set; } = string.Empty;
+    public string Sexo { get; set; } = null!;
 
-    [Required(ErrorMessage = "La dirección de residencia es obligatoria.")]
-    public string DireccionResidencia { get; set; } = string.Empty;
+    public string DireccionResidencia { get; set; } = null!;
 
     public string? TelefonoResidencial { get; set; }
 
@@ -37,14 +29,11 @@ public class Paciente
 
     public string? TelefonoLaboral { get; set; }
 
-    [EmailAddress(ErrorMessage = "El correo electrónico no tiene un formato válido.")]
     public string? CorreoElectronico { get; set; }
 
-    [Required(ErrorMessage = "La instalación de salud es obligatoria.")]
-    public string InstalacionSalud { get; set; } = string.Empty;
+    public string InstalacionSalud { get; set; } = null!;
 
-    [Required(ErrorMessage = "La región de salud es obligatoria.")]
-    public string RegionSalud { get; set; } = string.Empty;
+    public string RegionSalud { get; set; } = null!;
 
     public bool RequiereAcompanante { get; set; }
 

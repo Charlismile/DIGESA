@@ -17,11 +17,11 @@ public partial class AuditoriaAccion
 
     public string? DetallesAdicionales { get; set; }
 
-    public DateTime FechaAccion { get; set; }
+    public DateTime? FechaAccion { get; set; }
 
     public string? Ipaddress { get; set; }
 
     public string? UserAgent { get; set; }
 
-    public virtual Usuario Usuario { get; set; }
+    public virtual Usuario? Usuario { get; set; }
 }

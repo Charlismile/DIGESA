@@ -2,32 +2,85 @@
 @using MudBlazor
 
 <PageTitle>DIGESA</PageTitle>
+<!---carrusel--->
+@*Keyframes by https://animate.style/*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style type="text/css">
 
+    .bounceIn {
+        opacity: 0;
+        animation-delay: 0.5s;
+        animation-duration: 0.5s;
+        animation-name: bounceIn;
+        animation-fill-mode: forwards;
+    }
+
+    .bounceOut {
+        animation-duration: 0.5s;
+        animation-name: bounceOut;
+        animation-fill-mode: forwards;
+    }
+
+    .backInDown {
+        opacity: 0;
+        animation-delay: 0.5s;
+        animation-duration: 0.5s;
+        animation-name: backInDown;
+        animation-fill-mode: forwards;
+    }
+
+    .backOutDown {
+        animation-duration: 0.5s;
+        animation-name: backOutDown;
+        animation-fill-mode: forwards;
+    }
+
+    .rotateIn {
+        opacity: 0;
+        animation-delay: 0.5s;
+        animation-duration: 0.5s;
+        animation-name: rotateIn;
+        animation-fill-mode: forwards;
+    }
+
+    .rotateOut {
+        animation-duration: 0.5s;
+        animation-name: rotateOut;
+        animation-fill-mode: forwards;
+    }
+</style>
+
+<MudCarousel Class="mud-width-full" Style="height:200px" TData="object" AutoCycle="true">
+    <MudCarouselItem Color="@Color.Primary" Transition="Transition.Slide">
+        <div class="d-flex flex-column flex-column justify-center" style="height:100%">
+            <MudImage Src="/huana.png"/>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Color="@Color.Secondary" Transition="Transition.Fade">
+        <div class="d-flex flex-column flex-column justify-center" style="height:100%">
+            <MudImage Src="/Bannerinsa.png"/>
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
+<!---contenido de la pagina principal-->
 <MudContainer Class="mt-16">
-    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Portal DIGESA</MudText>
-    <MudText Align="Align.Center">Plataforma de Gestión de Carnet para Pacientes de Cannabis</MudText>
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Plataforma de Certificacion para Pacientes de Cannabis</MudText>
     <MudGrid Class="mt-8">
         <MudItem xs="12" sm="6" md="6">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Beneficiario</MudText>
+                        <MudText Typo="Typo.h4" Align="Align.Center">Beneficiario</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
                     <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h3">Paciente</MudText>
+                        <MudText Typo="Typo.h5">Paciente</MudText>
                         <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Tutor</MudText>
                     </div>
                     <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
                         <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            Unlimited something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            10 something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            No something
+                            Formulario para pacientes que deseen acceder a la certificacion de uso de cannabis terapeutico.
                         </MudListItem>
                     </MudList>
                 </MudCardContent>
@@ -40,28 +93,22 @@
             <MudCard Elevation="25" Class="rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudImage Fluid="true" Src="logo-minsa.png" Alt="logo" Class="d-flex align-content-start rounded-lg" Width="50"/>
+                    <MudText Typo="Typo.h4" Align="Align.Center">Usuario Minsa</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
                     <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h3">Admin.</MudText>
+                        <MudText Typo="Typo.h5">Admin.</MudText>
                         <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/colab.</MudText>
                     </div>
                     <MudList T="string" Class="mx-auto mt-4" Style="width:300px;">
                         <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            Unlimited something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            10 something
-                        </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
-                            No something
+                            Acceso para Administrativos y colaboradores pertenecientes a la institucion.
                         </MudListItem>
                     </MudList>
                 </MudCardContent>
                 <MudCardActions Class="d-flex justify-center">
-                    <MudButton Variant="Variant.Filled" Href="/FormularioMinsa" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Ingesar</MudButton>
+                    <MudButton Variant="Variant.Filled" Href="/Account/Login" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Ingesar</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudItem>
