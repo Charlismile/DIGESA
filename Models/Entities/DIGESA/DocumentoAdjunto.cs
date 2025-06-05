@@ -23,7 +23,7 @@ public partial class DocumentoAdjunto
 
     public string? Descripcion { get; set; }
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud Solicitudes { get; set; } = null!;
 
     public virtual Usuario? SubidoPorUsuario { get; set; }
 }

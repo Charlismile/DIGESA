@@ -23,5 +23,5 @@ public partial class AuditoriaAccion
 
     public string? UserAgent { get; set; }
 
-    public virtual Usuario? Usuario { get; set; }
+    public virtual Usuario? Usuarios { get; set; }
 }

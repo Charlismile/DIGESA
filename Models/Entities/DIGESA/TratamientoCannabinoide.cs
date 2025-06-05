@@ -13,5 +13,5 @@ public partial class TratamientoCannabinoide
 
     public string? Observacion { get; set; }
 
-    public virtual Tratamiento Tratamiento { get; set; } = null!;
+    public virtual Tratamiento Tratamientos { get; set; } = null!;
 }

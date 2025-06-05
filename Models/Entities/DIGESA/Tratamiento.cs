@@ -37,13 +37,13 @@ public partial class Tratamiento
 
     public string? InstruccionesAdicionales { get; set; }
 
-    public DateOnly? FechaInicioTratamientoPrevista { get; set; }
+    public DateTime? FechaInicioTratamientoPrevista { get; set; }
 
     public string? CannabinoidesSeleccionados { get; set; }
 
     public string? FormaFarmaceuticaExtra { get; set; }
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud Solicitudes { get; set; } = null!;
 
     public virtual ICollection<TratamientoCannabinoide> TratamientoCannabinoides { get; set; } = new List<TratamientoCannabinoide>();
 }

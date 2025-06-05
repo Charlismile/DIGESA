@@ -17,7 +17,7 @@ public class CorreoService
         _db = db;
     }
 
-    public async Task EnviarCarnetAsync(string correoPaciente, byte[] pdfBytes)
+    public static async Task EnviarCarnetAsync(string correoPaciente, byte[] pdfBytes)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress("DIGESA Panamá", _config["Correo:Remitente"]));

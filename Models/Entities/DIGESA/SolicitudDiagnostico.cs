@@ -13,7 +13,7 @@ public partial class SolicitudDiagnostico
 
     public string? Observaciones { get; set; }
 
-    public virtual Diagnostico Diagnostico { get; set; } = null!;
+    public virtual Diagnostico Diagnosticos { get; set; } = null!;
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud Solicitudes { get; set; } = null!;
 }

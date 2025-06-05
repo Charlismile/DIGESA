@@ -82,7 +82,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreTablaAfectada).HasMaxLength(128);
             entity.Property(e => e.UserAgent).HasMaxLength(255);
 
-            entity.HasOne(d => d.Usuario).WithMany(p => p.AuditoriaAcciones)
+            entity.HasOne(d => d.Usuarios).WithMany(p => p.AuditoriaAcciones)
                 .HasForeignKey(d => d.UsuarioId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_AuditoriaAccion_Usuario");
@@ -117,7 +117,7 @@ public partial class DbContextDigesa : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("RutaArchivoQR");
 
-            entity.HasOne(d => d.Solicitud).WithOne(p => p.Certificacion)
+            entity.HasOne(d => d.Solicitudes).WithOne(p => p.Certificacion)
                 .HasForeignKey<Certificacion>(d => d.SolicitudId)
                 .HasConstraintName("FK_Certificacion_Solicitud");
         });
@@ -158,7 +158,7 @@ public partial class DbContextDigesa : DbContext
                 .HasColumnName("TipoContenidoMIME");
             entity.Property(e => e.TipoDocumento).HasMaxLength(100);
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.DocumentoAdjuntos)
+            entity.HasOne(d => d.Solicitudes).WithMany(p => p.DocumentoAdjuntos)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_DocumentoAdjunto_Solicitud");
 
@@ -190,7 +190,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NumeroRegistroIdoneidad).HasMaxLength(50);
             entity.Property(e => e.NumeroTelefono).HasMaxLength(20);
 
-            entity.HasOne(d => d.Usuario).WithOne(p => p.Medico)
+            entity.HasOne(d => d.Usuarios).WithOne(p => p.Medico)
                 .HasForeignKey<Medico>(d => d.UsuarioId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Medico_Usuario");
@@ -223,7 +223,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.TipoDiscapacidad).HasMaxLength(200);
             entity.Property(e => e.TipoDocumento).HasMaxLength(20);
 
-            entity.HasOne(d => d.Usuario).WithMany(p => p.Pacientes)
+            entity.HasOne(d => d.Usuarios).WithMany(p => p.Pacientes)
                 .HasForeignKey(d => d.UsuarioId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Paciente_Usuario");
@@ -245,12 +245,12 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Observaciones).HasMaxLength(300);
             entity.Property(e => e.TratamientoRecibido).HasMaxLength(300);
 
-            entity.HasOne(d => d.Diagnostico).WithMany(p => p.PacienteDiagnosticos)
+            entity.HasOne(d => d.Diagnosticos).WithMany(p => p.PacienteDiagnosticos)
                 .HasForeignKey(d => d.DiagnosticoId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PacienteDiagnostico_Diagnostico");
 
-            entity.HasOne(d => d.Paciente).WithMany(p => p.PacienteDiagnosticos)
+            entity.HasOne(d => d.Pacientes).WithMany(p => p.PacienteDiagnosticos)
                 .HasForeignKey(d => d.PacienteId)
                 .HasConstraintName("FK_PacienteDiagnostico_Paciente");
         });
@@ -276,7 +276,7 @@ public partial class DbContextDigesa : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Revision_Revisor");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Revisiones)
+            entity.HasOne(d => d.Solicitudes).WithMany(p => p.Revisiones)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_Revision_Solicitud");
         });
@@ -333,11 +333,11 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.EsPrimario).HasDefaultValue(false);
             entity.Property(e => e.Observaciones).HasMaxLength(300);
 
-            entity.HasOne(d => d.Diagnostico).WithMany(p => p.SolicitudDiagnosticos)
+            entity.HasOne(d => d.Diagnosticos).WithMany(p => p.SolicitudDiagnosticos)
                 .HasForeignKey(d => d.DiagnosticoId)
                 .HasConstraintName("FK_SolicitudDiagnostico_Diagnostico");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.SolicitudDiagnosticos)
+            entity.HasOne(d => d.Solicitudes).WithMany(p => p.SolicitudDiagnosticos)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_SolicitudDiagnostico_Solicitud");
         });
@@ -373,7 +373,7 @@ public partial class DbContextDigesa : DbContext
                 .HasColumnName("UnidadTHC");
             entity.Property(e => e.ViaAdministracion).HasMaxLength(100);
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Tratamientos)
+            entity.HasOne(d => d.Solicitudes).WithMany(p => p.Tratamientos)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK_Tratamiento_Solicitud");
         });
@@ -387,7 +387,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Observacion).HasMaxLength(100);
             entity.Property(e => e.Tipo).HasMaxLength(50);
 
-            entity.HasOne(d => d.Tratamiento).WithMany(p => p.TratamientoCannabinoides)
+            entity.HasOne(d => d.Tratamientos).WithMany(p => p.TratamientoCannabinoides)
                 .HasForeignKey(d => d.TratamientoId)
                 .HasConstraintName("FK_TratamientoCannabinoide_Tratamiento");
         });

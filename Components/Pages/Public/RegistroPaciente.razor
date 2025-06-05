@@ -2,19 +2,17 @@
 @using DIGESA.Components.Layout
 @using DIGESA.Data
 @using DIGESA.Models.Entities.DIGESA
-@using Microsoft.EntityFrameworkCore
-@inject DbContextDigesa Db
-@inject IDialogService DialogService
-@inject NavigationManager Nav
-@inject PdfCarnetService PdfService
-@inject CorreoService CorreoService
-@layout WhiteDash 
+@using DIGESA.Services.Interfaces
+@using MudBlazor
+
+
 <MudContainer Class="mt-16" MaxWidth="MaxWidth.ExtraLarge">
     <MudText Typo="Typo.h5">FORMULARIO DE REGISTRO DE PACIENTES USUARIOS DE CANNABIS MEDICINAL</MudText>
     <MudDivider Class="my-2" />
 
-    <MudDatePicker @bind-Date="fechaSolicitud" Label="Fecha de Solicitud" Required="true" />
+    <MudDatePicker T="DateTime?" @bind-Date="fechaSolicitud" Label="Fecha de Solicitud" Required="true" />
 
+    <!-- Datos del Paciente -->
     <MudText Typo="Typo.h6" Class="mt-4">Datos del Paciente</MudText>
     <MudTextField @bind-Value="paciente.NombreCompleto" Label="Nombre completo" Required="true" />
     <MudSelect T="string" @bind-Value="paciente.TipoDocumento" Label="Tipo Documento" Required="true">
@@ -25,7 +23,7 @@
     </MudSelect>
     <MudTextField @bind-Value="paciente.NumeroDocumento" Label="Número Documento" Required="true" />
     <MudTextField @bind-Value="paciente.Nacionalidad" Label="Nacionalidad" />
-    <MudDatePicker @bind-Date="fechaNacimiento" Label="Fecha de Nacimiento" />
+    <MudDatePicker T="DateTime?" @bind-Date="fechaNacimiento" Label="Fecha de Nacimiento" />
     <MudRadioGroup T="string" @bind-SelectedOption="paciente.Sexo">
         <MudRadio T="string" Option="Femenino" Label="Femenino" />
         <MudRadio T="string" Option="Masculino" Label="Masculino" />
@@ -39,7 +37,7 @@
     <MudTextField @bind-Value="paciente.RegionSalud" Label="Región de salud" />
 
     <MudCheckBox T="bool" @bind-Value="requiereAcompanante" Label="¿Requiere acompañante autorizado?" />
-    @if (requiereAcompanante == true)
+    @if (requiereAcompanante)
     {
         <MudText Typo="Typo.h6" Class="mt-4">Datos del Acompañante</MudText>
         <MudTextField @bind-Value="acompanante.NombreCompleto" Label="Nombre completo" />
@@ -60,7 +58,8 @@
         <MudTextField @bind-Value="paciente.TipoDiscapacidad" Label="Discapacidad (si aplica)" />
     }
 
-    <MudText Typo="Typo.h6" Class="mt-4">Médico Tratante</MudText>
+    <!-- Médico -->
+    <MudText Typo="Typo.h6" Class="mt-4">SOBRE EL MÉDICO QUE PRESCRIBE</MudText>
     <MudTextField @bind-Value="medico.NombreCompleto" Label="Médico tratante responsable de la prescripción de Cannabis medicinal o derivados" />
     <MudSelect T="string" @bind-Value="medico.Disciplina" Label="Disciplina del médico" Required="true">
         @foreach (var disciplina in new[] { "Médico General", "Odontólogo", "Especialista" })
@@ -72,28 +71,73 @@
     <MudTextField @bind-Value="medico.InstalacionSalud" Label="Instalación de salud donde labora el médico" />
     <MudTextField @bind-Value="medico.NumeroTelefono" Label="Número de teléfono donde localizar al médico" />
 
-    <MudText Typo="Typo.h6" Class="mt-4">Diagnóstico y Tratamiento</MudText>
-    <MudSelect T="int" @bind-Value="diagnosticoSeleccionado" Label="Diagnóstico">
-        @foreach (var d in diagnosticos)
+    <!-- Diagnóstico y Tratamiento -->
+    <MudPaper Class="p-4 mt-6" Elevation="2">
+        <MudText Typo="Typo.h6" Class="mt-4">
+            SOBRE EL PACIENTE Y USO DEL CANNABIS MEDICINAL O DERIVADOS
+        </MudText>
+
+        @* 1) Carga diagnósticos mediante FormService *@
+        <MudSelect T="int"
+                   Label="Diagnósticos"
+                   @bind-SelectedValues="DiagnosticosSeleccionados"
+                   MultiSelection="true"
+                   Dense="true"
+                   Required="true">
+            @foreach (var diag in ListaDiagnosticos)
+            {
+                <MudSelectItem Value="@diag.Id">@diag.Nombre</MudSelectItem>
+            }
+        </MudSelect>
+
+        @* 2) Por cada diagnóstico seleccionado, mostramos campos extra *@
+        @if (DiagnosticosSeleccionados.Any())
         {
-            <MudSelectItem Value="@d.Id">@d.Nombre</MudSelectItem>
+            <MudDivider Class="my-3" />
+            @foreach (var id in DiagnosticosSeleccionados)
+            {
+                <MudPaper Class="mb-4 p-3" Elevation="1">
+                    <MudText Typo="Typo.subtitle1" Class="mb-1">
+                        @ListaDiagnosticos.First(d => d.Id == id).Nombre
+                    </MudText>
+
+                    <MudTextField T="string"
+                                  Label="Observaciones"
+                                  @bind-Value="Observacion[id]"
+                                  Lines="2" />
+
+                    <MudTextField T="string"
+                                  Label="Tratamiento Recibido"
+                                  @bind-Value="TratamientoPorDiagnostico[id]"
+                                  Lines="2" />
+
+                    <MudDatePicker Label="Fecha del Diagnóstico"
+                                   @bind-Date="FechasDiagnostico[id]" />
+                </MudPaper>
+            }
         }
-    </MudSelect>
-    @* <MudChipSet @bind-SelectedChips="tratamiento.NombreGenericoProducto" MultiSelection="true" Class="mb-2"/> *@
-    @*     <MudChip T="string" Value="CBD (Cannabidiol)" /> *@
-    @*     <MudChip T="string" Value="THC (delta-9-tetrahidrocannabinol)" /> *@
-    @*     <MudChip T="string" Value="Otro" /> *@
-    <MudTextField @bind-Value="tratamiento.OtrosCannabinoides" Label="Otro cannabinoide (especifique)" />
-    <MudSelect T="string" Label="Forma farmacéutica" @bind-Value="tratamiento.FormaFarmaceutica" MultiSelection="true">
+    </MudPaper>
+
+    <!-- Nombre del producto prescrito -->
+    <MudText Typo="Typo.h6" Class="mt-4">Nombre del producto prescrito</MudText>
+    <MudCheckBox T="bool" @bind-Checked="tieneCbd" Label="CBD (Cannabidiol)" />
+    <MudCheckBox T="bool" @bind-Checked="tieneThc" Label="THC (delta-9-tetrahidrocannabinol)" />
+    <MudTextField Label="Unidad CBD" @bind-Value="Tratamiento.UnidadCbd" />
+    <MudTextField Label="Unidad THC" @bind-Value="Tratamiento.UnidadThc" />
+    <MudTextField Label="Otro (Nombre comercial del producto)" @bind-Value="Tratamiento.NombreComercialProducto" />
+
+    <MudTextField @bind-Value="Tratamiento.OtrosCannabinoides" Label="Otro cannabinoide (especifique)" />
+    <MudSelect T="string" Label="Forma farmacéutica" @bind-Value="Tratamiento.FormaFarmaceutica" MultiSelection="true">
         @foreach (var forma in formasFarmaceuticas)
         {
             <MudSelectItem Value="@forma">@forma</MudSelectItem>
         }
     </MudSelect>
+
     <MudGrid>
         <MudItem xs="6">
-            <MudNumericField T="decimal?" @bind-Value="tratamiento.ConcentracionCbd" Label="CBD" />
-            <MudSelect T="string" @bind-Value="tratamiento.UnidadCbd" Label="Unidad CBD">
+            <MudNumericField T="decimal?" @bind-Value="Tratamiento.ConcentracionCbd" Label="CBD" />
+            <MudSelect T="string" @bind-Value="Tratamiento.UnidadCbd" Label="Unidad CBD">
                 @foreach (var unidad in unidades)
                 {
                     <MudSelectItem Value="@unidad">@unidad</MudSelectItem>
@@ -101,8 +145,8 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="6">
-            <MudNumericField T="decimal?" @bind-Value="tratamiento.ConcentracionThc" Label="THC" />
-            <MudSelect T="string" @bind-Value="tratamiento.UnidadThc" Label="Unidad THC">
+            <MudNumericField T="decimal?" @bind-Value="Tratamiento.ConcentracionThc" Label="THC" />
+            <MudSelect T="string" @bind-Value="Tratamiento.UnidadThc" Label="Unidad THC">
                 @foreach (var unidad in unidades)
                 {
                     <MudSelectItem Value="@unidad">@unidad</MudSelectItem>
@@ -110,30 +154,45 @@
             </MudSelect>
         </MudItem>
     </MudGrid>
-    <MudSelect T="string" @bind-Value="tratamiento.ViaAdministracion" Label="Vía de administración">
+
+    <MudSelect T="string" @bind-Value="Tratamiento.ViaAdministracion" Label="Vía de administración">
         @foreach (var via in viasAdministracion)
         {
             <MudSelectItem Value="@via">@via</MudSelectItem>
         }
     </MudSelect>
-    <MudTextField @bind-Value="tratamiento.Dosis" Label="Dosis (cantidad o indicación del médico)" Lines="2" />
-    <MudTextField @bind-Value="tratamiento.FrecuenciaAdministracion" Label="Frecuencia" />
-    <MudNumericField T="int" @bind-Value="tratamiento.DuracionTratamientoDias" Label="Duración (en días)" />
-    <MudText Typo="Typo.h6" Class="mt-4">Otras enfermedades que padece el paciente (Comorbilidades)</MudText>
+
+    <MudTextField @bind-Value="Tratamiento.Dosis" Label="Dosis (cantidad o indicación del médico)" Lines="2" />
+    <MudTextField @bind-Value="Tratamiento.FrecuenciaAdministracion" Label="Frecuencia" />
+    <MudNumericField T="int" @bind-Value="Tratamiento.DuracionTratamientoDias" Label="Duración (en días)" />
+
+    <!-- Comorbilidades -->
+    <MudText Typo="Typo.h6" Class="mt-4">Comorbilidades</MudText>
+    <MudButton OnClick="AgregarComorbilidad">Agregar Comorbilidad</MudButton>
     <MudTable Items="comorbilidades" Hover="true">
         <HeaderContent>
             <MudTh>Diagnóstico</MudTh>
             <MudTh>Tratamiento recibido</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd><MudTextField @bind-Value="context.Diagnostico" /></MudTd>
-            @* <MudTd><MudTextField @bind-Value="context.tratamiento" /></MudTd> *@
+            <MudTd>
+                <MudSelect T="int" @bind-Value="context.DiagnosticoId" Dense="true">
+                    @foreach (var d in ListaDiagnosticos)
+                    {
+                        <MudSelectItem Value="@d.Id">@d.Nombre</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudTd>
+            <MudTd>
+                <MudTextField @bind-Value="context.TratamientoRecibido" Dense="true" />
+            </MudTd>
         </RowTemplate>
     </MudTable>
-    <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Secondary" Variant="Variant.Outlined" OnClick="@AgregarComorbilidad">Agregar comorbilidad</MudButton>
 
+    <!-- Documentos Adjuntos -->
     <MudText Typo="Typo.h6" Class="mt-4">Documentos Adjuntos</MudText>
     <InputFile OnChange="OnFileSelected" />
+
     <div class="d-flex justify-content-between mt-4">
         <MudItem xs="6">
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="EnviarFormulario">
@@ -147,25 +206,87 @@
 </MudContainer>
 
 @code {
+    // =========================
+    //   INYECCIÓN DE SERVICIOS
+    // =========================
+    [Inject] IFormService FormService { get; set; } = default!;
+    [Inject] DbContextDigesa Db { get; set; } = default!;
+    [Inject] IDialogService DialogService { get; set; } = default!;
+    [Inject] NavigationManager Nav { get; set; } = default!;
+    [Inject] PdfCarnetService PdfService { get; set; } = default!;
+    [Inject] CorreoService CorreoService { get; set; } = default!;
+
+    // =====================================
+    //   ENTIDADES PRINCIPALES PARA GUARDAR
+    // =====================================
     Paciente paciente = new();
     Acompanante acompanante = new();
     Medico medico = new();
-    Tratamiento tratamiento = new();
+    Tratamiento Tratamiento = new();
     DateTime? fechaSolicitud = DateTime.Today;
     DateTime? fechaNacimiento;
     bool requiereAcompanante = false;
-    List<Diagnostico> diagnosticos = new();
-    int diagnosticoSeleccionado;
-    IBrowserFile documentoAdjunto;
+
+    // ========================================
+    //   DIAGNÓSTICOS DISPONIBLES Y SELECCIONADOS
+    // ========================================
+    private List<Diagnostico> ListaDiagnosticos = new();
+
+    // IMPORTANTE: HashSet<int> para que @bind-SelectedValues funcione sin conversión
+    private HashSet<int> DiagnosticosSeleccionados = new();
+
+    // Diccionarios para almacenar valores por cada diagnóstico seleccionado
+    private Dictionary<int, string> Observacion = new();
+    private Dictionary<int, string> TratamientoPorDiagnostico = new();
+    private Dictionary<int, DateTime?> FechasDiagnostico = new();
+
+    // ==============================
+    //   COMORBILIDADES (PacienteDiagnostico)
+    // ==============================
     List<PacienteDiagnostico> comorbilidades = new();
 
+    // ======================
+    //   CBD / THC PRODUCTO
+    // ======================
+    bool tieneCbd = false;
+    bool tieneThc = false;
+
+    // ================================
+    //   LISTAS DE APOYO (formularios)
+    // ================================
     List<string> formasFarmaceuticas = new() { "Aceites", "Cápsulas de gel", "Comprimido", "Crema", "Extractos", "Flor procesada", "Inhaladores orales", "Parche transdérmico", "Píldoras", "Ungüento", "Supositorio", "Tinturas/gotas orales", "Otro" };
     List<string> unidades = new() { "g", "mg", "ml", "mg/ml", "%", "Otra" };
     List<string> viasAdministracion = new() { "Oral (deglutida)", "Sublingual", "Inhalada", "Rectal", "Tópica (piel, oftálmica, ótica)", "Subcutánea", "Intravenosa", "Intramuscular", "Intradérmica", "Otro" };
 
+    // ======================
+    //   DOCUMENTO ADJUNTO
+    // ======================
+    IBrowserFile documentoAdjunto;
+
     protected override async Task OnInitializedAsync()
     {
-        diagnosticos = await Db.Diagnosticos.OrderBy(d => d.Nombre).ToListAsync();
+        // 1) Cargar diagnósticos desde la base de datos usando FormService
+        ListaDiagnosticos = await FormService.ObtenerDiagnosticosAsync();
+
+        // 2) Inicializar diccionarios en vacío para cada diagnóstico cargado
+        foreach (var d in ListaDiagnosticos)
+        {
+            Observacion[d.Id] = string.Empty;
+            TratamientoPorDiagnostico[d.Id] = string.Empty;
+            FechasDiagnostico[d.Id] = null;
+        }
+    }
+
+    private void OnDiagnosticosChanged(IEnumerable<int> nuevosIds)
+        {
+        DiagnosticosSeleccionados = nuevosIds.ToList();
+        // Aseguramos que existan entradas en los diccionarios:
+        foreach (var id in DiagnosticosSeleccionados)
+        {
+            if (!Observacion.ContainsKey(id)) Observacion[id] = string.Empty; 
+            if (!TratamientoPorDiagnostico.ContainsKey(id)) TratamientoPorDiagnostico[id] = string.Empty; 
+            if (!FechasDiagnostico.ContainsKey(id)) FechasDiagnostico[id] = null;
+        }
     }
 
     private void AgregarComorbilidad()
@@ -180,46 +301,65 @@
 
     private async Task EnviarFormulario()
     {
+        // 1) Si requiere acompañante, guárdalo primero y asócielo al paciente
         if (requiereAcompanante)
         {
+            paciente.RequiereAcompanante = true;
             Db.Acompanantes.Add(acompanante);
             paciente.Acompanantes = new List<Acompanante> { acompanante };
         }
 
-        paciente.FechaNacimiento = (DateTime)fechaNacimiento!;
+        // 2) Guardar paciente y médico
+        paciente.FechaNacimiento = fechaNacimiento ?? DateTime.MinValue;
         Db.Pacientes.Add(paciente);
         Db.Medicos.Add(medico);
         await Db.SaveChangesAsync();
 
+        // 3) Crear solicitud y guardarla
         var solicitud = new Solicitud
         {
             PacienteId = paciente.Id,
             MedicoId = medico.Id,
             FechaSolicitud = fechaSolicitud ?? DateTime.Now,
-            Estado = "Aprobada"
+            Estado = "Pendiente",
+            AceptaTerminos = true // Ajusta según tu lógica si es necesario
         };
         Db.Solicitudes.Add(solicitud);
         await Db.SaveChangesAsync();
 
-        Db.SolicitudDiagnosticos.Add(new SolicitudDiagnostico
+        // 4) Guardar cada Diagnóstico seleccionado en la tabla SolicitudDiagnostico
+        foreach (var id in DiagnosticosSeleccionados)
         {
-            SolicitudId = solicitud.Id,
-            DiagnosticoId = diagnosticoSeleccionado,
-            EsPrimario = true
-        });
+            var solicitudDiag = new SolicitudDiagnostico
+            {
+                SolicitudId = solicitud.Id,
+                DiagnosticoId = id,
+                Observaciones = Observacion[id]
+                // Si tienes columna FechaDiagnostico en SolicitudDiagnostico,
+                // agrégala igual aquí: FechaDiagnostico = FechasDiagnostico[id] ?? DateTime.Today
+            };
+            Db.SolicitudDiagnosticos.Add(solicitudDiag);
+        }
 
-        tratamiento.SolicitudId = solicitud.Id;
-        Db.Tratamientos.Add(tratamiento);
-
+        // 5) Guardar comorbilidades (PacienteDiagnostico) si las hay
         foreach (var com in comorbilidades)
         {
             com.PacienteId = paciente.Id;
             Db.PacienteDiagnosticos.Add(com);
         }
 
+        // 6) Guardar datos de Tratamiento (CBD/THC u otros campos)
+        Tratamiento.SolicitudId = solicitud.Id;
+        Tratamiento.CannabinoidesSeleccionados =
+            (tieneCbd ? "CBD " : "") + (tieneThc ? "THC" : "");
+        Db.Tratamientos.Add(Tratamiento);
+
+        // 7) Guardar documento adjunto en disco y referenciar en BD
         if (documentoAdjunto != null)
         {
-            var filePath = Path.Combine("wwwroot/documentos", documentoAdjunto.Name);
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documentos");
+            Directory.CreateDirectory(folderPath);
+            var filePath = Path.Combine(folderPath, documentoAdjunto.Name);
             await using var fs = new FileStream(filePath, FileMode.Create);
             await documentoAdjunto.OpenReadStream().CopyToAsync(fs);
 
@@ -232,10 +372,15 @@
             });
         }
 
+        // 8) Guardar todos los cambios pendientes
         await Db.SaveChangesAsync();
+
+        // 9) Generar carnet en PDF, enviarlo por correo y mostrar alerta
         var certificado = await PdfService.GenerarCarnetPacienteAsync(solicitud.Id);
         await CorreoService.EnviarCarnetAsync(paciente.CorreoElectronico, certificado);
         await DialogService.ShowMessageBox("Éxito", "Solicitud enviada correctamente y carnet generado.");
+
+        // 10) Redireccionar al listado principal o página de inicio
         Nav.NavigateTo("/");
     }
 }

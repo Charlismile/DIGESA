@@ -25,6 +25,8 @@ builder.Services.AddScoped<PdfCarnetService>();
 builder.Services.AddScoped<CorreoService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddMudServices();
+builder.Services.AddScoped<IFormService, FormService>();
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;

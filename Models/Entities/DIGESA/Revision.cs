@@ -21,5 +21,5 @@ public partial class Revision
 
     public virtual Usuario Revisor { get; set; } = null!;
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud Solicitudes { get; set; } = null!;
 }

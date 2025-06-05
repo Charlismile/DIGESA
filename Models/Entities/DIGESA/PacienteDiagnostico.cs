@@ -19,7 +19,7 @@ public partial class PacienteDiagnostico
 
     public string? TratamientoRecibido { get; set; }
 
-    public virtual Diagnostico? Diagnostico { get; set; }
+    public virtual Diagnostico? Diagnosticos { get; set; }
 
-    public virtual Paciente Paciente { get; set; } = null!;
+    public virtual Paciente Pacientes { get; set; } = null!;
 }

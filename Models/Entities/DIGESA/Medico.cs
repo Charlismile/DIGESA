@@ -25,5 +25,5 @@ public partial class Medico
 
     public virtual ICollection<Solicitud> Solicitudes { get; set; } = new List<Solicitud>();
 
-    public virtual Usuario? Usuario { get; set; }
+    public virtual Usuario? Usuarios { get; set; }
 }
