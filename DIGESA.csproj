@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-DIGESA-2fbce943-2e86-46c1-836e-6100d8bc7e18</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="Data\app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.16" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.16">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="QRCoder" Version="1.6.0" />
+        <PackageReference Include="QuestPDF" Version="2025.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\Clases\" />
+      <Folder Include="Services\Interfaces\" />
+    </ItemGroup>
+
+</Project>
