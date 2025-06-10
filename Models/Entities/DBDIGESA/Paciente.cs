@@ -17,7 +17,7 @@ public partial class Paciente
 
     public string Nacionalidad { get; set; } = null!;
 
-    public DateOnly FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; }
 
     public string Sexo { get; set; } = null!;
 
@@ -40,6 +40,9 @@ public partial class Paciente
     public string? MotivoRequerimientoAcompanante { get; set; }
 
     public string? TipoDiscapacidad { get; set; }
+    
+    public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
+    public string? EstadoSolicitud { get; set; } = "Pendiente"; // Pendiente / Aprobado / Rechazado
 
     public virtual ICollection<Acompanante> Acompanantes { get; set; } = new List<Acompanante>();
 

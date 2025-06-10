@@ -1,7 +1,34 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
+@using BlazorBootstrap
 
-<PageTitle>Home</PageTitle>
+<Container>
+    <Row Justify="JustifyContent.Center">
+        <Column ColumnSize="ColumnSize.Md6">
+            <Card Shadow="Shadow.Small">
+                <CardBody>
+                    <CardTitle >🧑‍🦰 Paciente</CardTitle>
+                    <CardText>Registre una nueva solicitud o consulte el estado de una existente.</CardText>
+                    <Button Color="ButtonColor.Primary" FullWidth Clicked="@(() => NavManager.NavigateTo("/registro-paciente"))">
+                        <Icon Name="IconName.PersonPlusFill" /> Registrar Solicitud
+                    </Button>
+                    <Button Color="ButtonColor.Info" FullWidth Clicked="@(() => NavManager.NavigateTo("/seguimiento"))" Class="mt-2">
+                        <Icon Name="IconName.Search" /> Consultar Estado
+                    </Button>
+                </CardBody>
+            </Card>
+        </Column>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+        <Column ColumnSize="ColumnSize.Md6">
+            <Card Shadow="Shadow.Small">
+                <CardBody>
+                    <CardTitle>🧑‍⚕️ Médico / Funcionario MINSA</CardTitle>
+                    <CardText>Inicie sesión para revisar solicitudes y emitir certificaciones médicas.</CardText>
+                    <Button Color="ButtonColor.Success" FullWidth Clicked="@(() => NavManager.NavigateTo("/identity/account/login"))">
+                        <Icon Name="IconName.BoxArrowInRight" /> Iniciar Sesión
+                    </Button>
+                </CardBody>
+            </Card>
+        </Column>
+    </Row>
+</Container>

@@ -1,0 +1,178 @@
+﻿@page "/registro-paciente"
+@using DIGESA.Models.DTOs
+@using DIGESA.Models.Entities.DBDIGESA
+@using DIGESA.Validators
+@inject IToastService ToastService
+@inject DbContextDigesa DbContext
+
+<PageTitle>Registro de Paciente</PageTitle>
+
+<h3>Formulario de Registro de Paciente</h3>
+
+<EditForm EditContext="@editContext" OnValidSubmit="OnValidSubmit">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <!-- Campos del paciente -->
+    <div class="mb-3">
+        <label>Nombre completo:</label>
+        <InputText @bind-Value="Model.NombreCompleto" class="form-control" />
+        <ValidationMessage For="@(() => Model.NombreCompleto)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo de documento:</label>
+        <InputSelect @bind-Value="Model.TipoDocumento" class="form-select">
+            <option value="">Seleccione...</option>
+            <option value="Cedula">Cédula</option>
+            <option value="Pasaporte">Pasaporte</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.TipoDocumento)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Número de documento:</label>
+        <InputText @bind-Value="Model.NumeroDocumento" class="form-control" />
+        <ValidationMessage For="@(() => Model.NumeroDocumento)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Nacionalidad:</label>
+        <InputText @bind-Value="Model.Nacionalidad" class="form-control" />
+        <ValidationMessage For="@(() => Model.Nacionalidad)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Fecha de nacimiento:</label>
+        <InputDate @bind-Value="Model.FechaNacimiento" class="form-control" />
+        <ValidationMessage For="@(() => Model.FechaNacimiento)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Sexo:</label>
+        <InputSelect @bind-Value="Model.Sexo" class="form-select">
+            <option value="">Seleccione...</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Masculino">Masculino</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.Sexo)" />
+    </div>
+
+    <div class="mb-3">
+        <label>Dirección de residencia:</label>
+        <InputTextArea @bind-Value="Model.DireccionResidencia" class="form-control" />
+        <ValidationMessage For="@(() => Model.DireccionResidencia)" />
+    </div>
+
+    <div class="mb-3 form-check">
+        <InputCheckbox @bind-Value="Model.RequiereAcompanante" />
+        <label class="form-check-label">¿Requiere acompañante autorizado?</label>
+    </div>
+
+    @if (Model.RequiereAcompanante)
+    {
+        <div class="card p-3 mt-3">
+            <h5>Datos del Acompañante Autorizado</h5>
+
+            <div class="mb-3">
+                <label>Nombre completo:</label>
+                <InputText @bind-Value="Model.Acompanante.NombreCompleto" class="form-control" />
+                <ValidationMessage For="@(() => Model.Acompanante.NombreCompleto)" />
+            </div>
+
+            <div class="mb-3">
+                <label>Tipo de documento:</label>
+                <InputSelect @bind-Value="Model.Acompanante.TipoDocumento" class="form-select">
+                    <option value="">Seleccione...</option>
+                    <option value="Cedula">Cédula</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => Model.Acompanante.TipoDocumento)" />
+            </div>
+
+            <div class="mb-3">
+                <label>Número de documento:</label>
+                <InputText @bind-Value="Model.Acompanante.NumeroDocumento" class="form-control" />
+                <ValidationMessage For="@(() => Model.Acompanante.NumeroDocumento)" />
+            </div>
+
+            <div class="mb-3">
+                <label>Nacionalidad:</label>
+                <InputText @bind-Value="Model.Acompanante.Nacionalidad" class="form-control" />
+                <ValidationMessage For="@(() => Model.Acompanante.Nacionalidad)" />
+            </div>
+
+            <div class="mb-3">
+                <label>Parentesco:</label>
+                <InputSelect @bind-Value="Model.Acompanante.Parentesco" class="form-select">
+                    <option value="">Seleccione...</option>
+                    <option value="Madre">Madre</option>
+                    <option value="Padre">Padre</option>
+                    <option value="Tutor">Tutor</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => Model.Acompanante.Parentesco)" />
+            </div>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
+</EditForm>
+
+@code {
+    private PacienteRegistroDTO Model = new();
+    private EditContext editContext = default!;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(Model);
+    }
+
+    private async Task OnValidSubmit()
+    {
+        var paciente = new Paciente
+        {
+            NombreCompleto = Model.NombreCompleto,
+            TipoDocumento = Model.TipoDocumento,
+            NumeroDocumento = Model.NumeroDocumento,
+            Nacionalidad = Model.Nacionalidad,
+            FechaNacimiento = Model.FechaNacimiento,
+            Sexo = Model.Sexo,
+            DireccionResidencia = Model.DireccionResidencia,
+            TelefonoResidencial = Model.TelefonoResidencial,
+            TelefonoPersonal = Model.TelefonoPersonal,
+            TelefonoLaboral = Model.TelefonoLaboral,
+            CorreoElectronico = Model.CorreoElectronico,
+            InstalacionSalud = Model.InstalacionSalud,
+            RegionSalud = Model.RegionSalud,
+            RequiereAcompanante = Model.RequiereAcompanante,
+            MotivoRequerimientoAcompanante = Model.MotivoRequerimientoAcompanante,
+            TipoDiscapacidad = Model.TipoDiscapacidad
+        };
+
+        await DbContext.Pacientes.AddAsync(paciente);
+        await DbContext.SaveChangesAsync();
+
+        if (Model.RequiereAcompanante)
+        {
+            var acompanante = new Acompanante
+            {
+                PacienteId = paciente.Id,
+                NombreCompleto = Model.Acompanante.NombreCompleto,
+                TipoDocumento = Model.Acompanante.TipoDocumento,
+                NumeroDocumento = Model.Acompanante.NumeroDocumento,
+                Nacionalidad = Model.Acompanante.Nacionalidad,
+                Parentesco = Model.Acompanante.Parentesco
+            };
+
+            await DbContext.Acompanantes.AddAsync(acompanante);
+            await DbContext.SaveChangesAsync();
+        }
+
+        // Mostrar notificación de éxito
+        ToastService.ShowSuccess("Solicitud enviada correctamente");
+
+        // Reiniciar formulario
+        Model = new PacienteRegistroDTO();
+        editContext = new(Model);
+    }
+}

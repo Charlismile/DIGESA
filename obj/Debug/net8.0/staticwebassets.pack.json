@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\DIGESA.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\.gitignore",
+      "PackagePath": "staticwebassets\\.gitignore"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\README.md",
+      "PackagePath": "staticwebassets\\README.md"
+    },
+    {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
@@ -19,6 +27,14 @@
     {
       "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\logo-gob.png",
+      "PackagePath": "staticwebassets\\logo-gob.png"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\RiderProjects\\DIGESA\\DIGESA\\wwwroot\\logo-minsa.png",
+      "PackagePath": "staticwebassets\\logo-minsa.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssets.props",

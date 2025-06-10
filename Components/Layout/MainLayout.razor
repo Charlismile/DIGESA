@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using DIGESA.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@inject AuthenticationStateProvider AuthStateProvider
+@using BlazorBootstrap
 
 <BlazorBootstrapLayout StickyHeader="true">
     <HeaderSection>
@@ -7,10 +12,10 @@
 
     <SidebarSection>
         <Sidebar2 Href="/"
-                  ImageSrc="https://demos.blazorbootstrap.com/images/logo/logo-white.svg"
-                  Title="Blazor Bootstrap"
-                  BadgeText="3.3.1"
-                  DataProvider="Sidebar2DataProvider"
+                  ImageSrc="/images/logo-minsa.png" 
+                  Title="DIGESA - Cannabis Medicinal"
+                  BadgeText="v1.0"
+                  DataProvider="SidebarDataProvider"
                   WidthUnit="Unit.Px" />
     </SidebarSection>
 
@@ -19,30 +24,79 @@
     </ContentSection>
 
     <FooterSection>
-        Footer links...
+        &copy; 2025 DIGESA - Registro oficial de pacientes con cannabis medicinal.
     </FooterSection>
 </BlazorBootstrapLayout>
 
 @code {
-    private IEnumerable<NavItem> navItems = default!;
+    private bool IsAuthenticated;
+    private string UserName = "Invitado";
+    private IEnumerable<NavItemEx> NavItems = Enumerable.Empty<NavItemEx>();
 
-    private async Task<Sidebar2DataProviderResult> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
+    protected override async Task OnInitializedAsync()
     {
-        if (navItems is null)
-            navItems = GetNavItems();
-
-        return await Task.FromResult(request.ApplyTo(navItems));
+        await base.OnInitializedAsync();
+        await LoadUserAsync();
+        NavItems = GetNavItems();
     }
 
-    private IEnumerable<NavItem> GetNavItems()
+    private async Task LoadUserAsync()
     {
-        navItems = new List<NavItem>
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        IsAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        if (IsAuthenticated)
         {
-            new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home", Match=NavLinkMatch.All},
-            new NavItem { Id = "2", Href = "/counter", IconName = IconName.PlusSquareFill, Text = "Counter"},
-            new NavItem { Id = "3", Href = "/fetchdata", IconName = IconName.Table, Text = "Fetch Data"},
+            UserName = user.Identity.Name ?? "Usuario";
+        }
+    }
+
+    private Sidebar2DataProviderDelegate SidebarDataProvider => async request =>
+    {
+        var items = await LoadNavItemsAsync(); // Carga desde BD u otro lugar
+        return request.ApplyTo(items);
+    };
+
+    private async Task<IEnumerable<NavItemEx>> LoadNavItemsAsync()
+    {
+        // Aquí puedes usar servicios o DB para cargar los ítems
+        await Task.Delay(100); // Ejemplo
+        return GetNavItems();
+    }
+
+    private IEnumerable<NavItemEx> GetNavItems()
+    {
+        var items = new List<NavItemEx>
+        {
+            new() { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Inicio" },
+            new() { Id = "2", Href = "/registro-paciente", IconName = IconName.PersonBoundingBox, Text = "Registrar Paciente" },
+            new() { Id = "3", Href = "/auth/login", IconName = IconName.BoxArrowInRight, Text = "Login" }
         };
 
-        return navItems;
+        if (IsAuthenticated)
+        {
+            items.Add(new NavItemEx { Id = "6", Href = "/dashboard/admin", IconName = IconName.ShieldFillCheck, Text = "Panel Admin", Roles = new[] { Roles.Administrador } });
+            items.Add(new NavItemEx { Id = "7", Href = "/solicitudes/medico", IconName = IconName.FileEarmarkMedicalFill, Text = "Solicitudes Médicas", Roles = new[] { Roles.Medico } });
+        }
+
+        return items.Where(item => HasAccess(item.Roles));
+    }
+
+    private bool HasAccess(string[]? allowedRoles)
+    {
+        if (allowedRoles == null || allowedRoles.Length == 0)
+            return true;
+
+        var authState = AuthStateProvider.GetAuthenticationStateAsync().Result;
+        var user = authState.User;
+
+        foreach (var role in allowedRoles)
+        {
+            if (user.IsInRole(role))
+                return true;
+        }
+
+        return false;
     }
 }
