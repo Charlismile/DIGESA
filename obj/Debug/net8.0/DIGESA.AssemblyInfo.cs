@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DIGESA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93c76266cbe2f30861ea7803b02a75f50776565e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa420982bd3f498228d43f00c3b49016156796ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("DIGESA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DIGESA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
