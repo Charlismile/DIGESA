@@ -1,0 +1,71 @@
+﻿@page "/Index"
+
+<h4 class="mb-4">Dashboard</h4>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <Card>
+            <CardBody>
+                <h6 class="text-muted">Usuarios</h6>
+                <h3>150+</h3>
+            </CardBody>
+        </Card>
+    </div>
+    <div class="col-md-3">
+        <Card>
+            <CardBody>
+                <h6 class="text-muted">Solicitudes</h6>
+                <h3>98%</h3>
+            </CardBody>
+        </Card>
+    </div>
+    <div class="col-md-3">
+        <Card>
+            <CardBody>
+                <h6 class="text-muted">En revisión</h6>
+                <h3>24/7</h3>
+            </CardBody>
+        </Card>
+    </div>
+    <div class="col-md-3">
+        <Card>
+            <CardBody>
+                <h6 class="text-muted">Aprobados</h6>
+                <h3>5+</h3>
+            </CardBody>
+        </Card>
+    </div>
+</div>
+
+<Card>
+    <CardBody>
+        <h5 class="card-title">Últimas Solicitudes</h5>
+        <Table Responsive="true" Hover="true" Striped="true">
+            <TableHead>
+                <TableRow>
+                    <TableHeader>#</TableHeader>
+                    <TableHeader>Paciente</TableHeader>
+                    <TableHeader>Médico</TableHeader>
+                    <TableHeader>Fecha</TableHeader>
+                    <TableHeader>Estado</TableHeader>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <TableRow>
+                    <TableCell>1</TableCell>
+                    <TableCell>Juan Pérez</TableCell>
+                    <TableCell>Dra. Ana Rojas</TableCell>
+                    <TableCell>2025-04-01</TableCell>
+                    <TableCell><Badge Theme="Theme.Success">Aprobada</Badge></TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell>2</TableCell>
+                    <TableCell>María López</TableCell>
+                    <TableCell>Dr. Carlos M.</TableCell>
+                    <TableCell>2025-04-02</TableCell>
+                    <TableCell><Badge Theme="Theme.Info">En Revisión</Badge></TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
+    </CardBody>
+</Card>

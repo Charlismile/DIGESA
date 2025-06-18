@@ -1,23 +1,160 @@
 ﻿@inherits LayoutComponentBase
+@inject IConfiguration Configuration
+@inject IJSRuntime JSRuntime
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
+<div class="wrapper d-flex flex-column min-vh-100">
+    <!-- Top Header -->
+    <div class="top-header bg-white border-bottom py-2">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img src="images/logo-gob.png" class="img-fluid me-3" alt="Gobierno Logo" style="height: 50px;">
+                <div>
+                    <h5 class="text-primary mb-0 fw-bold">Plataforma DIGESA</h5>
+                    <small class="text-muted">Cannabis Medicinal</small>
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-secondary btn-sm d-md-none" @onclick="ToggleSidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Usuario
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" @onclick="ToggleTheme" title="Cambiar tema">
+                    <i class="bi @(isDarkTheme ? "bi-sun" : "bi-moon")"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+    <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div class="sidebar-container @(sidebarExpanded ? "expanded" : "collapsed")">
+            <NavMenu @bind-IsExpanded="sidebarExpanded" />
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+        <!-- Main Content Area -->
+        <div class="main-content flex-grow-1 d-flex flex-column">
+            <!-- Page Header -->
+            <header class="page-header bg-white border-bottom py-3 px-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-ghost me-3 d-none d-md-block" @onclick="ToggleSidebar">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Inicio</a></li>
+                                <li class="breadcrumb-item active">@currentPage</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-bell me-1"></i>
+                            Notificaciones
+                            <span class="badge bg-danger ms-1">3</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="page-content flex-grow-1 p-4 bg-light">
+                <div class="container-fluid">
+                    @Body
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="page-footer bg-white border-top py-3 px-4 mt-auto">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted small">
+                        &copy; 2025 - Plataforma DIGESA - Cannabis Medicinal
+                    </div>
+                    <div class="text-muted small">
+                        Versión 1.0.0 | <a href="#" class="text-decoration-none">Soporte</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+<!-- Toast Container -->
+<Toasts class="position-fixed top-0 end-0 p-3" Placement="ToastsPlacement.TopRight" Delay="5000" AutoHide="true" />
+
+<!-- Overlay para móvil -->
+@if (sidebarExpanded)
+{
+    <div class="sidebar-overlay d-md-none" @onclick="ToggleSidebar"></div>
+}
+
+@code {
+    private bool sidebarExpanded = true;
+    private bool isDarkTheme = false;
+    private string currentPage = "Dashboard";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Obtener el estado del tema desde localStorage si existe
+            await LoadThemeState();
+        }
+    }
+
+    private async void ToggleSidebar()
+    {
+        sidebarExpanded = !sidebarExpanded;
+        StateHasChanged();
+    }
+
+    private async void ToggleTheme()
+    {
+        isDarkTheme = !isDarkTheme;
+        await JSRuntime.InvokeVoidAsync("toggleTheme", isDarkTheme);
+        StateHasChanged();
+    }
+
+    private async Task LoadThemeState()
+    {
+        try
+        {
+            var theme = await JSRuntime.InvokeAsync<string>("getTheme");
+            isDarkTheme = theme == "dark";
+            StateHasChanged();
+        }
+        catch
+        {
+            // Si hay error, usar tema por defecto
+        }
+    }
+}
+
+<script>
+    window.toggleTheme = (isDark) => {
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    };
+
+    window.getTheme = () => {
+        return localStorage.getItem('theme') || 'light';
+    };
+
+    // Aplicar tema al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    });
+</script>

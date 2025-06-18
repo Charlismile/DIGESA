@@ -17,7 +17,7 @@ public partial class Paciente
 
     public string Nacionalidad { get; set; } = null!;
 
-    public DateOnly FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; }
 
     public string Sexo { get; set; } = null!;
 

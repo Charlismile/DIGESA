@@ -1,92 +1,226 @@
-﻿@implements IDisposable
+﻿@using Microsoft.AspNetCore.Components.Routing
+@using BlazorBootstrap
 
-@inject NavigationManager NavigationManager
+<aside class="sidebar h-100 bg-white shadow-sm d-flex flex-column @(IsExpanded ? "" : "collapsed")"
+       style="width: @(IsExpanded ? "250px" : "80px");">
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">DIGESA</a>
+    <!-- Sidebar Header -->
+    <div class="sidebar-header p-3 border-bottom">
+        @{
+            var headerClass = IsExpanded
+                ? "d-flex align-items-center"
+                : "d-flex align-items-center justify-content-center";
+        }
+
+        <div class="@headerClass">
+            @if (IsExpanded)
+            {
+                <div class="d-flex align-items-center">
+                    <div class="sidebar-logo me-2">
+                        <i class="bi bi-capsule-pill fs-4 text-primary"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold text-primary small">DIGESA</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">Panel Admin</div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <i class="bi bi-capsule-pill fs-4 text-primary"></i>
+            }
+        </div>
     </div>
-</div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav flex-grow-1 p-2">
+        <ul class="nav flex-column">
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+            <!-- Dashboard -->
+            <li class="nav-item mb-1">
+                @{
+                    var dashboardClass = IsExpanded
+                        ? "nav-link sidebar-link d-flex align-items-center"
+                        : "nav-link sidebar-link d-flex align-items-center justify-content-center";
+                }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+                <NavLink class="@dashboardClass" href="/" Match="NavLinkMatch.All">
+                    <i class="bi bi-house-door nav-icon" title="Dashboard"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Dashboard</span>
+                    }
+                </NavLink>
+            </li>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
+            <!-- Pacientes -->
+            <li class="nav-item mb-1">
+                @if (IsExpanded)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title">
+                            <small class="text-muted fw-semibold">GESTIÓN</small>
+                        </div>
+                    </div>
+                }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/pacientes">
+                    <i class="bi bi-people nav-icon" title="Pacientes"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Pacientes</span>
+                        <span class="badge bg-primary ms-auto">12</span>
+                    }
+                </NavLink>
+            </li>
 
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <form action="Account/Logout" method="post">
-                        <AntiforgeryToken/>
-                        <input type="hidden" name="ReturnUrl" value="@currentUrl"/>
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
-                        </button>
-                    </form>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
+            <!-- Solicitudes -->
+            <li class="nav-item mb-1">
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/solicitudes">
+                    <i class="bi bi-file-earmark-medical nav-icon" title="Solicitudes"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Solicitudes</span>
+                        <span class="badge bg-warning ms-auto">5</span>
+                    }
+                </NavLink>
+            </li>
+
+            <!-- Certificaciones -->
+            <li class="nav-item mb-1">
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/certificaciones">
+                    <i class="bi bi-award nav-icon" title="Certificaciones"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Certificaciones</span>
+                    }
+                </NavLink>
+            </li>
+
+            <!-- Reportes -->
+            <li class="nav-item mb-1">
+                @if (IsExpanded)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title">
+                            <small class="text-muted fw-semibold">ANÁLISIS</small>
+                        </div>
+                    </div>
+                }
+
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/reportes">
+                    <i class="bi bi-graph-up nav-icon" title="Reportes"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Reportes</span>
+                    }
+                </NavLink>
+            </li>
+
+            <!-- Estadísticas -->
+            <li class="nav-item mb-1">
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/estadisticas">
+                    <i class="bi bi-bar-chart nav-icon" title="Estadísticas"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Estadísticas</span>
+                    }
+                </NavLink>
+            </li>
+
+            <!-- Configuración -->
+            <li class="nav-item mb-1">
+                @if (IsExpanded)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title">
+                            <small class="text-muted fw-semibold">SISTEMA</small>
+                        </div>
+                    </div>
+                }
+
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/configuracion">
+                    <i class="bi bi-gear nav-icon" title="Configuración"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Configuración</span>
+                    }
+                </NavLink>
+            </li>
+
+            <!-- Usuarios -->
+            <li class="nav-item mb-1">
+                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
+                         href="/usuarios">
+                    <i class="bi bi-person-gear nav-icon" title="Usuarios"></i>
+                    @if (IsExpanded)
+                    {
+                        <span class="nav-text ms-2">Usuarios</span>
+                    }
+                </NavLink>
+            </li>
+        </ul>
     </nav>
-</div>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer p-3 border-top mt-auto">
+        @if (IsExpanded)
+        {
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <img src="https://via.placeholder.com/32x32/007bff/ffffff?text=JD"
+                         class="rounded-circle" width="32" height="32" alt="Usuario">
+                </div>
+                <div class="flex-grow-1 ms-2">
+                    <div class="fw-semibold small">Juan Doe</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Administrador</div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li> 
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <img src="https://via.placeholder.com/32x32/007bff/ffffff?text=JD"
+                     class="rounded-circle" width="32" height="32" alt="Usuario">
+            </div>
+        }
+    </div>
+</aside>
+
+<style>
+    .sidebar.collapsed .nav-text {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-icon {
+        font-size: 1.25rem;
+    }
+</style>
 
 @code {
-    private string? currentUrl;
+    [Parameter] public bool IsExpanded { get; set; } = true;
+    [Parameter] public EventCallback<bool> IsExpandedChanged { get; set; }
 
-    protected override void OnInitialized()
+    private async void ToggleSidebar()
     {
-        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.LocationChanged += OnLocationChanged;
+        IsExpanded = !IsExpanded;
+        await IsExpandedChanged.InvokeAsync(IsExpanded);
     }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
-
 }

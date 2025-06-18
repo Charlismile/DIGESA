@@ -1,0 +1,39 @@
+﻿@page "/elegistro"
+<h3>Elija una opción de registro</h3>
+
+<div class="container py-5">
+    <div class="row justify-content-center g-4">
+        <!-- Card: Paciente -->
+        <div class="col-md-6">
+            <Card>
+                <CardBody>
+                    <h4 class="card-title"><PersonPlusFill /> Paciente</h4>
+                    <p class="card-text">Registre una nueva solicitud o consulte el estado de una existente.</p>
+                    <Button Color="ButtonColor.Primary" Class="w-100" @onclick="@(() => NavManager.NavigateTo("/registro-paciente"))">
+                        <Icon Name="IconName.PersonPlusFill" /> Registrar Solicitud
+                    </Button>
+                    <Button Color="ButtonColor.Info" Class="w-100 mt-2" @onclick="@(() => NavManager.NavigateTo("/seguimiento"))">
+                        <Icon Name="IconName.Search" /> Consultar Estado
+                    </Button>
+                </CardBody>
+            </Card>
+        </div>
+
+        <!-- Card: Médico / Funcionario MINSA -->
+        <div class="col-md-6">
+            <Card>
+                <CardBody>
+                    <h4 class="card-title"><PersonFill /> Médico / Funcionario MINSA</h4>
+                    <p class="card-text">Inicie sesión para revisar solicitudes y emitir certificaciones médicas.</p>
+                    <Button Color="ButtonColor.Success" Class="w-100" @onclick="@(() => NavManager.NavigateTo("/identity/account/login"))">
+                        <Icon Name="IconName.BoxArrowInRight" /> Iniciar Sesión
+                    </Button>
+                </CardBody>
+            </Card>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject] private NavigationManager NavManager { get; set; }
+}

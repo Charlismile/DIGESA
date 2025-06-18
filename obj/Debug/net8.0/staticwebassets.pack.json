@@ -1,24 +1,32 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
-      "PackagePath": "staticwebassets\\DIGESA.bundle.scp.css"
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "PackagePath": "staticwebassets\\DIGESA.vl6rg70dns.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\app.css",
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\.gitignore",
+      "PackagePath": "staticwebassets\\.gitignore"
+    },
+    {
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssets.props",

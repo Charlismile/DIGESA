@@ -1,0 +1,53 @@
+﻿# Ignore Visual Studio temporary files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+bin/
+obj/
+
+# Roslyn cache
+*.cache
+*.db
+
+# ReSharper and Rider
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+*.sln.DotSettings.user
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# User-specific files
+*.sln.user
+*.user
+*.orig
+*.log
+*.sqlite
+*.sqlitedb
+
+# Environment files
+.env
+.localenv
+
+# NuGet packages
+packages/
+
+# Backup files
+*.bak
+*.tmp
+*.temp

@@ -1,0 +1,178 @@
+﻿@page "/registro"
+@using DIGESA.Models.DTOs
+@using DIGESA.Models.Entities.DBDIGESA
+@using DIGESA.Services.Interfaces
+@inject DbContextDigesa _context    
+@inject NavigationManager NavManager
+
+<h3 class="mb-4">Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <!-- 1. DATOS PERSONALES DEL PACIENTE -->
+    <h5>1. Datos Personales del Paciente</h5>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Nombre completo:</label>
+            <InputText class="form-control" @bind-Value="Model.NombreCompleto" />
+            <ValidationMessage For="@(() => Model.NombreCompleto)" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Tipo de documento:</label>
+            <InputSelect class="form-control" @bind-Value="Model.TipoDocumento">
+                <option value="">Seleccionar</option>
+                <option value="Cédula">Cédula</option>
+                <option value="Pasaporte">Pasaporte</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Model.TipoDocumento)" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Número de documento:</label>
+            <InputText class="form-control" @bind-Value="Model.NumeroDocumento" />
+            <ValidationMessage For="@(() => Model.NumeroDocumento)" />
+        </div>
+    </div>
+
+    <!-- Más campos... -->
+
+    <div class="mb-3 form-check">
+        <InputCheckbox @bind-Value="Model.RequiereAcompanante" />
+        <label class="form-check-label">¿Requiere acompañante autorizado?</label>
+    </div>
+
+    @if (Model.RequiereAcompanante == true)
+    {
+        <h5>2. Datos del Acompañante Autorizado</h5>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Nombre completo:</label>
+                <InputText class="form-control" @bind-Value="Model.Acompanante.NombreCompleto" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Tipo de documento:</label>
+                <InputSelect class="form-control" @bind-Value="Model.Acompanante.TipoDocumento">
+                    <option value="">Seleccionar</option>
+                    <option value="Cédula">Cédula</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                </InputSelect>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Número de documento:</label>
+                <InputText class="form-control" @bind-Value="Model.Acompanante.NumeroDocumento" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label class="form-label">Nacionalidad:</label>
+                <InputText class="form-control" @bind-Value="Model.Acompanante.Nacionalidad" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Parentesco:</label>
+                <InputSelect class="form-control" @bind-Value="Model.Acompanante.Parentesco">
+                    <option value="">Seleccionar</option>
+                    <option value="Madre">Madre</option>
+                    <option value="Padre">Padre</option>
+                    <option value="Tutor">Tutor</option>
+                </InputSelect>
+            </div>
+        </div>
+    }
+
+    <!-- 3. MÉDICO TRATANTE -->
+    <h5 class="mt-4">3. Datos del Médico Tratante</h5>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Nombre completo:</label>
+            <InputText class="form-control" @bind-Value="Model.MedicoNombreCompleto" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Disciplina:</label>
+            <InputSelect class="form-control" @bind-Value="Model.MedicoDisciplina">
+                <option value="">Seleccionar</option>
+                <option value="Médico general">Médico General</option>
+                <option value="Odontólogo">Odontólogo</option>
+                <option value="Especialista">Especialista</option>
+            </InputSelect>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Número de registro de idoneidad:</label>
+            <InputText class="form-control" @bind-Value="Model.MedicoRegistroIdoneidad" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Teléfono de contacto:</label>
+            <InputText class="form-control" @bind-Value="Model.MedicoTelefono" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Instalación de salud:</label>
+            <InputText class="form-control" @bind-Value="Model.MedicoInstalacionSalud" />
+        </div>
+    </div>
+
+    <!-- 4. DIAGNÓSTICO Y TRATAMIENTO -->
+    <h5 class="mt-4">4. Diagnóstico y Tratamiento</h5>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label class="form-label">Diagnóstico(s):</label>
+            <InputTextArea class="form-control" @bind-Value="Model.Diagnostico" rows="3" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">CBD:</label>
+            <InputNumber class="form-control" @bind-Value="Model.ConcentracionCBD" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">THC:</label>
+            <InputNumber class="form-control" @bind-Value="Model.ConcentracionTHC" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Otros cannabinoides:</label>
+            <InputText class="form-control" @bind-Value="Model.OtrosCannabinoides" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Dosis:</label>
+            <InputText class="form-control" @bind-Value="Model.Dosis" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Frecuencia:</label>
+            <InputText class="form-control" @bind-Value="Model.FrecuenciaAdministracion" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Duración (días):</label>
+            <InputNumber class="form-control" @bind-Value="Model.DuracionTratamientoDias" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
+</EditForm>
+
+@code {
+    private PacienteRegistroDTO Model = new();
+
+    private async Task HandleValidSubmit()
+    {
+        // try
+        // {
+        //     int pacienteId = await PacienteService.CreateAsync(Model);
+        //
+        //     if (pacienteId > 0)
+        //     {
+        //         NavManager.NavigateTo("/confirmacion");
+        //     }
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.Error.WriteLine(ex.Message);
+        // }
+    }
+}
