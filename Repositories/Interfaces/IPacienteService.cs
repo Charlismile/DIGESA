@@ -1,11 +1,11 @@
 ﻿using DIGESA.Models.DTOs;
 using DIGESA.Models.Entities.DBDIGESA;
 
-namespace DIGESA.Services.Interfaces
+public interface IPacienteService
 {
-    public interface IPacienteService
-    {
-        Task<IEnumerable<Paciente>> GetAllAsync();
-        Task<int> CreateAsync(PacienteRegistroDTO model);
-    }
+    Task<IEnumerable<Paciente>> GetAllAsync();
+    Task<Paciente?> GetByIdAsync(int id);
+    Task<int> CreateAsync(PacienteRegistroDTO model);
+    Task UpdateAsync(Paciente paciente);
+    Task DeleteAsync(int id);
 }

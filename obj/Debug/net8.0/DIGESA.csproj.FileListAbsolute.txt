@@ -322,3 +322,8 @@ C:\Users\carlo\RiderProjects\Nueva carpeta\DIGESA\obj\Debug\net8.0\refint\DIGESA
 C:\Users\carlo\RiderProjects\Nueva carpeta\DIGESA\obj\Debug\net8.0\DIGESA.pdb
 C:\Users\carlo\RiderProjects\Nueva carpeta\DIGESA\obj\Debug\net8.0\DIGESA.genruntimeconfig.cache
 C:\Users\carlo\RiderProjects\Nueva carpeta\DIGESA\obj\Debug\net8.0\ref\DIGESA.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\obj\Debug\net8.0\DIGESA.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\Blazored.Toast.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

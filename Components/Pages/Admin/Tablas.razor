@@ -1,31 +1,26 @@
 ﻿@page "/tablas"
+@using DIGESA.Models.Entities.DBDIGESA
+@using DIGESA.Services.Interfaces
+@inject IPacienteService PacienteService
 
-<h4 class="mb-4">Listado de Pacientes</h4>
+@using BlazorBootstrap.Components
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<h4>Listado de Pacientes</h4>
 
 <Card>
     <CardBody>
         <Table Responsive="true" Hover="true" Striped="true">
-            <TableHead>
-                <TableRow>
-                    <TableHeader>ID</TableHeader>
-                    <TableHeader>Nombre</TableHeader>
-                    <TableHeader>Documento</TableHeader>
-                    <TableHeader>Diagnóstico</TableHeader>
-                    <TableHeader>Acciones</TableHeader>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                <TableRow>
-                    <TableCell>1</TableCell>
-                    <TableCell>Juan Pérez</TableCell>
-                    <TableCell>Cédula 123456789</TableCell>
-                    <TableCell>Epilepsia</TableCell>
-                    <TableCell>
-                        <Button Color="ButtonColor.Primary" ThemeSize="ThemeSize.Small">Ver</Button>
-                        <Button Color="ButtonColor.Danger" ThemeSize="ThemeSize.Small">Eliminar</Button>
-                    </TableCell>
-                </TableRow>
-            </TableBody>
+           <!--logica-->
         </Table>
     </CardBody>
 </Card>
+
+@code {
+    private IEnumerable<Paciente> pacientes = new List<Paciente>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        pacientes = await PacienteService.GetAllAsync();
+    }
+}

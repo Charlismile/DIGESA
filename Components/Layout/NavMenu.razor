@@ -1,226 +1,41 @@
-﻿@using Microsoft.AspNetCore.Components.Routing
-@using BlazorBootstrap
+﻿@using BlazorBootstrap
 
-<aside class="sidebar h-100 bg-white shadow-sm d-flex flex-column @(IsExpanded ? "" : "collapsed")"
-       style="width: @(IsExpanded ? "250px" : "80px");">
-
-    <!-- Sidebar Header -->
-    <div class="sidebar-header p-3 border-bottom">
-        @{
-            var headerClass = IsExpanded
-                ? "d-flex align-items-center"
-                : "d-flex align-items-center justify-content-center";
-        }
-
-        <div class="@headerClass">
-            @if (IsExpanded)
-            {
-                <div class="d-flex align-items-center">
-                    <div class="sidebar-logo me-2">
-                        <i class="bi bi-capsule-pill fs-4 text-primary"></i>
-                    </div>
-                    <div>
-                        <div class="fw-bold text-primary small">DIGESA</div>
-                        <div class="text-muted" style="font-size: 0.75rem;">Panel Admin</div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <i class="bi bi-capsule-pill fs-4 text-primary"></i>
-            }
-        </div>
-    </div>
-
-    <!-- Navigation Menu -->
-    <nav class="sidebar-nav flex-grow-1 p-2">
-        <ul class="nav flex-column">
-
-            <!-- Dashboard -->
-            <li class="nav-item mb-1">
-                @{
-                    var dashboardClass = IsExpanded
-                        ? "nav-link sidebar-link d-flex align-items-center"
-                        : "nav-link sidebar-link d-flex align-items-center justify-content-center";
-                }
-
-                <NavLink class="@dashboardClass" href="/" Match="NavLinkMatch.All">
-                    <i class="bi bi-house-door nav-icon" title="Dashboard"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Dashboard</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Pacientes -->
-            <li class="nav-item mb-1">
-                @if (IsExpanded)
-                {
-                    <div class="nav-section">
-                        <div class="nav-section-title">
-                            <small class="text-muted fw-semibold">GESTIÓN</small>
-                        </div>
-                    </div>
-                }
-
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/pacientes">
-                    <i class="bi bi-people nav-icon" title="Pacientes"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Pacientes</span>
-                        <span class="badge bg-primary ms-auto">12</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Solicitudes -->
-            <li class="nav-item mb-1">
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/solicitudes">
-                    <i class="bi bi-file-earmark-medical nav-icon" title="Solicitudes"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Solicitudes</span>
-                        <span class="badge bg-warning ms-auto">5</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Certificaciones -->
-            <li class="nav-item mb-1">
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/certificaciones">
-                    <i class="bi bi-award nav-icon" title="Certificaciones"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Certificaciones</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Reportes -->
-            <li class="nav-item mb-1">
-                @if (IsExpanded)
-                {
-                    <div class="nav-section">
-                        <div class="nav-section-title">
-                            <small class="text-muted fw-semibold">ANÁLISIS</small>
-                        </div>
-                    </div>
-                }
-
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/reportes">
-                    <i class="bi bi-graph-up nav-icon" title="Reportes"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Reportes</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Estadísticas -->
-            <li class="nav-item mb-1">
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/estadisticas">
-                    <i class="bi bi-bar-chart nav-icon" title="Estadísticas"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Estadísticas</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Configuración -->
-            <li class="nav-item mb-1">
-                @if (IsExpanded)
-                {
-                    <div class="nav-section">
-                        <div class="nav-section-title">
-                            <small class="text-muted fw-semibold">SISTEMA</small>
-                        </div>
-                    </div>
-                }
-
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/configuracion">
-                    <i class="bi bi-gear nav-icon" title="Configuración"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Configuración</span>
-                    }
-                </NavLink>
-            </li>
-
-            <!-- Usuarios -->
-            <li class="nav-item mb-1">
-                <NavLink class="nav-link sidebar-link d-flex align-items-center @(IsExpanded ? "" : "justify-content-center")"
-                         href="/usuarios">
-                    <i class="bi bi-person-gear nav-icon" title="Usuarios"></i>
-                    @if (IsExpanded)
-                    {
-                        <span class="nav-text ms-2">Usuarios</span>
-                    }
-                </NavLink>
-            </li>
-        </ul>
+<div class="pos-f-t">
+    <!-- Botón para abrir/colapsar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <button class="navbar-toggler" @onclick="() => collapse.ToggleAsync()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </nav>
 
-    <!-- Sidebar Footer -->
-    <div class="sidebar-footer p-3 border-top mt-auto">
-        @if (IsExpanded)
-        {
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0">
-                    <img src="https://via.placeholder.com/32x32/007bff/ffffff?text=JD"
-                         class="rounded-circle" width="32" height="32" alt="Usuario">
-                </div>
-                <div class="flex-grow-1 ms-2">
-                    <div class="fw-semibold small">Juan Doe</div>
-                    <div class="text-muted" style="font-size: 0.75rem;">Administrador</div>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li> 
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Salir</a></li>
-                    </ul>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="text-center">
-                <img src="https://via.placeholder.com/32x32/007bff/ffffff?text=JD"
-                     class="rounded-circle" width="32" height="32" alt="Usuario">
-            </div>
-        }
-    </div>
-</aside>
-
-<style>
-    .sidebar.collapsed .nav-text {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-
-    .nav-icon {
-        font-size: 1.25rem;
-    }
-</style>
+    <!-- Menú colapsable -->
+    <Collapse @ref="collapse" Show="false">
+        <div class="bg-dark p-4">
+            <h4 class="text-white">Menú</h4>
+            <ul class="nav flex-column text-white">
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/">Inicio</NavLink>
+                </li>
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/elegistro">Registrar</NavLink>
+                </li>
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/registro">Formulario</NavLink>
+                </li>
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/index">Panel de Control</NavLink>
+                </li>
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/paciente">Paciente</NavLink>
+                </li>
+                <li class="nav-item mb-2">
+                    <NavLink class="nav-link text-white" href="/tabla">tablas</NavLink>
+                </li>
+            </ul>
+        </div>
+    </Collapse>
+</div>
 
 @code {
-    [Parameter] public bool IsExpanded { get; set; } = true;
-    [Parameter] public EventCallback<bool> IsExpandedChanged { get; set; }
-
-    private async void ToggleSidebar()
-    {
-        IsExpanded = !IsExpanded;
-        await IsExpandedChanged.InvokeAsync(IsExpanded);
-    }
+    private Collapse? collapse;
 }

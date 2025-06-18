@@ -1,6 +1,6 @@
 ﻿using DIGESA.Models.DTOs;
 using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 public class PacienteService : IPacienteService
 {
@@ -13,7 +13,12 @@ public class PacienteService : IPacienteService
 
     public async Task<IEnumerable<Paciente>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Paciente.ToListAsync();
+    }
+
+    public async Task<Paciente?> GetByIdAsync(int id)
+    {
+        return await _context.Paciente.FindAsync(id);
     }
 
     public async Task<int> CreateAsync(PacienteRegistroDTO model)
@@ -34,6 +39,8 @@ public class PacienteService : IPacienteService
             InstalacionSalud = model.InstalacionSalud,
             RegionSalud = model.RegionSalud,
             RequiereAcompanante = model.RequiereAcompanante,
+
+            // ✅ Ahora sí puedes usar estas propiedades
             MotivoRequerimientoAcompanante = model.MotivoRequerimientoAcompanante,
             TipoDiscapacidad = model.TipoDiscapacidad
         };
@@ -41,7 +48,8 @@ public class PacienteService : IPacienteService
         await _context.Paciente.AddAsync(paciente);
         await _context.SaveChangesAsync();
 
-        if (model.RequiereAcompanante && model.Acompanante != null && !string.IsNullOrEmpty(model.Acompanante.NombreCompleto))
+        if (model.RequiereAcompanante && model.Acompanante != null &&
+            !string.IsNullOrEmpty(model.Acompanante.NombreCompleto))
         {
             var acompanante = new Acompanante
             {
@@ -58,5 +66,21 @@ public class PacienteService : IPacienteService
         }
 
         return paciente.Id;
+    }
+
+    public async Task UpdateAsync(Paciente paciente)
+    {
+        _context.Paciente.Update(paciente);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var paciente = await _context.Paciente.FindAsync(id);
+        if (paciente != null)
+        {
+            _context.Paciente.Remove(paciente);
+            await _context.SaveChangesAsync();
+        }
     }
 }

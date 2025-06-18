@@ -1,5 +1,8 @@
 ﻿@page "/elegistro"
-<h3>Elija una opción de registro</h3>
+@using BlazorBootstrap
+@inject NavigationManager NavManager
+
+<h3 class="mb-4">Elija una opción de registro</h3>
 
 <div class="container py-5">
     <div class="row justify-content-center g-4">
@@ -7,12 +10,14 @@
         <div class="col-md-6">
             <Card>
                 <CardBody>
-                    <h4 class="card-title"><PersonPlusFill /> Paciente</h4>
+                    <h4 class="card-title d-flex align-items-center">
+                        <Icon Name="IconName.PersonPlus" /> &nbsp;Paciente
+                    </h4>
                     <p class="card-text">Registre una nueva solicitud o consulte el estado de una existente.</p>
-                    <Button Color="ButtonColor.Primary" Class="w-100" @onclick="@(() => NavManager.NavigateTo("/registro-paciente"))">
-                        <Icon Name="IconName.PersonPlusFill" /> Registrar Solicitud
+                    <Button Color="ButtonColor.Primary" Class="w-100 mt-2" Clicked="@RegistrarPaciente">
+                        <Icon Name="IconName.PersonPlus" /> Registrar Solicitud
                     </Button>
-                    <Button Color="ButtonColor.Info" Class="w-100 mt-2" @onclick="@(() => NavManager.NavigateTo("/seguimiento"))">
+                    <Button Color="ButtonColor.Info" Class="w-100 mt-2" Clicked="@ConsultarEstado">
                         <Icon Name="IconName.Search" /> Consultar Estado
                     </Button>
                 </CardBody>
@@ -23,9 +28,11 @@
         <div class="col-md-6">
             <Card>
                 <CardBody>
-                    <h4 class="card-title"><PersonFill /> Médico / Funcionario MINSA</h4>
+                    <h4 class="card-title d-flex align-items-center">
+                        <Icon Name="IconName.PersonCheck" /> &nbsp;Médico / Funcionario MINSA
+                    </h4>
                     <p class="card-text">Inicie sesión para revisar solicitudes y emitir certificaciones médicas.</p>
-                    <Button Color="ButtonColor.Success" Class="w-100" @onclick="@(() => NavManager.NavigateTo("/identity/account/login"))">
+                    <Button Color="ButtonColor.Success" Class="w-100 mt-2" Clicked="@IniciarSesion">
                         <Icon Name="IconName.BoxArrowInRight" /> Iniciar Sesión
                     </Button>
                 </CardBody>
@@ -35,5 +42,18 @@
 </div>
 
 @code {
-    [Inject] private NavigationManager NavManager { get; set; }
+    private void RegistrarPaciente()
+    {
+        NavManager.NavigateTo("/registro");
+    }
+
+    private void ConsultarEstado()
+    {
+        NavManager.NavigateTo("/seguimiento-solicitud");
+    }
+
+    private void IniciarSesion()
+    {
+        NavManager.NavigateTo("/Account/Login");
+    }
 }

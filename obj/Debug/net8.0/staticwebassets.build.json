@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gJoUO+zHrh8AvljLa0NdvoGeO2peGDOspglV7FxT9oE=",
+  "Hash": "HogpPEQVORowq0PPel+6kvA/oRvfxlakIEwExDxizkE=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "DIGESA\\wwwroot",
       "Source": "DIGESA",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
       "AssetKind": "All",
@@ -31,17 +31,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "7t9tbfaemk",
-      "Integrity": "FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "blazor.bootstrap.css",
       "AssetKind": "All",
@@ -52,17 +50,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "63oqyoiiv4",
-      "Integrity": "jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "blazor.bootstrap.js",
       "AssetKind": "All",
@@ -73,17 +69,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "5vmds449nb",
-      "Integrity": "/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "blazor.bootstrap.pdf.js",
       "AssetKind": "All",
@@ -94,17 +88,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ct0ej5e0q0",
-      "Integrity": "oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "blazor.bootstrap.sortable-list.js",
       "AssetKind": "All",
@@ -115,17 +107,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ezlxc6gzv3",
-      "Integrity": "du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "blazor.bootstrap.theme-switcher.js",
       "AssetKind": "All",
@@ -136,17 +126,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "pisakkcwob",
-      "Integrity": "Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "icon/128X128.png",
       "AssetKind": "All",
@@ -157,17 +145,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tngynhsog2",
-      "Integrity": "J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "pdfjs-4.0.379.min.js",
       "AssetKind": "All",
@@ -178,17 +164,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "j8zp7bt7w3",
-      "Integrity": "XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
       "SourceId": "Blazor.Bootstrap",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
       "BasePath": "_content/Blazor.Bootstrap",
       "RelativePath": "pdfjs-4.0.379.worker.min.js",
       "AssetKind": "All",
@@ -199,17 +183,15 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "79hai7knhw",
-      "Integrity": "JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js"
     },
     {
-      "Identity": "C:\\Users\\carlo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css",
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css",
       "SourceId": "Blazored.Toast",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\carlo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\",
       "BasePath": "_content/Blazored.Toast",
       "RelativePath": "Blazored.Toast.bundle.scp.css",
       "AssetKind": "All",
@@ -220,19 +202,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "2eijknf10w",
-      "Integrity": "Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
       "SourceId": "DIGESA",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "DIGESA#[.{fingerprint}]?.styles.css",
+      "RelativePath": "DIGESA.styles.css",
       "AssetKind": "All",
       "AssetMode": "CurrentProject",
       "AssetRole": "Primary",
@@ -241,19 +221,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "m8xchl1yji",
-      "Integrity": "uhelTxAAs0zU+UuObItDMNAw3q+6HEBXpJkm3C4GziU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
       "SourceId": "DIGESA",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "DIGESA#[.{fingerprint}]!.bundle.scp.css",
+      "RelativePath": "DIGESA.bundle.scp.css",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Primary",
@@ -262,1475 +240,351 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "vl6rg70dns",
-      "Integrity": "zdlXAzBe7DaRnsC/pD2pSENd8gjUc6HG7M3E2JAjh1Y=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\.gitignore",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\.gitignore",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "#[.{fingerprint}]?.gitignore",
+      "RelativePath": ".gitignore",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "z2jl3osqow",
-      "Integrity": "29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\.gitignore"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\app.css",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "app#[.{fingerprint}]?.css",
+      "RelativePath": "app.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "da95v2qkru",
-      "Integrity": "u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
+      "RelativePath": "bootstrap/bootstrap.min.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "6gzpyzhau4",
-      "Integrity": "SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
+      "RelativePath": "bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "8inm30yfxf",
-      "Integrity": "gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\css\\bootstrap.min.css",
       "SourceId": "DIGESA",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
       "BasePath": "_content/DIGESA",
-      "RelativePath": "favicon#[.{fingerprint}]?.png",
+      "RelativePath": "css/bootstrap.min.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ifv42okdf2",
-      "Integrity": "4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\favicon.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "favicon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
-    }
-  ],
-  "Endpoints": [
-    {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.5vmds449nb.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "77889"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 18:04:42 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "5vmds449nb"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.js"
-        }
-      ]
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.63oqyoiiv4.css",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "22639"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 09 Nov 2024 14:43:36 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "63oqyoiiv4"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.css"
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\images\\1.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/1.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\1.jpeg"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "14166"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 02 Nov 2024 09:45:23 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "7t9tbfaemk"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/Blazor.Bootstrap.bundle.scp.css"
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\images\\2.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/2.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\2.jpeg"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/Blazor.Bootstrap.bundle.scp.css",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "14166"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 02 Nov 2024 09:45:23 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\images\\3.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/3.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3.jpeg"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.css",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "22639"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 09 Nov 2024 14:43:36 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\images\\logo-gob.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/logo-gob.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo-gob.png"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "77889"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 18:04:42 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\images\\logo-minsa.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/logo-minsa.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo-minsa.png"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.ct0ej5e0q0.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7290"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "ct0ej5e0q0"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.js"
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.js"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7290"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js.map",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.js.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.ezlxc6gzv3.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1930"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Apr 2024 19:30:56 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "ezlxc6gzv3"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.js"
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1930"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Apr 2024 19:30:56 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js.map",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.min.js.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2896"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 20 Nov 2024 15:30:37 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\sidebar.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/sidebar.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sidebar.js"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.pisakkcwob.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2896"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 20 Nov 2024 15:30:37 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "pisakkcwob"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.js"
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\js\\theme.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/theme.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\theme.js"
     },
     {
-      "Route": "_content/Blazor.Bootstrap/icon/128X128.png",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7074"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 19 Apr 2022 11:45:43 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU="
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor.Bootstrap/icon/128X128.tngynhsog2.png",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7074"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 19 Apr 2022 11:45:43 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "tngynhsog2"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/icon/128X128.png"
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.j8zp7bt7w3.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "305685"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "j8zp7bt7w3"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.js"
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "305685"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ="
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.79hai7knhw.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1029159"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "79hai7knhw"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.js"
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.js",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1029159"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ="
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazored.Toast/Blazored.Toast.bundle.scp.css",
-      "AssetFile": "C:\\Users\\carlo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3483"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 19 Mar 2024 16:42:38 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4="
-        }
-      ]
-    },
-    {
-      "Route": ".gitignore",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\.gitignore",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "622"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:27:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo="
-        }
-      ]
-    },
-    {
-      "Route": ".z2jl3osqow.gitignore",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\.gitignore",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "622"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:27:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "z2jl3osqow"
-        },
-        {
-          "Name": "label",
-          "Value": ".gitignore"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo="
-        }
-      ]
-    },
-    {
-      "Route": "app.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\app.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2591"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE="
-        }
-      ]
-    },
-    {
-      "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\app.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2591"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "da95v2qkru"
-        },
-        {
-          "Name": "label",
-          "Value": "app.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE="
-        }
-      ]
-    },
-    {
-      "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "162726"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "6gzpyzhau4"
-        },
-        {
-          "Name": "label",
-          "Value": "bootstrap/bootstrap.min.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0="
-        }
-      ]
-    },
-    {
-      "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "162726"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0="
-        }
-      ]
-    },
-    {
-      "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "449111"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/plain"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "8inm30yfxf"
-        },
-        {
-          "Name": "label",
-          "Value": "bootstrap/bootstrap.min.css.map"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ="
-        }
-      ]
-    },
-    {
-      "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "449111"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/plain"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ="
-        }
-      ]
-    },
-    {
-      "Route": "DIGESA.bundle.scp.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "8183"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"zdlXAzBe7DaRnsC/pD2pSENd8gjUc6HG7M3E2JAjh1Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-zdlXAzBe7DaRnsC/pD2pSENd8gjUc6HG7M3E2JAjh1Y="
-        }
-      ]
-    },
-    {
-      "Route": "DIGESA.m8xchl1yji.styles.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "8332"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"uhelTxAAs0zU+UuObItDMNAw3q+6HEBXpJkm3C4GziU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:35:57 GMT"
-        },
-        {
-          "Name": "Link",
-          "Value": "<_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Blazored.Toast/Blazored.Toast.bundle.scp.css>; rel=\"preload\"; as=\"style\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "m8xchl1yji"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-uhelTxAAs0zU+UuObItDMNAw3q+6HEBXpJkm3C4GziU="
-        },
-        {
-          "Name": "label",
-          "Value": "DIGESA.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "DIGESA.styles.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "8332"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"uhelTxAAs0zU+UuObItDMNAw3q+6HEBXpJkm3C4GziU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:35:57 GMT"
-        },
-        {
-          "Name": "Link",
-          "Value": "<_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Blazored.Toast/Blazored.Toast.bundle.scp.css>; rel=\"preload\"; as=\"style\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-uhelTxAAs0zU+UuObItDMNAw3q+6HEBXpJkm3C4GziU="
-        }
-      ]
-    },
-    {
-      "Route": "DIGESA.vl6rg70dns.bundle.scp.css",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "8183"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"zdlXAzBe7DaRnsC/pD2pSENd8gjUc6HG7M3E2JAjh1Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "vl6rg70dns"
-        },
-        {
-          "Name": "label",
-          "Value": "DIGESA.bundle.scp.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-zdlXAzBe7DaRnsC/pD2pSENd8gjUc6HG7M3E2JAjh1Y="
-        }
-      ]
-    },
-    {
-      "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\favicon.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1148"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "ifv42okdf2"
-        },
-        {
-          "Name": "label",
-          "Value": "favicon.png"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg="
-        }
-      ]
-    },
-    {
-      "Route": "favicon.png",
-      "AssetFile": "C:\\Users\\carlo\\RiderProjects\\Nueva carpeta\\DIGESA\\wwwroot\\favicon.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1148"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 18 Jun 2025 06:23:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg="
-        }
-      ]
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\README.md",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "README.md",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\README.md"
     }
   ]
 }

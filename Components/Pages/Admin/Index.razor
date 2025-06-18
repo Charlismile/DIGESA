@@ -1,7 +1,15 @@
-﻿@page "/Index"
+﻿@page "/index"
+@using BlazorBootstrap
+@using BlazorBootstrap.Components
 
-<h4 class="mb-4">Dashboard</h4>
+<PageTitle>Plataforma DIGESA - Cannabis Medicinal</PageTitle>
 
+<h2 class="fw-bold text-primary mb-1">
+    <Icon Name="IconName.Speedometer2" /> Panel de Control
+</h2>
+<p class="text-muted mb-4">Bienvenido al sistema de gestión de cannabis medicinal</p>
+
+<!-- Estadísticas Rápidas -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
         <Card>
@@ -37,35 +45,72 @@
     </div>
 </div>
 
+<!-- Tabla Últimas Solicitudes -->
 <Card>
     <CardBody>
         <h5 class="card-title">Últimas Solicitudes</h5>
         <Table Responsive="true" Hover="true" Striped="true">
-            <TableHead>
-                <TableRow>
-                    <TableHeader>#</TableHeader>
-                    <TableHeader>Paciente</TableHeader>
-                    <TableHeader>Médico</TableHeader>
-                    <TableHeader>Fecha</TableHeader>
-                    <TableHeader>Estado</TableHeader>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                <TableRow>
-                    <TableCell>1</TableCell>
-                    <TableCell>Juan Pérez</TableCell>
-                    <TableCell>Dra. Ana Rojas</TableCell>
-                    <TableCell>2025-04-01</TableCell>
-                    <TableCell><Badge Theme="Theme.Success">Aprobada</Badge></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell>2</TableCell>
-                    <TableCell>María López</TableCell>
-                    <TableCell>Dr. Carlos M.</TableCell>
-                    <TableCell>2025-04-02</TableCell>
-                    <TableCell><Badge Theme="Theme.Info">En Revisión</Badge></TableCell>
-                </TableRow>
-            </TableBody>
+            <!---logica para las ultimas solicitudes--->
         </Table>
     </CardBody>
 </Card>
+
+<!-- Más estadísticas -->
+<div class="row g-4 mt-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card bg-primary">
+            <div class="stats-card-body">
+                <div class="d-flex align-items-center">
+                    <div class="stats-icon text-white"><Icon Name="IconName.PeopleFill" /></div>
+                    <div class="stats-content text-white">
+                        <div class="stats-number">1,247</div>
+                        <div class="stats-label">Pacientes Registrados</div>
+                    </div>
+                </div>
+                <div class="stats-trend text-white"><Icon Name="IconName.ArrowUp" /> +12% este mes</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card bg-success">
+            <div class="stats-card-body">
+                <div class="d-flex align-items-center">
+                    <div class="stats-icon text-white"><Icon Name="IconName.FileEarmarkCheck" /></div>
+                    <div class="stats-content text-white">
+                        <div class="stats-number">856</div>
+                        <div class="stats-label">Solicitudes Aprobadas</div>
+                    </div>
+                </div>
+                <div class="stats-trend text-white"><Icon Name="IconName.ArrowUp" /> +8% este mes</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card bg-warning">
+            <div class="stats-card-body">
+                <div class="d-flex align-items-center">
+                    <div class="stats-icon text-white"><Icon Name="IconName.ClockHistory" /></div>
+                    <div class="stats-content text-white">
+                        <div class="stats-number">42</div>
+                        <div class="stats-label">Pendientes de Revisión</div>
+                    </div>
+                </div>
+                <div class="stats-trend text-white"><Icon Name="IconName.ArrowDown" /> -15% esta semana</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card bg-info">
+            <div class="stats-card-body">
+                <div class="d-flex align-items-center">
+                    <div class="stats-icon text-white"><Icon Name="IconName.Award" /></div>
+                    <div class="stats-content text-white">
+                        <div class="stats-number">723</div>
+                        <div class="stats-label">Certificaciones Emitidas</div>
+                    </div>
+                </div>
+                <div class="stats-trend text-white"><Icon Name="IconName.ArrowUp" /> +25% este mes</div>
+            </div>
+        </div>
+    </div>
+</div>

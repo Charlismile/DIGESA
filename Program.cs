@@ -8,7 +8,7 @@ using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Services;
 using DIGESA.Services.Interfaces;
-using DIGESA.Validadores;
+// using DIGESA.Validadores;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +28,7 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddBlazoredToast();
 builder.Services.AddSingleton<IQRService, QRService>();
-builder.Services.AddValidatorsFromAssemblyContaining<PacienteRegistroValidator>();
+// builder.Services.AddValidatorsFromAssemblyContaining<PacienteRegistroValidator>();
 // Configure Entity Framework and Identity
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
