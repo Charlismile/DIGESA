@@ -1,348 +1,119 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
 
-    <section id="home" class="hero-section bg-gradient-primary">
-        <div class="container">
-            <div class="row align-items-center min-vh-100 py-5">
-                <div class="col-lg-12 text-center">
-                    <div class="hero-content">
-                        <h1 class="display-4 fw-bold mb-3 animate-fadeInUp" style="animation-delay: 0.1s;">
-                            Registro de Pacientes con <span style="color: green">Cannabis Medicinal</span>
-                        </h1>
-                        <p class="lead mb-4 animate-fadeInUp" style="animation-delay: 0.2s;">
-                            Esta plataforma permite a los pacientes registrar sus solicitudes para el uso de cannabis medicinal y a los médicos emitir certificaciones médicas.
-                            Seleccione una opción para continuar.
-                        </p>
-                        <Carousel Autoplay="CarouselAutoPlay.StartOnPageLoad">
-                            <CarouselItem Active="true" Interval="5000">
-                                <Image Src="images/1.jpeg"/>
-                            </CarouselItem>
-                            <CarouselItem Interval="5000">
-                                <Image Src="images/2.jpeg"/>
-                            </CarouselItem>
-                            <CarouselItem Interval="5000">
-                                <Image Src="images/3.jpeg"/>
-                            </CarouselItem >
-                        </Carousel>
+<div class="container py-5">
+    <div class="row justify-content-center g-4">
+        <section id="home" class="hero-section bg-gradient-primary">
+                    <div class="col-lg-12 text-center">
+                        <div class="hero-content justify-content-center">
+                            <h1 class="display-4 fw-bold mb-3 animate-fadeInUp" style="animation-delay: 0.1s;">
+                                Registro de Pacientes con <span style="color: green">Cannabis Medicinal</span>
+                            </h1>
+                            <p class="lead mb-4 animate-fadeInUp" style="animation-delay: 0.2s;">
+                                El propósito principal del registro es permitir el seguimiento clínico y administrativo
+                                de los pacientes que hacen uso de cannabis medicinal,
+                                así como recopilar datos estadísticos que permitan conocer la demanda real de este producto en el sistema de salud nacional.
+                                Además, se busca formalizar el proceso de prescripción por parte de profesionales autorizados y establecer mecanismos de control y trazabilidad.
+                            </p>
+                            @* <Carousel Autoplay="CarouselAutoPlay.StartOnPageLoad"> *@
+                            @*     <CarouselItem Active="true" Interval="5000"> *@
+                            @*         <Image Src="images/1.jpeg"/> *@
+                            @*     </CarouselItem> *@
+                            @*     <CarouselItem Interval="5000"> *@
+                            @*         <Image Src="images/2.jpeg"/> *@
+                            @*     </CarouselItem> *@
+                            @*     <CarouselItem Interval="5000"> *@
+                            @*         <Image Src="images/3.jpeg"/> *@
+                            @*     </CarouselItem > *@
+                            @* </Carousel> *@
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div> 
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                    <h2 class="display-5 fw-bold mb-3">¿Para qué una plataforma?</h2>
-                    <p class="lead text-muted">
-                        El propósito principal del registro es permitir el seguimiento clínico y administrativo 
-                        de los pacientes que hacen uso de cannabis medicinal, 
-                        así como recopilar datos estadísticos que permitan conocer la demanda real de este producto en el sistema de salud nacional. 
-                        Además, se busca formalizar el proceso de prescripción por parte de profesionales autorizados y establecer mecanismos de control y trazabilidad.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-lift">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon bg-primary bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                <i class="bi bi-lightbulb text-white fs-3"></i>
-                            </div>
-                            <h5 class="card-title fw-bold">Innovación</h5>
-                            <p class="card-text text-muted">
-                                Generamos soluciones tecnológicas innovadoras que facilitan el acceso a tratamientos médicos con cannabis.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-lift">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon bg-success bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                <i class="bi bi-people text-white fs-3"></i>
-                            </div>
-                            <h5 class="card-title fw-bold">Equipo Experto</h5>
-                            <p class="card-text text-muted">
-                                Profesionales altamente calificados y debidamente titulados, con años de 
-                                experiencia en temas de la salud.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-lift">
-                        <div class="card-body text-center p-4">
-                            <div class="feature-icon bg-warning bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                <i class="bi bi-clock text-white fs-3"></i>
-                            </div>
-                            <h5 class="card-title fw-bold">Renovacion</h5>
-                            <p class="card-text text-muted">
-                                Realizar renovaciones del registro cada dos (2) años.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Repositories Section -->
-    <section id="services" class="py-5">
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                    <h2 class="display-5 fw-bold mb-3">Nuestros Servicios</h2>
-                    <p class="lead text-muted">
-                        Ofrecemos una amplia gama de servicios tecnológicos para 
-                        cubrir todas las necesidades de tu negocio.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="service-item d-flex">
-                        <div class="service-icon flex-shrink-0 me-4">
-                            <div class="bg-primary bg-gradient rounded-3 p-3">
-                                <i class="bi bi-code-slash text-white fs-4"></i>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h5 class="fw-bold mb-2">Desarrollo Web</h5>
-                            <p class="text-muted mb-3">
-                                Aplicaciones web modernas y responsivas utilizando 
-                                las últimas tecnologías como React, Angular y Blazor.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="service-item d-flex">
-                        <div class="service-icon flex-shrink-0 me-4">
-                            <div class="bg-success bg-gradient rounded-3 p-3">
-                                <i class="bi bi-phone text-white fs-4"></i>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h5 class="fw-bold mb-2">Apps Móviles</h5>
-                            <p class="text-muted mb-3">
-                                Desarrollo de aplicaciones móviles nativas e híbridas 
-                                para iOS y Android con experiencia de usuario excepcional.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="service-item d-flex">
-                        <div class="service-icon flex-shrink-0 me-4">
-                            <div class="bg-warning bg-gradient rounded-3 p-3">
-                                <i class="bi bi-cloud text-white fs-4"></i>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h5 class="fw-bold mb-2">Soluciones Cloud</h5>
-                            <p class="text-muted mb-3">
-                                Migración y desarrollo de aplicaciones en la nube 
-                                con Azure, AWS y Google Cloud Platform.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="service-item d-flex">
-                        <div class="service-icon flex-shrink-0 me-4">
-                            <div class="bg-info bg-gradient rounded-3 p-3">
-                                <i class="bi bi-graph-up text-white fs-4"></i>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h5 class="fw-bold mb-2">Análisis de Datos</h5>
-                            <p class="text-muted mb-3">
-                                Transformamos tus datos en insights valiosos mediante 
-                                dashboards interactivos y análisis predictivo.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-5 bg-primary text-white">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md-3">
-                    <div class="stat-item">
-                        <h3 class="display-4 fw-bold mb-0">150+</h3>
-                        <p class="mb-0">Proyectos Completados</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-item">
-                        <h3 class="display-4 fw-bold mb-0">98%</h3>
-                        <p class="mb-0">Satisfacción del Cliente</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-item">
-                        <h3 class="display-4 fw-bold mb-0">24/7</h3>
-                        <p class="mb-0">Soporte Técnico</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-item">
-                        <h3 class="display-4 fw-bold mb-0">5+</h3>
-                        <p class="mb-0">Años de Experiencia</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                    <h2 class="display-5 fw-bold mb-3">¿Listo para comenzar?</h2>
-                    <p class="lead text-muted">
-                        Contáctanos hoy mismo y descubre cómo podemos ayudarte 
-                        a llevar tu negocio al siguiente nivel.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body p-4">
-                            <form>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Tu nombre">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" placeholder="tu@email.com">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="form-label">Asunto</label>
-                                        <input type="text" class="form-control" placeholder="¿En qué podemos ayudarte?">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="form-label">Mensaje</label>
-                                        <textarea class="form-control" rows="5" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button type="submit" class="btn btn-primary btn-lg px-4">
-                                            <i class="bi bi-send me-2"></i>
-                                            Enviar mensaje
-                                        </button>
-                                    </div>
+        <!-- Features Section -->
+        <section id="about" class="py-5 bg-light">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-primary bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-lightbulb text-white fs-3"></i>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <div class="contact-info">
-                        <div class="contact-item d-flex mb-4">
-                            <div class="contact-icon flex-shrink-0 me-3">
-                                <div class="bg-primary rounded-circle p-3">
-                                    <i class="bi bi-geo-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1">Dirección</h6>
-                                <p class="text-muted mb-0">Av. Principal 123, Ciudad, País</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item d-flex mb-4">
-                            <div class="contact-icon flex-shrink-0 me-3">
-                                <div class="bg-success rounded-circle p-3">
-                                    <i class="bi bi-telephone text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1">Teléfono</h6>
-                                <p class="text-muted mb-0">+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item d-flex mb-4">
-                            <div class="contact-icon flex-shrink-0 me-3">
-                                <div class="bg-warning rounded-circle p-3">
-                                    <i class="bi bi-envelope text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1">Email</h6>
-                                <p class="text-muted mb-0">contacto@techsolutions.com</p>
+                                <h5 class="card-title fw-bold">Innovación</h5>
+                                <p class="card-text text-muted">
+                                    Generamos soluciones tecnológicas innovadoras que facilitan el acceso a tratamientos médicos con cannabis.
+                                </p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <h5 class="fw-bold mb-3">
-                        <i class="bi bi-lightning-charge-fill me-2"></i>
-                        TechSolutions
-                    </h5>
-                    <p class="text-muted">
-                        Transformamos ideas en soluciones digitales innovadoras 
-                        que impulsan el crecimiento de tu negocio.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
-                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
-                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-5"></i></a>
-                        <a href="#" class="text-white"><i class="bi bi-instagram fs-5"></i></a>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-success bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-people text-white fs-3"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Equipo Experto</h5>
+                                <p class="card-text text-muted">
+                                    Profesionales altamente calificados y debidamente titulados, con años de
+                                    experiencia en temas de la salud.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-warning bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-clock text-white fs-3"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Renovacion</h5>
+                                <p class="card-text text-muted">
+                                    Realizar renovaciones del registro cada dos (2) años.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-2">
-                    <h6 class="fw-bold mb-3">Empresa</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Acerca de</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Equipo</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Carreras</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Blog</a></li>
-                    </ul>
-                </div>
-                
             </div>
-            
-            <hr class="my-4">
-            
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-muted mb-0">© 2025 TechSolutions. Todos los derechos reservados.</p>
+        </section>
+        <h3 class="mb-6 text-center">Elija una opción de registro</h3>
+
+        <!-- Card: Paciente -->
+        <div class="col">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="card-title d-flex align-items-center">
+                        <Icon Name="IconName.PersonPlus"/> &nbsp;Paciente
+                    </h4>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-muted text-decoration-none me-3">Privacidad</a>
-                    <a href="#" class="text-muted text-decoration-none">Términos</a>
+                <div class="card-body d-flex flex-column text-center">
+                    <i class="bi bi-people-fill display-4 text-success mb-3"></i>
+                    <p class="card-text">Registre una nueva solicitud o consulte el estado de una existente.</p>
+                    <a class="btn btn-success mt-3 w-100" href="/registro">Registrar</a>
+                    <a class="btn btn-success mt-3 w-100" href="/seguimiento-solicitud">Consultar estado</a>
                 </div>
             </div>
         </div>
-    </footer>
+
+        <!-- Card: Médico / Funcionario MINSA -->
+        <div class="col">
+            <div class="card h-100 border-warning shadow-sm">
+                <div class="card-header bg-warning text-white text-center py-3">
+                    <h4 class="card-title d-flex align-items-center">
+                        <Icon Name="IconName.PersonCheck"/> &nbsp;Médico / Funcionario MINSA
+                    </h4>
+                </div>
+                <div class="card-body d-flex flex-column text-center">
+                    <img src="images/logo-minsa.png" alt="logomin" width="55px" class="rounded mx-auto d-block"/><br/>
+                    <p class="card-text">Inicie sesión para revisar solicitudes y emitir certificaciones médicas.</p>
+                    <a class="btn btn-warning mt-3 w-100" href="/Account/Login">Iniciar Sesion</a>
+                    <a class="btn btn-warning mt-3 w-100" href="/Account/Register">Registrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

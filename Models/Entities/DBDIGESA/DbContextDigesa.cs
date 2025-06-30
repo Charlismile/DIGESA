@@ -21,8 +21,6 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<Certificacion> Certificacion { get; set; }
 
-    public virtual DbSet<Diagnostico> Diagnostico { get; set; }
-
     public virtual DbSet<DocumentoAdjunto> DocumentoAdjunto { get; set; }
 
     public virtual DbSet<FormaFarmaceutica> FormaFarmaceutica { get; set; }
@@ -31,17 +29,11 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<Paciente> Paciente { get; set; }
 
-    public virtual DbSet<PacienteDiagnostico> PacienteDiagnostico { get; set; }
-
     public virtual DbSet<Revision> Revision { get; set; }
 
     public virtual DbSet<Solicitud> Solicitud { get; set; }
 
-    public virtual DbSet<SolicitudDiagnostico> SolicitudDiagnostico { get; set; }
-
     public virtual DbSet<Tratamiento> Tratamiento { get; set; }
-
-    public virtual DbSet<TratamientoCannabinoide> TratamientoCannabinoide { get; set; }
 
     public virtual DbSet<TratamientoFormaFarmaceutica> TratamientoFormaFarmaceutica { get; set; }
 
@@ -58,312 +50,375 @@ public partial class DbContextDigesa : DbContext
     {
         modelBuilder.Entity<Acompanante>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Acompana__3214EC075DAF836C");
+            entity.Property(e => e.AcompananteActivo)
+                .HasDefaultValue(true)
+                .HasColumnName("Acompanante_Activo");
+            entity.Property(e => e.AcompananteFechaRegistro)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Acompanante_FechaRegistro");
+            entity.Property(e => e.AcompananteNacionalidad)
+                .HasMaxLength(50)
+                .HasColumnName("Acompanante_Nacionalidad");
+            entity.Property(e => e.AcompananteNombreCompleto)
+                .HasMaxLength(150)
+                .HasColumnName("Acompanante_NombreCompleto");
+            entity.Property(e => e.AcompananteNumeroDocumento)
+                .HasMaxLength(30)
+                .HasColumnName("Acompanante_NumeroDocumento");
+            entity.Property(e => e.AcompanantePacienteId).HasColumnName("Acompanante_PacienteId");
+            entity.Property(e => e.AcompananteParentesco)
+                .HasMaxLength(50)
+                .HasColumnName("Acompanante_Parentesco");
+            entity.Property(e => e.AcompananteTipoDocumento)
+                .HasMaxLength(20)
+                .HasColumnName("Acompanante_TipoDocumento");
 
-            entity.HasIndex(e => new { e.TipoDocumento, e.NumeroDocumento }, "UQ_Acompanante_Documento").IsUnique();
-
-            entity.Property(e => e.Nacionalidad).HasMaxLength(50);
-            entity.Property(e => e.NombreCompleto).HasMaxLength(150);
-            entity.Property(e => e.NumeroDocumento).HasMaxLength(30);
-            entity.Property(e => e.Parentesco).HasMaxLength(50);
-            entity.Property(e => e.TipoDocumento).HasMaxLength(20);
-
-            entity.HasOne(d => d.Paciente).WithMany(p => p.Acompanante)
-                .HasForeignKey(d => d.PacienteId)
+            entity.HasOne(d => d.AcompanantePaciente).WithMany(p => p.Acompanante)
+                .HasForeignKey(d => d.AcompanantePacienteId)
                 .HasConstraintName("FK_Acompanante_Paciente");
         });
 
         modelBuilder.Entity<AuditoriaAccion>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Auditori__3214EC07E59971FD");
-
-            entity.Property(e => e.AccionRealizada).HasMaxLength(500);
-            entity.Property(e => e.FechaAccion)
+            entity.Property(e => e.AuditoriaAccionAccionRealizada)
+                .HasMaxLength(500)
+                .HasColumnName("AuditoriaAccion_AccionRealizada");
+            entity.Property(e => e.AuditoriaAccionDetallesAdicionales).HasColumnName("AuditoriaAccion_DetallesAdicionales");
+            entity.Property(e => e.AuditoriaAccionFechaAccion)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Ipaddress)
+                .HasColumnType("datetime")
+                .HasColumnName("AuditoriaAccion_FechaAccion");
+            entity.Property(e => e.AuditoriaAccionIpaddress)
                 .HasMaxLength(50)
-                .HasColumnName("IPAddress");
-            entity.Property(e => e.NombreTablaAfectada).HasMaxLength(128);
-            entity.Property(e => e.UserAgent).HasMaxLength(255);
-            entity.Property(e => e.UsuarioId).HasMaxLength(450);
+                .HasColumnName("AuditoriaAccion_IPAddress");
+            entity.Property(e => e.AuditoriaAccionRegistroAfectadoId).HasColumnName("AuditoriaAccion_RegistroAfectadoId");
+            entity.Property(e => e.AuditoriaAccionTablaAfectada)
+                .HasMaxLength(128)
+                .HasColumnName("AuditoriaAccion_TablaAfectada");
+            entity.Property(e => e.AuditoriaAccionUserAgent)
+                .HasMaxLength(255)
+                .HasColumnName("AuditoriaAccion_UserAgent");
+            entity.Property(e => e.AuditoriaAccionUsuarioId)
+                .HasMaxLength(450)
+                .HasColumnName("AuditoriaAccion_UsuarioId");
         });
 
         modelBuilder.Entity<Certificacion>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Certific__3214EC07E5CDB8CD");
+            entity.HasIndex(e => e.CertificacionCodigoCertificado, "UIX_Certificacion_Codigo").IsUnique();
 
-            entity.HasIndex(e => e.CodigoCertificado, "UQ__Certific__AAE1A2C378CE674B").IsUnique();
-
-            entity.Property(e => e.CodigoCertificado).HasMaxLength(100);
-            entity.Property(e => e.CodigoQr)
+            entity.Property(e => e.CertificacionCodigoCertificado)
+                .HasMaxLength(100)
+                .HasColumnName("Certificacion_CodigoCertificado");
+            entity.Property(e => e.CertificacionCodigoQr)
                 .HasMaxLength(500)
-                .HasColumnName("CodigoQR");
-            entity.Property(e => e.EstadoCertificado)
+                .HasColumnName("Certificacion_CodigoQR");
+            entity.Property(e => e.CertificacionEstado)
                 .HasMaxLength(20)
-                .HasDefaultValue("Activa");
-            entity.Property(e => e.FechaEmision)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.FechaVencimiento).HasColumnType("datetime");
-            entity.Property(e => e.RutaArchivoQr)
+                .HasDefaultValue("Vigente")
+                .HasColumnName("Certificacion_Estado");
+            entity.Property(e => e.CertificacionFechaEmision)
+                .HasColumnType("datetime")
+                .HasColumnName("Certificacion_FechaEmision");
+            entity.Property(e => e.CertificacionFechaVencimiento)
+                .HasColumnType("datetime")
+                .HasColumnName("Certificacion_FechaVencimiento");
+            entity.Property(e => e.CertificacionRutaArchivoQr)
                 .HasMaxLength(255)
-                .HasColumnName("RutaArchivoQR");
+                .HasColumnName("Certificacion_RutaArchivoQR");
+            entity.Property(e => e.CertificacionSolicitudId).HasColumnName("Certificacion_SolicitudId");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Certificacion)
-                .HasForeignKey(d => d.SolicitudId)
+            entity.HasOne(d => d.CertificacionSolicitud).WithMany(p => p.Certificacion)
+                .HasForeignKey(d => d.CertificacionSolicitudId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Certificacion_Solicitud");
-        });
-
-        modelBuilder.Entity<Diagnostico>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Diagnost__3214EC07A9410CBF");
-
-            entity.HasIndex(e => e.CodigoCie10, "UQ_Diagnostico_Codigo").IsUnique();
-
-            entity.HasIndex(e => e.Nombre, "UQ_Diagnostico_Nombre").IsUnique();
-
-            entity.Property(e => e.CodigoCie10)
-                .HasMaxLength(10)
-                .HasColumnName("CodigoCIE10");
-            entity.Property(e => e.Descripcion).HasMaxLength(300);
-            entity.Property(e => e.Nombre).HasMaxLength(150);
         });
 
         modelBuilder.Entity<DocumentoAdjunto>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Document__3214EC07C2E731A4");
-
-            entity.Property(e => e.Descripcion).HasMaxLength(500);
-            entity.Property(e => e.FechaSubida)
+            entity.Property(e => e.DocumentoAdjuntoDescripcion)
+                .HasMaxLength(500)
+                .HasColumnName("DocumentoAdjunto_Descripcion");
+            entity.Property(e => e.DocumentoAdjuntoFechaSubida)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.NombreArchivo).HasMaxLength(255);
-            entity.Property(e => e.RutaAlmacenamiento).HasMaxLength(500);
-            entity.Property(e => e.SubidoPorUsuarioId).HasMaxLength(450);
-            entity.Property(e => e.TipoContenidoMime)
+                .HasColumnType("datetime")
+                .HasColumnName("DocumentoAdjunto_FechaSubida");
+            entity.Property(e => e.DocumentoAdjuntoNombreArchivo)
+                .HasMaxLength(255)
+                .HasColumnName("DocumentoAdjunto_NombreArchivo");
+            entity.Property(e => e.DocumentoAdjuntoRutaAlmacenamiento)
+                .HasMaxLength(500)
+                .HasColumnName("DocumentoAdjunto_RutaAlmacenamiento");
+            entity.Property(e => e.DocumentoAdjuntoSolicitudId).HasColumnName("DocumentoAdjunto_SolicitudId");
+            entity.Property(e => e.DocumentoAdjuntoSubidoPorUsuarioId)
+                .HasMaxLength(450)
+                .HasColumnName("DocumentoAdjunto_SubidoPorUsuarioId");
+            entity.Property(e => e.DocumentoAdjuntoTipoContenidoMime)
                 .HasMaxLength(100)
-                .HasColumnName("TipoContenidoMIME");
-            entity.Property(e => e.TipoDocumento).HasMaxLength(100);
+                .HasColumnName("DocumentoAdjunto_TipoContenidoMIME");
+            entity.Property(e => e.DocumentoAdjuntoTipoDocumento)
+                .HasMaxLength(100)
+                .HasColumnName("DocumentoAdjunto_TipoDocumento");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.DocumentoAdjunto)
-                .HasForeignKey(d => d.SolicitudId)
-                .HasConstraintName("FK__Documento__Solic__0E6E26BF");
+            entity.HasOne(d => d.DocumentoAdjuntoSolicitud).WithMany(p => p.DocumentoAdjunto)
+                .HasForeignKey(d => d.DocumentoAdjuntoSolicitudId)
+                .HasConstraintName("FK_DocumentoAdjunto_Solicitud");
         });
 
         modelBuilder.Entity<FormaFarmaceutica>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FormaFar__3214EC07BA8DB969");
+            entity.HasIndex(e => e.FormaFarmaceuticaNombre, "UIX_FormaFarmaceutica_Nombre").IsUnique();
 
-            entity.Property(e => e.Nombre).HasMaxLength(100);
+            entity.Property(e => e.FormaFarmaceuticaNombre)
+                .HasMaxLength(100)
+                .HasColumnName("FormaFarmaceutica_Nombre");
         });
 
         modelBuilder.Entity<Medico>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Medico__3214EC0719EC784E");
+            entity.HasIndex(e => e.MedicoNumeroRegistroIdoneidad, "UIX_Medico_RegistroIdoneidad").IsUnique();
 
-            entity.HasIndex(e => e.NumeroRegistroIdoneidad, "UQ_Medico_Idoneidad").IsUnique();
-
-            entity.Property(e => e.CorreoElectronico).HasMaxLength(100);
-            entity.Property(e => e.Disciplina).HasMaxLength(50);
-            entity.Property(e => e.Especialidad).HasMaxLength(100);
-            entity.Property(e => e.InstalacionSalud).HasMaxLength(150);
-            entity.Property(e => e.NombreCompleto).HasMaxLength(150);
-            entity.Property(e => e.NumeroRegistroIdoneidad).HasMaxLength(50);
-            entity.Property(e => e.NumeroTelefono).HasMaxLength(20);
+            entity.Property(e => e.MedicoCorreoElectronico)
+                .HasMaxLength(100)
+                .HasColumnName("Medico_CorreoElectronico");
+            entity.Property(e => e.MedicoDisciplina)
+                .HasMaxLength(50)
+                .HasColumnName("Medico_Disciplina");
+            entity.Property(e => e.MedicoEspecialidad)
+                .HasMaxLength(100)
+                .HasColumnName("Medico_Especialidad");
+            entity.Property(e => e.MedicoFechaRegistro)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Medico_FechaRegistro");
+            entity.Property(e => e.MedicoInstalacionSalud)
+                .HasMaxLength(150)
+                .HasColumnName("Medico_InstalacionSalud");
+            entity.Property(e => e.MedicoNombreCompleto)
+                .HasMaxLength(150)
+                .HasColumnName("Medico_NombreCompleto");
+            entity.Property(e => e.MedicoNumeroRegistroIdoneidad)
+                .HasMaxLength(50)
+                .HasColumnName("Medico_NumeroRegistroIdoneidad");
+            entity.Property(e => e.MedicoNumeroTelefono)
+                .HasMaxLength(20)
+                .HasColumnName("Medico_NumeroTelefono");
             entity.Property(e => e.UsuarioId).HasMaxLength(450);
         });
 
         modelBuilder.Entity<Paciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Paciente__3214EC07E652C9FC");
+            entity.HasIndex(e => new { e.PacienteTipoDocumento, e.PacienteNumeroDocumento }, "UIX_Paciente_NumeroDocumento").IsUnique();
 
-            entity.HasIndex(e => new { e.TipoDocumento, e.NumeroDocumento }, "UQ_Paciente_Documento").IsUnique();
-
-            entity.Property(e => e.CorreoElectronico).HasMaxLength(100);
-            entity.Property(e => e.DireccionResidencia).HasMaxLength(300);
-            entity.Property(e => e.InstalacionSalud).HasMaxLength(150);
-            entity.Property(e => e.MotivoRequerimientoAcompanante).HasMaxLength(250);
-            entity.Property(e => e.Nacionalidad).HasMaxLength(50);
-            entity.Property(e => e.NombreCompleto).HasMaxLength(150);
-            entity.Property(e => e.NumeroDocumento).HasMaxLength(30);
-            entity.Property(e => e.RegionSalud).HasMaxLength(100);
-            entity.Property(e => e.Sexo).HasMaxLength(20);
-            entity.Property(e => e.TelefonoLaboral).HasMaxLength(20);
-            entity.Property(e => e.TelefonoPersonal).HasMaxLength(20);
-            entity.Property(e => e.TelefonoResidencial).HasMaxLength(20);
-            entity.Property(e => e.TipoDiscapacidad).HasMaxLength(200);
-            entity.Property(e => e.TipoDocumento).HasMaxLength(20);
+            entity.Property(e => e.PacienteCorreoElectronico)
+                .HasMaxLength(100)
+                .HasColumnName("Paciente_CorreoElectronico");
+            entity.Property(e => e.PacienteDireccionResidencia)
+                .HasMaxLength(300)
+                .HasColumnName("Paciente_DireccionResidencia");
+            entity.Property(e => e.PacienteEstado)
+                .HasMaxLength(50)
+                .HasDefaultValue("Activo")
+                .HasColumnName("Paciente_Estado");
+            entity.Property(e => e.PacienteFechaNacimiento).HasColumnName("Paciente_FechaNacimiento");
+            entity.Property(e => e.PacienteFechaRegistro)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Paciente_FechaRegistro");
+            entity.Property(e => e.PacienteInstalacionSalud)
+                .HasMaxLength(150)
+                .HasColumnName("Paciente_InstalacionSalud");
+            entity.Property(e => e.PacienteMotivoRequerimientoAcompanante)
+                .HasMaxLength(250)
+                .HasColumnName("Paciente_MotivoRequerimientoAcompanante");
+            entity.Property(e => e.PacienteNacionalidad)
+                .HasMaxLength(50)
+                .HasColumnName("Paciente_Nacionalidad");
+            entity.Property(e => e.PacienteNombreCompleto)
+                .HasMaxLength(150)
+                .HasColumnName("Paciente_NombreCompleto");
+            entity.Property(e => e.PacienteNumeroDocumento)
+                .HasMaxLength(30)
+                .HasColumnName("Paciente_NumeroDocumento");
+            entity.Property(e => e.PacienteRegionSalud)
+                .HasMaxLength(100)
+                .HasColumnName("Paciente_RegionSalud");
+            entity.Property(e => e.PacienteRequiereAcompanante).HasColumnName("Paciente_RequiereAcompanante");
+            entity.Property(e => e.PacienteSexo)
+                .HasMaxLength(20)
+                .HasColumnName("Paciente_Sexo");
+            entity.Property(e => e.PacienteTelefonoLaboral)
+                .HasMaxLength(20)
+                .HasColumnName("Paciente_TelefonoLaboral");
+            entity.Property(e => e.PacienteTelefonoPersonal)
+                .HasMaxLength(20)
+                .HasColumnName("Paciente_TelefonoPersonal");
+            entity.Property(e => e.PacienteTelefonoResidencial)
+                .HasMaxLength(20)
+                .HasColumnName("Paciente_TelefonoResidencial");
+            entity.Property(e => e.PacienteTipoDiscapacidad)
+                .HasMaxLength(200)
+                .HasColumnName("Paciente_TipoDiscapacidad");
+            entity.Property(e => e.PacienteTipoDocumento)
+                .HasMaxLength(20)
+                .HasColumnName("Paciente_TipoDocumento");
             entity.Property(e => e.UsuarioId).HasMaxLength(450);
-        });
-
-        modelBuilder.Entity<PacienteDiagnostico>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Paciente__3214EC07AF4D704D");
-
-            entity.HasIndex(e => new { e.PacienteId, e.DiagnosticoId }, "UQ_PacienteDiagnostico").IsUnique();
-
-            entity.Property(e => e.DiagnosticoLibre).HasMaxLength(150);
-            entity.Property(e => e.Observaciones).HasMaxLength(300);
-            entity.Property(e => e.TratamientoRecibido).HasMaxLength(300);
-
-            entity.HasOne(d => d.Diagnostico).WithMany(p => p.PacienteDiagnostico)
-                .HasForeignKey(d => d.DiagnosticoId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_PD_Diagnostico");
-
-            entity.HasOne(d => d.Paciente).WithMany(p => p.PacienteDiagnostico)
-                .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK_PD_Paciente");
         });
 
         modelBuilder.Entity<Revision>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Revision__3214EC07D5F14A85");
-
-            entity.Property(e => e.Decision).HasMaxLength(50);
-            entity.Property(e => e.FechaRevision)
+            entity.Property(e => e.RevisionDecision)
+                .HasMaxLength(50)
+                .HasColumnName("Revision_Decision");
+            entity.Property(e => e.RevisionEstado)
+                .HasMaxLength(50)
+                .HasDefaultValue("Finalizada")
+                .HasColumnName("Revision_Estado");
+            entity.Property(e => e.RevisionFechaRevision)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.RevisorId).HasMaxLength(450);
-            entity.Property(e => e.TipoRevision).HasMaxLength(50);
+                .HasColumnType("datetime")
+                .HasColumnName("Revision_FechaRevision");
+            entity.Property(e => e.RevisionObservaciones).HasColumnName("Revision_Observaciones");
+            entity.Property(e => e.RevisionRevisorId)
+                .HasMaxLength(450)
+                .HasColumnName("Revision_RevisorId");
+            entity.Property(e => e.RevisionSolicitudId).HasColumnName("Revision_SolicitudId");
+            entity.Property(e => e.RevisionTipoRevision)
+                .HasMaxLength(50)
+                .HasColumnName("Revision_TipoRevision");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Revision)
-                .HasForeignKey(d => d.SolicitudId)
-                .HasConstraintName("FK__Revision__Solici__114A936A");
+            entity.HasOne(d => d.RevisionSolicitud).WithMany(p => p.Revision)
+                .HasForeignKey(d => d.RevisionSolicitudId)
+                .HasConstraintName("FK_Revision_Solicitud");
         });
 
         modelBuilder.Entity<Solicitud>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Solicitu__3214EC07375E08A4");
-
-            entity.Property(e => e.Estado)
+            entity.Property(e => e.SolicitudAceptaTerminos).HasColumnName("Solicitud_AceptaTerminos");
+            entity.Property(e => e.SolicitudEstado)
                 .HasMaxLength(50)
-                .HasDefaultValue("Pendiente");
-            entity.Property(e => e.FechaAprobacionRechazo).HasColumnType("datetime");
-            entity.Property(e => e.FechaRecepcion).HasColumnType("datetime");
-            entity.Property(e => e.FechaSolicitud)
+                .HasDefaultValue("Pendiente")
+                .HasColumnName("Solicitud_Estado");
+            entity.Property(e => e.SolicitudFechaSolicitud)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.FuncionarioRecibeId).HasMaxLength(450);
-            entity.Property(e => e.NombreFirmante).HasMaxLength(150);
+                .HasColumnType("datetime")
+                .HasColumnName("Solicitud_FechaSolicitud");
+            entity.Property(e => e.SolicitudMedicoId).HasColumnName("Solicitud_MedicoId");
+            entity.Property(e => e.SolicitudObservaciones).HasColumnName("Solicitud_Observaciones");
+            entity.Property(e => e.SolicitudPacienteId).HasColumnName("Solicitud_PacienteId");
 
-            entity.HasOne(d => d.Acompanante).WithMany(p => p.Solicitud)
-                .HasForeignKey(d => d.AcompananteId)
-                .HasConstraintName("FK_Solicitud_Acompanante");
-
-            entity.HasOne(d => d.Medico).WithMany(p => p.Solicitud)
-                .HasForeignKey(d => d.MedicoId)
+            entity.HasOne(d => d.SolicitudMedico).WithMany(p => p.Solicitud)
+                .HasForeignKey(d => d.SolicitudMedicoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Solicitud_Medico");
 
-            entity.HasOne(d => d.Paciente).WithMany(p => p.Solicitud)
-                .HasForeignKey(d => d.PacienteId)
+            entity.HasOne(d => d.SolicitudPaciente).WithMany(p => p.Solicitud)
+                .HasForeignKey(d => d.SolicitudPacienteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Solicitud_Paciente");
         });
 
-        modelBuilder.Entity<SolicitudDiagnostico>(entity =>
-        {
-            entity.HasKey(e => new { e.SolicitudId, e.DiagnosticoId }).HasName("PK__Solicitu__3C49881275443A2D");
-
-            entity.Property(e => e.EsPrimario).HasDefaultValue(false);
-            entity.Property(e => e.Observaciones).HasMaxLength(300);
-
-            entity.HasOne(d => d.Diagnostico).WithMany(p => p.SolicitudDiagnostico)
-                .HasForeignKey(d => d.DiagnosticoId)
-                .HasConstraintName("FK__Solicitud__Diagn__160F4887");
-
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.SolicitudDiagnostico)
-                .HasForeignKey(d => d.SolicitudId)
-                .HasConstraintName("FK__Solicitud__Solic__151B244E");
-        });
-
         modelBuilder.Entity<Tratamiento>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC07F9697A67");
-
-            entity.Property(e => e.CantidadPrescrita).HasMaxLength(100);
-            entity.Property(e => e.ConcentracionCbd)
+            entity.Property(e => e.TratamientoCantidadPrescrita)
+                .HasMaxLength(100)
+                .HasColumnName("Tratamiento_CantidadPrescrita");
+            entity.Property(e => e.TratamientoConcentracionCbd)
                 .HasColumnType("decimal(10, 2)")
-                .HasColumnName("ConcentracionCBD");
-            entity.Property(e => e.ConcentracionThc)
+                .HasColumnName("Tratamiento_ConcentracionCBD");
+            entity.Property(e => e.TratamientoConcentracionThc)
                 .HasColumnType("decimal(10, 2)")
-                .HasColumnName("ConcentracionTHC");
-            entity.Property(e => e.Dosis).HasMaxLength(100);
-            entity.Property(e => e.FrecuenciaAdministracion).HasMaxLength(100);
-            entity.Property(e => e.NombreComercialProducto).HasMaxLength(150);
-            entity.Property(e => e.NombreGenericoProducto).HasMaxLength(150);
-            entity.Property(e => e.OtrosCannabinoides).HasMaxLength(200);
-            entity.Property(e => e.UnidadCbdid).HasColumnName("UnidadCBDId");
-            entity.Property(e => e.UnidadThcid).HasColumnName("UnidadTHCId");
+                .HasColumnName("Tratamiento_ConcentracionTHC");
+            entity.Property(e => e.TratamientoDosis)
+                .HasMaxLength(100)
+                .HasColumnName("Tratamiento_Dosis");
+            entity.Property(e => e.TratamientoDuracionTratamientoDias).HasColumnName("Tratamiento_DuracionTratamientoDias");
+            entity.Property(e => e.TratamientoEstado)
+                .HasMaxLength(50)
+                .HasDefaultValue("En proceso")
+                .HasColumnName("Tratamiento_Estado");
+            entity.Property(e => e.TratamientoFechaFinEstimada).HasColumnName("Tratamiento_FechaFinEstimada");
+            entity.Property(e => e.TratamientoFechaInicioTratamientoPrevista).HasColumnName("Tratamiento_FechaInicioTratamientoPrevista");
+            entity.Property(e => e.TratamientoFrecuenciaAdministracion)
+                .HasMaxLength(100)
+                .HasColumnName("Tratamiento_FrecuenciaAdministracion");
+            entity.Property(e => e.TratamientoInstruccionesAdicionales).HasColumnName("Tratamiento_InstruccionesAdicionales");
+            entity.Property(e => e.TratamientoNombreComercialProducto)
+                .HasMaxLength(150)
+                .HasColumnName("Tratamiento_NombreComercialProducto");
+            entity.Property(e => e.TratamientoNombreGenericoProducto)
+                .HasMaxLength(150)
+                .HasColumnName("Tratamiento_NombreGenericoProducto");
+            entity.Property(e => e.TratamientoOtrosCannabinoides)
+                .HasMaxLength(200)
+                .HasColumnName("Tratamiento_OtrosCannabinoides");
+            entity.Property(e => e.TratamientoSolicitudId).HasColumnName("Tratamiento_SolicitudId");
+            entity.Property(e => e.TratamientoUnidadCbdid).HasColumnName("Tratamiento_UnidadCBDId");
+            entity.Property(e => e.TratamientoUnidadThcid).HasColumnName("Tratamiento_UnidadTHCId");
 
-            entity.HasOne(d => d.Solicitud).WithMany(p => p.Tratamiento)
-                .HasForeignKey(d => d.SolicitudId)
+            entity.HasOne(d => d.TratamientoSolicitud).WithMany(p => p.Tratamiento)
+                .HasForeignKey(d => d.TratamientoSolicitudId)
                 .HasConstraintName("FK_Tratamiento_Solicitud");
-
-            entity.HasOne(d => d.UnidadCbd).WithMany(p => p.TratamientoUnidadCbd)
-                .HasForeignKey(d => d.UnidadCbdid)
-                .HasConstraintName("FK_Tratamiento_UnidadCBD");
-
-            entity.HasOne(d => d.UnidadThc).WithMany(p => p.TratamientoUnidadThc)
-                .HasForeignKey(d => d.UnidadThcid)
-                .HasConstraintName("FK_Tratamiento_UnidadTHC");
-        });
-
-        modelBuilder.Entity<TratamientoCannabinoide>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC07C3AB5B8E");
-
-            entity.Property(e => e.Observacion).HasMaxLength(100);
-            entity.Property(e => e.Tipo).HasMaxLength(50);
-
-            entity.HasOne(d => d.Tratamiento).WithMany(p => p.TratamientoCannabinoide)
-                .HasForeignKey(d => d.TratamientoId)
-                .HasConstraintName("FK_TC_Tratamiento");
         });
 
         modelBuilder.Entity<TratamientoFormaFarmaceutica>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC073E615F15");
+            entity.Property(e => e.FormaFarmaceuticaId).HasColumnName("FormaFarmaceutica_Id");
+            entity.Property(e => e.TratamientoFormaFarmaceuticaFechaAsignacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("TratamientoFormaFarmaceutica_FechaAsignacion");
+            entity.Property(e => e.TratamientoId).HasColumnName("Tratamiento_Id");
 
             entity.HasOne(d => d.FormaFarmaceutica).WithMany(p => p.TratamientoFormaFarmaceutica)
                 .HasForeignKey(d => d.FormaFarmaceuticaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Tratamien__Forma__1BC821DD");
+                .HasConstraintName("FK_TFF_FormaFarmaceutica");
 
             entity.HasOne(d => d.Tratamiento).WithMany(p => p.TratamientoFormaFarmaceutica)
                 .HasForeignKey(d => d.TratamientoId)
-                .HasConstraintName("FK__Tratamien__Trata__1AD3FDA4");
+                .HasConstraintName("FK_TFF_Tratamiento");
         });
 
         modelBuilder.Entity<TratamientoViaAdministracion>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC075B5453B6");
+            entity.Property(e => e.TratamientoId).HasColumnName("Tratamiento_Id");
+            entity.Property(e => e.TratamientoViaAdminFechaAsignacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("TratamientoViaAdmin_FechaAsignacion");
+            entity.Property(e => e.ViaAdministracionId).HasColumnName("ViaAdministracion_Id");
 
             entity.HasOne(d => d.Tratamiento).WithMany(p => p.TratamientoViaAdministracion)
                 .HasForeignKey(d => d.TratamientoId)
-                .HasConstraintName("FK__Tratamien__Trata__1CBC4616");
+                .HasConstraintName("FK_TVA_Tratamiento");
 
             entity.HasOne(d => d.ViaAdministracion).WithMany(p => p.TratamientoViaAdministracion)
                 .HasForeignKey(d => d.ViaAdministracionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Tratamien__ViaAd__1DB06A4F");
+                .HasConstraintName("FK_TVA_ViaAdministracion");
         });
 
         modelBuilder.Entity<UnidadMedida>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UnidadMe__3214EC074500B66D");
+            entity.HasIndex(e => e.UnidadMedidaNombre, "UIX_UnidadMedida_Nombre").IsUnique();
 
-            entity.Property(e => e.Nombre).HasMaxLength(50);
-            entity.Property(e => e.Simbolo).HasMaxLength(20);
+            entity.Property(e => e.UnidadMedidaNombre)
+                .HasMaxLength(50)
+                .HasColumnName("UnidadMedida_Nombre");
+            entity.Property(e => e.UnidadMedidaSimbolo)
+                .HasMaxLength(20)
+                .HasColumnName("UnidadMedida_Simbolo");
         });
 
         modelBuilder.Entity<ViaAdministracion>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ViaAdmin__3214EC0762A91733");
+            entity.HasIndex(e => e.ViaAdministracionNombre, "UIX_ViaAdministracion_Nombre").IsUnique();
 
-            entity.Property(e => e.Nombre).HasMaxLength(100);
+            entity.Property(e => e.ViaAdministracionNombre)
+                .HasMaxLength(100)
+                .HasColumnName("ViaAdministracion_Nombre");
         });
 
         OnModelCreatingPartial(modelBuilder);

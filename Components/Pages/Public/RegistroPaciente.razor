@@ -1,239 +1,322 @@
-﻿@page "/registro"
-@using DIGESA.Models.DTOs
-@using DIGESA.Services.Interfaces
-@using Microsoft.AspNetCore.Components.Forms
-@inject IPacienteService PacienteService
-@inject NavigationManager NavManager
-
-
-<h3 class="mb-4">Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3>
-
-<EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <!-- 1. DATOS PERSONALES DEL PACIENTE -->
-    <h5>1. Datos Personales del Paciente</h5>
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label class="form-label">Nombre completo:</label>
-            <InputText @bind-Value="Model.NombreCompleto" class="form-control" />
-            <ValidationMessage For="@(() => Model.NombreCompleto)" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Tipo de documento:</label>
-            <InputSelect @bind-Value="Model.TipoDocumento" class="form-select">
-                <option value="">Seleccionar</option>
-                <option value="Cédula">Cédula</option>
-                <option value="Pasaporte">Pasaporte</option>
-            </InputSelect>
-            <ValidationMessage For="@(() => Model.TipoDocumento)" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Número de documento:</label>
-            <InputText @bind-Value="Model.NumeroDocumento" class="form-control" />
-            <ValidationMessage For="@(() => Model.NumeroDocumento)" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-3">
-            <label class="form-label">Nacionalidad:</label>
-            <InputText @bind-Value="Model.Nacionalidad" class="form-control" />
-            <ValidationMessage For="@(() => Model.Nacionalidad)" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Fecha de nacimiento:</label>
-            <InputDate @bind-Value="Model.FechaNacimiento" class="form-control" />
-            <ValidationMessage For="@(() => Model.FechaNacimiento)" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Sexo:</label>
-            <InputSelect @bind-Value="Model.Sexo" class="form-select">
-                <option value="">Seleccionar</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-            </InputSelect>
-            <ValidationMessage For="@(() => Model.Sexo)" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <label class="form-label">Dirección de residencia:</label>
-            <InputText @bind-Value="Model.DireccionResidencia" class="form-control" />
-            <ValidationMessage For="@(() => Model.DireccionResidencia)" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-3">
-            <label class="form-label">Teléfono residencial:</label>
-            <InputText @bind-Value="Model.TelefonoResidencial" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Teléfono personal:</label>
-            <InputText @bind-Value="Model.TelefonoPersonal" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Teléfono laboral:</label>
-            <InputText @bind-Value="Model.TelefonoLaboral" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Correo electrónico:</label>
-            <InputText @bind-Value="Model.CorreoElectronico" class="form-control" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label class="form-label">Instalación de salud donde es atendido:</label>
-            <InputText @bind-Value="Model.InstalacionSalud" class="form-control" />
-            <ValidationMessage For="@(() => Model.InstalacionSalud)" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Región de salud:</label>
-            <InputText @bind-Value="Model.RegionSalud" class="form-control" />
-            <ValidationMessage For="@(() => Model.RegionSalud)" />
-        </div>
-    </div>
-
-    <div class="mb-3 form-check">
-        <InputCheckbox @bind-Value="Model.RequiereAcompanante" />
-        <label class="form-check-label">¿Requiere acompañante autorizado?</label>
-    </div>
-
-    @if (Model.RequiereAcompanante)
-    {
-        <h5>2. Datos del Acompañante Autorizado</h5>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label class="form-label">Nombre completo:</label>
-                <InputText @bind-Value="Model.Acompanante.NombreCompleto" class="form-control" />
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Tipo de documento:</label>
-                <InputSelect @bind-Value="Model.Acompanante.TipoDocumento" class="form-select">
-                    <option value="">Seleccionar</option>
-                    <option value="Cédula">Cédula</option>
-                    <option value="Pasaporte">Pasaporte</option>
-                </InputSelect>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Número de documento:</label>
-                <InputText @bind-Value="Model.Acompanante.NumeroDocumento" class="form-control" />
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <label class="form-label">Nacionalidad:</label>
-                <InputText @bind-Value="Model.Acompanante.Nacionalidad" class="form-control" />
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Parentesco:</label>
-                <InputSelect @bind-Value="Model.Acompanante.Parentesco" class="form-select">
-                    <option value="">Seleccionar</option>
-                    <option value="Madre">Madre</option>
-                    <option value="Padre">Padre</option>
-                    <option value="Tutor">Tutor</option>
-                </InputSelect>
-            </div>
-        </div>
-    }
-
-    <!-- 3. DATOS DEL MÉDICO TRATANTE -->
-    <h5 class="mt-4">3. Datos del Médico Tratante</h5>
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label class="form-label">Nombre completo:</label>
-            <InputText @bind-Value="Model.MedicoNombreCompleto" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Disciplina:</label>
-            <InputSelect @bind-Value="Model.MedicoDisciplina" class="form-select">
-                <option value="">Seleccionar</option>
-                <option value="Médico general">Médico General</option>
-                <option value="Odontólogo">Odontólogo</option>
-                <option value="Especialista">Especialista</option>
-            </InputSelect>
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Número de registro de idoneidad:</label>
-            <InputText @bind-Value="Model.MedicoRegistroIdoneidad" class="form-control" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label class="form-label">Teléfono de contacto:</label>
-            <InputText @bind-Value="Model.MedicoTelefono" class="form-control" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Instalación de salud:</label>
-            <InputText @bind-Value="Model.MedicoInstalacionSalud" class="form-control" />
-        </div>
-    </div>
-
-    <!-- 4. DIAGNÓSTICO Y TRATAMIENTO -->
-    <h5 class="mt-4">4. Diagnóstico y Tratamiento</h5>
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <label class="form-label">Diagnóstico(s):</label>
-            <InputTextArea @bind-Value="Model.Diagnostico" class="form-control" rows="3" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label class="form-label">CBD:</label>
-            <InputNumber @bind-Value="Model.ConcentracionCBD" class="form-control" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">THC:</label>
-            <InputNumber @bind-Value="Model.ConcentracionTHC" class="form-control" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Otros cannabinoides:</label>
-            <InputText @bind-Value="Model.OtrosCannabinoides" class="form-control" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label class="form-label">Dosis:</label>
-            <InputText @bind-Value="Model.Dosis" class="form-control" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Frecuencia:</label>
-            <InputText @bind-Value="Model.FrecuenciaAdministracion" class="form-control" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Duración (días):</label>
-            <InputNumber @bind-Value="Model.DuracionTratamientoDias" class="form-control" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
-</EditForm>
-
-@code {
-    private PacienteRegistroDTO Model = new();
-    
-    private async Task HandleValidSubmit()
-    {
-        try
-        {
-            int pacienteId = await PacienteService.CreateAsync(Model);
-
-            if (pacienteId > 0)
-            {
-                NavManager.NavigateTo("/confirmacion");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine($"Error al registrar paciente: {ex.Message}");
-        }
-    }
-}
+﻿@* @page "/registro" *@
+@* @using DIGESA.Models.DTOs *@
+@* @using DIGESA.Services.Interfaces *@
+@* @using Microsoft.AspNetCore.Components.Forms *@
+@* @inject IPacienteService PacienteService *@
+@* @inject NavigationManager NavManager *@
+@* *@
+@* <div class="container py-5"> *@
+@*     <div class="row justify-content-center g-4"> *@
+@*         <h3 class="mb-4">Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3> *@
+@* *@
+@*         <EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit"> *@
+@*             <DataAnnotationsValidator /> *@
+@*             <ValidationSummary /> *@
+@* *@
+@*             <!-- 1. DATOS PERSONALES DEL PACIENTE --> *@
+@*             <h5>1. Datos Personales del Paciente</h5> *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Nombre completo:</label> *@
+@*                     <InputText @bind-Value="Model.NombreCompleto" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.NombreCompleto)" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Tipo de documento:</label> *@
+@*                     <InputSelect @bind-Value="Model.TipoDocumento" class="form-select"> *@
+@*                         <option value="">Seleccionar</option> *@
+@*                         <option value="Cédula">Cédula</option> *@
+@*                         <option value="Pasaporte">Pasaporte</option> *@
+@*                     </InputSelect> *@
+@*                     <ValidationMessage For="@(() => Model.TipoDocumento)" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Número de documento:</label> *@
+@*                     <InputText @bind-Value="Model.NumeroDocumento" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.NumeroDocumento)" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Nacionalidad:</label> *@
+@*                     <InputText @bind-Value="Model.Nacionalidad" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.Nacionalidad)" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Fecha de nacimiento:</label> *@
+@*                     <InputDate @bind-Value="Model.FechaNacimiento" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.FechaNacimiento)" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Sexo:</label> *@
+@*                     <InputSelect @bind-Value="Model.Sexo" class="form-select"> *@
+@*                         <option value="">Seleccionar</option> *@
+@*                         <option value="Femenino">Femenino</option> *@
+@*                         <option value="Masculino">Masculino</option> *@
+@*                     </InputSelect> *@
+@*                     <ValidationMessage For="@(() => Model.Sexo)" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <label class="form-label">Dirección de residencia:</label> *@
+@*                     <InputText @bind-Value="Model.DireccionResidencia" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.DireccionResidencia)" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Teléfono residencial:</label> *@
+@*                     <InputText @bind-Value="Model.TelefonoResidencial" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Teléfono personal:</label> *@
+@*                     <InputText @bind-Value="Model.TelefonoPersonal" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Teléfono laboral:</label> *@
+@*                     <InputText @bind-Value="Model.TelefonoLaboral" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Correo electrónico:</label> *@
+@*                     <InputText @bind-Value="Model.CorreoElectronico" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Instalación de salud donde es atendido:</label> *@
+@*                     <InputText @bind-Value="Model.InstalacionSalud" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.InstalacionSalud)" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Región de salud:</label> *@
+@*                     <InputText @bind-Value="Model.RegionSalud" class="form-control" /> *@
+@*                     <ValidationMessage For="@(() => Model.RegionSalud)" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="mb-3 form-check"> *@
+@*                 <InputCheckbox @bind-Value="Model.RequiereAcompanante" /> *@
+@*                 <label class="form-check-label">¿Requiere acompañante autorizado?</label> *@
+@*             </div> *@
+@* *@
+@*             @if (Model.RequiereAcompanante) *@
+@*             { *@
+@*                 <h5 class="mt-4">2. Datos del Acompañante Autorizado</h5> *@
+@* *@
+@*                 <div class="row mb-3"> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label class="form-label">Nombre completo del acompañante autorizado:</label> *@
+@*                         <InputText @bind-Value="Model.Acompanante.NombreCompleto" class="form-control" /> *@
+@*                     </div> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label class="form-label">Tipo de documento:</label> *@
+@*                         <InputSelect @bind-Value="Model.Acompanante.TipoDocumento" class="form-select"> *@
+@*                             <option value="">Seleccionar</option> *@
+@*                             <option value="Cédula">Cédula</option> *@
+@*                             <option value="Pasaporte">Pasaporte</option> *@
+@*                         </InputSelect> *@
+@*                     </div> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label class="form-label">Número del documento:</label> *@
+@*                         <InputText @bind-Value="Model.Acompanante.NumeroDocumento" class="form-control" /> *@
+@*                     </div> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="row mb-3"> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label class="form-label">Nacionalidad:</label> *@
+@*                         <InputText @bind-Value="Model.Acompanante.Nacionalidad" class="form-control" /> *@
+@*                     </div> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label class="form-label">Parentesco:</label> *@
+@*                         <InputSelect @bind-Value="Model.Acompanante.Parentesco" class="form-select"> *@
+@*                             <option value="">Seleccionar</option> *@
+@*                             <option value="Madre">Madre</option> *@
+@*                             <option value="Padre">Padre</option> *@
+@*                             <option value="Tutor">Tutor</option> *@
+@*                         </InputSelect> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             } *@
+@* *@
+@*             <!-- 3. DATOS DEL MÉDICO TRATANTE --> *@
+@*             <h5 class="mt-4">3. Datos del Médico Tratante</h5> *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Nombre completo del médico tratante responsable de la prescripción:</label> *@
+@*                     <InputText @bind-Value="Model.Medico.NombreCompleto" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Disciplina:</label> *@
+@*                     <InputSelect @bind-Value="Model.Medico.Disciplina" class="form-select"> *@
+@*                         <option value="">Seleccionar</option> *@
+@*                         <option value="Médico general">Médico General</option> *@
+@*                         <option value="Odontólogo">Odontólogo</option> *@
+@*                         <option value="Especialista">Especialista</option> *@
+@*                     </InputSelect> *@
+@*                 </div> *@
+@*                 <div class="col-md-3"> *@
+@*                     <label class="form-label">Número de registro de idoneidad:</label> *@
+@*                     <InputText @bind-Value="Model.Medico.RegistroIdoneidad" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Número de teléfono donde localizar al médico:</label> *@
+@*                     <InputText @bind-Value="Model.Medico.NumeroTelefono" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-6"> *@
+@*                     <label class="form-label">Instalación de salud donde labora el médico:</label> *@
+@*                     <InputText @bind-Value="Model.Medico.InstalacionSalud" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <!-- 4. DIAGNÓSTICO(S) QUE JUSTIFICAN EL USO DE CANNABIS MEDICINAL Y SUS DERIVADOS --> *@
+@*             <h5 class="mt-4">4. Diagnóstico(s) que justifican el uso de cannabis medicinal y sus derivados</h5> *@
+@*             <p class="text-muted">Marque todas las opciones aplicables o especifique otro diagnóstico.</p> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Alzheimer" /> *@
+@*                         <label class="form-check-label">Alzheimer</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Epilepsia" /> *@
+@*                         <label class="form-check-label">Epilepsia</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.SIDA" /> *@
+@*                         <label class="form-check-label">Síndrome de Inmunodeficiencia Adquirida (SIDA)</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Anorexia" /> *@
+@*                         <label class="form-check-label">Anorexia</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Fibromialgia" /> *@
+@*                         <label class="form-check-label">Fibromialgia</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Artritis" /> *@
+@*                         <label class="form-check-label">Artritis</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Glaucoma" /> *@
+@*                         <label class="form-check-label">Glaucoma</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.EstrésPostraumatico" /> *@
+@*                         <label class="form-check-label">Síndrome de Estrés Postraumático</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.Autismo" /> *@
+@*                         <label class="form-check-label">Autismo</label> *@
+@*                     </div> *@
+@*                     <div class="form-check"> *@
+@*                         <InputCheckbox @bind-Value="Model.Diagnostico.HepatitisC" /> *@
+@*                         <label class="form-check-label">Hepatitis C</label> *@
+@*                     </div> *@
+@*                     <div class="form-check mt-3"> *@
+@*                         <InputText @bind-Value="Model.Diagnostico.OtroDiagnostico" placeholder="Especifique otro diagnóstico..." class="form-control" /> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <!-- 5. OTRAS ENFERMEDADES QUE PADECE EL PACIENTE --> *@
+@*             <h5 class="mt-4">5. Otras enfermedades que padece el paciente</h5> *@
+@*             <p class="text-muted">Nota: De contar con otras comorbilidades, especifique el(los) diagnóstico(s) y el(los) tratamiento(s) recibido(s).</p> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <label class="form-label">Diagnóstico(s):</label> *@
+@*                     <InputText @bind-Value="Model.OtrasEnfermedades.Diagnostico" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <label class="form-label">Tratamiento(s) recibido(s):</label> *@
+@*                     <InputText @bind-Value="Model.OtrasEnfermedades.Tratamiento" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <!-- 6. TRATAMIENTO CON CANNABIS MEDICINAL --> *@
+@*             <h5 class="mt-4">6. Tratamiento con Cannabis Medicinal</h5> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">CBD:</label> *@
+@*                     <InputNumber @bind-Value="Model.Terapia.ConcentracionCBD" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">THC:</label> *@
+@*                     <InputNumber @bind-Value="Model.Terapia.ConcentracionTHC" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">Otros cannabinoides:</label> *@
+@*                     <InputText @bind-Value="Model.Terapia.OtrosCannabinoides" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">Dosis:</label> *@
+@*                     <InputText @bind-Value="Model.Terapia.Dosis" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">Frecuencia:</label> *@
+@*                     <InputText @bind-Value="Model.Terapia.FrecuenciaAdministracion" class="form-control" /> *@
+@*                 </div> *@
+@*                 <div class="col-md-4"> *@
+@*                     <label class="form-label">Duración (días):</label> *@
+@*                     <InputNumber @bind-Value="Model.Terapia.DuracionTratamientoDias" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <label class="form-label">Cantidad prescrita:</label> *@
+@*                     <InputText @bind-Value="Model.Terapia.CantidadPrescrita" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <div class="row mb-3"> *@
+@*                 <div class="col-md-12"> *@
+@*                     <label class="form-label">Instrucciones adicionales:</label> *@
+@*                     <InputTextArea @bind-Value="Model.Terapia.InstruccionesAdicionales" rows="3" class="form-control" /> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             <!-- Botón de envío --> *@
+@*             <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button> *@
+@*         </EditForm> *@
+@*     </div> *@
+@* </div> *@
+@* *@
+@* @code { *@
+@*     private PacienteRegistroDTO Model = new(); *@
+@* *@
+@*     private async Task HandleValidSubmit() *@
+@*     { *@
+@*         try *@
+@*         { *@
+@*             int pacienteId = await PacienteService.CreateAsync(Model); *@
+@* *@
+@*             if (pacienteId > 0) *@
+@*             { *@
+@*                 NavManager.NavigateTo("/confirmacion"); *@
+@*             } *@
+@*         } *@
+@*         catch (Exception ex) *@
+@*         { *@
+@*             Console.Error.WriteLine($"Error al registrar paciente: {ex.Message}"); *@
+@*         } *@
+@*     } *@
+@* } *@

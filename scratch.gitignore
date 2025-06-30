@@ -1,0 +1,64 @@
+﻿# Build and output folders
+bin/
+obj/
+out/
+publish/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.iml
+*.iws
+
+# Resharper
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+
+# NuGet packages
+packages/
+
+# Windows thumbnails
+Thumbs.db
+
+# macOS files
+.DS_Store
+*.swp
+*~.nib
+
+# VS Code
+.vscode/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# User secrets
+secrets.json
+
+# Blazor specific
+wwwroot/css/app.css.map
+wwwroot/js/*
+!wwwroot/js/site.js # Mantén solo site.js si lo usas personalizado
+
+# Logs
+*.log
+logs/
+
+# Test results
+TestResults/
+test-results/
+coverage/
+
+# Backup files
+*.bak
+*.tmp

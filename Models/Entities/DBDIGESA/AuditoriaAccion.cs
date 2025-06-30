@@ -5,21 +5,21 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class AuditoriaAccion
 {
-    public int Id { get; set; }
+    public int AuditoriaAccionId { get; set; }
 
-    public string? UsuarioId { get; set; }
+    public string? AuditoriaAccionUsuarioId { get; set; }
 
-    public string AccionRealizada { get; set; } = null!;
+    public string AuditoriaAccionAccionRealizada { get; set; } = null!;
 
-    public string? NombreTablaAfectada { get; set; }
+    public string? AuditoriaAccionTablaAfectada { get; set; }
 
-    public int? RegistroAfectadoId { get; set; }
+    public int? AuditoriaAccionRegistroAfectadoId { get; set; }
 
-    public string? DetallesAdicionales { get; set; }
+    public string? AuditoriaAccionDetallesAdicionales { get; set; }
 
-    public DateTime? FechaAccion { get; set; }
+    public DateTime? AuditoriaAccionFechaAccion { get; set; }
 
-    public string? Ipaddress { get; set; }
+    public string? AuditoriaAccionIpaddress { get; set; }
 
-    public string? UserAgent { get; set; }
+    public string? AuditoriaAccionUserAgent { get; set; }
 }

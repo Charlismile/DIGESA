@@ -4,7 +4,6 @@ namespace DIGESA.Models.DTOs
 {
     public class PacienteRegistroDTO
     {
-        // Datos del paciente
         [Required(ErrorMessage = "Nombre completo es requerido.")]
         public string NombreCompleto { get; set; } = string.Empty;
 
@@ -41,40 +40,7 @@ namespace DIGESA.Models.DTOs
         public string? MotivoRequerimientoAcompanante { get; set; }
         public string? TipoDiscapacidad { get; set; }
 
-        // Datos del acompañante (opcional)
-        public AcompananteRegistroDTO? Acompanante { get; set; } = new();
-
-        // Datos del médico tratante
-        [Required(ErrorMessage = "Nombre del médico es requerido.")]
-        public string MedicoNombreCompleto { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Disciplina del médico es requerida.")]
-        public string MedicoDisciplina { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Número de registro es requerido.")]
-        public string MedicoRegistroIdoneidad { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Teléfono del médico es requerido.")]
-        public string MedicoTelefono { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Instalación de salud del médico es requerida.")]
-        public string MedicoInstalacionSalud { get; set; } = string.Empty;
-
-        // Tratamiento y diagnóstico
-        [Required(ErrorMessage = "Diagnóstico es requerido.")]
-        public string Diagnostico { get; set; } = string.Empty;
-
-        public decimal? ConcentracionCBD { get; set; }
-        public decimal? ConcentracionTHC { get; set; }
-        public string? OtrosCannabinoides { get; set; }
-
-        [Required(ErrorMessage = "Dosis es requerida.")]
-        public string Dosis { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Frecuencia es requerida.")]
-        public string FrecuenciaAdministracion { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Duración del tratamiento es requerida.")]
-        public int DuracionTratamientoDias { get; set; }
+        // Datos anidados
+        public AcompananteRegistroDTO Acompanante { get; set; } = new();
     }
 }

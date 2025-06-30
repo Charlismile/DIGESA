@@ -1,26 +1,25 @@
-﻿@page "/tablas"
-@using DIGESA.Models.Entities.DBDIGESA
-@using DIGESA.Services.Interfaces
-@inject IPacienteService PacienteService
-
-@using BlazorBootstrap.Components
-@using Microsoft.AspNetCore.Components.Web.Virtualization
-
-<h4>Listado de Pacientes</h4>
-
-<Card>
-    <CardBody>
-        <Table Responsive="true" Hover="true" Striped="true">
-           <!--logica-->
-        </Table>
-    </CardBody>
-</Card>
-
-@code {
-    private IEnumerable<Paciente> pacientes = new List<Paciente>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        pacientes = await PacienteService.GetAllAsync();
-    }
-}
+﻿@* @page "/tablas" *@
+@* @using DIGESA.Models.Entities.DBDIGESA *@
+@* *@
+@* @using BlazorBootstrap.Components *@
+@* @using DIGESA.Repositories.Services *@
+@* @using Microsoft.AspNetCore.Components.Web.Virtualization *@
+@* *@
+@* <h4>Listado de Pacientes</h4> *@
+@* *@
+@* <Card> *@
+@*     <CardBody> *@
+@*         <Table Responsive="true" Hover="true" Striped="true"> *@
+@*            <!--logica--> *@
+@*         </Table> *@
+@*     </CardBody> *@
+@* </Card> *@
+@* *@
+@* @code { *@
+@*     private IEnumerable<Paciente> pacientes = new List<Paciente>(); *@
+@* *@
+@*     protected override async Task OnInitializedAsync() *@
+@*     { *@
+@*         pacientes = await PacienteService.GetAllAsync(); *@
+@*     } *@
+@* } *@

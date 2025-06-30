@@ -5,23 +5,23 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class DocumentoAdjunto
 {
-    public int Id { get; set; }
+    public int DocumentoAdjuntoId { get; set; }
 
-    public int SolicitudId { get; set; }
+    public int DocumentoAdjuntoSolicitudId { get; set; }
 
-    public string NombreArchivo { get; set; } = null!;
+    public string DocumentoAdjuntoNombreArchivo { get; set; } = null!;
 
-    public string TipoDocumento { get; set; } = null!;
+    public string DocumentoAdjuntoTipoDocumento { get; set; } = null!;
 
-    public string? TipoContenidoMime { get; set; }
+    public string? DocumentoAdjuntoTipoContenidoMime { get; set; }
 
-    public string RutaAlmacenamiento { get; set; } = null!;
+    public string DocumentoAdjuntoRutaAlmacenamiento { get; set; } = null!;
 
-    public DateTime? FechaSubida { get; set; }
+    public DateTime? DocumentoAdjuntoFechaSubida { get; set; }
 
-    public string? SubidoPorUsuarioId { get; set; }
+    public string? DocumentoAdjuntoSubidoPorUsuarioId { get; set; }
 
-    public string? Descripcion { get; set; }
+    public string? DocumentoAdjuntoDescripcion { get; set; }
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud DocumentoAdjuntoSolicitud { get; set; } = null!;
 }

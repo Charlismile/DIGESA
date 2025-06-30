@@ -5,21 +5,21 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class Certificacion
 {
-    public int Id { get; set; }
+    public int CertificacionId { get; set; }
 
-    public int SolicitudId { get; set; }
+    public int CertificacionSolicitudId { get; set; }
 
-    public string CodigoCertificado { get; set; } = null!;
+    public string CertificacionCodigoCertificado { get; set; } = null!;
 
-    public string? CodigoQr { get; set; }
+    public string? CertificacionCodigoQr { get; set; }
 
-    public string? RutaArchivoQr { get; set; }
+    public string? CertificacionRutaArchivoQr { get; set; }
 
-    public DateTime? FechaEmision { get; set; }
+    public DateTime? CertificacionFechaEmision { get; set; }
 
-    public DateTime FechaVencimiento { get; set; }
+    public DateTime CertificacionFechaVencimiento { get; set; }
 
-    public string EstadoCertificado { get; set; } = null!;
+    public string CertificacionEstado { get; set; } = null!;
 
-    public virtual Solicitud Solicitud { get; set; } = null!;
+    public virtual Solicitud CertificacionSolicitud { get; set; } = null!;
 }

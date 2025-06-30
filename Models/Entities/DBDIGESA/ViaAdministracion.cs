@@ -5,9 +5,9 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class ViaAdministracion
 {
-    public int Id { get; set; }
+    public int ViaAdministracionId { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string ViaAdministracionNombre { get; set; } = null!;
 
     public virtual ICollection<TratamientoViaAdministracion> TratamientoViaAdministracion { get; set; } = new List<TratamientoViaAdministracion>();
 }

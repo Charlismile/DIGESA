@@ -5,19 +5,10 @@
     <!-- Header -->
     <NavMenu/>
     <header class="bg-light border-bottom py-2">
-        
         <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2" href="/">
                 <img src="images/logo-gob.png" alt="Logo" style="height: 40px;"/>
-                <h5 class="mb-0 text-primary">Plataforma DIGESA</h5>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                <a href="/Account/Login" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-                </a>
-                <button class="btn btn-outline-secondary btn-sm" @onclick="ToggleTheme">
-                    <i class="bi @(isDarkTheme ? "bi-sun" : "bi-moon")"></i>
-                </button>
+                <h5 class="mb-0 text-dark">Plataforma DIGESA</h5>
             </div>
         </div>
     </header>

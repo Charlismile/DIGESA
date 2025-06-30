@@ -5,9 +5,9 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class FormaFarmaceutica
 {
-    public int Id { get; set; }
+    public int FormaFarmaceuticaId { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string FormaFarmaceuticaNombre { get; set; } = null!;
 
     public virtual ICollection<TratamientoFormaFarmaceutica> TratamientoFormaFarmaceutica { get; set; } = new List<TratamientoFormaFarmaceutica>();
 }
