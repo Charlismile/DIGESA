@@ -5,25 +5,23 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class Medico
 {
-    public int MedicoId { get; set; }
+    public int Id { get; set; }
 
-    public string? UsuarioId { get; set; }
+    public int? UsuarioId { get; set; }
 
-    public string MedicoNombreCompleto { get; set; } = null!;
+    public string NombreCompleto { get; set; } = null!;
 
-    public string MedicoDisciplina { get; set; } = null!;
+    public string Especialidad { get; set; } = null!;
 
-    public string? MedicoEspecialidad { get; set; }
+    public string NumeroRegistroIdoneidad { get; set; } = null!;
 
-    public string MedicoNumeroRegistroIdoneidad { get; set; } = null!;
+    public string InstalacionSalud { get; set; } = null!;
 
-    public string MedicoNumeroTelefono { get; set; } = null!;
+    public string? FirmaBase64 { get; set; }
 
-    public string? MedicoCorreoElectronico { get; set; }
-
-    public string MedicoInstalacionSalud { get; set; } = null!;
-
-    public DateTime MedicoFechaRegistro { get; set; }
+    public string NumeroTelefono { get; set; } = null!;
 
     public virtual ICollection<Solicitud> Solicitud { get; set; } = new List<Solicitud>();
+
+    public virtual Usuario? Usuario { get; set; }
 }

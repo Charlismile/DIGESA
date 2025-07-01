@@ -5,43 +5,39 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class Tratamiento
 {
-    public int TratamientoId { get; set; }
+    public int Id { get; set; }
 
-    public int TratamientoSolicitudId { get; set; }
+    public int SolicitudId { get; set; }
 
-    public string? TratamientoNombreGenericoProducto { get; set; }
+    public string? NombreGenericoProducto { get; set; }
 
-    public string? TratamientoNombreComercialProducto { get; set; }
+    public string? NombreComercialProducto { get; set; }
 
-    public decimal? TratamientoConcentracionCbd { get; set; }
+    public string FormaFarmaceutica { get; set; } = null!;
 
-    public int? TratamientoUnidadCbdid { get; set; }
+    public decimal? ConcentracionCbd { get; set; }
 
-    public decimal? TratamientoConcentracionThc { get; set; }
+    public string? UnidadCbd { get; set; }
 
-    public int? TratamientoUnidadThcid { get; set; }
+    public decimal? ConcentracionThc { get; set; }
 
-    public string? TratamientoOtrosCannabinoides { get; set; }
+    public string? UnidadThc { get; set; }
 
-    public string TratamientoDosis { get; set; } = null!;
+    public string? OtrosCannabinoides { get; set; }
 
-    public string TratamientoFrecuenciaAdministracion { get; set; } = null!;
+    public string ViaAdministracion { get; set; } = null!;
 
-    public int TratamientoDuracionTratamientoDias { get; set; }
+    public string Dosis { get; set; } = null!;
 
-    public string? TratamientoCantidadPrescrita { get; set; }
+    public string FrecuenciaAdministracion { get; set; } = null!;
 
-    public string? TratamientoInstruccionesAdicionales { get; set; }
+    public int DuracionTratamientoDias { get; set; }
 
-    public DateOnly? TratamientoFechaInicioTratamientoPrevista { get; set; }
+    public string? CantidadPrescrita { get; set; }
 
-    public DateOnly? TratamientoFechaFinEstimada { get; set; }
+    public string? InstruccionesAdicionales { get; set; }
 
-    public string TratamientoEstado { get; set; } = null!;
+    public DateOnly? FechaInicioTratamientoPrevista { get; set; }
 
-    public virtual ICollection<TratamientoFormaFarmaceutica> TratamientoFormaFarmaceutica { get; set; } = new List<TratamientoFormaFarmaceutica>();
-
-    public virtual Solicitud TratamientoSolicitud { get; set; } = null!;
-
-    public virtual ICollection<TratamientoViaAdministracion> TratamientoViaAdministracion { get; set; } = new List<TratamientoViaAdministracion>();
+    public virtual Solicitud Solicitud { get; set; } = null!;
 }

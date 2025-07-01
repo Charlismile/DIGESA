@@ -1,41 +1,43 @@
-﻿@* @page "/pacientes" *@
-@* @using DIGESA.Models.Entities.DBDIGESA *@
-@* @using DIGESA.Repositories.Services *@
-@* *@
-@* <h3>Listado de Pacientes</h3> *@
-@* *@
-@* @if (pacientes == null) *@
-@* { *@
-@*     <p>Cargando...</p> *@
-@* } *@
-@* else *@
-@* { *@
-@*     <table class="table table-striped"> *@
-@*         <thead> *@
-@*         <tr> *@
-@*             <th>Nombre</th> *@
-@*             <th>Documento</th> *@
-@*             <th>Fecha Nacimiento</th> *@
-@*         </tr> *@
-@*         </thead> *@
-@*         <tbody> *@
-@*         @foreach (var paciente in pacientes) *@
-@*         { *@
-@*             <tr> *@
-@*                 <td>@paciente.PacienteNombreCompleto</td> *@
-@*                 <td>@paciente.PacienteTipoDocumento - @paciente.PacienteNumeroDocumento</td> *@
-@*                 <td>@paciente.PacienteFechaNacimiento.ToShortDateString()</td> *@
-@*             </tr> *@
-@*         } *@
-@*         </tbody> *@
-@*     </table> *@
-@* } *@
-@* *@
-@* @code { *@
-@*     private IEnumerable<Paciente> pacientes = new List<Paciente>(); *@
-@* *@
-@*     protected override async Task OnInitializedAsync() *@
-@*     { *@
-@*         pacientes = await PacienteService.GetAllAsync(); *@
-@*     } *@
-@* } *@
+﻿@page "/pacientes"
+@using DIGESA.Models.Entities.DBDIGESA
+@inject IPacienteService PacienteService
+@inject NavigationManager NavManager
+<h3>Listado de Pacientes</h3>
+
+@if (pacientes != null && !pacientes.Any())
+{
+    <p>No hay pacientes registrados aún.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Documento</th>
+            <th>Fecha Nacimiento</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var paciente in pacientes)
+        {
+            <tr>
+                <td>@paciente.NombreCompleto</td>
+                <td>@paciente.TipoDocumento - @paciente.NumeroDocumento</td>
+                <td>@paciente.FechaNacimiento.ToShortDateString()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Paciente> pacientes = new List<Paciente>();
+    private bool cargando = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pacientes = await PacienteService.GetAllAsync();
+        cargando = false;
+    }
+}

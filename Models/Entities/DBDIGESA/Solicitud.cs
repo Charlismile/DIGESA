@@ -5,29 +5,47 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class Solicitud
 {
-    public int SolicitudId { get; set; }
+    public int Id { get; set; }
 
-    public int SolicitudPacienteId { get; set; }
+    public int PacienteId { get; set; }
 
-    public int SolicitudMedicoId { get; set; }
+    public int MedicoId { get; set; }
 
-    public string SolicitudEstado { get; set; } = null!;
+    public int? AcompananteId { get; set; }
 
-    public DateTime SolicitudFechaSolicitud { get; set; }
+    public DateTime? FechaSolicitud { get; set; }
 
-    public string? SolicitudObservaciones { get; set; }
+    public int EstadoSolicitudId { get; set; }
 
-    public bool SolicitudAceptaTerminos { get; set; }
+    public string? MotivoSolicitud { get; set; }
 
-    public virtual ICollection<Certificacion> Certificacion { get; set; } = new List<Certificacion>();
+    public int? FuncionarioRecibeId { get; set; }
+
+    public DateTime? FechaRecepcion { get; set; }
+
+    public DateTime? FechaAprobacionRechazo { get; set; }
+
+    public string? ObservacionesRevision { get; set; }
+
+    public string? FirmaBase64 { get; set; }
+
+    public virtual Acompanante? Acompanante { get; set; }
+
+    public virtual Certificacion? Certificacion { get; set; }
 
     public virtual ICollection<DocumentoAdjunto> DocumentoAdjunto { get; set; } = new List<DocumentoAdjunto>();
 
+    public virtual EstadoSolicitud EstadoSolicitud { get; set; } = null!;
+
+    public virtual Usuario? FuncionarioRecibe { get; set; }
+
+    public virtual Medico Medico { get; set; } = null!;
+
+    public virtual Paciente Paciente { get; set; } = null!;
+
     public virtual ICollection<Revision> Revision { get; set; } = new List<Revision>();
 
-    public virtual Medico SolicitudMedico { get; set; } = null!;
-
-    public virtual Paciente SolicitudPaciente { get; set; } = null!;
+    public virtual ICollection<SolicitudDiagnostico> SolicitudDiagnostico { get; set; } = new List<SolicitudDiagnostico>();
 
     public virtual ICollection<Tratamiento> Tratamiento { get; set; } = new List<Tratamiento>();
 }

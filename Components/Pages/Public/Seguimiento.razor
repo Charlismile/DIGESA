@@ -4,7 +4,6 @@
 @* @using DIGESA.Services.Interfaces *@
 @* @using Microsoft.EntityFrameworkCore *@
 @* @inject DbContextDigesa DbContext *@
-@* @inject IQRService QRService *@
 @* @inject NavigationManager NavManager *@
 @* *@
 @* <PageTitle>Seguimiento de Solicitud</PageTitle> *@
@@ -63,7 +62,6 @@
 @* *@
 @* @code { *@
 @*     private string Documento { get; set; } = ""; *@
-@*     private PacienteSeguimientoDTO? Model { get; set; } *@
 @*     private string? Error { get; set; } *@
 @*     private string QRCodeDataUri { get; set; } = ""; *@
 @* *@

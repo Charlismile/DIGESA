@@ -1,90 +1,155 @@
-﻿using DIGESA.Models.DTOs;
+﻿
+using System.ComponentModel.DataAnnotations;
 using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DIGESA.Repositories.Services
+public class PacienteService : IPacienteService
 {
-    public class PacienteService : IPacienteService
+    private readonly DbContextDigesa _context;
+    private readonly ILogger<PacienteService> _logger;
+
+    public PacienteService(DbContextDigesa context, ILogger<PacienteService> logger)
     {
-        private readonly DbContextDigesa _context;
+        _context = context;
+        _logger = logger;
+    }
 
-        public PacienteService(DbContextDigesa context)
+    public async Task<int> CreateAsync(PacienteRegistroDTO model)
+    {
+        try
         {
-            _context = context;
-        }
+            var errores = model.Validate();
+            if (errores.Count > 0)
+                throw new ValidationException(string.Join(", ", errores));
 
-        public async Task<int> CreateAsync(PacienteRegistroDTO model)
-        {
-            // Registrar al paciente
+            // Mapeo de Paciente
             var paciente = new Paciente
             {
-                PacienteNombreCompleto = model.NombreCompleto,
-                PacienteTipoDocumento = model.TipoDocumento,
-                PacienteNumeroDocumento = model.NumeroDocumento,
-                PacienteNacionalidad = model.Nacionalidad,
-                PacienteFechaNacimiento = model.FechaNacimiento,
-                PacienteSexo = model.Sexo,
-                PacienteDireccionResidencia = model.DireccionResidencia,
-                PacienteTelefonoResidencial = model.TelefonoResidencial,
-                PacienteTelefonoPersonal = model.TelefonoPersonal,
-                PacienteTelefonoLaboral = model.TelefonoLaboral,
-                PacienteCorreoElectronico = model.CorreoElectronico,
-                PacienteInstalacionSalud = model.InstalacionSalud,
-                PacienteRegionSalud = model.RegionSalud,
-                PacienteRequiereAcompanante = model.RequiereAcompanante,
-                PacienteMotivoRequerimientoAcompanante = model.MotivoRequerimientoAcompanante,
-                PacienteTipoDiscapacidad = model.TipoDiscapacidad
+                NombreCompleto = model.NombreCompleto,
+                TipoDocumento = model.TipoDocumento,
+                NumeroDocumento = model.NumeroDocumento,
+                Nacionalidad = model.Nacionalidad,
+                FechaNacimiento = model.FechaNacimiento.Value,
+                Sexo = model.Sexo,
+                DireccionResidencia = model.DireccionResidencia,
+                TelefonoResidencial = model.TelefonoResidencial,
+                TelefonoPersonal = model.TelefonoPersonal,
+                TelefonoLaboral = model.TelefonoLaboral,
+                CorreoElectronico = model.CorreoElectronico,
+                InstalacionSalud = model.InstalacionSalud,
+                RegionSalud = model.RegionSalud,
+                RequiereAcompanante = model.RequiereAcompanante
             };
 
             await _context.Paciente.AddAsync(paciente);
             await _context.SaveChangesAsync();
 
-            // Si requiere acompañante, registrar también
-            if (model.RequiereAcompanante && model.Acompanante != null &&
-                !string.IsNullOrEmpty(model.Acompanante.NombreCompleto))
+            // Si requiere acompañante
+            if (model.RequiereAcompanante && model.Acompanante != null)
             {
                 var acompanante = new Acompanante
                 {
-                    AcompanantePacienteId = paciente.PacienteId,
-                    AcompananteNombreCompleto = model.Acompanante.NombreCompleto,
-                    AcompananteTipoDocumento = model.Acompanante.TipoDocumento,
-                    AcompananteNumeroDocumento = model.Acompanante.NumeroDocumento,
-                    AcompananteNacionalidad = model.Acompanante.Nacionalidad,
-                    AcompananteParentesco = model.Acompanante.Parentesco
+                    PacienteId = paciente.Id,
+                    NombreCompleto = model.Acompanante.NombreCompleto,
+                    TipoDocumento = model.Acompanante.TipoDocumento,
+                    NumeroDocumento = model.Acompanante.NumeroDocumento,
+                    Nacionalidad = model.Acompanante.Nacionalidad,
+                    Parentesco = model.Acompanante.Parentesco
                 };
-
                 await _context.Acompanante.AddAsync(acompanante);
-                await _context.SaveChangesAsync();
             }
 
-            return paciente.PacienteId;
-        }
+            // Médico
+            var medico = new Medico
+            {
+                NombreCompleto = model.Medico.NombreCompleto,
+                Disciplina = model.Medico.Disciplina,
+                Especialidad = model.Medico.Disciplina,
+                NumeroRegistroIdoneidad = model.Medico.RegistroIdoneidad,
+                NumeroTelefono = model.Medico.NumeroTelefono,
+                InstalacionSalud = model.Medico.InstalacionSalud
+            };
+            await _context.Medico.AddAsync(medico);
+            await _context.SaveChangesAsync(); // Necesario para obtener Id del médico
 
-        public async Task<Paciente?> GetByIdAsync(int id)
-        {
-            return await _context.Paciente.FindAsync(id);
-        }
+            // Solicitud
+            var solicitud = new Solicitud
+            {
+                PacienteId = paciente.Id,
+                MedicoId = medico.Id,
+                // EstadoSolicitud = "Pendiente",
+                FechaSolicitud = DateTime.Now
+            };
+            await _context.Solicitud.AddAsync(solicitud);
+            await _context.SaveChangesAsync();
 
-        public async Task<IEnumerable<Paciente>> GetAllAsync()
-        {
-            return await _context.Paciente.ToListAsync();
-        }
+            // Diagnósticos
+            var diagnosticoIds = new List<int>();
+            if (model.Diagnostico.Alzheimer) diagnosticoIds.Add(await GetOrCreateDiagnostico("Alzheimer"));
+            if (model.Diagnostico.Epilepsia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Epilepsia"));
+            if (model.Diagnostico.SIDA) diagnosticoIds.Add(await GetOrCreateDiagnostico("VIH/SIDA"));
+            if (model.Diagnostico.Anorexia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Anorexia"));
+            if (model.Diagnostico.Fibromialgia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Fibromialgia"));
+            if (model.Diagnostico.Artritis) diagnosticoIds.Add(await GetOrCreateDiagnostico("Artritis"));
+            if (model.Diagnostico.Glaucoma) diagnosticoIds.Add(await GetOrCreateDiagnostico("Glaucoma"));
+            if (model.Diagnostico.EstrésPostraumatico) diagnosticoIds.Add(await GetOrCreateDiagnostico("Síndrome de Estrés Postraumático"));
+            if (model.Diagnostico.Autismo) diagnosticoIds.Add(await GetOrCreateDiagnostico("Autismo"));
+            if (model.Diagnostico.HepatitisC) diagnosticoIds.Add(await GetOrCreateDiagnostico("Hepatitis C"));
 
-        public async Task UpdateAsync(Paciente paciente)
+            foreach (var id in diagnosticoIds)
+            {
+                await _context.SolicitudDiagnostico.AddAsync(new SolicitudDiagnostico
+                {
+                    SolicitudId = solicitud.Id,
+                    DiagnosticoId = id,
+                    EsPrimario = diagnosticoIds.First() == id
+                });
+            }
+
+            // Tratamiento
+            var tratamiento = new Tratamiento
+            {
+                SolicitudId = solicitud.Id,
+                ConcentracionCbd = model.Terapia.ConcentracionCBD,
+                ConcentracionThc = model.Terapia.ConcentracionTHC,
+                OtrosCannabinoides = model.Terapia.OtrosCannabinoides,
+                Dosis = model.Terapia.Dosis,
+                FrecuenciaAdministracion = model.Terapia.FrecuenciaAdministracion,
+                DuracionTratamientoDias = model.Terapia.DuracionTratamientoDias,
+                CantidadPrescrita = model.Terapia.CantidadPrescrita,
+                InstruccionesAdicionales = model.Terapia.InstruccionesAdicionales
+            };
+            await _context.Tratamiento.AddAsync(tratamiento);
+
+            await _context.SaveChangesAsync();
+
+            return paciente.Id;
+        }
+        catch (ValidationException ex)
         {
-            _context.Paciente.Update(paciente);
+            _logger.LogWarning(ex, "Validación fallida en registro de paciente");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al registrar paciente");
+            throw;
+        }
+    }
+
+    private async Task<int> GetOrCreateDiagnostico(string nombre)
+    {
+        var diag = await _context.Diagnostico.FirstOrDefaultAsync(d => d.Nombre == nombre);
+        if (diag == null)
+        {
+            diag = new Diagnostico { Nombre = nombre, Descripcion = $"Diagnóstico creado automáticamente - {nombre}" };
+            await _context.Diagnostico.AddAsync(diag);
             await _context.SaveChangesAsync();
         }
-
-        public async Task DeleteAsync(int id)
-        {
-            var paciente = await _context.Paciente.FindAsync(id);
-            if (paciente != null)
-            {
-                _context.Paciente.Remove(paciente);
-                await _context.SaveChangesAsync();
-            }
-        }
+        return diag.Id;
+    }
+    public async Task<List<Paciente>> GetAllAsync()
+    {
+        return await _context.Paciente.ToListAsync();
     }
 }

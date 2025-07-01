@@ -6,8 +6,7 @@ using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Repositories.Services;
-using DIGESA.Services.Interfaces;
+
 // using DIGESA.Validadores;
 using FluentValidation;
 
