@@ -11,4 +11,7 @@
 
     public int? CorregimientoId { get; set; }
     public string? Corregimiento { get; set; }
+    
+    public int? InstalacionId { get; set; }
+    public string? Instalacion { get; set; }
 }

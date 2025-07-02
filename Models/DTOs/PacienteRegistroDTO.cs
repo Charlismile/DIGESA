@@ -88,7 +88,7 @@
         {
             if (string.IsNullOrWhiteSpace(Medico.NombreCompleto))
                 errores.Add("Debe ingresar el nombre completo del médico tratante.");
-            if (string.IsNullOrWhiteSpace(Medico.Disciplina))
+            if (string.IsNullOrWhiteSpace(Medico.Especialidad))
                 errores.Add("Debe seleccionar la disciplina del médico.");
             if (string.IsNullOrWhiteSpace(Medico.RegistroIdoneidad))
                 errores.Add("El número de registro de idoneidad del médico es obligatorio.");
@@ -136,7 +136,7 @@ public class AcompananteDTO
 public class MedicoDTO
 {
     public string NombreCompleto { get; set; }
-    public string Disciplina { get; set; } // Médico general, Odontólogo, Especialista
+    public string Especialidad { get; set; } // Médico general, Odontólogo, Especialista
     public string RegistroIdoneidad { get; set; }
     public string NumeroTelefono { get; set; }
     public string InstalacionSalud { get; set; }
@@ -145,24 +145,44 @@ public class MedicoDTO
 public class DiagnosticosDTO
 {
     public bool Alzheimer { get; set; }
-    public bool Epilepsia { get; set; }
-    public bool SIDA { get; set; }
     public bool Anorexia { get; set; }
-    public bool Fibromialgia { get; set; }
     public bool Artritis { get; set; }
-    public bool Glaucoma { get; set; }
-    public bool EstrésPostraumatico { get; set; }
     public bool Autismo { get; set; }
+    public bool Cancer { get; set; }
+    public bool Depresion { get; set; }
+    public bool EnfermedadInflamatoriaIntestinal { get; set; }
+    public bool CuidadosPaliativos { get; set; }
+    public bool EnfermedadesDegenerativas { get; set; }
+    public bool Epilepsia { get; set; }
+    public bool Fibromialgia { get; set; }
+    public bool Glaucoma { get; set; }
     public bool HepatitisC { get; set; }
-
+    public bool Insomnio { get; set; }
+    public bool LesionMedular { get; set; }
+    public bool NeuropatiaPeriferica { get; set; }
+    public bool Parkinson { get; set; }
+    public bool VIH { get; set; }
+    public bool SIDA { get; set; }
+    public bool EstresPostraumatico { get; set; }
+    public bool TrastornoBipolar { get; set; }
+    public bool TrastornosAnsiedad { get; set; }
+    public bool DolorNeuropatico { get; set; }
+    public bool Espasticidad { get; set; }
+    public bool Migrana { get; set; }
+    public bool Otro { get; set; }
     public string OtroDiagnostico { get; set; }
 
     public bool AnySelected()
     {
-        return Alzheimer || Epilepsia || SIDA || Anorexia || Fibromialgia ||
-               Artritis || Glaucoma || EstrésPostraumatico || Autismo || HepatitisC;
+        return Alzheimer || Anorexia || Artritis || Autismo || Cancer ||
+               Depresion || EnfermedadInflamatoriaIntestinal || CuidadosPaliativos ||
+               EnfermedadesDegenerativas || Epilepsia || Fibromialgia || Glaucoma ||
+               HepatitisC || Insomnio || LesionMedular || NeuropatiaPeriferica ||
+               Parkinson || VIH || SIDA || EstresPostraumatico || TrastornoBipolar ||
+               TrastornosAnsiedad || DolorNeuropatico || Espasticidad || Migrana || Otro;
     }
 }
+
 
 public class OtrasEnfermedadesDTO
 {

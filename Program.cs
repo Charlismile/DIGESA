@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
+using DIGESA.Models.Entities.BDUbicaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 
 // using DIGESA.Validadores;
@@ -15,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddScoped<IDbUbicacionesService, DbUbicacionesService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IPacienteService, PacienteService>();
@@ -27,6 +28,9 @@ builder.Services.AddBlazoredToast();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+//Ubicaciones
+builder.Services.AddDbContext<DbUbicacionPanama>(options =>
+    options.UseSqlServer("UbicacionConnection"));
 // Registro del contexto principal de Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -42,6 +46,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Si usas roles, asegúrate de tener esta línea
 builder.Services.AddAuthorization();

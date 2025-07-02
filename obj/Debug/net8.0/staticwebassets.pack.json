@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\css\\custom.css",
+      "PackagePath": "staticwebassets\\css\\custom.css"
+    },
+    {
       "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\DIGESA\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },

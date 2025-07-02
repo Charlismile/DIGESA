@@ -1,0 +1,112 @@
+﻿@page "/formstepper"
+
+<h3>Stepper Vertical con Blazor + Bootstrap</h3>
+
+<div class="card" style="width: 400px;">
+    <div class="card-body">
+        <div class="d-flex flex-column">
+            @for (int i = 0; i < steps.Count; i++)
+            {
+                var step = steps[i];
+                <div class="step @(i == currentStepIndex ? "active" : "") @(step.IsCompleted ? "completed" : "")">
+                    <div class="step-header d-flex align-items-center mb-2">
+                        <div class="step-number me-3">@step.Number</div>
+                        <div class="step-title fw-bold">@step.Title</div>
+                        @if (!string.IsNullOrEmpty(step.SecondaryText))
+                        {
+                            <span class="badge bg-secondary ms-2">@step.SecondaryText</span>
+                        }
+                    </div>
+                    <div class="step-content ms-5 mb-3" @key="@i">
+                        @if (i == currentStepIndex)
+                        {
+                            @step.Content
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Botones -->
+            <div class="mt-3 d-flex justify-content-between">
+                <button class="btn btn-outline-primary btn-sm" @onclick="GoToPrevious" disabled="@(!CanGoBack)">Previous</button>
+                <button class="btn btn-primary btn-sm" @onclick="GoToNext" disabled="@(!CanGoForward)">Next</button>
+            </div>
+
+            @if (IsComplete)
+            {
+                <div class="alert alert-success mt-3">
+                    Thank you for wasting your money on clicks!
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" @bind="nonLinear" />
+    <label class="form-check-label">NonLinear</label>
+</div>
+
+@code {
+    private bool nonLinear = false;
+    private int currentStepIndex = 0;
+
+    private List<StepModel> steps = new()
+    {
+        new StepModel("1", "Select campaign settings",
+            "For each ad campaign that you create, you can control how much you're willing to spend on clicks and conversions, which networks and geographical locations you want your ads to show on, and more."),
+        new StepModel("2", "Create an ad group", "Optional", true,
+            "An ad group contains one or more ads which target a shared set of keywords."),
+        new StepModel("3", "Create an ad",
+            "Try out different ad text to see what brings in the most customers, and learn how to enhance your ads using features like ad extensions. If you run into any problems with your ads, find out how to tell if they're running and how to resolve approval issues.")
+    };
+
+    private bool CanGoBack => currentStepIndex > 0;
+    private bool CanGoForward => currentStepIndex < steps.Count - 1;
+    private bool IsComplete => currentStepIndex == steps.Count;
+
+    private void GoToNext()
+    {
+        if (currentStepIndex < steps.Count - 1)
+        {
+            steps[currentStepIndex].IsCompleted = true;
+            currentStepIndex++;
+        }
+    }
+
+    private void GoToPrevious()
+    {
+        if (currentStepIndex > 0)
+        {
+            currentStepIndex--;
+        }
+    }
+
+    private class StepModel
+    {
+        public string Number { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string SecondaryText { get; set; } = "";
+        public bool Skippable { get; set; } = false;
+        public bool IsCompleted { get; set; } = false;
+
+        public StepModel(string number, string title, string content)
+        {
+            Number = number;
+            Title = title;
+            Content = content;
+        }
+
+        public StepModel(string number, string title, string secondaryText, bool skippable, string content)
+        {
+            Number = number;
+            Title = title;
+            SecondaryText = secondaryText;
+            Skippable = skippable;
+            Content = content;
+        }
+    }
+}

@@ -19,6 +19,8 @@ public partial class DbUbicacionPanama : DbContext
 
     public virtual DbSet<Distrito> Distrito { get; set; }
 
+    public virtual DbSet<InstalacionSalud> InstalacionSalud { get; set; }
+
     public virtual DbSet<Provincia> Provincia { get; set; }
 
     public virtual DbSet<RegionSalud> RegionSalud { get; set; }
@@ -52,6 +54,18 @@ public partial class DbUbicacionPanama : DbContext
             entity.HasOne(d => d.Provincia).WithMany(p => p.Distrito)
                 .HasForeignKey(d => d.ProvinciaId)
                 .HasConstraintName("FK__Distrito__Provin__2E1BDC42");
+        });
+
+        modelBuilder.Entity<InstalacionSalud>(entity =>
+        {
+            entity.HasKey(e => e.InstalacionId).HasName("PK__Instalac__14B99F7A2F07A6D7");
+
+            entity.Property(e => e.InstalacionId)
+                .ValueGeneratedNever()
+                .HasColumnName("instalacion_Id");
+            entity.Property(e => e.Instalacion)
+                .HasMaxLength(255)
+                .HasColumnName("instalacion");
         });
 
         modelBuilder.Entity<Provincia>(entity =>

@@ -63,8 +63,7 @@ public class PacienteService : IPacienteService
             var medico = new Medico
             {
                 NombreCompleto = model.Medico.NombreCompleto,
-                Disciplina = model.Medico.Disciplina,
-                Especialidad = model.Medico.Disciplina,
+                Especialidad = model.Medico.Especialidad,
                 NumeroRegistroIdoneidad = model.Medico.RegistroIdoneidad,
                 NumeroTelefono = model.Medico.NumeroTelefono,
                 InstalacionSalud = model.Medico.InstalacionSalud
@@ -92,7 +91,7 @@ public class PacienteService : IPacienteService
             if (model.Diagnostico.Fibromialgia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Fibromialgia"));
             if (model.Diagnostico.Artritis) diagnosticoIds.Add(await GetOrCreateDiagnostico("Artritis"));
             if (model.Diagnostico.Glaucoma) diagnosticoIds.Add(await GetOrCreateDiagnostico("Glaucoma"));
-            if (model.Diagnostico.EstrésPostraumatico) diagnosticoIds.Add(await GetOrCreateDiagnostico("Síndrome de Estrés Postraumático"));
+            if (model.Diagnostico.EstresPostraumatico) diagnosticoIds.Add(await GetOrCreateDiagnostico("Síndrome de Estrés Postraumático"));
             if (model.Diagnostico.Autismo) diagnosticoIds.Add(await GetOrCreateDiagnostico("Autismo"));
             if (model.Diagnostico.HepatitisC) diagnosticoIds.Add(await GetOrCreateDiagnostico("Hepatitis C"));
 
