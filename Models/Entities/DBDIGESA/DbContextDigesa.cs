@@ -31,6 +31,10 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<EstadoSolicitud> EstadoSolicitud { get; set; }
 
+    public virtual DbSet<FormaFarmaceutica> FormaFarmaceutica { get; set; }
+
+    public virtual DbSet<FrecuenciaAdministracion> FrecuenciaAdministracion { get; set; }
+
     public virtual DbSet<Medico> Medico { get; set; }
 
     public virtual DbSet<Paciente> Paciente { get; set; }
@@ -47,9 +51,15 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<TipoContacto> TipoContacto { get; set; }
 
+    public virtual DbSet<TipoProducto> TipoProducto { get; set; }
+
     public virtual DbSet<Tratamiento> Tratamiento { get; set; }
 
+    public virtual DbSet<UnidadConcentracion> UnidadConcentracion { get; set; }
+
     public virtual DbSet<Usuario> Usuario { get; set; }
+
+    public virtual DbSet<ViaAdministracion> ViaAdministracion { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
@@ -199,6 +209,24 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<FormaFarmaceutica>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__FormaFar__3214EC070E70081C");
+
+            entity.HasIndex(e => e.Nombre, "UQ__FormaFar__75E3EFCF2F83C8A6").IsUnique();
+
+            entity.Property(e => e.Nombre).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<FrecuenciaAdministracion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Frecuenc__3214EC0747F3F180");
+
+            entity.HasIndex(e => e.Nombre, "UQ__Frecuenc__75E3EFCFC62CD14D").IsUnique();
+
+            entity.Property(e => e.Nombre).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Medico>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Medico__3214EC074E06C452");
@@ -211,7 +239,7 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasIndex(e => e.NumeroRegistroIdoneidad, "UQ__Medico__489C33DD7B406326").IsUnique();
 
-            entity.Property(e => e.Especialidad).HasMaxLength(100);
+            entity.Property(e => e.Especialidad).HasMaxLength(500);
             entity.Property(e => e.InstalacionSalud).HasMaxLength(150);
             entity.Property(e => e.NombreCompleto).HasMaxLength(150);
             entity.Property(e => e.NumeroRegistroIdoneidad).HasMaxLength(50);
@@ -388,6 +416,15 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<TipoProducto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TipoProd__3214EC077766BD1E");
+
+            entity.HasIndex(e => e.Nombre, "UQ__TipoProd__75E3EFCF2DF5D570").IsUnique();
+
+            entity.Property(e => e.Nombre).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Tratamiento>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Tratamie__3214EC0790222EF2");
@@ -398,6 +435,8 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.ConcentracionCbd)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("ConcentracionCBD");
+            entity.Property(e => e.ConcentracionOtroCannabinoide1).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.ConcentracionOtroCannabinoide2).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.ConcentracionThc)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("ConcentracionTHC");
@@ -406,18 +445,74 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.FrecuenciaAdministracion).HasMaxLength(100);
             entity.Property(e => e.NombreComercialProducto).HasMaxLength(150);
             entity.Property(e => e.NombreGenericoProducto).HasMaxLength(150);
+            entity.Property(e => e.OtraFormaFarmaceuticaDescripcion).HasMaxLength(255);
+            entity.Property(e => e.OtraUnidadCbddescripcion)
+                .HasMaxLength(50)
+                .HasColumnName("OtraUnidadCBDDescripcion");
+            entity.Property(e => e.OtraUnidadOtroCannabinoide1Descripcion).HasMaxLength(50);
+            entity.Property(e => e.OtraUnidadOtroCannabinoide2Descripcion).HasMaxLength(50);
+            entity.Property(e => e.OtraUnidadThcdescripcion)
+                .HasMaxLength(50)
+                .HasColumnName("OtraUnidadTHCDescripcion");
+            entity.Property(e => e.OtraViaAdministracionDescripcion).HasMaxLength(255);
+            entity.Property(e => e.OtroCannabinode1).HasMaxLength(100);
+            entity.Property(e => e.OtroCannabinode2).HasMaxLength(100);
+            entity.Property(e => e.OtroProductoDescripcion).HasMaxLength(255);
             entity.Property(e => e.OtrosCannabinoides).HasMaxLength(200);
             entity.Property(e => e.UnidadCbd)
                 .HasMaxLength(20)
                 .HasColumnName("UnidadCBD");
+            entity.Property(e => e.UnidadCbdid).HasColumnName("UnidadCBDId");
             entity.Property(e => e.UnidadThc)
                 .HasMaxLength(20)
                 .HasColumnName("UnidadTHC");
+            entity.Property(e => e.UnidadThcid).HasColumnName("UnidadTHCId");
             entity.Property(e => e.ViaAdministracion).HasMaxLength(100);
+
+            entity.HasOne(d => d.FormaFarmaceuticaNavigation).WithMany(p => p.Tratamiento)
+                .HasForeignKey(d => d.FormaFarmaceuticaId)
+                .HasConstraintName("FK_Tratamiento_FormaFarmaceutica");
+
+            entity.HasOne(d => d.FrecuenciaAdministracionNavigation).WithMany(p => p.Tratamiento)
+                .HasForeignKey(d => d.FrecuenciaAdministracionId)
+                .HasConstraintName("FK_Tratamiento_FrecuenciaAdministracion");
 
             entity.HasOne(d => d.Solicitud).WithMany(p => p.Tratamiento)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK__Tratamien__Solic__14E61A24");
+
+            entity.HasOne(d => d.TipoProducto).WithMany(p => p.Tratamiento)
+                .HasForeignKey(d => d.TipoProductoId)
+                .HasConstraintName("FK_Tratamiento_TipoProducto");
+
+            entity.HasOne(d => d.UnidadCbdNavigation).WithMany(p => p.TratamientoUnidadCbdNavigation)
+                .HasForeignKey(d => d.UnidadCbdid)
+                .HasConstraintName("FK_Tratamiento_UnidadCBD");
+
+            entity.HasOne(d => d.UnidadOtroCannabinoide1).WithMany(p => p.TratamientoUnidadOtroCannabinoide1)
+                .HasForeignKey(d => d.UnidadOtroCannabinoide1Id)
+                .HasConstraintName("FK_Tratamiento_UnidadOtroCannabinoide1");
+
+            entity.HasOne(d => d.UnidadOtroCannabinoide2).WithMany(p => p.TratamientoUnidadOtroCannabinoide2)
+                .HasForeignKey(d => d.UnidadOtroCannabinoide2Id)
+                .HasConstraintName("FK_Tratamiento_UnidadOtroCannabinoide2");
+
+            entity.HasOne(d => d.UnidadThcNavigation).WithMany(p => p.TratamientoUnidadThcNavigation)
+                .HasForeignKey(d => d.UnidadThcid)
+                .HasConstraintName("FK_Tratamiento_UnidadTHC");
+
+            entity.HasOne(d => d.ViaAdministracionNavigation).WithMany(p => p.Tratamiento)
+                .HasForeignKey(d => d.ViaAdministracionId)
+                .HasConstraintName("FK_Tratamiento_ViaAdministracion");
+        });
+
+        modelBuilder.Entity<UnidadConcentracion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__UnidadCo__3214EC072C7C0C46");
+
+            entity.HasIndex(e => e.Nombre, "UQ__UnidadCo__75E3EFCFE78154C7").IsUnique();
+
+            entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -441,6 +536,15 @@ public partial class DbContextDigesa : DbContext
                 .HasForeignKey(d => d.RolId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Usuario__RolId__6BE40491");
+        });
+
+        modelBuilder.Entity<ViaAdministracion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ViaAdmin__3214EC07FA817CB3");
+
+            entity.HasIndex(e => e.Nombre, "UQ__ViaAdmin__75E3EFCF3E05F2D3").IsUnique();
+
+            entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

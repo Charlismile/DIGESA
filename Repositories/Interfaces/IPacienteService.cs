@@ -1,7 +1,7 @@
-﻿using DIGESA.Models.Entities.DBDIGESA;
+﻿
+using System.Threading.Tasks;
 
 public interface IPacienteService
 {
     Task<int> CreateAsync(PacienteRegistroDTO model);
-    Task<List<Paciente>> GetAllAsync(); // Nuevo método
 }

@@ -1,154 +1,141 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using DIGESA.Models.Entities.DBDIGESA;
+﻿using DIGESA.Models.Entities.DBDIGESA;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 
 public class PacienteService : IPacienteService
 {
+    private readonly IPacienteRepository _pacienteRepo;
+    private readonly IMedicoRepository _medicoRepo;
+    private readonly IDiagnosticoRepository _diagnosticoRepo;
+    private readonly ITratamientoRepository _tratamientoRepo;
+    private readonly IAcompananteRepository _acompananteRepo;
+    private readonly ISolicitudRepository _solicitudRepo; // Nuevo repo
+    private readonly ISolicitudDiagnosticoRepository _solicitudDiagnosticoRepo; // Nuevo repo
     private readonly DbContextDigesa _context;
     private readonly ILogger<PacienteService> _logger;
+    private readonly IMapper _mapper; // Agregado para usar AutoMapper
 
-    public PacienteService(DbContextDigesa context, ILogger<PacienteService> logger)
+    public PacienteService(
+        IPacienteRepository pacienteRepo,
+        IMedicoRepository medicoRepo,
+        IDiagnosticoRepository diagnosticoRepo,
+        ITratamientoRepository tratamientoRepo,
+        IAcompananteRepository acompananteRepo,
+        ISolicitudRepository solicitudRepo,
+        ISolicitudDiagnosticoRepository solicitudDiagnosticoRepo,
+        DbContextDigesa context,
+        IMapper mapper,
+        ILogger<PacienteService> logger)
     {
+        _pacienteRepo = pacienteRepo;
+        _medicoRepo = medicoRepo;
+        _diagnosticoRepo = diagnosticoRepo;
+        _tratamientoRepo = tratamientoRepo;
+        _acompananteRepo = acompananteRepo;
+        _solicitudRepo = solicitudRepo;
+        _solicitudDiagnosticoRepo = solicitudDiagnosticoRepo;
         _context = context;
+        _mapper = mapper;
         _logger = logger;
     }
 
     public async Task<int> CreateAsync(PacienteRegistroDTO model)
+{
+    var transaction = await _context.Database.BeginTransactionAsync();
+    try
     {
-        try
+        // var errores = model.Validate();
+        // if (errores.Count > 0)
+        //     throw new ValidationException(string.Join(", ", errores));
+
+        // Mapear paciente
+        var paciente = _mapper.Map<Paciente>(model);
+        await _pacienteRepo.AddAsync(paciente);
+        await _context.SaveChangesAsync(); // Guardamos para obtener Id
+
+        // Acompañante (si aplica)
+        if (model.RequiereAcompanante && model.Acompanante != null)
         {
-            var errores = model.Validate();
-            if (errores.Count > 0)
-                throw new ValidationException(string.Join(", ", errores));
-
-            // Mapeo de Paciente
-            var paciente = new Paciente
-            {
-                NombreCompleto = model.NombreCompleto,
-                TipoDocumento = model.TipoDocumento,
-                NumeroDocumento = model.NumeroDocumento,
-                Nacionalidad = model.Nacionalidad,
-                FechaNacimiento = model.FechaNacimiento.Value,
-                Sexo = model.Sexo,
-                DireccionResidencia = model.DireccionResidencia,
-                TelefonoResidencial = model.TelefonoResidencial,
-                TelefonoPersonal = model.TelefonoPersonal,
-                TelefonoLaboral = model.TelefonoLaboral,
-                CorreoElectronico = model.CorreoElectronico,
-                InstalacionSalud = model.InstalacionSalud,
-                RegionSalud = model.RegionSalud,
-                RequiereAcompanante = model.RequiereAcompanante
-            };
-
-            await _context.Paciente.AddAsync(paciente);
+            var acompanante = _mapper.Map<Acompanante>(model.Acompanante);
+            acompanante.PacienteId = paciente.Id;
+            await _acompananteRepo.AddAsync(acompanante);
             await _context.SaveChangesAsync();
+        }
 
-            // Si requiere acompañante
-            if (model.RequiereAcompanante && model.Acompanante != null)
+        // Médico
+        var medicoExiste = await _medicoRepo.ExistePorDocumento(model.Medico.RegistroIdoneidad);
+        if (medicoExiste)
+        {
+            throw new ValidationException("El médico ya está registrado.");
+        }
+
+        var medico = _mapper.Map<Medico>(model.Medico);
+        await _medicoRepo.AddAsync(medico);
+        await _context.SaveChangesAsync();
+
+        // Solicitud - CORRECTAMENTE CREADA DESDE CERO
+        var solicitud = new Solicitud
+        {
+            PacienteId = paciente.Id,
+            MedicoId = medico.Id,
+            FechaSolicitud = DateTime.Now,
+            EstadoSolicitudId = 1 // Pendiente
+        };
+
+        await _solicitudRepo.AddAsync(solicitud);
+        await _context.SaveChangesAsync();
+
+        // Diagnósticos
+        foreach (var diag in model.Diagnosticos)
+        {
+            var diagnostico = await _diagnosticoRepo.GetByNombreOrCodigoAsync(diag.Nombre, diag.CodigoCIE10);
+
+            if (diagnostico == null)
             {
-                var acompanante = new Acompanante
-                {
-                    PacienteId = paciente.Id,
-                    NombreCompleto = model.Acompanante.NombreCompleto,
-                    TipoDocumento = model.Acompanante.TipoDocumento,
-                    NumeroDocumento = model.Acompanante.NumeroDocumento,
-                    Nacionalidad = model.Acompanante.Nacionalidad,
-                    Parentesco = model.Acompanante.Parentesco
-                };
-                await _context.Acompanante.AddAsync(acompanante);
+                diagnostico = _mapper.Map<Diagnostico>(diag);
+                diagnostico.Descripcion = diag.Observaciones ?? $"Diagnóstico creado automáticamente - {diag.Nombre}";
+                await _diagnosticoRepo.GetOrCreateAsync(diagnostico);
             }
 
-            // Médico
-            var medico = new Medico
-            {
-                NombreCompleto = model.Medico.NombreCompleto,
-                Especialidad = model.Medico.Especialidad,
-                NumeroRegistroIdoneidad = model.Medico.RegistroIdoneidad,
-                NumeroTelefono = model.Medico.NumeroTelefono,
-                InstalacionSalud = model.Medico.InstalacionSalud
-            };
-            await _context.Medico.AddAsync(medico);
-            await _context.SaveChangesAsync(); // Necesario para obtener Id del médico
-
-            // Solicitud
-            var solicitud = new Solicitud
-            {
-                PacienteId = paciente.Id,
-                MedicoId = medico.Id,
-                // EstadoSolicitud = "Pendiente",
-                FechaSolicitud = DateTime.Now
-            };
-            await _context.Solicitud.AddAsync(solicitud);
-            await _context.SaveChangesAsync();
-
-            // Diagnósticos
-            var diagnosticoIds = new List<int>();
-            if (model.Diagnostico.Alzheimer) diagnosticoIds.Add(await GetOrCreateDiagnostico("Alzheimer"));
-            if (model.Diagnostico.Epilepsia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Epilepsia"));
-            if (model.Diagnostico.SIDA) diagnosticoIds.Add(await GetOrCreateDiagnostico("VIH/SIDA"));
-            if (model.Diagnostico.Anorexia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Anorexia"));
-            if (model.Diagnostico.Fibromialgia) diagnosticoIds.Add(await GetOrCreateDiagnostico("Fibromialgia"));
-            if (model.Diagnostico.Artritis) diagnosticoIds.Add(await GetOrCreateDiagnostico("Artritis"));
-            if (model.Diagnostico.Glaucoma) diagnosticoIds.Add(await GetOrCreateDiagnostico("Glaucoma"));
-            if (model.Diagnostico.EstresPostraumatico) diagnosticoIds.Add(await GetOrCreateDiagnostico("Síndrome de Estrés Postraumático"));
-            if (model.Diagnostico.Autismo) diagnosticoIds.Add(await GetOrCreateDiagnostico("Autismo"));
-            if (model.Diagnostico.HepatitisC) diagnosticoIds.Add(await GetOrCreateDiagnostico("Hepatitis C"));
-
-            foreach (var id in diagnosticoIds)
-            {
-                await _context.SolicitudDiagnostico.AddAsync(new SolicitudDiagnostico
-                {
-                    SolicitudId = solicitud.Id,
-                    DiagnosticoId = id,
-                    EsPrimario = diagnosticoIds.First() == id
-                });
-            }
-
-            // Tratamiento
-            var tratamiento = new Tratamiento
+            var solicitudDiagnostico = new SolicitudDiagnostico
             {
                 SolicitudId = solicitud.Id,
-                ConcentracionCbd = model.Terapia.ConcentracionCBD,
-                ConcentracionThc = model.Terapia.ConcentracionTHC,
-                OtrosCannabinoides = model.Terapia.OtrosCannabinoides,
-                Dosis = model.Terapia.Dosis,
-                FrecuenciaAdministracion = model.Terapia.FrecuenciaAdministracion,
-                DuracionTratamientoDias = model.Terapia.DuracionTratamientoDias,
-                CantidadPrescrita = model.Terapia.CantidadPrescrita,
-                InstruccionesAdicionales = model.Terapia.InstruccionesAdicionales
+                DiagnosticoId = diagnostico.Id,
+                EsPrimario = model.Diagnosticos.FirstOrDefault()?.CodigoCIE10 == diag.CodigoCIE10,
+                Observaciones = diag.Observaciones
             };
-            await _context.Tratamiento.AddAsync(tratamiento);
 
-            await _context.SaveChangesAsync();
+            await _solicitudDiagnosticoRepo.AddAsync(solicitudDiagnostico);
+        }
 
-            return paciente.Id;
-        }
-        catch (ValidationException ex)
-        {
-            _logger.LogWarning(ex, "Validación fallida en registro de paciente");
-            throw;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error al registrar paciente");
-            throw;
-        }
+        await _context.SaveChangesAsync();
+
+        // Tratamiento
+        var tratamiento = _mapper.Map<Tratamiento>(model.Tratamiento);
+        tratamiento.SolicitudId = solicitud.Id;
+
+        await _tratamientoRepo.AddAsync(tratamiento);
+        await _context.SaveChangesAsync();
+
+        await transaction.CommitAsync();
+        return paciente.Id;
     }
-
-    private async Task<int> GetOrCreateDiagnostico(string nombre)
+    catch (ValidationException ex)
     {
-        var diag = await _context.Diagnostico.FirstOrDefaultAsync(d => d.Nombre == nombre);
-        if (diag == null)
-        {
-            diag = new Diagnostico { Nombre = nombre, Descripcion = $"Diagnóstico creado automáticamente - {nombre}" };
-            await _context.Diagnostico.AddAsync(diag);
-            await _context.SaveChangesAsync();
-        }
-        return diag.Id;
+        await transaction.RollbackAsync();
+        _logger.LogWarning(ex, "Validación fallida en registro de paciente");
+        throw;
     }
-    public async Task<List<Paciente>> GetAllAsync()
+    catch (Exception ex)
     {
-        return await _context.Paciente.ToListAsync();
+        await transaction.RollbackAsync();
+        _logger.LogError(ex, "Error al registrar paciente");
+        throw;
     }
+}
 }

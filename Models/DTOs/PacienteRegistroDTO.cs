@@ -1,203 +1,165 @@
-﻿public class PacienteRegistroDTO
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+public class PacienteRegistroDTO
 {
     // Datos personales del paciente
+    [Required(ErrorMessage = "El nombre completo es obligatorio.")]
     public string NombreCompleto { get; set; }
-    public string TipoDocumento { get; set; } // Cédula, Pasaporte
+
+    [Required(ErrorMessage = "Debe seleccionar un tipo de documento.")]
+    public string TipoDocumento { get; set; } // Ej: Cédula, Pasaporte
+
+    [Required(ErrorMessage = "El número de documento es obligatorio.")]
+    [RegularExpression(@"^[a-zA-Z0-9\-]{5,30}$", ErrorMessage = "Número de documento no válido.")]
     public string NumeroDocumento { get; set; }
+
+    [Required(ErrorMessage = "La nacionalidad es obligatoria.")]
     public string Nacionalidad { get; set; }
+
+    [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime? FechaNacimiento { get; set; }
+
+    [Required(ErrorMessage = "Debe seleccionar el sexo del paciente.")]
     public string Sexo { get; set; } // Femenino, Masculino
+
+    [Required(ErrorMessage = "La dirección de residencia es obligatoria.")]
     public string DireccionResidencia { get; set; }
 
     // Contacto
+    [RegularExpression(@"^\+?[0-9]{7,15}$", ErrorMessage = "Teléfono residencial no válido.")]
     public string TelefonoResidencial { get; set; }
+
+    [RegularExpression(@"^\+?[0-9]{7,15}$", ErrorMessage = "Teléfono personal no válido.")]
     public string TelefonoPersonal { get; set; }
+
+    [RegularExpression(@"^\+?[0-9]{7,15}$", ErrorMessage = "Teléfono laboral no válido.")]
     public string TelefonoLaboral { get; set; }
+
+    [EmailAddress(ErrorMessage = "Correo electrónico no válido.")]
     public string CorreoElectronico { get; set; }
 
     // Instalación de salud
+    [Required(ErrorMessage = "La instalación de salud es obligatoria.")]
     public string InstalacionSalud { get; set; }
+
+    [Required(ErrorMessage = "La región de salud es obligatoria.")]
     public string RegionSalud { get; set; }
 
-    // Acompañante
+    // Discapacidad
     public bool RequiereAcompanante { get; set; }
-    public AcompananteDTO Acompanante { get; set; }
+
+    public string MotivoRequerimientoAcompanante { get; set; }
+
+    public string TipoDiscapacidad { get; set; }
+
+    // Acompañante
+    public AcompananteDTO Acompanante { get; set; } = new();
 
     // Médico tratante
-    public MedicoDTO Medico { get; set; }
+    [Required(ErrorMessage = "Los datos del médico son obligatorios.")]
+    public MedicoDTO Medico { get; set; } = new();
 
     // Diagnósticos
-    public DiagnosticosDTO Diagnostico { get; set; }
-
-    // Otras enfermedades
-    public OtrasEnfermedadesDTO OtrasEnfermedades { get; set; }
+    [Required(ErrorMessage = "Debe seleccionar al menos un diagnóstico.")]
+    public List<DiagnosticoSeleccionadoDTO> Diagnosticos { get; set; } = new();
 
     // Tratamiento
-    public TerapiaDTO Terapia { get; set; }
+    [Required(ErrorMessage = "Debe proporcionar los datos del tratamiento.")]
+    public TratamientoDTO Tratamiento { get; set; } = new();
 
-    // Validación de negocio
-    public List<string> Validate()
-    {
-        var errores = new List<string>();
-
-        if (string.IsNullOrWhiteSpace(NombreCompleto))
-            errores.Add("El nombre completo del paciente es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(TipoDocumento))
-            errores.Add("Debe seleccionar un tipo de documento.");
-
-        if (string.IsNullOrWhiteSpace(NumeroDocumento))
-            errores.Add("El número de documento es obligatorio.");
-
-        if (!FechaNacimiento.HasValue)
-            errores.Add("La fecha de nacimiento es obligatoria.");
-        else if (FechaNacimiento.Value.Date > DateTime.Now.Date)
-            errores.Add("La fecha de nacimiento no puede ser futura.");
-
-        if (string.IsNullOrWhiteSpace(Sexo))
-            errores.Add("Debe seleccionar el sexo del paciente.");
-
-        if (string.IsNullOrWhiteSpace(DireccionResidencia))
-            errores.Add("La dirección de residencia es obligatoria.");
-
-        if (string.IsNullOrWhiteSpace(InstalacionSalud))
-            errores.Add("La instalación de salud donde es atendido es obligatoria.");
-
-        if (string.IsNullOrWhiteSpace(RegionSalud))
-            errores.Add("La región de salud es obligatoria.");
-
-        // Validar requerimiento de acompañante
-        if (RequiereAcompanante)
-        {
-            if (Acompanante == null || string.IsNullOrWhiteSpace(Acompanante.NombreCompleto))
-                errores.Add("Debe ingresar el nombre completo del acompañante.");
-            if (string.IsNullOrWhiteSpace(Acompanante.TipoDocumento))
-                errores.Add("Debe seleccionar el tipo de documento del acompañante.");
-            if (string.IsNullOrWhiteSpace(Acompanante.NumeroDocumento))
-                errores.Add("El número de documento del acompañante es obligatorio.");
-            if (string.IsNullOrWhiteSpace(Acompanante.Nacionalidad))
-                errores.Add("La nacionalidad del acompañante es obligatoria.");
-            if (string.IsNullOrWhiteSpace(Acompanante.Parentesco))
-                errores.Add("Debe seleccionar el parentesco del acompañante.");
-        }
-
-        // Validar médico tratante
-        if (Medico == null)
-            errores.Add("Los datos del médico tratante son obligatorios.");
-        else
-        {
-            if (string.IsNullOrWhiteSpace(Medico.NombreCompleto))
-                errores.Add("Debe ingresar el nombre completo del médico tratante.");
-            if (string.IsNullOrWhiteSpace(Medico.Especialidad))
-                errores.Add("Debe seleccionar la disciplina del médico.");
-            if (string.IsNullOrWhiteSpace(Medico.RegistroIdoneidad))
-                errores.Add("El número de registro de idoneidad del médico es obligatorio.");
-            if (string.IsNullOrWhiteSpace(Medico.InstalacionSalud))
-                errores.Add("La instalación de salud del médico es obligatoria.");
-        }
-
-        // Validar diagnósticos
-        if (Diagnostico == null)
-            errores.Add("Debe seleccionar al menos un diagnóstico.");
-        else
-        {
-            if (!Diagnostico.AnySelected() && string.IsNullOrWhiteSpace(Diagnostico.OtroDiagnostico))
-                errores.Add("Debe seleccionar al menos un diagnóstico o especificar uno personalizado.");
-        }
-
-        // Validar tratamiento
-        if (Terapia == null)
-            errores.Add("Debe proporcionar los datos del tratamiento.");
-        else
-        {
-            if (string.IsNullOrWhiteSpace(Terapia.Dosis))
-                errores.Add("La dosis del tratamiento es obligatoria.");
-            if (string.IsNullOrWhiteSpace(Terapia.FrecuenciaAdministracion))
-                errores.Add("La frecuencia de administración es obligatoria.");
-            if (Terapia.DuracionTratamientoDias <= 0)
-                errores.Add("La duración del tratamiento debe ser mayor a cero días.");
-        }
-
-        return errores;
-    }
+    // Otras enfermedades
+    public OtrasEnfermedadesDTO OtrasEnfermedades { get; set; } = new();
 }
 
 // Clases auxiliares
 
 public class AcompananteDTO
 {
+    [Required(ErrorMessage = "Nombre completo del acompañante es obligatorio.")]
     public string NombreCompleto { get; set; }
+
+    [Required(ErrorMessage = "Tipo de documento es obligatorio.")]
     public string TipoDocumento { get; set; }
+
+    [Required(ErrorMessage = "Número de documento es obligatorio.")]
+    [RegularExpression(@"^[a-zA-Z0-9\-]{5,30}$", ErrorMessage = "Número de documento no válido.")]
     public string NumeroDocumento { get; set; }
+
+    [Required(ErrorMessage = "Nacionalidad del acompañante es obligatoria.")]
     public string Nacionalidad { get; set; }
+
+    [Required(ErrorMessage = "Parentesco es obligatorio.")]
     public string Parentesco { get; set; }
+
+    public bool EsPacienteMenorEdad { get; set; }
+    public bool EsPacienteMayorDiscapacidad { get; set; }
 }
 
 public class MedicoDTO
 {
+    [Required(ErrorMessage = "Nombre completo del médico es obligatorio.")]
     public string NombreCompleto { get; set; }
-    public string Especialidad { get; set; } // Médico general, Odontólogo, Especialista
+
+    [Required(ErrorMessage = "Especialidad del médico es obligatoria.")]
+    public string Especialidad { get; set; }
+
+    [Required(ErrorMessage = "Número de registro de idoneidad es obligatorio.")]
     public string RegistroIdoneidad { get; set; }
-    public string NumeroTelefono { get; set; }
+
+    [Required(ErrorMessage = "Instalación de salud del médico es obligatoria.")]
     public string InstalacionSalud { get; set; }
+
+    [RegularExpression(@"^\+?[0-9]{7,15}$", ErrorMessage = "Número de teléfono no válido.")]
+    public string NumeroTelefono { get; set; }
 }
 
-public class DiagnosticosDTO
+public class DiagnosticoSeleccionadoDTO
 {
-    public bool Alzheimer { get; set; }
-    public bool Anorexia { get; set; }
-    public bool Artritis { get; set; }
-    public bool Autismo { get; set; }
-    public bool Cancer { get; set; }
-    public bool Depresion { get; set; }
-    public bool EnfermedadInflamatoriaIntestinal { get; set; }
-    public bool CuidadosPaliativos { get; set; }
-    public bool EnfermedadesDegenerativas { get; set; }
-    public bool Epilepsia { get; set; }
-    public bool Fibromialgia { get; set; }
-    public bool Glaucoma { get; set; }
-    public bool HepatitisC { get; set; }
-    public bool Insomnio { get; set; }
-    public bool LesionMedular { get; set; }
-    public bool NeuropatiaPeriferica { get; set; }
-    public bool Parkinson { get; set; }
-    public bool VIH { get; set; }
-    public bool SIDA { get; set; }
-    public bool EstresPostraumatico { get; set; }
-    public bool TrastornoBipolar { get; set; }
-    public bool TrastornosAnsiedad { get; set; }
-    public bool DolorNeuropatico { get; set; }
-    public bool Espasticidad { get; set; }
-    public bool Migrana { get; set; }
-    public bool Otro { get; set; }
-    public string OtroDiagnostico { get; set; }
-
-    public bool AnySelected()
-    {
-        return Alzheimer || Anorexia || Artritis || Autismo || Cancer ||
-               Depresion || EnfermedadInflamatoriaIntestinal || CuidadosPaliativos ||
-               EnfermedadesDegenerativas || Epilepsia || Fibromialgia || Glaucoma ||
-               HepatitisC || Insomnio || LesionMedular || NeuropatiaPeriferica ||
-               Parkinson || VIH || SIDA || EstresPostraumatico || TrastornoBipolar ||
-               TrastornosAnsiedad || DolorNeuropatico || Espasticidad || Migrana || Otro;
-    }
+    public string Nombre { get; set; }
+    public string CodigoCIE10 { get; set; }
+    public string Observaciones { get; set; }
 }
 
+public class TratamientoDTO
+{
+    [Range(0, 100, ErrorMessage = "La concentración de CBD debe estar entre 0 y 100.")]
+    public decimal ConcentracionCBD { get; set; }
+
+    [Range(0, 100, ErrorMessage = "La concentración de THC debe estar entre 0 y 100.")]
+    public decimal ConcentracionTHC { get; set; }
+
+    public string OtrosCannabinoides { get; set; }
+
+    [Required(ErrorMessage = "La dosis es obligatoria.")]
+    public string Dosis { get; set; }
+
+    [Required(ErrorMessage = "La frecuencia de administración es obligatoria.")]
+    public string FrecuenciaAdministracion { get; set; }
+
+    [Range(1, 365, ErrorMessage = "La duración del tratamiento debe estar entre 1 y 365 días.")]
+    public int DuracionTratamientoDias { get; set; }
+
+    public string CantidadPrescrita { get; set; }
+    public string InstruccionesAdicionales { get; set; }
+
+    public int FormaFarmaceuticaId { get; set; }
+    public int FrecuenciaAdministracionId { get; set; }
+    public int ViaAdministracionId { get; set; }
+    public int UnidadCBDId { get; set; }
+    public int UnidadTHCId { get; set; }
+    public int? UnidadOtroCannabinoide1Id { get; set; }
+    public int? UnidadOtroCannabinoide2Id { get; set; }
+    public int TipoProductoId { get; set; }
+}
 
 public class OtrasEnfermedadesDTO
 {
+    [Required(ErrorMessage = "El diagnóstico adicional es obligatorio.")]
     public string Diagnostico { get; set; }
-    public string Tratamiento { get; set; }
-}
 
-public class TerapiaDTO
-{
-    public decimal ConcentracionCBD { get; set; }
-    public decimal ConcentracionTHC { get; set; }
-    public string OtrosCannabinoides { get; set; }
-    public string Dosis { get; set; }
-    public string FrecuenciaAdministracion { get; set; }
-    public int DuracionTratamientoDias { get; set; }
-    public string CantidadPrescrita { get; set; }
-    public string InstruccionesAdicionales { get; set; }
+    public string Tratamiento { get; set; }
 }

@@ -327,3 +327,5 @@ C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\Blazored
 C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.dll
 C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
 C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\cabernalo\Documents\PROJECT GIT\DIGESA\DIGESA\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

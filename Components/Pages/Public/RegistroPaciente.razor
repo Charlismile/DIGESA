@@ -1,401 +1,340 @@
-﻿@page "/registro"
-@inject IPacienteService PacienteService
-@inject NavigationManager NavManager
-
-<div class="container py-5">
-    <div class="row justify-content-center g-4">
-        <h3 class="mb-4">Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3>
-
-        <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-
-            <!-- 1. DATOS PERSONALES DEL PACIENTE -->
-            <h5>1. Datos Personales del Paciente</h5>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Nombre completo:</label>
-                    <InputText @bind-Value="_model.NombreCompleto" class="form-control" />
-                    <ValidationMessage For="@(() => _model.NombreCompleto)" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Tipo de documento:</label>
-                    <InputSelect @bind-Value="_model.TipoDocumento" class="form-select">
-                        <option value="">Seleccionar</option>
-                        <option value="Cédula">Cédula</option>
-                        <option value="Pasaporte">Pasaporte</option>
-                    </InputSelect>
-                    <ValidationMessage For="@(() => _model.TipoDocumento)" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Número de documento:</label>
-                    <InputText @bind-Value="_model.NumeroDocumento" class="form-control" />
-                    <ValidationMessage For="@(() => _model.NumeroDocumento)" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label class="form-label">Nacionalidad:</label>
-                    <InputText @bind-Value="_model.Nacionalidad" class="form-control" />
-                    <ValidationMessage For="@(() => _model.Nacionalidad)" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Fecha de nacimiento:</label>
-                    <InputDate @bind-Value="_model.FechaNacimiento" class="form-control" />
-                    <ValidationMessage For="@(() => _model.FechaNacimiento)" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Sexo:</label>
-                    <InputSelect @bind-Value="_model.Sexo" class="form-select">
-                        <option value="">Seleccionar</option>
-                        <option value="Femenino">Femenino</option>
-                        <option value="Masculino">Masculino</option>
-                    </InputSelect>
-                    <ValidationMessage For="@(() => _model.Sexo)" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Dirección de residencia:</label>
-                    <InputText @bind-Value="_model.DireccionResidencia" class="form-control" />
-                    <ValidationMessage For="@(() => _model.DireccionResidencia)" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label class="form-label">Teléfono residencial:</label>
-                    <InputText @bind-Value="_model.TelefonoResidencial" class="form-control" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Teléfono personal:</label>
-                    <InputText @bind-Value="_model.TelefonoPersonal" class="form-control" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Teléfono laboral:</label>
-                    <InputText @bind-Value="_model.TelefonoLaboral" class="form-control" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Correo electrónico:</label>
-                    <InputText @bind-Value="_model.CorreoElectronico" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Instalación de salud donde es atendido:</label>
-                    <InputSelect @bind-Value="_model.InstalacionSalud" class="form-control" /> 
-                    <ValidationMessage For="@(() => _model.InstalacionSalud)" />
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Región de salud:</label>
-                    <InputText @bind-Value="_model.RegionSalud" class="form-control" />
-                    <ValidationMessage For="@(() => _model.RegionSalud)" />
-                </div>
-            </div>
-
-            <div class="mb-3 form-check">
-                <InputCheckbox @bind-Value="_model.RequiereAcompanante" />
-                <label class="form-check-label">¿Requiere acompañante autorizado?</label>
-            </div>
-
-            @if (_model.RequiereAcompanante)
-            {
-                <h5 class="mt-4">2. Datos del Acompañante Autorizado</h5>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Nombre completo del acompañante autorizado:</label>
-                        <InputText @bind-Value="_model.Acompanante.NombreCompleto" class="form-control" />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Tipo de documento:</label>
-                        <InputSelect @bind-Value="_model.Acompanante.TipoDocumento" class="form-select">
-                            <option value="">Seleccionar</option>
-                            <option value="Cédula">Cédula</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                        </InputSelect>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Número del documento:</label>
-                        <InputText @bind-Value="_model.Acompanante.NumeroDocumento" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Nacionalidad:</label>
-                        <InputText @bind-Value="_model.Acompanante.Nacionalidad" class="form-control" />
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Parentesco:</label>
-                        <InputSelect @bind-Value="_model.Acompanante.Parentesco" class="form-select">
-                            <option value="">Seleccionar</option>
-                            <option value="Madre">Madre</option>
-                            <option value="Padre">Padre</option>
-                            <option value="Tutor">Tutor</option>
-                        </InputSelect>
-                    </div>
-                </div>
-            }
-
-            <!-- 3. DATOS DEL MÉDICO TRATANTE -->
-            <h5 class="mt-4">3. Datos del Médico Tratante</h5>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Nombre completo del médico tratante responsable de la prescripción:</label>
-                    <InputText @bind-Value="_model.Medico.NombreCompleto" class="form-control" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Disciplina:</label>
-                    <InputSelect @bind-Value="_model.Medico.Especialidad" class="form-select">
-                        <option value="">Seleccionar</option>
-                        <option value="Médico general">Médico General</option>
-                        <option value="Odontólogo">Odontólogo</option>
-                        <option value="Especialista">Especialista</option>
-                    </InputSelect>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Número de registro de idoneidad:</label>
-                    <InputText @bind-Value="_model.Medico.RegistroIdoneidad" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Número de teléfono donde localizar al médico:</label>
-                    <InputText @bind-Value="_model.Medico.NumeroTelefono" class="form-control" />
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Instalación de salud donde labora el médico:</label>
-                    <InputText @bind-Value="_model.Medico.InstalacionSalud" class="form-control" />
-                </div>
-            </div>
-
-            <!-- 4. DIAGNÓSTICO(S) QUE JUSTIFICAN EL USO DE CANNABIS MEDICINAL Y SUS DERIVADOS -->
-            <h5 class="mt-4">4. Diagnóstico(s) que justifican el uso de cannabis medicinal y sus derivados</h5>
-            <p class="text-muted">Marque todas las opciones aplicables o especifique otro diagnóstico.</p>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Alzheimer" />
-                        <label class="form-check-label">Alzheimer</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Anorexia" />
-                        <label class="form-check-label">Anorexia</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Artritis" />
-                        <label class="form-check-label">Artritis</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Autismo" />
-                        <label class="form-check-label">Autismo</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Cancer" />
-                        <label class="form-check-label">Cáncer</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Depresion" />
-                        <label class="form-check-label">Depresión Mayor Resistente a Tratamiento</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.EnfermedadInflamatoriaIntestinal" />
-                        <label class="form-check-label">Enfermedad Inflamatoria Intestinal</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.CuidadosPaliativos" />
-                        <label class="form-check-label">Enfermedad incurable que requiera cuidado paliativo</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.EnfermedadesDegenerativas" />
-                        <label class="form-check-label">Enfermedades Degenerativas</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Epilepsia" />
-                        <label class="form-check-label">Epilepsia Refractaria</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Fibromialgia" />
-                        <label class="form-check-label">Fibromialgia</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Glaucoma" />
-                        <label class="form-check-label">Glaucoma</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.HepatitisC" />
-                        <label class="form-check-label">Hepatitis C</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Insomnio" />
-                        <label class="form-check-label">Insomnio Crónico Resistente</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.LesionMedular" />
-                        <label class="form-check-label">Lesión Medular Espinal</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.NeuropatiaPeriferica" />
-                        <label class="form-check-label">Neuropatía Periférica</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Parkinson" />
-                        <label class="form-check-label">Parkinson</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.VIH" />
-                        <label class="form-check-label">Relacionado a VIH positivo</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.SIDA" />
-                        <label class="form-check-label">Síndrome de Inmunodeficiencia Adquirida (SIDA)</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.EstresPostraumatico" />
-                        <label class="form-check-label">Síndrome de Estrés Postraumático</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.TrastornoBipolar" />
-                        <label class="form-check-label">Trastorno Bipolar</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.TrastornosAnsiedad" />
-                        <label class="form-check-label">Trastornos de Ansiedad Generalizada Resistentes</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.DolorNeuropatico" />
-                        <label class="form-check-label">Dolor Crónico Neuropático</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Espasticidad" />
-                        <label class="form-check-label">Espasticidad</label>
-                    </div>
-                    <div class="form-check">
-                        <InputCheckbox @bind-Value="_model.Diagnostico.Migrana" />
-                        <label class="form-check-label">Migraña Crónica Refractaria</label>
-                    </div>
-                    <div class="mb-3">Otro (especificar):</div>
-                    <div class="form-control">
-                        @* <TextInput @bind-Value="_model.Diagnostico.Otro"  /> *@
-                    </div>
-                </div>
-            </div>
-            
-            <p class="text-muted">Marque todas las opciones aplicables o especifique otro diagnóstico.</p>
-
-            <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="form-check">
-                    <InputCheckbox @bind-Value="_model.Diagnostico.Alzheimer" />
-                    <label class="form-check-label">CBD (Cannabidiol)</label>
-                </div>
-                <div class="form-check">
-                    <InputCheckbox @bind-Value="_model.Diagnostico.Anorexia" />
-                    <label class="form-check-label">THC (delta-9-tetrahidrocannabinol)</label>
-                </div>
-                <div class="mb-3">Otro (especificar):</div>
-                <div class="form-control">
-                    @* <TextInput @bind-Value="_model.Diagnostico.Otro"  /> *@
-                </div>
-            </div>
-            </div>
-            <!-- 5. OTRAS ENFERMEDADES QUE PADECE EL PACIENTE -->
-            <h5 class="mt-4">5. Otras enfermedades que padece el paciente</h5>
-            <p class="text-muted">Nota: De contar con otras comorbilidades, especifique el(los) diagnóstico(s) y el(los) tratamiento(s) recibido(s).</p>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Diagnóstico(s):</label>
-                    <InputText @bind-Value="_model.OtrasEnfermedades.Diagnostico" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Tratamiento(s) recibido(s):</label>
-                    <InputText @bind-Value="_model.OtrasEnfermedades.Tratamiento" class="form-control" />
-                </div>
-            </div>
-
-            <!-- 6. TRATAMIENTO CON CANNABIS MEDICINAL -->
-            <h5 class="mt-4">6. Tratamiento con Cannabis Medicinal</h5>
-
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label class="form-label">CBD:</label>
-                    <InputNumber @bind-Value="_model.Terapia.ConcentracionCBD" class="form-control" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">THC:</label>
-                    <InputNumber @bind-Value="_model.Terapia.ConcentracionTHC" class="form-control" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Otros cannabinoides:</label>
-                    <InputText @bind-Value="_model.Terapia.OtrosCannabinoides" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label class="form-label">Dosis:</label>
-                    <InputText @bind-Value="_model.Terapia.Dosis" class="form-control" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Frecuencia:</label>
-                    <InputText @bind-Value="_model.Terapia.FrecuenciaAdministracion" class="form-control" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Duración (días):</label>
-                    <InputNumber @bind-Value="_model.Terapia.DuracionTratamientoDias" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Cantidad prescrita:</label>
-                    <InputText @bind-Value="_model.Terapia.CantidadPrescrita" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Instrucciones adicionales:</label>
-                    <InputTextArea @bind-Value="_model.Terapia.InstruccionesAdicionales" rows="3" class="form-control" />
-                </div>
-            </div>
-
-            <!-- Botón de envío -->
-            <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
-        </EditForm>
-    </div>
-</div>
-
-@code {
-    private PacienteRegistroDTO _model = new()
-    {
-        Medico = new MedicoDTO(),
-        Acompanante = new AcompananteDTO(),
-        Diagnostico = new DiagnosticosDTO(),
-        OtrasEnfermedades = new OtrasEnfermedadesDTO(),
-        Terapia = new TerapiaDTO()
-    };
-
-    private async Task HandleValidSubmit()
-    {
-        try
-        {
-            await PacienteService.CreateAsync(_model);
-            NavManager.NavigateTo("/confirmacion");
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine($"Error al registrar paciente: {ex.Message}");
-        }
-    }
-}
+﻿@* @page "/registro" *@
+@* @inject IPacienteService PacienteService *@
+@* @inject NavigationManager NavManager *@
+@* *@
+@* <h3>Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3> *@
+@* *@
+@* <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmit"> *@
+@*     <DataAnnotationsValidator /> *@
+@*     <ValidationSummary /> *@
+@* *@
+@*     <!-- DATOS PERSONALES DEL PACIENTE --> *@
+@*     <h5>1. Datos Personales del Paciente</h5> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Nombre completo:</label> *@
+@*             <InputText @bind-Value="_model.NombreCompleto" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.NombreCompleto)" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Tipo de documento:</label> *@
+@*             <InputSelect @bind-Value="_model.TipoDocumento" class="form-control"> *@
+@*                 <option value="">Seleccionar</option> *@
+@*                 <option value="Cédula">Cédula</option> *@
+@*                 <option value="Pasaporte">Pasaporte</option> *@
+@*             </InputSelect> *@
+@*             <ValidationMessage For="@(() => _model.TipoDocumento)" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Número de documento:</label> *@
+@*             <InputText @bind-Value="_model.NumeroDocumento" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.NumeroDocumento)" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Nacionalidad:</label> *@
+@*             <InputText @bind-Value="_model.Nacionalidad" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.Nacionalidad)" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Fecha de nacimiento:</label> *@
+@*             <InputDate @bind-Value="_model.FechaNacimiento" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.FechaNacimiento)" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Sexo:</label> *@
+@*             <InputSelect @bind-Value="_model.Sexo" class="form-control"> *@
+@*                 <option value="">Seleccionar</option> *@
+@*                 <option value="Femenino">Femenino</option> *@
+@*                 <option value="Masculino">Masculino</option> *@
+@*             </InputSelect> *@
+@*             <ValidationMessage For="@(() => _model.Sexo)" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             <label>Dirección de residencia:</label> *@
+@*             <InputText @bind-Value="_model.DireccionResidencia" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.DireccionResidencia)" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Teléfono residencial:</label> *@
+@*             <InputText @bind-Value="_model.TelefonoResidencial" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Teléfono personal:</label> *@
+@*             <InputText @bind-Value="_model.TelefonoPersonal" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Teléfono laboral:</label> *@
+@*             <InputText @bind-Value="_model.TelefonoLaboral" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Correo electrónico:</label> *@
+@*             <InputText @bind-Value="_model.CorreoElectronico" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Instalación de salud donde es atendido:</label> *@
+@*             <InputText @bind-Value="_model.InstalacionSalud" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.InstalacionSalud)" /> *@
+@*         </div> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Región de salud:</label> *@
+@*             <InputText @bind-Value="_model.RegionSalud" class="form-control" /> *@
+@*             <ValidationMessage For="@(() => _model.RegionSalud)" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <!-- REQUIERE ACOMPAÑANTE --> *@
+@*     <div class="mb-3 form-check"> *@
+@*         <InputCheckbox @bind-Value="_model.RequiereAcompanante" /> *@
+@*         <label class="form-check-label">¿Requiere acompañante autorizado?</label> *@
+@*     </div> *@
+@* *@
+@*     @if (_model.RequiereAcompanante) *@
+@*     { *@
+@*         <div class="mb-3 form-check"> *@
+@*             <InputCheckbox @bind-Value="_model.Acompanante.EsPacienteMenorEdad" /> *@
+@*             <label class="form-check-label">Paciente menor de edad</label> *@
+@*         </div> *@
+@*         <div class="mb-3 form-check"> *@
+@*             <InputCheckbox @bind-Value="_model.Acompanante.EsPacienteMayorDiscapacidad" /> *@
+@*             <label class="form-check-label">Paciente mayor de edad con discapacidad física o mental</label> *@
+@*         </div> *@
+@* *@
+@*         <h5>Datos del Acompañante Autorizado</h5> *@
+@*         <div class="row mb-3"> *@
+@*             <div class="col-md-6"> *@
+@*                 <label>Nombre completo:</label> *@
+@*                 <InputText @bind-Value="_model.Acompanante.NombreCompleto" class="form-control" /> *@
+@*             </div> *@
+@*             <div class="col-md-3"> *@
+@*                 <label>Tipo de documento:</label> *@
+@*                 <InputSelect @bind-Value="_model.Acompanante.TipoDocumento" class="form-control"> *@
+@*                     <option value="">Seleccionar</option> *@
+@*                     <option value="Cédula">Cédula</option> *@
+@*                     <option value="Pasaporte">Pasaporte</option> *@
+@*                 </InputSelect> *@
+@*             </div> *@
+@*             <div class="col-md-3"> *@
+@*                 <label>Número del documento:</label> *@
+@*                 <InputText @bind-Value="_model.Acompanante.NumeroDocumento" class="form-control" /> *@
+@*             </div> *@
+@*         </div> *@
+@* *@
+@*         <div class="row mb-3"> *@
+@*             <div class="col-md-6"> *@
+@*                 <label>Nacionalidad:</label> *@
+@*                 <InputText @bind-Value="_model.Acompanante.Nacionalidad" class="form-control" /> *@
+@*             </div> *@
+@*             <div class="col-md-6"> *@
+@*                 <label>Parentesco:</label> *@
+@*                 <InputSelect @bind-Value="_model.Acompanante.Parentesco" class="form-control"> *@
+@*                     <option value="">Seleccionar</option> *@
+@*                     <option value="Madre">Madre</option> *@
+@*                     <option value="Padre">Padre</option> *@
+@*                     <option value="Tutor">Tutor</option> *@
+@*                 </InputSelect> *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* *@
+@*     <!-- DATOS DEL MÉDICO TRATANTE --> *@
+@*     <h5>3. Datos del Médico Tratante</h5> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Nombre completo:</label> *@
+@*             <InputText @bind-Value="_model.Medico.NombreCompleto" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Disciplina:</label> *@
+@*             <InputSelect @bind-Value="_model.Medico.Especialidad" class="form-control"> *@
+@*                 <option value="">Seleccionar</option> *@
+@*                 <option value="Médico general">Médico General</option> *@
+@*                 <option value="Odontólogo">Odontólogo</option> *@
+@*                 <option value="Especialista">Especialista</option> *@
+@*             </InputSelect> *@
+@*         </div> *@
+@*         <div class="col-md-3"> *@
+@*             <label>Número de registro de idoneidad:</label> *@
+@*             <InputText @bind-Value="_model.Medico.RegistroIdoneidad" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Número de teléfono:</label> *@
+@*             <InputText @bind-Value="_model.Medico.NumeroTelefono" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-6"> *@
+@*             <label>Instalación de salud:</label> *@
+@*             <InputText @bind-Value="_model.Medico.InstalacionSalud" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <!-- DIAGNÓSTICOS --> *@
+@*     <h5>4. Diagnóstico(s) que justifican el uso de cannabis medicinal</h5> *@
+@*     <p class="text-muted">Marque todas las opciones aplicables o especifique otro diagnóstico.</p> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             @foreach (var diag in ListaDiagnosticos) *@
+@*             { *@
+@*                 <div class="form-check"> *@
+@*                     <InputCheckbox @onchange="() => ToggleDiagnostico(diag)" checked="@IsSelected(diag.Nombre)" /> *@
+@*                     <label class="form-check-label">@diag.Nombre</label> *@
+@*                 </div> *@
+@*             } *@
+@* *@
+@*             <div class="mt-3"> *@
+@*                 <label>Otro diagnóstico:</label> *@
+@*                 <InputText @bind-Value="_model.MotivoRequerimientoAcompanante" class="form-control" /> *@
+@*                 <button @onclick="AgregarOtroDiagnostico" type="button" class="btn btn-sm btn-secondary mt-2">Agregar</button> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <!-- OTRAS ENFERMEDADES --> *@
+@*     <h5>5. Otras enfermedades que padece el paciente</h5> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             <label>Diagnóstico:</label> *@
+@*             <InputText @bind-Value="_otroDiagnostico.Diagnostico" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             <label>Tratamiento recibido:</label> *@
+@*             <InputText @bind-Value="_otroDiagnostico.Tratamiento" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <!-- TRATAMIENTO CON CANNABIS MEDICINAL --> *@
+@*     <h5>6. Tratamiento con Cannabis Medicinal</h5> *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-4"> *@
+@*             <label>CBD:</label> *@
+@*             <InputNumber @bind-Value="_model.Tratamiento.ConcentracionCBD" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-4"> *@
+@*             <label>THC:</label> *@
+@*             <InputNumber @bind-Value="_model.Tratamiento.ConcentracionTHC" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-4"> *@
+@*             <label>Otros cannabinoides:</label> *@
+@*             <InputText @bind-Value="_model.Tratamiento.OtrosCannabinoides" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-4"> *@
+@*             <label>Dosis:</label> *@
+@*             <InputText @bind-Value="_model.Tratamiento.Dosis" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-4"> *@
+@*             <label>Frecuencia:</label> *@
+@*             <InputText @bind-Value="_model.Tratamiento.FrecuenciaAdministracion" class="form-control" /> *@
+@*         </div> *@
+@*         <div class="col-md-4"> *@
+@*             <label>Duración (días):</label> *@
+@*             <InputNumber @bind-Value="_model.Tratamiento.DuracionTratamientoDias" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             <label>Cantidad prescrita:</label> *@
+@*             <InputText @bind-Value="_model.Tratamiento.CantidadPrescrita" class="form-control" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="row mb-3"> *@
+@*         <div class="col-md-12"> *@
+@*             <label>Instrucciones adicionales:</label> *@
+@*             <InputTextArea @bind-Value="_model.Tratamiento.InstruccionesAdicionales" class="form-control" rows="3" /> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <!-- Botón de envío --> *@
+@*     <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button> *@
+@* </EditForm> *@
+@* *@
+@* @code { *@
+@*     private PacienteRegistroDTO _model = new(); *@
+@*     private OtrasEnfermedadesDTO _otroDiagnostico = new(); *@
+@* *@
+@*     private List<DiagnosticoSeleccionadoDTO> ListaDiagnosticos = new() *@
+@*     { *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Alzheimer", CodigoCIE10 = "G30.0" }, *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Epilepsia Refractaria", CodigoCIE10 = "G40.5" }, *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Fibromialgia", CodigoCIE10 = "M79.7" }, *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Glaucoma", CodigoCIE10 = "H40.9" }, *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Parkinson", CodigoCIE10 = "G20" }, *@
+@*         new DiagnosticoSeleccionadoDTO { Nombre = "Migraña Crónica", CodigoCIE10 = "G43.8" } *@
+@*         // Agrega más diagnósticos según sea necesario *@
+@*     }; *@
+@* *@
+@*     private HashSet<string> _diagnosticosSeleccionados = new(); *@
+@* *@
+@*     protected override void OnInitialized() *@
+@*     { *@
+@*         _model = new() *@
+@*         { *@
+@*             Medico = new(), *@
+@*             Acompanante = new(), *@
+@*             Diagnosticos = new(), *@
+@*             OtrasEnfermedades = new(), *@
+@*             Terapia = new() *@
+@*         }; *@
+@*     } *@
+@* *@
+@*     private bool IsSelected(string nombre) *@
+@*     { *@
+@*         return _diagnosticosSeleccionados.Contains(nombre); *@
+@*     } *@
+@* *@
+@*     private void ToggleDiagnostico(DiagnosticoSeleccionadoDTO diag) *@
+@*     { *@
+@*         if (IsSelected(diag.Nombre)) *@
+@*             _diagnosticosSeleccionados.Remove(diag.Nombre); *@
+@*         else *@
+@*             _diagnosticosSeleccionados.Add(diag.Nombre); *@
+@* *@
+@*         _model.Diagnosticos = _diagnosticosSeleccionados *@
+@*             .Select(n => ListaDiagnosticos.First(d => d.Nombre == n)) *@
+@*             .ToList(); *@
+@*     } *@
+@* *@
+@*     private void AgregarOtroDiagnostico() *@
+@*     { *@
+@*         if (!string.IsNullOrWhiteSpace(_otroDiagnostico)) *@
+@*         { *@
+@*             _diagnosticosSeleccionados.Add(_otroDiagnostico); *@
+@*             _model.Diagnosticos = _diagnosticosSeleccionados *@
+@*                 .Select(n => new DiagnosticoSeleccionadoDTO { Nombre = n }) *@
+@*                 .ToList(); *@
+@*             _otroDiagnostico = ""; *@
+@*         } *@
+@*     } *@
+@* *@
+@*     private async Task HandleValidSubmit() *@
+@*     { *@
+@*         try *@
+@*         { *@
+@*             await PacienteService.CreateAsync(_model); *@
+@*             NavManager.NavigateTo("/confirmacion"); *@
+@*         } *@
+@*         catch (Exception ex) *@
+@*         { *@
+@*             Console.Error.WriteLine($"Error al registrar paciente: {ex.Message}"); *@
+@*         } *@
+@*     } *@
+@* } *@

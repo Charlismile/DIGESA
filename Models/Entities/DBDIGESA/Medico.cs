@@ -21,6 +21,8 @@ public partial class Medico
 
     public string NumeroTelefono { get; set; } = null!;
 
+    public bool EsMedicoEspecialista { get; set; }
+
     public virtual ICollection<Solicitud> Solicitud { get; set; } = new List<Solicitud>();
 
     public virtual Usuario? Usuario { get; set; }

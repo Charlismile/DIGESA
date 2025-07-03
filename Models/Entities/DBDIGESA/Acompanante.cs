@@ -21,6 +21,12 @@ public partial class Acompanante
 
     public string? FirmaBase64 { get; set; }
 
+    public bool EsPacienteMenorEdad { get; set; }
+
+    public bool EsPacienteMayorDiscapacidad { get; set; }
+
+    public string? DiscapacidadDescripcion { get; set; }
+
     public virtual Paciente Paciente { get; set; } = null!;
 
     public virtual ICollection<Solicitud> Solicitud { get; set; } = new List<Solicitud>();
