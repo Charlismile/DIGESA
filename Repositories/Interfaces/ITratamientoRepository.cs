@@ -1,7 +1,9 @@
 ﻿using DIGESA.Models.Entities.DBDIGESA;
-using System.Threading.Tasks;
 
-public interface ITratamientoRepository
+namespace DIGESA.Repositories.Interfaces
 {
-    Task AddAsync(Tratamiento tratamiento);
+    public interface ITratamientoRepository : IRepository<Tratamiento>
+    {
+        Task<Tratamiento?> GetBySolicitudIdAsync(int solicitudId);
+    }
 }

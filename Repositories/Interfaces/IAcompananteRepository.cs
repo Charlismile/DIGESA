@@ -1,9 +1,9 @@
 ﻿using DIGESA.Models.Entities.DBDIGESA;
-using System.Threading.Tasks;
 
-public interface IAcompananteRepository
+namespace DIGESA.Repositories.Interfaces
 {
-    Task AddAsync(Acompanante acompanante);
-    Task UpdateAsync(Acompanante acompanante);
-    Task<Acompanante> GetByIdAsync(int id);
+    public interface IAcompananteRepository : IRepository<Acompanante>
+    {
+        Task<Acompanante?> GetByPacienteIdAsync(int pacienteId);
+    }
 }

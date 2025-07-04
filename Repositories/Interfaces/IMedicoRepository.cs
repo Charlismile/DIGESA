@@ -1,8 +1,9 @@
 ﻿using DIGESA.Models.Entities.DBDIGESA;
-using System.Threading.Tasks;
 
-public interface IMedicoRepository
+namespace DIGESA.Repositories.Interfaces
 {
-    Task AddAsync(Medico medico);
-    Task<bool> ExistePorDocumento(string numeroRegistro);
+    public interface IMedicoRepository : IRepository<Medico>
+    {
+        Task<Medico?> GetByUserIdAsync(int userId);
+    }
 }

@@ -1,6 +1,9 @@
 ﻿using DIGESA.Models.Entities.DBDIGESA;
 
-public interface ISolicitudRepository
+namespace DIGESA.Repositories.Interfaces
 {
-    Task AddAsync(Solicitud solicitud);
+    public interface ISolicitudRepository : IRepository<Solicitud>
+    {
+        Task<Solicitud?> GetByPacienteIdAsync(int pacienteId);
+    }
 }

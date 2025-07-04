@@ -8,6 +8,8 @@ using DIGESA.Data;
 using DIGESA.Mappings;
 using DIGESA.Models.Entities.BDUbicaciones;
 using DIGESA.Models.Entities.DBDIGESA;
+using DIGESA.Repositories.Interfaces;
+using DIGESA.Repositories.Services;
 
 // using DIGESA.Validadores;
 using FluentValidation;
@@ -23,16 +25,16 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<IDbUbicacionesService, DbUbicacionesService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
-
-//implementacion
-builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
-builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
-builder.Services.AddScoped<IDiagnosticoRepository, DiagnosticoRepository>();
-builder.Services.AddScoped<ITratamientoRepository, TratamientoRepository>();
+// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// //implementacion
+// builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+// builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
+// builder.Services.AddScoped<IDiagnosticoRepository, DiagnosticoRepository>();
+// builder.Services.AddScoped<ITratamientoRepository, TratamientoRepository>();
 // Agregar AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddScoped<IPacienteService, PacienteService>();
+// builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();

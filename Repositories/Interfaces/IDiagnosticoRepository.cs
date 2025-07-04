@@ -1,8 +1,9 @@
 ﻿using DIGESA.Models.Entities.DBDIGESA;
-using System.Threading.Tasks;
 
-public interface IDiagnosticoRepository
+namespace DIGESA.Repositories.Interfaces
 {
-    Task<Diagnostico> GetByNombreOrCodigoAsync(string nombre, string codigoCie10);
-    Task<Diagnostico> GetOrCreateAsync(Diagnostico diagnostico);
+    public interface IDiagnosticoRepository : IRepository<Diagnostico>
+    {
+        Task<List<Diagnostico>> GetDiagnosticosPredefinidosAsync();
+    }
 }
