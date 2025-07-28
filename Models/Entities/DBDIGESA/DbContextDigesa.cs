@@ -23,9 +23,13 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<Contacto> Contacto { get; set; }
 
+    public virtual DbSet<Corregimiento> Corregimiento { get; set; }
+
     public virtual DbSet<DecisionRevision> DecisionRevision { get; set; }
 
     public virtual DbSet<Diagnostico> Diagnostico { get; set; }
+
+    public virtual DbSet<Distrito> Distrito { get; set; }
 
     public virtual DbSet<DocumentoAdjunto> DocumentoAdjunto { get; set; }
 
@@ -40,6 +44,8 @@ public partial class DbContextDigesa : DbContext
     public virtual DbSet<Paciente> Paciente { get; set; }
 
     public virtual DbSet<PacienteDiagnostico> PacienteDiagnostico { get; set; }
+
+    public virtual DbSet<Provincia> Provincia { get; set; }
 
     public virtual DbSet<Revision> Revision { get; set; }
 
@@ -149,6 +155,17 @@ public partial class DbContextDigesa : DbContext
                 .HasConstraintName("FK__Contacto__TipoCo__6EC0713C");
         });
 
+        modelBuilder.Entity<Corregimiento>(entity =>
+        {
+            entity.HasIndex(e => new { e.NombreCorregimiento, e.DistritoId }, "UQ_Corregimiento_Nombre_Distrito").IsUnique();
+
+            entity.Property(e => e.NombreCorregimiento).HasMaxLength(100);
+
+            entity.HasOne(d => d.Distrito).WithMany(p => p.Corregimiento)
+                .HasForeignKey(d => d.DistritoId)
+                .HasConstraintName("FK_Corregimiento_Distrito");
+        });
+
         modelBuilder.Entity<DecisionRevision>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Decision__3214EC07B430FA49");
@@ -171,6 +188,13 @@ public partial class DbContextDigesa : DbContext
                 .HasColumnName("CodigoCIE10");
             entity.Property(e => e.Descripcion).HasMaxLength(300);
             entity.Property(e => e.Nombre).HasMaxLength(150);
+        });
+
+        modelBuilder.Entity<Distrito>(entity =>
+        {
+            entity.HasIndex(e => new { e.NombreDistrito, e.ProvinciaId }, "UQ_Distrito_Nombre_Provincia").IsUnique();
+
+            entity.Property(e => e.NombreDistrito).HasMaxLength(100);
         });
 
         modelBuilder.Entity<DocumentoAdjunto>(entity =>
@@ -268,9 +292,7 @@ public partial class DbContextDigesa : DbContext
             entity.HasIndex(e => new { e.TipoDocumento, e.NumeroDocumento }, "UQ_Paciente_Documento").IsUnique();
 
             entity.Property(e => e.CorreoElectronico).HasMaxLength(100);
-            entity.Property(e => e.DireccionResidencia)
-                .HasMaxLength(300)
-                .HasDefaultValue("");
+            entity.Property(e => e.DireccionExacta).HasMaxLength(300);
             entity.Property(e => e.FechaNacimiento).HasColumnType("datetime");
             entity.Property(e => e.InstalacionSalud).HasMaxLength(150);
             entity.Property(e => e.MotivoRequerimientoAcompanante).HasMaxLength(250);
@@ -284,6 +306,18 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.TelefonoResidencial).HasMaxLength(20);
             entity.Property(e => e.TipoDiscapacidad).HasMaxLength(200);
             entity.Property(e => e.TipoDocumento).HasMaxLength(20);
+
+            entity.HasOne(d => d.Corregimiento).WithMany(p => p.Paciente)
+                .HasForeignKey(d => d.CorregimientoId)
+                .HasConstraintName("FK_Paciente_Corregimiento");
+
+            entity.HasOne(d => d.Distrito).WithMany(p => p.Paciente)
+                .HasForeignKey(d => d.DistritoId)
+                .HasConstraintName("FK_Paciente_Distrito");
+
+            entity.HasOne(d => d.Provincia).WithMany(p => p.Paciente)
+                .HasForeignKey(d => d.ProvinciaId)
+                .HasConstraintName("FK_Paciente_Provincia");
 
             entity.HasOne(d => d.Usuario).WithMany(p => p.Paciente)
                 .HasForeignKey(d => d.UsuarioId)
@@ -310,6 +344,13 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.Paciente).WithMany(p => p.PacienteDiagnostico)
                 .HasForeignKey(d => d.PacienteId)
                 .HasConstraintName("FK__PacienteD__Pacie__11158940");
+        });
+
+        modelBuilder.Entity<Provincia>(entity =>
+        {
+            entity.HasIndex(e => e.NombreProvincia, "UQ_Provincia_Nombre").IsUnique();
+
+            entity.Property(e => e.NombreProvincia).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Revision>(entity =>

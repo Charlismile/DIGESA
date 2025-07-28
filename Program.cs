@@ -5,34 +5,25 @@ using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
-using DIGESA.Mappings;
-using DIGESA.Models.Entities.BDUbicaciones;
 using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Repositories.Interfaces;
-using DIGESA.Repositories.Services;
+using DIGESA.Repositorios.Interfaces;
+using DIGESA.Repositorios.Services;
 
 // using DIGESA.Validadores;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddScoped<IDbUbicacionesService, DbUbicacionesService>();
+builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-// //implementacion
-// builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
-// builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
-// builder.Services.AddScoped<IDiagnosticoRepository, DiagnosticoRepository>();
-// builder.Services.AddScoped<ITratamientoRepository, TratamientoRepository>();
-// Agregar AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -44,17 +35,17 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 //Ubicaciones
-builder.Services.AddDbContext<DbUbicacionPanama>(options =>
-    options.UseSqlServer("UbicacionConnection"));
-// Registro del contexto principal de Identity
+// builder.Services.AddDbContext<DbUbicacionPanama>(options =>
+//     options.UseSqlServer("UbicacionConnection"));
+// RegistroDto del contexto principal de Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Registro del contexto de tu dominio (Pacientes, Médicos, etc.)
+// RegistroDto del contexto de tu dominio (Pacientes, Médicos, etc.)
 builder.Services.AddDbContext<DbContextDigesa>(options =>
     options.UseSqlServer(connectionString));
 
-// Registro de Identity (usa ApplicationUser si lo personalizaste)
+// RegistroDto de Identity (usa ApplicationUser si lo personalizaste)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
@@ -66,7 +57,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 // Si usas roles, asegúrate de tener esta línea
 builder.Services.AddAuthorization();
 
-// Registro de servicios adicionales
+// RegistroDto de servicios adicionales
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 

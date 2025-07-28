@@ -1,84 +1,83 @@
-﻿@page "/pacientes"
-@inject IPacienteService PacienteService
-@inject NavigationManager NavManager
-
-<h3>📄 Detalles del Registro</h3>
-
-@if (_model == null)
-{
-    <p>Cargando datos...</p>
-}
-else
-{
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Paciente</h5>
-            <p><strong>Nombre:</strong> @_model.NombreCompleto</p>
-            <p><strong>Documento:</strong> @_model.TipoDocumento - @_model.NumeroDocumento</p>
-            <p><strong>Nacionalidad:</strong> @_model.Nacionalidad</p>
-            <p><strong>Fecha de nacimiento:</strong> @_model.FechaNacimiento?.ToString("dd/MM/yyyy")</p>
-            <p><strong>Dirección:</strong> @_model.DireccionResidencia</p>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Médico Tratante</h5>
-            <p><strong>Nombre:</strong> @_model.Medico.NombreCompleto</p>
-            <p><strong>Especialidad:</strong> @_model.Medico.Especialidad</p>
-            <p><strong>Registro:</strong> @_model.Medico.RegistroIdoneidad</p>
-            <p><strong>Instalación:</strong> @_model.Medico.InstalacionSalud</p>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Diagnósticos Seleccionados</h5>
-            <ul>
-                @foreach (var diag in _model.Diagnosticos)
-                {
-                    <li>@diag.Nombre</li>
-                }
-            </ul>
-        </div>
-    </div>
-
-    <div class="mt-4">
-        <button class="btn btn-primary" @onclick="IrAlInicio">Nuevo Registro</button>
-    </div>
-}
-
-@code {
-    private PacienteRegistroDTO _model;
-
-    protected override void OnInitialized()
-    {
-        // Aquí podrías obtener los datos desde el servicio si estás guardándolos temporalmente
-        _model = new PacienteRegistroDTO
-        {
-            NombreCompleto = "Ana María Rojas",
-            TipoDocumento = "Pasaporte",
-            NumeroDocumento = "A12345678",
-            Nacionalidad = "Costarricense",
-            FechaNacimiento = new DateTime(1985, 8, 1),
-            DireccionResidencia = "Cartago, Costa Rica",
-            Medico = new MedicoDTO
-            {
-                NombreCompleto = "Dr. Luis Campos",
-                Especialidad = "Neurólogo",
-                RegistroIdoneidad = "REG-MED-1234",
-                InstalacionSalud = "Hospital Nacional de Neurología"
-            },
-            Diagnosticos = new List<DiagnosticoSeleccionadoDTO>
-            {
-                new DiagnosticoSeleccionadoDTO { Nombre = "Epilepsia Refractaria", CodigoCIE10 = "G40.5" },
-                new DiagnosticoSeleccionadoDTO { Nombre = "Dolor Neuropático Crónico" }
-            }
-        };
-    }
-
-    private void IrAlInicio()
-    {
-        NavManager.NavigateTo("/registro");
-    }
-}
+﻿@* @page "/pacientes" *@
+@* @inject NavigationManager NavManager *@
+@* *@
+@* <h3>📄 Detalles del RegistroDto</h3> *@
+@* *@
+@* @if (_model == null) *@
+@* { *@
+@*     <p>Cargando datos...</p> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <div class="card"> *@
+@*         <div class="card-body"> *@
+@*             <h5 class="card-title">Paciente</h5> *@
+@*             <p><strong>Nombre:</strong> @_model.NombreCompleto</p> *@
+@*             <p><strong>Documento:</strong> @_model.TipoDocumento - @_model.NumeroDocumento</p> *@
+@*             <p><strong>Nacionalidad:</strong> @_model.Nacionalidad</p> *@
+@*             <p><strong>Fecha de nacimiento:</strong> @_model.FechaNacimiento?.ToString("dd/MM/yyyy")</p> *@
+@*             <p><strong>Dirección:</strong> @_model.DireccionResidencia</p> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="card mt-4"> *@
+@*         <div class="card-body"> *@
+@*             <h5 class="card-title">Médico Tratante</h5> *@
+@*             <p><strong>Nombre:</strong> @_model.Medico.NombreCompleto</p> *@
+@*             <p><strong>Especialidad:</strong> @_model.Medico.Especialidad</p> *@
+@*             <p><strong>RegistroDto:</strong> @_model.Medico.RegistroDtoIdoneidad</p> *@
+@*             <p><strong>Instalación:</strong> @_model.Medico.InstalacionSalud</p> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="card mt-4"> *@
+@*         <div class="card-body"> *@
+@*             <h5 class="card-title">Diagnósticos Seleccionados</h5> *@
+@*             <ul> *@
+@*                 @foreach (var diag in _model.Diagnosticos) *@
+@*                 { *@
+@*                     <li>@diag.Nombre</li> *@
+@*                 } *@
+@*             </ul> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div class="mt-4"> *@
+@*         <button class="btn btn-primary" @onclick="IrAlInicio">Nuevo RegistroDto</button> *@
+@*     </div> *@
+@* } *@
+@* *@
+@* @code { *@
+@*     private PacienteRegistroDtoDTO _model; *@
+@* *@
+@*     protected override void OnInitialized() *@
+@*     { *@
+@*         // Aquí podrías obtener los datos desde el servicio si estás guardándolos temporalmente *@
+@*         _model = new PacienteRegistroDtoDTO *@
+@*         { *@
+@*             NombreCompleto = "Ana María Rojas", *@
+@*             TipoDocumento = "Pasaporte", *@
+@*             NumeroDocumento = "A12345678", *@
+@*             Nacionalidad = "Costarricense", *@
+@*             FechaNacimiento = new DateTime(1985, 8, 1), *@
+@*             DireccionResidencia = "Cartago, Costa Rica", *@
+@*             Medico = new MedicoDTO *@
+@*             { *@
+@*                 NombreCompleto = "Dr. Luis Campos", *@
+@*                 Especialidad = "Neurólogo", *@
+@*                 RegistroDtoIdoneidad = "REG-MED-1234", *@
+@*                 InstalacionSalud = "Hospital Nacional de Neurología" *@
+@*             }, *@
+@*             Diagnosticos = new List<DiagnosticoSeleccionadoDTO> *@
+@*             { *@
+@*                 new DiagnosticoSeleccionadoDTO { Nombre = "Epilepsia Refractaria", CodigoCIE10 = "G40.5" }, *@
+@*                 new DiagnosticoSeleccionadoDTO { Nombre = "Dolor Neuropático Crónico" } *@
+@*             } *@
+@*         }; *@
+@*     } *@
+@* *@
+@*     private void IrAlInicio() *@
+@*     { *@
+@*         NavManager.NavigateTo("/registro"); *@
+@*     } *@
+@* } *@

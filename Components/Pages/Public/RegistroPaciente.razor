@@ -1,288 +1,832 @@
-﻿@* @page "/registro" *@
-@* @inject IPacienteService PacienteService *@
-@* @inject NavigationManager NavManager *@
-@* *@
-@* <h3>Formulario de Registro de Paciente Usuario de Cannabis Medicinal</h3> *@
-@* *@
-@* <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmit"> *@
-@*     <DataAnnotationsValidator /> *@
-@*     <ValidationSummary /> *@
-@* *@
-@*     <!-- DATOS PERSONALES DEL PACIENTE --> *@
-@*     <h5>1. Datos Personales del Paciente</h5> *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Nombre completo:</label> *@
-@*             <InputText @bind-Value="_model.NombreCompleto" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.NombreCompleto)" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Tipo de documento:</label> *@
-@*             <InputSelect @bind-Value="_model.TipoDocumento" class="form-control"> *@
-@*                 <option value="">Seleccionar</option> *@
-@*                 <option value="Cédula">Cédula</option> *@
-@*                 <option value="Pasaporte">Pasaporte</option> *@
-@*             </InputSelect> *@
-@*             <ValidationMessage For="@(() => _model.TipoDocumento)" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Número de documento:</label> *@
-@*             <InputText @bind-Value="_model.NumeroDocumento" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.NumeroDocumento)" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Nacionalidad:</label> *@
-@*             <InputText @bind-Value="_model.Nacionalidad" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.Nacionalidad)" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Fecha de nacimiento:</label> *@
-@*             <InputDate @bind-Value="_model.FechaNacimiento" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.FechaNacimiento)" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Sexo:</label> *@
-@*             <InputSelect @bind-Value="_model.Sexo" class="form-control"> *@
-@*                 <option value="">Seleccionar</option> *@
-@*                 <option value="Femenino">Femenino</option> *@
-@*                 <option value="Masculino">Masculino</option> *@
-@*             </InputSelect> *@
-@*             <ValidationMessage For="@(() => _model.Sexo)" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-12"> *@
-@*             <label>Dirección de residencia:</label> *@
-@*             <InputText @bind-Value="_model.DireccionResidencia" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.DireccionResidencia)" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Teléfono residencial:</label> *@
-@*             <InputText @bind-Value="_model.TelefonoResidencial" class="form-control" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Teléfono personal:</label> *@
-@*             <InputText @bind-Value="_model.TelefonoPersonal" class="form-control" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Teléfono laboral:</label> *@
-@*             <InputText @bind-Value="_model.TelefonoLaboral" class="form-control" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Correo electrónico:</label> *@
-@*             <InputText @bind-Value="_model.CorreoElectronico" class="form-control" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Instalación de salud donde es atendido:</label> *@
-@*             <InputText @bind-Value="_model.InstalacionSalud" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.InstalacionSalud)" /> *@
-@*         </div> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Región de salud:</label> *@
-@*             <InputText @bind-Value="_model.RegionSalud" class="form-control" /> *@
-@*             <ValidationMessage For="@(() => _model.RegionSalud)" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <!-- REQUIERE ACOMPAÑANTE --> *@
-@*     <div class="mb-3 form-check"> *@
-@*         <InputCheckbox @bind-Value="_model.RequiereAcompanante" /> *@
-@*         <label class="form-check-label">¿Requiere acompañante autorizado?</label> *@
-@*     </div> *@
-@* *@
-@*     @if (_model.RequiereAcompanante) *@
-@*     { *@
-@*         <div class="mb-3 form-check"> *@
-@*             <InputCheckbox @bind-Value="_model.Acompanante.EsPacienteMenorEdad" /> *@
-@*             <label class="form-check-label">Paciente menor de edad</label> *@
-@*         </div> *@
-@*         <div class="mb-3 form-check"> *@
-@*             <InputCheckbox @bind-Value="_model.Acompanante.EsPacienteMayorDiscapacidad" /> *@
-@*             <label class="form-check-label">Paciente mayor de edad con discapacidad física o mental</label> *@
-@*         </div> *@
-@* *@
-@*         <h5>Datos del Acompañante Autorizado</h5> *@
-@*         <div class="row mb-3"> *@
-@*             <div class="col-md-6"> *@
-@*                 <label>Nombre completo:</label> *@
-@*                 <InputText @bind-Value="_model.Acompanante.NombreCompleto" class="form-control" /> *@
-@*             </div> *@
-@*             <div class="col-md-3"> *@
-@*                 <label>Tipo de documento:</label> *@
-@*                 <InputSelect @bind-Value="_model.Acompanante.TipoDocumento" class="form-control"> *@
-@*                     <option value="">Seleccionar</option> *@
-@*                     <option value="Cédula">Cédula</option> *@
-@*                     <option value="Pasaporte">Pasaporte</option> *@
-@*                 </InputSelect> *@
-@*             </div> *@
-@*             <div class="col-md-3"> *@
-@*                 <label>Número del documento:</label> *@
-@*                 <InputText @bind-Value="_model.Acompanante.NumeroDocumento" class="form-control" /> *@
-@*             </div> *@
-@*         </div> *@
-@* *@
-@*         <div class="row mb-3"> *@
-@*             <div class="col-md-6"> *@
-@*                 <label>Nacionalidad:</label> *@
-@*                 <InputText @bind-Value="_model.Acompanante.Nacionalidad" class="form-control" /> *@
-@*             </div> *@
-@*             <div class="col-md-6"> *@
-@*                 <label>Parentesco:</label> *@
-@*                 <InputSelect @bind-Value="_model.Acompanante.Parentesco" class="form-control"> *@
-@*                     <option value="">Seleccionar</option> *@
-@*                     <option value="Madre">Madre</option> *@
-@*                     <option value="Padre">Padre</option> *@
-@*                     <option value="Tutor">Tutor</option> *@
-@*                 </InputSelect> *@
-@*             </div> *@
-@*         </div> *@
-@*     } *@
-@* *@
-@*     <!-- DATOS DEL MÉDICO TRATANTE --> *@
-@*     <h5>3. Datos del Médico Tratante</h5> *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Nombre completo:</label> *@
-@*             <InputText @bind-Value="_model.Medico.NombreCompleto" class="form-control" /> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Disciplina:</label> *@
-@*             <InputSelect @bind-Value="_model.Medico.Especialidad" class="form-control"> *@
-@*                 <option value="">Seleccionar</option> *@
-@*                 <option value="Médico general">Médico General</option> *@
-@*                 <option value="Odontólogo">Odontólogo</option> *@
-@*                 <option value="Especialista">Especialista</option> *@
-@*             </InputSelect> *@
-@*         </div> *@
-@*         <div class="col-md-3"> *@
-@*             <label>Número de registro de idoneidad:</label> *@
-@*             <InputText @bind-Value="_model.Medico.RegistroIdoneidad" class="form-control" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <div class="row mb-3"> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Número de teléfono:</label> *@
-@*             <InputText @bind-Value="_model.Medico.NumeroTelefono" class="form-control" /> *@
-@*         </div> *@
-@*         <div class="col-md-6"> *@
-@*             <label>Instalación de salud:</label> *@
-@*             <InputText @bind-Value="_model.Medico.InstalacionSalud" class="form-control" /> *@
-@*         </div> *@
-@*     </div> *@
-@* *@
-@*     <!-- Diagnósticos --> *@
-@*         <h5>4. Diagnóstico(s)</h5> *@
-@*         <div class="row mb-3"> *@
-@*             <div class="col-md-12"> *@
-@*                 @foreach (var diag in _diagnosticos) *@
-@*                 { *@
-@*                     <div class="form-check"> *@
-@*                         <InputCheckbox @onchange="() => ToggleDiagnostico(diag)" checked="@IsSelected(diag.Nombre)" /> *@
-@*                         <label class="form-check-label">@diag.Nombre - @diag.CodigoCIE10</label> *@
-@*                     </div> *@
-@*                 } *@
-@* *@
-@*                 <div class="mt-3"> *@
-@*                     <label>Otro diagnóstico:</label> *@
-@*                     <InputText @bind-Value="_otroDiagnostico" class="form-control" /> *@
-@*                     <button @onclick="AgregarOtroDiagnostico" type="button" class="btn btn-sm btn-secondary mt-2">Agregar</button> *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@* *@
-@*         <!-- Otras enfermedades --> *@
-@*         <h5>5. Otras enfermedades que padece el paciente</h5> *@
-@*         <div class="row mb-3"> *@
-@*             <div class="col-md-12"> *@
-@*                 <label>Diagnóstico:</label> *@
-@*                 <InputText @bind-Value="_otroDiagnostico.Diagnostico" class="form-control" /> *@
-@*             </div> *@
-@*         </div> *@
-@*         <div class="row mb-3"> *@
-@*             <div class="col-md-12"> *@
-@*                 <label>Tratamiento recibido:</label> *@
-@*                 <InputText @bind-Value="_otroDiagnostico.Tratamiento" class="form-control" /> *@
-@*             </div> *@
-@*         </div> *@
-@* *@
-@*         <!-- Tratamiento con cannabis --> *@
-@*         <h5>6. Tratamiento con Cannabis Medicinal</h5> *@
-@*         <!-- Tus campos de tratamiento aquí --> *@
-@* *@
-@*         <!-- Botón de envío --> *@
-@*         <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button> *@
-@*     </EditForm> *@
-@* } *@
-@* *@
-@* @code { *@
-@*     private PacienteRegistroDTO _model = new(); *@
-@*     private List<DiagnosticoSeleccionadoDTO> _diagnosticos; *@
-@*     private string _otroDiagnostico = ""; *@
-@*      *@
-@*     protected override async Task OnInitializedAsync() *@
-@*     { *@
-@*         _diagnosticos = await DiagnosticoService.GetAllAsync(); *@
-@* *@
-@*         // Inicialización del modelo *@
-@*         _model = new() *@
-@*         { *@
-@*             Medico = new MedicoDTO(), *@
-@*             Acompanante = new AcompananteDTO(), *@
-@*             Diagnosticos = new List<DiagnosticoSeleccionadoDTO>(), *@
-@*             OtrasEnfermedades = new OtrasEnfermedadesDTO(), *@
-@*             Tratamiento = new TratamientoDTO() *@
-@*         }; *@
-@*     } *@
-@* *@
-@*     private HashSet<string> _diagnosticosSeleccionados = new(); *@
-@* *@
-@*     private bool IsSelected(string nombre) => _diagnosticosSeleccionados.Contains(nombre); *@
-@* *@
-@*     private void ToggleDiagnostico(DiagnosticoSeleccionadoDTO diag) *@
-@*     { *@
-@*         if (IsSelected(diag.Nombre)) *@
-@*             _diagnosticosSeleccionados.Remove(diag.Nombre); *@
-@*         else *@
-@*             _diagnosticosSeleccionados.Add(diag.Nombre); *@
-@* *@
-@*         _model.Diagnosticos = _diagnosticosSeleccionados *@
-@*             .Select(n => new DiagnosticoSeleccionadoDTO { Nombre = n }) *@
-@*             .ToList(); *@
-@*     } *@
-@* *@
-@*     private void AgregarOtroDiagnostico() *@
-@*     { *@
-@*         if (!string.IsNullOrWhiteSpace(_otroDiagnostico)) *@
-@*         { *@
-@*             _diagnosticosSeleccionados.Add(_otroDiagnostico); *@
-@*             _model.Diagnosticos = _diagnosticosSeleccionados *@
-@*                 .Select(n => new DiagnosticoSeleccionadoDTO { Nombre = n }) *@
-@*                 .ToList(); *@
-@*             _otroDiagnostico = ""; *@
-@*         } *@
-@*     } *@
-@* *@
-@*     private async Task HandleValidSubmit() *@
-@*     { *@
-@*         try *@
-@*         { *@
-@*             await PacienteService.CreateAsync(_model); *@
-@*             NavManager.NavigateTo("/confirmacion"); *@
-@*         } *@
-@*         catch (Exception ex) *@
-@*         { *@
-@*             Console.Error.WriteLine($"Error al registrar paciente: {ex.Message}"); *@
-@*         } *@
-@*     } *@
-@* } *@
+﻿@page "/registro-paciente"
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro de Pacientes - Cannabis Medicinal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .date-field {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            border-left: 4px solid #4CAF50;
+            padding-left: 20px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-group.full-width {
+            flex: 100%;
+        }
+
+        .form-group.half-width {
+            flex: 0 0 calc(50% - 10px);
+        }
+
+        .form-group.third-width {
+            flex: 0 0 calc(33.333% - 14px);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4CAF50;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .condition-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .condition-group h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .warning-box strong {
+            color: #333;
+        }
+
+        .concentration-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .concentration-input {
+            width: 100px !important;
+        }
+
+        .unit-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dosage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .dosage-table th,
+        .dosage-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .dosage-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .submit-section {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        /*media (max-width: 768px) {*/
+        /*    .form-row {*/
+        /*        flex-direction: column;*/
+        /*    }*/
+        /*    */
+        /*    .form-group.half-width,*/
+        /*    .form-group.third-width {*/
+        /*        flex: 100%;*/
+        /*    }*/
+        /*    */
+        /*    .concentration-group {*/
+        /*        flex-direction: column;*/
+        /*        align-items: flex-start;*/
+        /*    }*/
+        /*    */
+        /*    .checkbox-grid {*/
+        /*        grid-template-columns: 1fr;*/
+        /*    }*/
+        /*}*/
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Formulario de Usuarios de Cannabis Medicinal y Acompañantes Autorizados</h1>
+            <h2>Usuario de Cannabis Medicinal</h2>
+            <div class="date-field">
+                <label for="application-date">Fecha de solicitud:</label>
+                <input type="date" id="application-date" name="application-date">
+            </div>
+        </div>
+
+        <form class="form-content">
+            <!-- Sección 1: Datos Personales del Solicitante -->
+            <div class="section">
+                <h3 class="section-title">1. DATOS PERSONALES DEL SOLICITANTE</h3>
+                
+                <div class="form-group full-width">
+                    <label for="patient-name">1.1 Nombre completo del paciente:</label>
+                    <input type="text" id="patient-name" name="patient-name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group third-width">
+                        <label>1.2 Documento de identidad:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="radio" id="cedula" name="id-type" value="cedula">
+                                <label for="cedula">Cédula</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" id="passport" name="id-type" value="passport">
+                                <label for="passport">Pasaporte</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="id-number">1.2.1 Número del documento:</label>
+                        <input type="text" id="id-number" name="id-number" required>
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="nationality">1.3 Nacionalidad:</label>
+                        <input type="text" id="nationality" name="nationality" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="birth-date">1.4 Fecha de nacimiento:</label>
+                        <input type="date" id="birth-date" name="birth-date" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label>1.5 Sexo:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="radio" id="female" name="gender" value="female">
+                                <label for="female">Femenino</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" id="male" name="gender" value="male">
+                                <label for="male">Masculino</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="residence">1.6 Residencia (Lugar donde reside la mayor parte del tiempo):</label>
+                    <input type="text" id="residence" name="residence" placeholder="Provincia, distrito, corregimiento, barriada, calle, casa /edificio /apartamento, n°" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group third-width">
+                        <label for="phone-home">1.7 Teléfono residencial:</label>
+                        <input type="tel" id="phone-home" name="phone-home">
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="phone-personal">Teléfono personal:</label>
+                        <input type="tel" id="phone-personal" name="phone-personal">
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="email">1.8 Correo electrónico:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="health-facility">1.9 Instalación de salud donde es atendido:</label>
+                        <input type="text" id="health-facility" name="health-facility" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="health-region">1.9.1 Región de salud:</label>
+                        <input type="text" id="health-region" name="health-region" required>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <label><strong>1.10 ¿Requiere acompañante autorizado?</strong></label>
+                    <p>Acompañante autorizado es todo aquel madre o padre con patria potestad o tutor designado por un Tribunal competente. Esto aplica a todo paciente usuario de Cannabis medicinal <strong>MENOR DE EDAD</strong> o paciente <strong>MAYOR DE EDAD CON DISCAPACIDAD FÍSICA O MENTAL</strong>.</p>
+                    <div class="checkbox-group" style="margin-top: 15px;">
+                        <div class="checkbox-item">
+                            <input type="radio" id="companion-yes" name="needs-companion" value="yes" onchange="toggleCompanionSection()">
+                            <label for="companion-yes">Sí</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="companion-no" name="needs-companion" value="no" onchange="toggleCompanionSection()">
+                            <label for="companion-no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="companion-reason" style="display: none;">
+                    <label><strong>1.10.1 Motivo por el cual requiere acompañante autorizado:</strong></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="minor" name="companion-reason" value="minor">
+                            <label for="minor">Paciente menor de edad</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="disability" name="companion-reason" value="disability">
+                            <label for="disability">Paciente mayor de edad con discapacidad física o mental</label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="disability-specify">Especifique la discapacidad:</label>
+                        <input type="text" id="disability-specify" name="disability-specify">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2: Datos del Acompañante -->
+            <div class="section" id="companion-section" style="display: none;">
+                <h3 class="section-title">2. DATOS PERSONALES DEL ACOMPAÑANTE AUTORIZADO</h3>
+                
+                <div class="form-group full-width">
+                    <label for="companion-name">2.1 Nombre completo del acompañante autorizado:</label>
+                    <input type="text" id="companion-name" name="companion-name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group third-width">
+                        <label>2.2 Documento de identidad:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="radio" id="companion-cedula" name="companion-id-type" value="cedula">
+                                <label for="companion-cedula">Cédula</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" id="companion-passport" name="companion-id-type" value="passport">
+                                <label for="companion-passport">Pasaporte</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="companion-id-number">2.2.1 Número del documento:</label>
+                        <input type="text" id="companion-id-number" name="companion-id-number">
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="companion-nationality">2.3 Nacionalidad:</label>
+                        <input type="text" id="companion-nationality" name="companion-nationality">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>2.4 Parentesco con el paciente:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="mother" name="relationship" value="mother">
+                            <label for="mother">Madre con patria potestad</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="father" name="relationship" value="father">
+                            <label for="father">Padre con patria potestad</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="guardian" name="relationship" value="guardian">
+                            <label for="guardian">Tutor designado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3: Sobre el Médico -->
+            <div class="section">
+                <h3 class="section-title">3. SOBRE EL MÉDICO QUE PRESCRIBE</h3>
+                
+                <div class="form-group full-width">
+                    <label for="doctor-name">3.1 Nombre del Médico tratante responsable de la prescripción:</label>
+                    <input type="text" id="doctor-name" name="doctor-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>3.2 Disciplina del médico:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="general-doctor" name="doctor-type" value="general">
+                            <label for="general-doctor">Médico general</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="dentist" name="doctor-type" value="dentist">
+                            <label for="dentist">Médico odontólogo</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="specialist" name="doctor-type" value="specialist">
+                            <label for="specialist">Médico especialista</label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="specialty">Especifique especialidad:</label>
+                        <input type="text" id="specialty" name="specialty">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="license-number">3.3 Número de registro de idoneidad:</label>
+                        <input type="text" id="license-number" name="license-number" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="doctor-phone">3.4 Teléfono del médico:</label>
+                        <input type="tel" id="doctor-phone" name="doctor-phone" required>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="doctor-facility">3.5 Instalación de salud donde labora el médico:</label>
+                    <input type="text" id="doctor-facility" name="doctor-facility" required>
+                </div>
+            </div>
+
+            <!-- Sección 4: Cannabis Medicinal -->
+            <div class="section">
+                <h3 class="section-title">4. SOBRE EL PACIENTE Y USO DEL CANNABIS MEDICINAL O DERIVADOS</h3>
+                
+                <div class="condition-group">
+                    <h4>4.1 Diagnóstico(s) que justifica el uso de cannabis medicinal:</h4>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" id="alzheimer" name="conditions" value="alzheimer"><label for="alzheimer">Alzheimer</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="anorexia" name="conditions" value="anorexia"><label for="anorexia">Anorexia</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="arthritis" name="conditions" value="arthritis"><label for="arthritis">Artritis</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="autism" name="conditions" value="autism"><label for="autism">Autismo</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cancer" name="conditions" value="cancer"><label for="cancer">Cáncer</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="depression" name="conditions" value="depression"><label for="depression">Depresión</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ibd" name="conditions" value="ibd"><label for="ibd">Enfermedad inflamatoria intestinal</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="palliative" name="conditions" value="palliative"><label for="palliative">Enfermedad incurable que requiera cuidado paliativo</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="degenerative" name="conditions" value="degenerative"><label for="degenerative">Enfermedades Degenerativas</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="epilepsy" name="conditions" value="epilepsy"><label for="epilepsy">Epilepsia</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="fibromyalgia" name="conditions" value="fibromyalgia"><label for="fibromyalgia">Fibromialgia</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="glaucoma" name="conditions" value="glaucoma"><label for="glaucoma">Glaucoma</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="hepatitis" name="conditions" value="hepatitis"><label for="hepatitis">Hepatitis C</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="insomnia" name="conditions" value="insomnia"><label for="insomnia">Insomnio</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="spinal" name="conditions" value="spinal"><label for="spinal">Lesiones de cordón espinal</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="neuropathy" name="conditions" value="neuropathy"><label for="neuropathy">Neuropatía periférica</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="parkinson" name="conditions" value="parkinson"><label for="parkinson">Parkinson</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="hiv" name="conditions" value="hiv"><label for="hiv">Relacionado a VIH positivo</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="aids" name="conditions" value="aids"><label for="aids">Síndrome de Inmunodeficiencia Adquirida (SIDA)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ptsd" name="conditions" value="ptsd"><label for="ptsd">Síndrome de Estrés Postraumático</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="bipolar" name="conditions" value="bipolar"><label for="bipolar">Trastorno Bipolar</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="anxiety" name="conditions" value="anxiety"><label for="anxiety">Trastornos de ansiedad</label></div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="other-conditions">Otro(s), especifique:</label>
+                        <textarea id="other-conditions" name="other-conditions" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>4.2 Nombre genérico:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cbd" name="product-type" value="cbd">
+                            <label for="cbd">CBD (Cannabidiol)</label>
+                        </div>
+                        <br/>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="thc" name="product-type" value="thc">
+                            <label for="thc">THC (delta-9-tetrahidrocannabinol)</label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="other-product">Otros, especifique:</label>
+                        <input type="text" id="other-product" name="other-product">
+                    </div>
+                    <label>Nombre comercial del producto:(Opcional)</label>
+                    <div>
+                        <input type="text" id="product-name" name="product-name" placeholder="Nombre del producto" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>4.3 Forma Farmacéutica:</label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" id="oils" name="form" value="oils"><label for="oils">Aceites</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="gel-caps" name="form" value="gel-caps"><label for="gel-caps">Cápsulas de gel</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="tablets" name="form" value="tablets"><label for="tablets">Comprimido</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cream" name="form" value="cream"><label for="cream">Crema</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="extracts" name="form" value="extracts"><label for="extracts">Extractos</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="flower" name="form" value="flower"><label for="flower">Flor procesada</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="inhalers" name="form" value="inhalers"><label for="inhalers">Inhaladores orales</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="patches" name="form" value="patches"><label for="patches">Parches transdérmicos</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="pills" name="form" value="pills"><label for="pills">Píldoras</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ointment" name="form" value="ointment"><label for="ointment">Ungüento</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="suppository" name="form" value="suppository"><label for="suppository">Supositorio</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="tinctures" name="form" value="tinctures"><label for="tinctures">Tinturas/gotas orales</label></div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="other-form">Otro:</label>
+                        <input type="text" id="other-form" name="other-form">
+                    </div>
+                </div>
+
+                <div class="condition-group">
+                    <h4>4.4 Concentración:</h4>
+                    <div class="concentration-group">
+                        <strong>CBD:</strong>
+                        <input type="number" class="concentration-input" name="cbd-amount" step="0.1">
+                        <div class="unit-group">
+                            <div class="checkbox-item"><input type="radio" id="cbd-g" name="cbd-unit" value="g"><label for="cbd-g">g</label></div>
+                            <div class="checkbox-item"><input type="radio" id="cbd-mg" name="cbd-unit" value="mg"><label for="cbd-mg">mg</label></div>
+                            <div class="checkbox-item"><input type="radio" id="cbd-ml" name="cbd-unit" value="ml"><label for="cbd-ml">ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="cbd-mgml" name="cbd-unit" value="mg/ml"><label for="cbd-mgml">mg/ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="cbd-percent" name="cbd-unit" value="%"><label for="cbd-percent">%</label></div>
+                        </div>
+                        <input type="text" placeholder="Otra unidad" name="cbd-other-unit" style="width: 150px;">
+                    </div>
+                    
+                    <div class="concentration-group">
+                        <strong>THC:</strong>
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1">
+                        <div class="unit-group">
+                            <div class="checkbox-item"><input type="radio" id="thc-g" name="thc-unit" value="g"><label for="thc-g">g</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mg" name="thc-unit" value="mg"><label for="thc-mg">mg</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-ml" name="thc-unit" value="ml"><label for="thc-ml">ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mgml" name="thc-unit" value="mg/ml"><label for="thc-mgml">mg/ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-percent" name="thc-unit" value="%"><label for="thc-percent">%</label></div>
+                        </div>
+                        <input type="text" placeholder="Otra unidad" name="thc-other-unit" style="width: 150px;">
+                    </div>
+                    
+                    <!-- la persona puede tener mas de 2 medicamentos, desde la 4.2 a la 4.8 se pueden repetir hasta 3 veces por paciente
+-->
+                    <div class="concentration-group">
+                        <strong>Otro:</strong>
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Nombre">
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Concentración">
+                        <div class="unit-group">
+                            <div class="checkbox-item"><input type="radio" id="thc-g" name="thc-unit" value="g"><label for="thc-g">g</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mg" name="thc-unit" value="mg"><label for="thc-mg">mg</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-ml" name="thc-unit" value="ml"><label for="thc-ml">ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mgml" name="thc-unit" value="mg/ml"><label for="thc-mgml">mg/ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-percent" name="thc-unit" value="%"><label for="thc-percent">%</label></div>
+                        </div>
+                        <input type="text" placeholder="Otra unidad" name="thc-other-unit" style="width: 150px;">
+                    </div>
+                    <div class="concentration-group">
+                        <strong>Otro:</strong>
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Nombre">
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Concentración">
+                        <div class="unit-group">
+                            <div class="checkbox-item"><input type="radio" id="thc-g" name="thc-unit" value="g"><label for="thc-g">g</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mg" name="thc-unit" value="mg"><label for="thc-mg">mg</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-ml" name="thc-unit" value="ml"><label for="thc-ml">ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mgml" name="thc-unit" value="mg/ml"><label for="thc-mgml">mg/ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-percent" name="thc-unit" value="%"><label for="thc-percent">%</label></div>
+                        </div>
+                        <input type="text" placeholder="Otra unidad" name="thc-other-unit" style="width: 150px;">
+                    </div>
+                    <div class="concentration-group">
+                        <strong>Otro:</strong>
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Nombre">
+                        <input type="number" class="concentration-input" name="thc-amount" step="0.1" placeholder="Concentración">
+                        <div class="unit-group">
+                            <div class="checkbox-item"><input type="radio" id="thc-g" name="thc-unit" value="g"><label for="thc-g">g</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mg" name="thc-unit" value="mg"><label for="thc-mg">mg</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-ml" name="thc-unit" value="ml"><label for="thc-ml">ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-mgml" name="thc-unit" value="mg/ml"><label for="thc-mgml">mg/ml</label></div>
+                            <div class="checkbox-item"><input type="radio" id="thc-percent" name="thc-unit" value="%"><label for="thc-percent">%</label></div>
+                        </div>
+                        <input type="text" placeholder="Otra unidad" name="thc-other-unit" style="width: 150px;">
+                    </div>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label>4.5 Vía de administración:</label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" id="oral" name="administration" value="oral"><label for="oral">Oral (deglutida)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="sublingual" name="administration" value="sublingual"><label for="sublingual">Sublingual</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="inhaled" name="administration" value="inhaled"><label for="inhaled">Inhalada</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="rectal" name="administration" value="rectal"><label for="rectal">Rectal</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="topical" name="administration" value="topical"><label for="topical">Tópica (piel, oftálmica, ótica)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="subcutaneous" name="administration" value="subcutaneous"><label for="subcutaneous">Subcutánea</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="intravenous" name="administration" value="intravenous"><label for="intravenous">Intravenosa</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="intramuscular" name="administration" value="intramuscular"><label for="intramuscular">Intramuscular</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="intradermal" name="administration" value="intradermal"><label for="intradermal">Intradérmica</label></div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="other-administration">Otro:</label>
+                        <input type="text" id="other-administration" name="other-administration">
+                    </div>
+                </div>
+
+                <div class="condition-group">
+                    <h4>4.6 Dosis, Frecuencia y Duración:</h4>
+                    <table class="dosage-table">
+                        <thead>
+                        <tr>
+                            <th>Dosis (cantidad o indicación del médico)</th>
+                            <th>Frecuencia</th>
+                            <th>Duración</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" name="dose-1" style="width: 100%; border: none; padding: 5px;"></td>
+                            <td>
+                                <div style="font-size: 0.9em;">
+                                   <input type="number" name="freq-1" value="4-day"> veces al día <input type="checkbox" name="freq-1" value="sometimes"> de rescate <input type="checkbox" name="freq-1" value="weekly"> Semanal 
+                                        <input type="checkbox" name="freq-1" value="biweekly"> Quincenal <input type="checkbox" name="freq-1" value="monthly"> Mensual
+                                         <div/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="dose-2" style="width: 100%; border: none; padding: 5px;"></td>
+                            <td>
+                                <div style="font-size: 0.9em;">
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="1-day"> 1 vez al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="2-day"> 2 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="3-day"> 3 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="4-day"> 4 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="weekly"> Semanal</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="biweekly"> Quincenal</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="monthly"> Mensual</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-2" value="sometimes"> A veces</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="dose-3" style="width: 100%; border: none; padding: 5px;"></td>
+                            <td>
+                                <div style="font-size: 0.9em;">
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="1-day"> 1 vez al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="2-day"> 2 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="3-day"> 3 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="4-day"> 4 veces al día</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="weekly"> Semanal</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="biweekly"> Quincenal</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="monthly"> Mensual</div>
+                                    <div class="checkbox-item"><input type="checkbox" name="freq-3" value="sometimes"> A veces</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sección 5: Otras Enfermedades -->
+            <div class="section">
+                <h3 class="section-title">5. OTRAS ENFERMEDADES QUE PADECE EL PACIENTE</h3>
+                <p style="margin-bottom: 20px; color: #666;"><strong>Nota:</strong> De contar con otras comorbilidades, especifique el/los diagnóstico(s) y el/los tratamiento(s) recibido(s).</p>
+                
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="other-diagnoses">5.1 Diagnóstico(s):</label>
+                        <textarea id="other-diagnoses" name="other-diagnoses" rows="6" placeholder="Especifique otros diagnósticos médicos del paciente..."></textarea>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="other-treatments">5.2 Tratamiento(s) recibido(s):</label>
+                        <textarea id="other-treatments" name="other-treatments" rows="6" placeholder="Especifique los tratamientos recibidos para estos diagnósticos..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label>Observaciones</label>
+                <textarea id="other-treatments" name="other-treatments" rows="6" placeholder=" "></textarea>
+
+            </div>
+
+        </form>
+
+        <div class="submit-section">
+            <button type="submit" class="submit-btn" onclick="submitForm()">Enviar Formulario</button>
+            <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                Al enviar este formulario, confirmo que toda la información proporcionada es veraz y completa.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleCompanionSection() {
+            const companionYes = document.getElementById('companion-yes');
+            const companionReason = document.getElementById('companion-reason');
+            const companionSection = document.getElementById('companion-section');
+            
+            if (companionYes.checked) {
+                companionReason.style.display = 'block';
+                companionSection.style.display = 'block';
+            } else {
+                companionReason.style.display = 'none';
+                companionSection.style.display = 'none';
+            }
+        }
+
+        function submitForm() {
+            // Validación básica
+            const requiredFields = [
+                'patient-name', 'id-number', 'nationality', 'birth-date', 
+                'residence', 'email', 'health-facility', 'health-region',
+                'doctor-name', 'license-number', 'doctor-phone', 'doctor-facility'
+            ];
+            
+            let isValid = true;
+            const missingFields = [];
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    isValid = false;
+                    missingFields.push(field.previousElementSibling.textContent);
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '#e0e0e0';
+                }
+            });
+            
+            // Validar que se haya seleccionado al menos una condición médica
+            const conditions = document.querySelectorAll('input[name="conditions"]:checked');
+            if (conditions.length === 0 && !document.getElementById('other-conditions').value.trim()) {
+                isValid = false;
+                alert('Por favor, seleccione al menos un diagnóstico que justifique el uso de cannabis medicinal.');
+                return;
+            }
+            
+            if (!isValid) {
+                alert('Por favor, complete los siguientes campos obligatorios:\n\n' + missingFields.join('\n'));
+                return;
+            }
+            
+            // Aquí se enviaría el formulario a un servidor
+            alert('Formulario enviado exitosamente. Recibirá una confirmación por correo electrónico.');
+        }
+
+        // Funcionalidad adicional para mejorar la experiencia del usuario
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-rellenar fecha actual
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('application-date').value = today;
+            
+            // Validación en tiempo real para email
+            const emailField = document.getElementById('email');
+            emailField.addEventListener('blur', function() {
+                const emailRegex = /^[^\s]+[^\s]+\.[^\s]+$/;
+                if (this.value && !emailRegex.test(this.value)) {
+                    this.style.borderColor = '#e74c3c';
+                } else {
+                    this.style.borderColor = '#e0e0e0';
+                }
+            });
+            
+            // Formatear números de teléfono
+            const phoneFields = document.querySelectorAll('input[type="tel"]');
+            phoneFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    // Remover caracteres no numéricos excepto guiones y espacios
+                    this.value = this.value.replace(/[^\d\s-]/g, '');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

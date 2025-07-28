@@ -33,8 +33,6 @@ public partial class Paciente
 
     public string? FirmaBase64 { get; set; }
 
-    public string DireccionResidencia { get; set; } = null!;
-
     public string? TelefonoResidencial { get; set; }
 
     public string? TelefonoPersonal { get; set; }
@@ -43,9 +41,23 @@ public partial class Paciente
 
     public string? CorreoElectronico { get; set; }
 
+    public int? ProvinciaId { get; set; }
+
+    public int? DistritoId { get; set; }
+
+    public int? CorregimientoId { get; set; }
+
+    public string? DireccionExacta { get; set; }
+
     public virtual ICollection<Acompanante> Acompanante { get; set; } = new List<Acompanante>();
 
+    public virtual Corregimiento? Corregimiento { get; set; }
+
+    public virtual Distrito? Distrito { get; set; }
+
     public virtual ICollection<PacienteDiagnostico> PacienteDiagnostico { get; set; } = new List<PacienteDiagnostico>();
+
+    public virtual Provincia? Provincia { get; set; }
 
     public virtual ICollection<Solicitud> Solicitud { get; set; } = new List<Solicitud>();
 

@@ -214,14 +214,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcUmVnaXN0cm9QYWNpZW50ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/DIGESA/Components/Pages/Public/Seguimiento.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcU2VndWltaWVudG8ucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/DIGESA/Components/Pages/Public/UbicacionSelector.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcVWJpY2FjaW9uU2VsZWN0b3IucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/DIGESA/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
