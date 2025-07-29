@@ -17,6 +17,28 @@ namespace DIGESA.Repositorios.Services
         }
         
         //ubicacion
+        public async Task<List<RegistroDto>> ObtenerInstalacionesSaludAsync()
+        {
+            return await _context.TbInstalacionSalud
+                .Select(i => new RegistroDto
+                {
+                    IId = i.InstalacionId,
+                    NombreInstalacion = i.Nombre
+                })
+                .OrderBy(i => i.NombreInstalacion)
+                .ToListAsync();
+        }
+        public async Task<List<RegistroDto>> ObtenerRegionesAsync()
+        {
+            return await _context.TbRegionSalud
+                .Select(r => new RegistroDto
+                {
+                    RId = r.RegionSaludId,
+                    NombreRegion = r.Nombre
+                })
+                .OrderBy(r => r.NombreRegion)
+                .ToListAsync();
+        }
         public async Task<List<RegistroDto>> ObtenerProvinciasAsync()
         {
             return await _context.Provincia
@@ -51,7 +73,7 @@ namespace DIGESA.Repositorios.Services
                 {
                     CId = c.Id,
                     NombreCorregimiento = c.NombreCorregimiento,
-                    DistritoId = c.DistritoId
+                    DId = c.DistritoId
                 })
                 .OrderBy(c => c.NombreCorregimiento)
                 .ToListAsync();
@@ -77,8 +99,8 @@ namespace DIGESA.Repositorios.Services
                         Nacionalidad = dto.Nacionalidad,
                         FechaNacimiento = dto.FechaNacimiento ?? DateTime.Now,
                         Sexo = dto.Sexo,
-                        InstalacionSalud = dto.InstalacionSalud,
-                        RegionSalud = dto.RegionSalud,
+                        InstalacionSalud = dto.NombreInstalacion,
+                        RegionSalud = dto.NombreRegion,
                         RequiereAcompanante = dto.RequiereAcompanante,
                         MotivoRequerimientoAcompanante = string.Join("; ",
                             (dto.EsPacienteMenorEdad ? "Menor de edad" : null),

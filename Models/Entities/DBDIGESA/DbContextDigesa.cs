@@ -55,6 +55,10 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<SolicitudDiagnostico> SolicitudDiagnostico { get; set; }
 
+    public virtual DbSet<TbInstalacionSalud> TbInstalacionSalud { get; set; }
+
+    public virtual DbSet<TbRegionSalud> TbRegionSalud { get; set; }
+
     public virtual DbSet<TipoContacto> TipoContacto { get; set; }
 
     public virtual DbSet<TipoProducto> TipoProducto { get; set; }
@@ -446,6 +450,20 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.Solicitud).WithMany(p => p.SolicitudDiagnostico)
                 .HasForeignKey(d => d.SolicitudId)
                 .HasConstraintName("FK__Solicitud__Solic__0C50D423");
+        });
+
+        modelBuilder.Entity<TbInstalacionSalud>(entity =>
+        {
+            entity.HasKey(e => e.InstalacionId).HasName("PK__TbInstal__63F5EAB55F984344");
+
+            entity.Property(e => e.Nombre).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<TbRegionSalud>(entity =>
+        {
+            entity.HasKey(e => e.RegionSaludId).HasName("PK__TbRegion__2B018A542D0E75B2");
+
+            entity.Property(e => e.Nombre).HasMaxLength(150);
         });
 
         modelBuilder.Entity<TipoContacto>(entity =>

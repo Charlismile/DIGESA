@@ -39,7 +39,6 @@ public class RegistroDto
     [Required(ErrorMessage = "El corregimiento es obligatorio.")]
     public int CId { get; set; }
     public string NombreCorregimiento { get; set; } = "";
-    public int DistritoId { get; set; }
 
     [Required(ErrorMessage = "La dirección exacta es obligatoria.")]
     [StringLength(300, ErrorMessage = "La dirección no puede exceder 300 caracteres.")]
@@ -52,12 +51,16 @@ public class RegistroDto
     [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
     [EmailAddress(ErrorMessage = "El formato del correo electrónico no es válido.")]
     public string CorreoElectronico { get; set; } = string.Empty;
+    
+    public int IId { get; set; } = 0;
 
     [Required(ErrorMessage = "La instalación de salud es obligatoria.")]
-    public string InstalacionSalud { get; set; } = string.Empty;
+    public string NombreInstalacion { get; set; } = string.Empty;
+    
+    public int RId { get; set; } = 0;
 
     [Required(ErrorMessage = "La región de salud es obligatoria.")]
-    public string RegionSalud { get; set; } = string.Empty;
+    public string NombreRegion { get; set; } = string.Empty;
 
     // 1.10 ¿Requiere acompañante?
     public bool RequiereAcompanante { get; set; }
@@ -95,8 +98,8 @@ public class RegistroDto
     public List<int> DiagnosticoIds { get; set; } = new();
 
     public string? OtroDiagnosticoEspecifique { get; set; }
-
-    // 4.2 Tipo de producto
+    
+        // 4.2 Tipo de producto
     public bool UsaCBD { get; set; }
     public bool UsaTHC { get; set; }
     public bool UsaOtroCannabinoide { get; set; }
@@ -145,22 +148,92 @@ public class RegistroDto
 
     [Required(ErrorMessage = "La duración en días es obligatoria.")]
     public int? DuracionDiasExtra { get; set; }
+    
+    
+    // 6. DATOS ADICIONALES
+    [Required(ErrorMessage = "La fecha de solicitud es requerida")]
+    public DateTime FechaSolicitud { get; set; } = DateTime.Today;
 
-    // 5. COMORBILIDADES (OTRAS ENFERMEDADES)
-    // ✅ Corregido: ahora es una lista, no un solo campo
-    public List<ComorbilidadItem> Comorbilidades { get; set; } = new();
+        
+        public string MotivoAcompanante { get; set; } = string.Empty;
+        public string EspecificarDiscapacidad { get; set; } = string.Empty;
 
-    // Firma del paciente
-    public string? FirmaBase64 { get; set; }
+        // Datos del Acompañante
+        public string NombreAcompanante { get; set; } = string.Empty;
+        public string TipoDocumentoAcompanante { get; set; } = "cedula";
+        public string NumeroDocumentoAcompanante { get; set; } = string.Empty;
+        public string NacionalidadAcompanante { get; set; } = string.Empty;
+        public string Parentesco { get; set; } = string.Empty;
 
-    // Clase anidada para comorbilidades
-    public class ComorbilidadItem
-    {
-        [Required(ErrorMessage = "Debe seleccionar un diagnóstico.")]
-        public int? DiagnosticoId { get; set; }
+        // Datos del Médico
+        [Required(ErrorMessage = "El nombre del médico es requerido")]
+        public string NombreMedico { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "El tratamiento recibido es obligatorio.")]
-        [StringLength(300, ErrorMessage = "El tratamiento no puede exceder 300 caracteres.")]
-        public string TratamientoRecibido { get; set; } = string.Empty;
-    }
+        public string DisciplinaMedico { get; set; } = "general";
+        public string EspecialidadMedico { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "El número de registro del médico es requerido")]
+        public string NumeroRegistroMedico { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "El teléfono del médico es requerido")]
+        public string TelefonoMedico { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La instalación de salud del médico es requerida")]
+        public string InstalacionSaludMedico { get; set; } = string.Empty;
+
+        // Cannabis Medicinal
+        public List<string> CondicionesMedicas { get; set; } = new();
+        public string OtrasCondiciones { get; set; } = string.Empty;
+
+        // public bool UsaCBD { get; set; } = false;
+        // public bool UsaTHC { get; set; } = false;
+        public string OtrosProductos { get; set; } = string.Empty;
+        public string NombreComercialProducto { get; set; } = string.Empty;
+
+        public List<string> FormasFarmaceuticas { get; set; } = new();
+        public string OtraFormaFarmaceutica { get; set; } = string.Empty;
+
+        // public decimal? ConcentracionCBD { get; set; }
+        public string UnidadCBD { get; set; } = "mg";
+        public string OtraUnidadCBD { get; set; } = string.Empty;
+
+        // public decimal? ConcentracionTHC { get; set; }
+        public string UnidadTHC { get; set; } = "mg";
+        public string OtraUnidadTHC { get; set; } = string.Empty;
+
+        public List<string> ViasAdministracion { get; set; } = new();
+        public string OtraViaAdministracion { get; set; } = string.Empty;
+
+        // public string Dosis { get; set; } = string.Empty;
+        public int VecesAlDia { get; set; } = 1;
+        public bool DeRescate { get; set; } = false;
+        public bool Semanal { get; set; } = false;
+        public bool Quincenal { get; set; } = false;
+        public bool Mensual { get; set; } = false;
+
+        // Otras Enfermedades
+        public string OtrosDiagnosticos { get; set; } = string.Empty;
+        public string OtrosTratamientos { get; set; } = string.Empty;
+
+        // Observaciones
+        public string Observaciones { get; set; } = string.Empty; 
+        
+        // 5. COMORBILIDADES (OTRAS ENFERMEDADES)
+        // ✅ Corregido: ahora es una lista, no un solo campo
+        public List<ComorbilidadItem> Comorbilidades { get; set; } = new();
+
+        // Firma del paciente
+        public string? FirmaBase64 { get; set; }
+
+        // Clase anidada para comorbilidades
+        public class ComorbilidadItem
+        {
+            [Required(ErrorMessage = "Debe seleccionar un diagnóstico.")]
+            public int? DiagnosticoId { get; set; }
+
+            [Required(ErrorMessage = "El tratamiento recibido es obligatorio.")]
+            [StringLength(300, ErrorMessage = "El tratamiento no puede exceder 300 caracteres.")]
+            public string TratamientoRecibido { get; set; } = string.Empty;
+        }
 }
+
