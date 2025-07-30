@@ -148,45 +148,11 @@
           }
         }
       },
-      "Mapster/7.4.2-pre02": {
+      "Microsoft.AspNetCore.Authorization/8.0.18": {
         "type": "package",
         "dependencies": {
-          "Mapster.Core": "1.2.3-pre02"
-        },
-        "compile": {
-          "lib/net8.0/Mapster.dll": {}
-        },
-        "runtime": {
-          "lib/net8.0/Mapster.dll": {}
-        }
-      },
-      "Mapster.Core/1.2.3-pre02": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0/Mapster.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net8.0/Mapster.Core.dll": {}
-        }
-      },
-      "Mapster.DependencyInjection/1.0.1": {
-        "type": "package",
-        "dependencies": {
-          "Mapster": "7.4.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
-        },
-        "compile": {
-          "lib/net7.0/Mapster.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/net7.0/Mapster.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.AspNetCore.Authorization/8.0.11": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Metadata": "8.0.11",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.AspNetCore.Metadata": "8.0.18",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "Microsoft.Extensions.Options": "8.0.2"
         },
         "compile": {
@@ -200,11 +166,11 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components/8.0.11": {
+      "Microsoft.AspNetCore.Components/8.0.18": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Authorization": "8.0.11",
-          "Microsoft.AspNetCore.Components.Analyzers": "8.0.11"
+          "Microsoft.AspNetCore.Authorization": "8.0.18",
+          "Microsoft.AspNetCore.Components.Analyzers": "8.0.18"
         },
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Components.dll": {
@@ -217,16 +183,16 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Analyzers/8.0.11": {
+      "Microsoft.AspNetCore.Components.Analyzers/8.0.18": {
         "type": "package",
         "build": {
           "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
         }
       },
-      "Microsoft.AspNetCore.Components.Forms/8.0.11": {
+      "Microsoft.AspNetCore.Components.Forms/8.0.18": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "8.0.11"
+          "Microsoft.AspNetCore.Components": "8.0.18"
         },
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Components.Forms.dll": {
@@ -239,14 +205,36 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Web/8.0.11": {
+      "Microsoft.AspNetCore.Components.QuickGrid/8.0.18": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "8.0.11",
-          "Microsoft.AspNetCore.Components.Forms": "8.0.11",
+          "Microsoft.AspNetCore.Components.Web": "8.0.18"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.QuickGrid.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.QuickGrid.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Microsoft.AspNetCore.Components.QuickGrid.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Microsoft.AspNetCore.Components.QuickGrid.props": {}
+        }
+      },
+      "Microsoft.AspNetCore.Components.Web/8.0.18": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "8.0.18",
+          "Microsoft.AspNetCore.Components.Forms": "8.0.18",
           "Microsoft.Extensions.DependencyInjection": "8.0.1",
           "Microsoft.Extensions.Primitives": "8.0.0",
-          "Microsoft.JSInterop": "8.0.11",
+          "Microsoft.JSInterop": "8.0.18",
           "System.IO.Pipelines": "8.0.0"
         },
         "compile": {
@@ -325,7 +313,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Metadata/8.0.11": {
+      "Microsoft.AspNetCore.Metadata/8.0.18": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Metadata.dll": {
@@ -948,7 +936,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+      "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
@@ -1137,7 +1125,7 @@
           }
         }
       },
-      "Microsoft.JSInterop/8.0.11": {
+      "Microsoft.JSInterop/8.0.18": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.JSInterop.dll": {
@@ -1990,52 +1978,10 @@
         "logo.png"
       ]
     },
-    "Mapster/7.4.2-pre02": {
-      "sha512": "ry6YPGImX4aL0+Jj0rn46vqYOxzeyKOdlr6LUPvby1NLc68E5T2gRhDVWxvFexgZGOIW/U8NM87kygE4xl7Qvw==",
+    "Microsoft.AspNetCore.Authorization/8.0.18": {
+      "sha512": "ZKCGwaoN0hJoWaE9WpvwsjgVkJNtDTP0Tp8T2/S4sR3KZr0KXdp1ROrAl+xJKBFd4acMQ7c6lU1YF/C6wfC+Cg==",
       "type": "package",
-      "path": "mapster/7.4.2-pre02",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net8.0/Mapster.dll",
-        "lib/net9.0/Mapster.dll",
-        "mapster.7.4.2-pre02.nupkg.sha512",
-        "mapster.nuspec"
-      ]
-    },
-    "Mapster.Core/1.2.3-pre02": {
-      "sha512": "FDVPfGvCz1RRb1PYeoddiJftxo+ANAifiaqkZbH2kijZT2GcoR1w6byLQ8Czc9YBuNZqHHV4LKeXZA+eoFuCTw==",
-      "type": "package",
-      "path": "mapster.core/1.2.3-pre02",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net8.0/Mapster.Core.dll",
-        "lib/net9.0/Mapster.Core.dll",
-        "mapster.core.1.2.3-pre02.nupkg.sha512",
-        "mapster.core.nuspec"
-      ]
-    },
-    "Mapster.DependencyInjection/1.0.1": {
-      "sha512": "LfjnRIwx6WAo3ssq8PFeaHFaUz00BfSG9BhWgXsiDa3H5lDhG0lpMGDF6w2ZnooS4eHYmAv4f77VxmzpvgorNg==",
-      "type": "package",
-      "path": "mapster.dependencyinjection/1.0.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net6.0/Mapster.DependencyInjection.dll",
-        "lib/net7.0/Mapster.DependencyInjection.dll",
-        "mapster.dependencyinjection.1.0.1.nupkg.sha512",
-        "mapster.dependencyinjection.nuspec"
-      ]
-    },
-    "Microsoft.AspNetCore.Authorization/8.0.11": {
-      "sha512": "ACaLyjBSz9WUzbaJe0Sv09/FihRNHYlRUIj3uQ8CZFFByf6Qwv3+PXnbltidFKz2iOyqdvppQias3emdQUY2nA==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.authorization/8.0.11",
+      "path": "microsoft.aspnetcore.authorization/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2047,14 +1993,14 @@
         "lib/net8.0/Microsoft.AspNetCore.Authorization.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
-        "microsoft.aspnetcore.authorization.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.authorization.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.authorization.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components/8.0.11": {
-      "sha512": "kyhSQcVEQvMnv2BNRn7JRgYCr+PIO5Uh1mhIFdCNycxE/k8NsI72sV693s1KVmVebMA8g3hTBmfBEheWb3hhww==",
+    "Microsoft.AspNetCore.Components/8.0.18": {
+      "sha512": "HmSsFizBnFRqd5EstlR65LzY8oGsOKsKo3zNmFLgRYND0IESy5Hvb3DPklbqDjZdRDb0B11KlyOHPM8AgEjRJQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components/8.0.11",
+      "path": "microsoft.aspnetcore.components/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2062,14 +2008,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.xml",
-        "microsoft.aspnetcore.components.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.components.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.components.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Analyzers/8.0.11": {
-      "sha512": "4JtFt5IR0ixuFpwY6D2Xi5R+vZQ6iykd2EuG3puHETCOZOgYG8M538LCY1lbgQTkHOL04YKDjQTQu8PU/BaXRQ==",
+    "Microsoft.AspNetCore.Components.Analyzers/8.0.18": {
+      "sha512": "dZJloNAzGIKV1oOJcMCsUlb6Be7ZJR7S80NoYifDiri4n7awgP9ZszL7bylIUMIMlHETLofU1HX5OkxBapbzSg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.analyzers/8.0.11",
+      "path": "microsoft.aspnetcore.components.analyzers/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2078,14 +2024,14 @@
         "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
         "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
         "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
-        "microsoft.aspnetcore.components.analyzers.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.components.analyzers.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Forms/8.0.11": {
-      "sha512": "60g+idqaiVhPVNOqauy/vH5lREpjcuKl3/w6zJhdU1PFWg4jtdoyIPQH+qxBKsUohkELhH3cRfzGRKElVuZuwg==",
+    "Microsoft.AspNetCore.Components.Forms/8.0.18": {
+      "sha512": "yJsQcwOhDd6neF1pd5YnbIk3N+TKljyog8J4BcnyTXGn7DDSDSoVa6nC3Zy8/yScYCywy+W2kbpcz0ZBy+SVUw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.forms/8.0.11",
+      "path": "microsoft.aspnetcore.components.forms/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2093,14 +2039,35 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.Forms.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.Forms.xml",
-        "microsoft.aspnetcore.components.forms.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.components.forms.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.components.forms.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Web/8.0.11": {
-      "sha512": "IDmjQ/K7hv6zUEz2LsCkQBngZx6PMnty8OdSPf0hYGMpC+4Yi37pgCc/25fFu3CSBe8nDirqTrqKtfToHWCpbw==",
+    "Microsoft.AspNetCore.Components.QuickGrid/8.0.18": {
+      "sha512": "O4xYf7/CEpUtxiutbpIDbB1599KgCBOFJHaat1YtwnSv9+oya5aezdgKbZrXNtxzuMxYt34RtaQgvXTwyFAkrw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.web/8.0.11",
+      "path": "microsoft.aspnetcore.components.quickgrid/8.0.18",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "build/Microsoft.AspNetCore.Components.QuickGrid.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Microsoft.AspNetCore.Components.QuickGrid.props",
+        "buildTransitive/Microsoft.AspNetCore.Components.QuickGrid.props",
+        "lib/net8.0/Microsoft.AspNetCore.Components.QuickGrid.dll",
+        "lib/net8.0/Microsoft.AspNetCore.Components.QuickGrid.xml",
+        "microsoft.aspnetcore.components.quickgrid.8.0.18.nupkg.sha512",
+        "microsoft.aspnetcore.components.quickgrid.nuspec",
+        "staticwebassets/Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+        "staticwebassets/QuickGrid.razor.js"
+      ]
+    },
+    "Microsoft.AspNetCore.Components.Web/8.0.18": {
+      "sha512": "gNigEMREsBsX6IOtASVeQs7QR1epXi9CjyRYIsUOtOEvQIAC2lFBXiOepC62uJVFRmfz8tJ+yt00IpLYHdcItw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.web/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2108,7 +2075,7 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.Web.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.Web.xml",
-        "microsoft.aspnetcore.components.web.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.components.web.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.components.web.nuspec"
       ]
     },
@@ -2180,10 +2147,10 @@
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Metadata/8.0.11": {
-      "sha512": "cy04xnMSTXTkRPjEwseRz57R5zjR/CWsdEOHH6NhWbNl97k+U1w6dSjqIOC7kv08tyzmM30FzIilSDtE5HdL/A==",
+    "Microsoft.AspNetCore.Metadata/8.0.18": {
+      "sha512": "vuTpRfALl6MCvmbJAGy2DhJVh0Ai7k6/seYo5rxdfY/n/WPSzK2sO2fg3LKCU3tAUV/3TPuessU0xhCsDnORWw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.metadata/8.0.11",
+      "path": "microsoft.aspnetcore.metadata/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2195,7 +2162,7 @@
         "lib/net8.0/Microsoft.AspNetCore.Metadata.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
-        "microsoft.aspnetcore.metadata.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.metadata.8.0.18.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
       ]
     },
@@ -3168,10 +3135,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
-      "sha512": "nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
+    "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
+      "sha512": "dL0QGToTxggRLMYY4ZYX5AMwBb+byQBd/5dMiZE07Nv73o6I5Are3C7eQTh7K2+A4ct0PVISSr7TZANbiNb2yQ==",
       "type": "package",
-      "path": "microsoft.extensions.logging.abstractions/8.0.2",
+      "path": "microsoft.extensions.logging.abstractions/8.0.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3236,7 +3203,7 @@
         "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
-        "microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
         "microsoft.extensions.logging.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -3493,10 +3460,10 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.JSInterop/8.0.11": {
-      "sha512": "UYSbAkNGTWVUne3I04/9IRQel3Bt1Ww6Y5cjvZEZ89rWhBD1yWu7YDotvQS62V6mgSfFaXXPGrCUm1VG824QXw==",
+    "Microsoft.JSInterop/8.0.18": {
+      "sha512": "5cRn6C2NAvxYc5jxWonC/4VvNd1MnrO/Ui4bLvw9GsGdk2pfRnaCuD1YIsEsQOO0ac0rCm/KBJbw2GRlQS2B6g==",
       "type": "package",
-      "path": "microsoft.jsinterop/8.0.11",
+      "path": "microsoft.jsinterop/8.0.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3504,7 +3471,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net8.0/Microsoft.JSInterop.dll",
         "lib/net8.0/Microsoft.JSInterop.xml",
-        "microsoft.jsinterop.8.0.11.nupkg.sha512",
+        "microsoft.jsinterop.8.0.18.nupkg.sha512",
         "microsoft.jsinterop.nuspec"
       ]
     },
@@ -4728,8 +4695,7 @@
       "FluentValidation >= 12.0.0",
       "FluentValidation.AspNetCore >= 11.3.1",
       "FluentValidation.DependencyInjectionExtensions >= 12.0.0",
-      "Mapster >= 7.4.2-pre02",
-      "Mapster.DependencyInjection >= 1.0.1",
+      "Microsoft.AspNetCore.Components.QuickGrid >= 8.0.18",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 8.0.17",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.17",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.17",
@@ -4807,13 +4773,9 @@
             "target": "Package",
             "version": "[12.0.0, )"
           },
-          "Mapster": {
+          "Microsoft.AspNetCore.Components.QuickGrid": {
             "target": "Package",
-            "version": "[7.4.2-pre02, )"
-          },
-          "Mapster.DependencyInjection": {
-            "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[8.0.18, )"
           },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",

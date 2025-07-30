@@ -91,62 +91,62 @@
                             </div>
 
                             <!--Ubicacion-->
-                            @* <div class="row mb-3"> *@
-                            @*     <div class="col-12"> *@
-                            @*         <label class="form-label fw-bold">1.6 Residencia (Lugar donde reside la mayor parte del tiempo):</label> *@
-                            @*         <div class="mb-3"> *@
-                            @*             <label class="form-label">Region de Salud:</label> *@
-                            @*             <InputSelect class="form-select" @bind-Value="model.NombreRegion" @onchange="ObtenerRegionesAsync"> *@
-                            @*                 <option value="">Seleccione una provincia</option> *@
-                            @*                 @foreach (var region in regiones) *@
-                            @*                 { *@
-                            @*                     <option value="@region.Id">@region.Nombre</option> *@
-                            @*                 } *@
-                            @*             </InputSelect> *@
-                            @*             <ValidationMessage For="@(() => model.ProvinciaId)" /> *@
-                            @*         </div> *@
-                            @*         <div class="mb-3"> *@
-                            @*             <label class="form-label">Provincia:</label> *@
-                            @*             <InputSelect class="form-select" @bind-Value="model.ProvinciaId" @onchange="ObtenerProvinciasAsync"> *@
-                            @*                 <option value="">Seleccione una provincia</option> *@
-                            @*                 @foreach (var provincia in provincias) *@
-                            @*                 { *@
-                            @*                     <option value="@provincia.Id">@provincia.Nombre</option> *@
-                            @*                 } *@
-                            @*             </InputSelect> *@
-                            @*             <ValidationMessage For="@(() => model.ProvinciaId)" /> *@
-                            @*         </div> *@
-                            @* *@
-                            @*         <!-- Distrito --> *@
-                            @*         <div class="mb-3"> *@
-                            @*             <label class="form-label">Distrito:</label> *@
-                            @*             <InputSelect class="form-select" @bind-Value="model.DistritoId" @onchange="ObtenerDistritosPorProvinciaAsync" disabled="@!distritos.Any()"> *@
-                            @*                 <option value="">Seleccione un distrito</option> *@
-                            @*                 @foreach (var distrito in distritos) *@
-                            @*                 { *@
-                            @*                     <option value="@distrito.Id">@distrito.Nombre</option> *@
-                            @*                 } *@
-                            @*             </InputSelect> *@
-                            @*             <ValidationMessage For="@(() => model.DistritoId)" /> *@
-                            @*         </div> *@
-                            @* *@
-                            @*         <!-- Corregimiento --> *@
-                            @*         <div class="mb-3"> *@
-                            @*             <label class="form-label">Corregimiento:</label> *@
-                            @*             <InputSelect class="form-select" @bind-Value="model.CId" disabled="@!corregimientos.Any()"> *@
-                            @*                 <option value="">Seleccione un corregimiento</option> *@
-                            @*                 @foreach (var corregimiento in corregimientos) *@
-                            @*                 { *@
-                            @*                     <option value="@corregimiento.Id">@corregimiento.Nombre</option> *@
-                            @*                 } *@
-                            @*             </InputSelect> *@
-                            @*             <ValidationMessage For="@(() => model.CId)" /> *@
-                            @*         </div> *@
-                            @*         <input type="text" class="form-control" @bind="model.DireccionExacta" *@
-                            @*                placeholder="Provincia, distrito, corregimiento, barriada, calle, casa/edificio/apartamento, n°" required /> *@
-                            @*         <ValidationMessage For="@(() => model.DireccionExacta)" /> *@
-                            @*     </div> *@
-                            @* </div> *@
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">1.6 Residencia (Lugar donde reside la mayor parte del tiempo):</label>
+                                    <div class="mb-3">
+                                        <label class="form-label">Region de Salud:</label>
+                                        <InputSelect class="form-select" @bind-Value="model.NombreRegion" @onchange="ObtenerRegionesAsync">
+                                            <option value="">Seleccione una provincia</option>
+                                            @foreach (var region in regiones)
+                                            {
+                                                <option value="@region.RId">@region.NombreRegion</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => model.PId)" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Provincia:</label>
+                                        <InputSelect class="form-select" @bind-Value="model.PId" @OnChange="">
+                                            <option value="">Seleccione una provincia</option>
+                                            @foreach (var provincia in provincias)
+                                            {
+                                                <option value="@provincia.PId">@provincia.NombreProvincia</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => model.PId)" />
+                                    </div>
+                            
+                                    <!-- Distrito -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Distrito:</label>
+                                        <InputSelect class="form-select" @bind-Value="model.DId" @onchange="CargarDistritos" disabled="@!distritos.Any()">
+                                            <option value="">Seleccione un distrito</option>
+                                            @foreach (var distrito in distritos)
+                                            {
+                                                <option value="@distrito.DId">@distrito.NombreDistrito</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => model.DId)" />
+                                    </div>
+                            
+                                    <!-- Corregimiento -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Corregimiento:</label>
+                                        <InputSelect class="form-select" @bind-Value="model.CId" @OnChange="CargarCorregimientos" disabled="@!corregimientos.Any()">
+                                            <option value="">Seleccione un corregimiento</option>
+                                            @foreach (var corregimiento in corregimientos)
+                                            {
+                                                <option value="@corregimiento.CId">@corregimiento.NombreCorregimiento</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => model.CId)" />
+                                    </div>
+                                    <input type="text" class="form-control" @bind="model.DireccionExacta"
+                                           placeholder="Provincia, distrito, corregimiento, barriada, calle, casa/edificio/apartamento, n°" required />
+                                    <ValidationMessage For="@(() => model.DireccionExacta)" />
+                                </div>
+                            </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
@@ -234,7 +234,7 @@
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label class="form-label fw-bold">2.1 Nombre completo del acompañante autorizado:</label>
-                                        <input type="text" class="form-control" @bind="model.NombreAcompanante" />
+                                        <input type="text" class="form-control" @bind="model.AcompananteNombreCompleto" />
                                     </div>
                                 </div>
 
@@ -244,23 +244,23 @@
                                         <div class="mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="tipoDocumentoAcompanante" id="acompanante-cedula" 
-                                                       @onchange="@(() => model.TipoDocumentoAcompanante = "cedula")" checked="@(model.TipoDocumentoAcompanante == "cedula")" />
+                                                       @onchange="@(() => model.AcompananteTipoDocumento = "cedula")" checked="@(model.AcompananteTipoDocumento == "cedula")" />
                                                 <label class="form-check-label" for="acompanante-cedula">Cédula</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="tipoDocumentoAcompanante" id="acompanante-pasaporte" 
-                                                       @onchange="@(() => model.TipoDocumentoAcompanante = "pasaporte")" checked="@(model.TipoDocumentoAcompanante == "pasaporte")" />
+                                                       @onchange="@(() => model.AcompananteTipoDocumento = "pasaporte")" checked="@(model.AcompananteTipoDocumento == "pasaporte")" />
                                                 <label class="form-check-label" for="acompanante-pasaporte">Pasaporte</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold">2.2.1 Número del documento:</label>
-                                        <input type="text" class="form-control" @bind="model.NumeroDocumentoAcompanante" />
+                                        <input type="text" class="form-control" @bind="model.AcompananteNumeroDocumento" />
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold">2.3 Nacionalidad:</label>
-                                        <input type="text" class="form-control" @bind="model.NacionalidadAcompanante" />
+                                        <input type="text" class="form-control" @bind="model.AcompananteNacionalidad" />
                                     </div>
                                 </div>
 
@@ -270,17 +270,17 @@
                                         <div class="mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="parentesco" id="madre" 
-                                                       @onchange="@(() => model.Parentesco = "madre")" checked="@(model.Parentesco == "madre")" />
+                                                       @onchange="@(() => model.AcompananteParentesco = "madre")" checked="@(model.AcompananteParentesco == "madre")" />
                                                 <label class="form-check-label" for="madre">Madre con patria potestad</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="parentesco" id="padre" 
-                                                       @onchange="@(() => model.Parentesco = "padre")" checked="@(model.Parentesco == "padre")" />
+                                                       @onchange="@(() => model.AcompananteParentesco = "padre")" checked="@(model.AcompananteParentesco == "padre")" />
                                                 <label class="form-check-label" for="padre">Padre con patria potestad</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="parentesco" id="tutor" 
-                                                       @onchange="@(() => model.Parentesco = "tutor")" checked="@(model.Parentesco == "tutor")" />
+                                                       @onchange="@(() => model.AcompananteParentesco = "tutor")" checked="@(model.AcompananteParentesco == "tutor")" />
                                                 <label class="form-check-label" for="tutor">Tutor designado</label>
                                             </div>
                                         </div>
@@ -298,8 +298,8 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <label class="form-label fw-bold">3.1 Nombre del Médico tratante responsable de la prescripción:</label>
-                                    <input type="text" class="form-control" @bind="model.NombreMedico" required />
-                                    <ValidationMessage For="@(() => model.NombreMedico)" />
+                                    <input type="text" class="form-control" @bind="model.MedicoNombreCompleto" required />
+                                    <ValidationMessage For="@(() => model.MedicoNombreCompleto)" />
                                 </div>
                             </div>
 
@@ -309,45 +309,45 @@
                                     <div class="mt-2">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="disciplinaMedico" id="medico-general" 
-                                                   @onchange="@(() => model.DisciplinaMedico = "general")" checked="@(model.DisciplinaMedico == "general")" />
+                                                   @onchange="@(() => model.MedicoEspecialidad = "general")" checked="@(model.MedicoEspecialidad == "general")" />
                                             <label class="form-check-label" for="medico-general">Médico general</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="disciplinaMedico" id="odontologo" 
-                                                   @onchange="@(() => model.DisciplinaMedico = "odontologo")" checked="@(model.DisciplinaMedico == "odontologo")" />
+                                                   @onchange="@(() => model.MedicoEspecialidad = "odontologo")" checked="@(model.MedicoEspecialidad == "odontologo")" />
                                             <label class="form-check-label" for="odontologo">Médico odontólogo</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="disciplinaMedico" id="especialista" 
-                                                   @onchange="@(() => model.DisciplinaMedico = "especialista")" checked="@(model.DisciplinaMedico == "especialista")" />
+                                                   @onchange="@(() => model.MedicoEspecialidad = "especialista")" checked="@(model.MedicoEspecialidad == "especialista")" />
                                             <label class="form-check-label" for="especialista">Médico especialista</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">Especifique especialidad:</label>
-                                    <input type="text" class="form-control" @bind="model.EspecialidadMedico" />
+                                    <input type="text" class="form-control" @bind="model.MedicoEspecialidad" />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">3.3 Número de registro de idoneidad:</label>
-                                    <input type="text" class="form-control" @bind="model.NumeroRegistroMedico" required />
-                                    <ValidationMessage For="@(() => model.NumeroRegistroMedico)" />
+                                    <input type="text" class="form-control" @bind="model.MedicoNumeroRegistroIdoneidad" required />
+                                    <ValidationMessage For="@(() => model.MedicoNumeroRegistroIdoneidad)" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">3.4 Teléfono del médico:</label>
-                                    <input type="tel" class="form-control" @bind="model.TelefonoMedico" required />
-                                    <ValidationMessage For="@(() => model.TelefonoMedico)" />
+                                    <input type="tel" class="form-control" @bind="model.MedicoNumeroTelefono" required />
+                                    <ValidationMessage For="@(() => model.MedicoNumeroTelefono)" />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <label class="form-label fw-bold">3.5 Instalación de salud donde labora el médico:</label>
-                                    <input type="text" class="form-control" @bind="model.InstalacionSaludMedico" required />
-                                    <ValidationMessage For="@(() => model.InstalacionSaludMedico)" />
+                                    <input type="text" class="form-control" @bind="model.MedicoInstalacionSalud" required />
+                                    <ValidationMessage For="@(() => model.MedicoInstalacionSalud)" />
                                 </div>
                             </div>
                         </div>
@@ -400,12 +400,12 @@
                                             </div>
                                             <div class="mt-3">
                                                 <label class="form-label">Otros, especifique:</label>
-                                                <input type="text" class="form-control" @bind="model.OtrosProductos"/>
+                                                <input type="text" class="form-control" @bind="model.UsaOtroCannabinoide"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-bold">Nombre comercial del producto: (Opcional)</label>
-                                            <input type="text" class="form-control" @bind="model.NombreComercialProducto" placeholder="Nombre del producto"/>
+                                            <input type="text" class="form-control" @bind="model.OtroCannabinoideEspecifique" placeholder="Nombre del producto"/>
                                         </div>
                                     </div>
 
@@ -426,7 +426,7 @@
                                             </div>
                                             <div class="mt-3">
                                                 <label class="form-label">Otro:</label>
-                                                <input type="text" class="form-control" @bind="model.OtraFormaFarmaceutica"/>
+                                                <input type="text" class="form-control" @bind="model.OtraFormaFarmaceuticaDescripcion"/>
                                             </div>
                                         </div>
                                     </div>
@@ -456,7 +456,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <input type="text" class="form-control form-control-sm" placeholder="Otra" @bind="model.OtraUnidadCBD"/>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Otra" @bind="model.OtraUnidadCBDDescripcion"/>
                                                 </div>
                                             </div>
 
@@ -481,7 +481,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <input type="text" class="form-control form-control-sm" placeholder="Otra" @bind="model.OtraUnidadTHC"/>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Otra" @bind="model.OtraUnidadTHCDescripcion"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -504,7 +504,7 @@
                                             </div>
                                             <div class="mt-3">
                                                 <label class="form-label">Otro:</label>
-                                                <input type="text" class="form-control" @bind="model.OtraViaAdministracion"/>
+                                                <input type="text" class="form-control" @bind="model.OtraViaAdministracionDescripcion"/>
                                             </div>
                                         </div>
                                     </div>
@@ -534,7 +534,7 @@
                                                                     <label class="form-check-label" for="rescate">de rescate</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" id="semanal" @bind="model.Semanal"/>
+                                                                    <input class="form-check-input" type="checkbox" id="semanal" @bind="model.Mes"/>
                                                                     <label class="form-check-label" for="semanal">Dias al mes</label>
                                                                 </div>
                                                             </div>

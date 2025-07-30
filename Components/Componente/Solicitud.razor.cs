@@ -1,11 +1,21 @@
 ﻿using DIGESA.DTOs;
+using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
 
 namespace DIGESA.Components.Componente;
 
 public partial class Solicitud : ComponentBase
 {
+    [Inject] public ISolicitudService SolicitudService { get; set; } = default!;
+    [Inject] private ICommon _CommonService { get; set; } = default!;
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+
     private RegistroDto model = new();
+    private List<UbicacionDto> regiones = new();
+    private List<UbicacionDto> provincias = new();
+    private List<UbicacionDto> distritos = new();
+    private List<UbicacionDto> corregimientos = new();
+    private List<UbicacionDto> instalaciones = new();
     
     private readonly Dictionary<string, string> condicionesMedicas = new()
     {
@@ -64,15 +74,47 @@ public partial class Solicitud : ComponentBase
 
     private readonly string[] unidadesMedida = { "g", "mg", "ml", "mg/ml", "%" };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         model.FechaSolicitud = DateTime.Today;
         model.TipoDocumento = "cedula";
-        model.TipoDocumentoAcompanante = "cedula";
-        model.DisciplinaMedico = "general";
+        model.AcompananteTipoDocumento = "cedula";
+        model.MedicoEspecialidad = "general";
         model.UnidadCBD = "mg";
         model.UnidadTHC = "mg";
         model.VecesAlDia = 1;
+
+        regiones = (await _CommonService.ObtenerRegionesAsync())
+            .Select(x => new UbicacionDto { Id = x.Id, Nombre = x.Nombre }).ToList();
+
+        provincias = (await _CommonService.GetProvincias())
+            .Select(x => new UbicacionDto { Id = x.Id, Nombre = x.Nombre }).ToList();
+
+        instalaciones = (await _CommonService.ObtenerInstalacionesSaludAsync())
+            .Select(x => new UbicacionDto { Id = x.Id, Nombre = x.Nombre }).ToList();
+
+    }
+
+    private async Task CargarDistritos(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int provinciaId))
+        {
+            model.PId = provinciaId;
+            distritos = await _CommonService.GetDistritosPorProvincia();
+            corregimientos.Clear();
+            model.DId = null;
+            model.CId = null;
+        }
+    }
+
+    private async Task CargarCorregimientos(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int distritoId))
+        {
+            model.DId = distritoId;
+            corregimientos = await _CommonService.GetCorregimientos(distritoId);
+            model.CId = null;
+        }
     }
 
     private void ToggleCondition(string conditionKey, bool isChecked)

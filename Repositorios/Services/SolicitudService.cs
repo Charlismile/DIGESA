@@ -16,66 +16,15 @@ namespace DIGESA.Repositorios.Services
             _context = context;
         }
         
-        //ubicacion
-        public async Task<List<RegistroDto>> ObtenerInstalacionesSaludAsync()
+        public async Task<List<UbicacionDto>> ObtenerInstalacionesSaludAsync()
         {
             return await _context.TbInstalacionSalud
-                .Select(i => new RegistroDto
+                .Select(i => new UbicacionDto
                 {
                     IId = i.InstalacionId,
                     NombreInstalacion = i.Nombre
                 })
                 .OrderBy(i => i.NombreInstalacion)
-                .ToListAsync();
-        }
-        public async Task<List<RegistroDto>> ObtenerRegionesAsync()
-        {
-            return await _context.TbRegionSalud
-                .Select(r => new RegistroDto
-                {
-                    RId = r.RegionSaludId,
-                    NombreRegion = r.Nombre
-                })
-                .OrderBy(r => r.NombreRegion)
-                .ToListAsync();
-        }
-        public async Task<List<RegistroDto>> ObtenerProvinciasAsync()
-        {
-            return await _context.Provincia
-                .Select(p => new RegistroDto
-                {
-                    PId = p.Id,
-                    NombreProvincia = p.NombreProvincia
-                })
-                .OrderBy(p => p.NombreProvincia)
-                .ToListAsync();
-        }
-
-        public async Task<List<RegistroDto>> ObtenerDistritosPorProvinciaAsync(int provinciaId)
-        {
-            return await _context.Distrito
-                .Where(d => d.ProvinciaId == provinciaId)
-                .Select(d => new RegistroDto
-                {
-                    DId = d.Id,
-                    NombreDistrito = d.NombreDistrito,
-                    ProvinciaId = d.ProvinciaId
-                })
-                .OrderBy(d => d.NombreDistrito)
-                .ToListAsync();
-        }
-
-        public async Task<List<RegistroDto>> ObtenerCorregimientosPorDistritoAsync(int distritoId)
-        {
-            return await _context.Corregimiento
-                .Where(c => c.DistritoId == distritoId)
-                .Select(c => new RegistroDto
-                {
-                    CId = c.Id,
-                    NombreCorregimiento = c.NombreCorregimiento,
-                    DId = c.DistritoId
-                })
-                .OrderBy(c => c.NombreCorregimiento)
                 .ToListAsync();
         }
 
