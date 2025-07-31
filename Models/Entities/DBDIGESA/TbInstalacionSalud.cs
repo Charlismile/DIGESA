@@ -5,7 +5,11 @@ namespace DIGESA.Models.Entities.DBDIGESA;
 
 public partial class TbInstalacionSalud
 {
-    public int InstalacionId { get; set; }
+    public int Id { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string? NombreInstalacion { get; set; }
+
+    public virtual ICollection<TbMedicoPaciente> TbMedicoPaciente { get; set; } = new List<TbMedicoPaciente>();
+
+    public virtual ICollection<TbPaciente> TbPaciente { get; set; } = new List<TbPaciente>();
 }

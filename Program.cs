@@ -6,8 +6,6 @@ using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Repositorios.Interfaces;
-using DIGESA.Repositorios.Services;
 
 // using DIGESA.Validadores;
 using FluentValidation;
@@ -21,7 +19,7 @@ builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddScoped<ISolicitudService, SolicitudService>();
+// builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
 
@@ -34,10 +32,7 @@ builder.Services.AddBlazoredToast();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-//Ubicaciones
-// builder.Services.AddDbContext<DbUbicacionPanama>(options =>
-//     options.UseSqlServer("UbicacionConnection"));
-// RegistroDto del contexto principal de Identity
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 

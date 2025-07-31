@@ -1,37 +1,63 @@
 ﻿@inherits LayoutComponentBase
-@inject IJSRuntime JSRuntime
+@inject IHttpContextAccessor _HttpContextAccessor;
 
-<div class="d-flex flex-column min-vh-100">
-    <!-- Header -->
-    @* <NavMenu/> *@
-    <header class="bg-light border-bottom py-2">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2" href="/">
-                <img src="images/logo-gob.png" alt="Logo" style="height: 60px;"/>
-                <h5 class="mb-0 text-dark"> DIGESA</h5>
+<header>
+    <div class="container-fluid" style="height: 120px;">
+        <img src="images/logo-gob.png" class="img-fluid" alt="Logo Gobierno" style="height: 120px;">
+    </div>
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #0D6EFD;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/"><i class="bi bi-house-door"></i>
+                            Inicio</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-theme="light">
+                    <AuthorizeView>
+                        <Authorized>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    @context.User.Identity?.Name
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
+                                    <li>
+                                        <NavLink class="dropdown-item" href="/dashboard" Match="NavLinkMatch.All">
+                                            <i class="fa-solid fa-computer me-1"></i> Sistema
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <form action="account/custom-logout" method="post">
+                                        <AntiforgeryToken />
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fa-solid fa-right-from-bracket text-danger"></i> Salir
+                                        </button>
+                                    </form>
+                                </ul>
+                            </li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li class="nav-item">
+                                <NavLink class="nav-link active" href="/account/login" Match="NavLinkMatch.All">
+                                    <i class="fa-solid fa-right-to-bracket me-1"></i> Acceder
+                                </NavLink>
+                            </li>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </ul>
             </div>
         </div>
-    </header>
-
-    <!-- Body -->
-    <main class="flex-grow-1 bg-light py-4">
-        <div class="container-fluid">
-            @Body
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-top py-3 text-center small text-muted">
-        &copy; 2025 Plataforma DIGESA | Ministerio de Salud de Panamá
-    </footer>
+    </nav>
+</header>
+<div class="container-fluid p-2">
+    @Body
 </div>
-
-@code {
-private bool isDarkTheme = false;
-
-private async Task ToggleTheme()
-{
-isDarkTheme = !isDarkTheme;
-await JSRuntime.InvokeVoidAsync("toggleTheme", isDarkTheme);
-}
-}

@@ -1,4 +1,4 @@
-﻿using DIGESA.DTOs;
+﻿using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -8,52 +8,62 @@ namespace DIGESA.Repositorios.Services;
 public class CommonServices : ICommon
 {
     private readonly IDbContextFactory<DbContextDigesa> _Context;
-    private readonly IConfiguration _Configuration;
-
-    public CommonServices(IDbContextFactory<DbContextDigesa> Context, IConfiguration Configuration)
+    public CommonServices(IDbContextFactory<DbContextDigesa> Context)
     {
         _Context = Context;
-        _Configuration = Configuration;
+       
     }
 
-    public async Task<string> GetFakePassword()
+    public async Task<List<ListModel>> GetInstalaciones()
     {
-        string Password = _Configuration.GetSection("FakePass").Value ?? "";
-        return await Task.FromResult(Password);
-    }
-
-    public async Task<List<UbicacionDto>> ObtenerRegionesAsync()
-    {
-        var lista = new List<UbicacionDto>();
+        List<ListModel> Lista = new List<ListModel>();
         try
         {
             using (var localContext = await _Context.CreateDbContextAsync())
             {
-                lista = await localContext.TbRegionSalud
-                    .Select(x => new UbicacionDto()
+                Lista = await localContext.TbInstalacionSalud
+                    .Select(x => new ListModel()
                     {
-                        RId = x.RegionSaludId,
-                        NombreRegion = x.Nombre
+                        Id = x.Id,
+                        Name = x.NombreInstalacion ?? "",
                     }).ToListAsync();
             }
         }
         catch (Exception)
         {
-            // manejar errores o log
         }
-
-        return lista;
+        return Lista;
     }
 
-    public async Task<List<ListDto>> GetProvincias()
+    public async Task<List<ListModel>> GetRegiones()
     {
-        List<ListDto> Lista = new List<ListDto>();
+        List<ListModel> Lista = new List<ListModel>();
         try
         {
             using (var localContext = await _Context.CreateDbContextAsync())
             {
-                Lista = await localContext.Provincia
-                    .Select(x => new ListDto()
+                Lista = await localContext.TbRegionSalud
+                    .Select(x => new ListModel()
+                    {
+                        Id = x.Id,
+                        Name = x.NombreRegion ?? "",
+                    }).ToListAsync();
+            }
+        }
+        catch (Exception)
+        {
+        }
+        return Lista;
+    }
+    public async Task<List<ListModel>> GetProvincias()
+    {
+        List<ListModel> Lista = new List<ListModel>();
+        try
+        {
+            using (var localContext = await _Context.CreateDbContextAsync())
+            {
+                Lista = await localContext.TbProvincia
+                    .Select(x => new ListModel()
                     {
                         Id = x.Id,
                         Name = x.NombreProvincia ?? "",
@@ -63,20 +73,18 @@ public class CommonServices : ICommon
         catch (Exception)
         {
         }
-
         return Lista;
     }
-
-    public async Task<List<ListDto>> GetDistritosPorProvincia(int provinciaId)
-
+    
+    public async Task<List<ListModel>> GetDistritos(int ProvinciaId)
     {
-        List<ListDto> Lista = new List<ListDto>();
+        List<ListModel> Lista = new List<ListModel>();
         try
         {
             using (var localContext = await _Context.CreateDbContextAsync())
             {
-                Lista = await localContext.Distrito.Where(x => x.ProvinciaId == provinciaId)
-                    .Select(x => new ListDto()
+                Lista = await localContext.TbDistrito.Where(x => x.ProvinciaId == ProvinciaId)
+                    .Select(x => new ListModel()
                     {
                         Id = x.Id,
                         Name = x.NombreDistrito ?? "",
@@ -88,19 +96,21 @@ public class CommonServices : ICommon
         catch (Exception)
         {
         }
-
         return Lista;
     }
 
-    public async Task<List<ListDto>> GetCorregimientos(int distritoId)
+   
+
+
+    public async Task<List<ListModel>> GetCorregimientos(int DistritoId)
     {
-        List<ListDto> Lista = new List<ListDto>();
+        List<ListModel> Lista = new List<ListModel>();
         try
         {
             using (var localContext = await _Context.CreateDbContextAsync())
             {
-                Lista = await localContext.Corregimiento.Where(x => x.DistritoId == distritoId)
-                    .Select(x => new ListDto()
+                Lista = await localContext.TbCorregimiento.Where(x => x.DistritoId == DistritoId)
+                    .Select(x => new ListModel()
                     {
                         Id = x.Id,
                         Name = x.NombreCorregimiento ?? "",
@@ -112,7 +122,6 @@ public class CommonServices : ICommon
         catch (Exception)
         {
         }
-
         return Lista;
     }
 }
