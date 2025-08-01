@@ -2,7 +2,7 @@
 
 namespace DIGESA.Models.CannabisModels;
 
-public class PacienteDiagnostico
+public class PacienteDiagnosticoModel
 {
     public int Id { get; set; }
     public int? PacienteId { get; set; }

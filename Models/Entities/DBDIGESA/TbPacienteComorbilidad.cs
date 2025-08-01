@@ -10,8 +10,4 @@ public partial class TbPacienteComorbilidad
     public string? NombreDiagnostico { get; set; }
 
     public string? DetalleTratamiento { get; set; }
-
-    public int? PacienteId { get; set; }
-
-    public virtual TbPaciente? Paciente { get; set; }
 }

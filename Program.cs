@@ -6,6 +6,8 @@ using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
+using DIGESA.Repositorios.Interfaces;
+using DIGESA.Repositorios.Services;
 
 // using DIGESA.Validadores;
 using FluentValidation;
@@ -36,6 +38,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddDbContextFactory<DbContextDigesa>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionDigesa"));
+});
+
 // RegistroDto del contexto de tu dominio (Pacientes, Médicos, etc.)
 builder.Services.AddDbContext<DbContextDigesa>(options =>
     options.UseSqlServer(connectionString));
@@ -55,7 +62,7 @@ builder.Services.AddAuthorization();
 // RegistroDto de servicios adicionales
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
+builder.Services.AddScoped<ICommon, CommonServices>();
 // Enable CORS
 builder.Services.AddCors(options =>
 {
@@ -79,7 +86,7 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    foreach (var roleName in new[] { "Administrador", "Médico", "Paciente" })
+    foreach (var roleName in new[] { "Administrador", "Médico", "Solicitud" })
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {

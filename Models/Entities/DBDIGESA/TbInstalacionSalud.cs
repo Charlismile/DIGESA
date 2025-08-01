@@ -7,7 +7,7 @@ public partial class TbInstalacionSalud
 {
     public int Id { get; set; }
 
-    public string? NombreInstalacion { get; set; }
+    public string? Nombre { get; set; }
 
     public virtual ICollection<TbMedicoPaciente> TbMedicoPaciente { get; set; } = new List<TbMedicoPaciente>();
 

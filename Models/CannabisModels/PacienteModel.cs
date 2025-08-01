@@ -2,6 +2,10 @@
 
 namespace DIGESA.Models.CannabisModels;
 
+public enum TipoDocumentoPaciente { Cedula, Pasaporte }
+public enum RequiereAcompanante { Si, No }
+public enum MotivoRequerimientoAcompanante { PacienteMenorEdad, PacienteDiscapacidad }
+public enum Sexo {Masculino, Femenino}
 public class PacienteModel
 {
     public int Id { get; set; }
@@ -15,9 +19,8 @@ public class PacienteModel
     public string? PrimerApellido { get; set; }
 
     public string? SegundoApellido { get; set; }
-
-    [Required(ErrorMessage = "El tipo de documento es obligatorio.")]
-    public string? TipoDocumento { get; set; }
+    
+    public TipoDocumentoPaciente TipoDocumentoPacienteEnum { get; set; }
 
     [Required(ErrorMessage = "El número de cedula es obligatorio.")]
     [RegularExpression(@"^(\d{1,2}-\d{1,8}-\d{1,8}|PE-\d{1,8}-\d{1,8}|E-\d{1,8}-\d{1,8}|N-\d{1,8}-\d{1,8}|\d{1,8}AV-\d{1,8}-\d{1,8}|\d{1,8}PI-\d{1,8}-\d{1,8})$", 
@@ -35,24 +38,22 @@ public class PacienteModel
     public DateTime? FechaNacimiento { get; set; }
 
     [Required(ErrorMessage = "El sexo es obligatorio.")]
-    public string? Sexo { get; set; }
-
-    public bool? RequiereAcompanante { get; set; }
-
-    [Required(ErrorMessage = "El motivo es obligatorio.")]
-    public string? MotivoRequerimientoAcompanante { get; set; }
+    public Sexo? SexoEnum { get; set; }
+    [Required(ErrorMessage = "Indique si requiere acompañante.")]
+    public RequiereAcompanante? RequiereAcompanante { get; set; }
+    public MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
 
     [Required(ErrorMessage = "Indique la discapacidad.")]
     public string? TipoDiscapacidad { get; set; }
 
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public long? TelefonoResidencial { get; set; }
+    public string? TelefonoResidencial { get; set; }
 
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public long? TelefonoPersonal { get; set; }
+    public string? TelefonoPersonal { get; set; }
 
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public long? TelefonoLaboral { get; set; }
+    public string? TelefonoLaboral { get; set; }
 
     [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
     [EmailAddress(ErrorMessage = "Correo electrónico inválido.")]
@@ -60,14 +61,16 @@ public class PacienteModel
 
     [Required(ErrorMessage = "La dirección es obligatoria.")]
     public string? DireccionExacta { get; set; }
-
-    [Required(ErrorMessage = "Seleccione una via de consumo.")]
-    public string? ViaConsumoProducto { get; set; }
-
-    [Required(ErrorMessage = "El detalle de la dosis del tratamiento es obligatoria.")]
-    public string? DetDosisPaciente { get; set; }
-
-    [Required(ErrorMessage = "El tiempo de tratamiento es obligatoria.")]
-    public string? DuracionTratamiento { get; set; }
     
+    public int? pacienteInstalacionId { get; set; }
+    public int? pacienteRegionId { get; set; }
+    public int? pacienteProvinciaId { get; set; }
+    public int? pacienteDistritoId { get; set; }
+    public int? pacienteCorregimientoId { get; set; }
+    
+    public string? pacienteRegion { get; set; }
+    public string? pacienteProvincia { get; set; }
+    public string? pacienteDistrito { get; set; }
+    public string? pacienteCorregimiento { get; set; }
+    public string? pacienteInstalacion { get; set; }
 }

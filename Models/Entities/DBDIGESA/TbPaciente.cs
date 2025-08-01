@@ -19,6 +19,8 @@ public partial class TbPaciente
 
     public string? NumDocCedula { get; set; }
 
+    public string? NumDocPasaporte { get; set; }
+
     public string? Nacionalidad { get; set; }
 
     public DateOnly? FechaNacimiento { get; set; }
@@ -35,11 +37,11 @@ public partial class TbPaciente
 
     public string? TipoDiscapacidad { get; set; }
 
-    public long? TelefonoResidencial { get; set; }
+    public string? TelefonoResidencial { get; set; }
 
-    public long? TelefonoPersonal { get; set; }
+    public string? TelefonoPersonal { get; set; }
 
-    public long? TelefonoLaboral { get; set; }
+    public string? TelefonoLaboral { get; set; }
 
     public string? CorreoElectronico { get; set; }
 
@@ -51,17 +53,9 @@ public partial class TbPaciente
 
     public string? DireccionExacta { get; set; }
 
-    public string? ViaConsumoProducto { get; set; }
-
-    public string? DetDosisPaciente { get; set; }
-
-    public string? DuracionTratamiento { get; set; }
-
     public int? RegionId { get; set; }
 
     public int? InstalacionId { get; set; }
-
-    public string? NumDocPasaporte { get; set; }
 
     public virtual TbCorregimiento? Corregimiento { get; set; }
 
@@ -75,11 +69,7 @@ public partial class TbPaciente
 
     public virtual ICollection<TbAcompanantePaciente> TbAcompanantePaciente { get; set; } = new List<TbAcompanantePaciente>();
 
-    public virtual ICollection<TbMedicoPaciente> TbMedicoPaciente { get; set; } = new List<TbMedicoPaciente>();
-
     public virtual ICollection<TbNombreProductoPaciente> TbNombreProductoPaciente { get; set; } = new List<TbNombreProductoPaciente>();
-
-    public virtual ICollection<TbPacienteComorbilidad> TbPacienteComorbilidad { get; set; } = new List<TbPacienteComorbilidad>();
 
     public virtual ICollection<TbPacienteDiagnostico> TbPacienteDiagnostico { get; set; } = new List<TbPacienteDiagnostico>();
 

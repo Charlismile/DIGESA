@@ -15,7 +15,7 @@ public partial class TbMedicoPaciente
 
     public string? MedicoIdoneidad { get; set; }
 
-    public long? MedicoTelefono { get; set; }
+    public string? MedicoTelefono { get; set; }
 
     public string? MedicoInstalacion { get; set; }
 
@@ -23,11 +23,7 @@ public partial class TbMedicoPaciente
 
     public int? InstalacionId { get; set; }
 
-    public int? PacienteId { get; set; }
-
     public virtual TbInstalacionSalud? Instalacion { get; set; }
-
-    public virtual TbPaciente? Paciente { get; set; }
 
     public virtual TbRegionSalud? Region { get; set; }
 

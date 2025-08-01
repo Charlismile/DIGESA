@@ -17,7 +17,11 @@ public partial class TbNombreProductoPaciente
 
     public string? Concentracion { get; set; }
 
-    public string? Parentesco { get; set; }
+    public string? ViaConsumoProducto { get; set; }
+
+    public string? DetDosisPaciente { get; set; }
+
+    public string? DuracionTratamiento { get; set; }
 
     public virtual TbPaciente? Paciente { get; set; }
 }

@@ -5,7 +5,7 @@
 @* @using DIGESA.Repositories.Services *@
 @* @using Microsoft.AspNetCore.Components.Web.Virtualization *@
 @* *@
-@* <h4>Listado de Pacientes</h4> *@
+@* <h4>Listado de Solicituds</h4> *@
 @* *@
 @* <Card> *@
 @*     <CardBody> *@
@@ -16,10 +16,10 @@
 @* </Card> *@
 @* *@
 @* @code { *@
-@*     private IEnumerable<Paciente> pacientes = new List<Paciente>(); *@
+@*     private IEnumerable<Solicitud> pacientes = new List<Solicitud>(); *@
 @* *@
 @*     protected override async Task OnInitializedAsync() *@
 @*     { *@
-@*         pacientes = await PacienteService.GetAllAsync(); *@
+@*         pacientes = await SolicitudService.GetAllAsync(); *@
 @*     } *@
 @* } *@

@@ -18,7 +18,13 @@ public class ProductoPacienteModel
         [Required(ErrorMessage = "La Concentracion es obligatoria.")]
         public string? Concentracion { get; set; }
 
-        [Required(ErrorMessage = "El Parentesco es obligatoria.")]
-        public string? Parentesco { get; set; }
+        [Required(ErrorMessage = "Seleccione una via de consumo.")]
+        public string? ViaConsumoProducto { get; set; }
+
+        [Required(ErrorMessage = "El detalle de la dosis del tratamiento es obligatoria.")]
+        public string? DetDosisPaciente { get; set; }
+
+        [Required(ErrorMessage = "El tiempo de tratamiento es obligatoria.")]
+        public string? DuracionTratamiento { get; set; }
 }
 

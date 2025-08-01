@@ -15,7 +15,7 @@ public partial class TbDeclaracionJurada
 
     public string? NombreDeclarante { get; set; }
 
-    public bool Aceptada { get; set; }
+    public bool? Aceptada { get; set; }
 
     public virtual TbSolRegCannabis? SolRegCannabis { get; set; }
 }

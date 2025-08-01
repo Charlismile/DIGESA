@@ -14,26 +14,31 @@ public class CommonServices : ICommon
        
     }
 
-    public async Task<List<ListModel>> GetInstalaciones()
+    public async Task<List<ListModel>> GetInstalaciones(string filtro)
     {
-        List<ListModel> Lista = new List<ListModel>();
         try
         {
-            using (var localContext = await _Context.CreateDbContextAsync())
-            {
-                Lista = await localContext.TbInstalacionSalud
-                    .Select(x => new ListModel()
-                    {
-                        Id = x.Id,
-                        Name = x.NombreInstalacion ?? "",
-                    }).ToListAsync();
-            }
+            await using var ctx = await _Context.CreateDbContextAsync();
+            var query = ctx.TbInstalacionSalud.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+                query = query.Where(i => i.Nombre!.Contains(filtro));
+
+            return await query
+                .OrderBy(i => i.Nombre)
+                .Select(x => new ListModel {
+                    Id   = x.Id,
+                    Name = x.Nombre ?? ""
+                })
+                .Take(20)        // límite de resultados
+                .ToListAsync();
         }
-        catch (Exception)
+        catch
         {
+            return new List<ListModel>();
         }
-        return Lista;
     }
+
 
     public async Task<List<ListModel>> GetRegiones()
     {
@@ -46,7 +51,7 @@ public class CommonServices : ICommon
                     .Select(x => new ListModel()
                     {
                         Id = x.Id,
-                        Name = x.NombreRegion ?? "",
+                        Name = x.Nombre ?? "",
                     }).ToListAsync();
             }
         }

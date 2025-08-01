@@ -2,6 +2,7 @@
 
 namespace DIGESA.Models.CannabisModels;
 
+public enum TipoDocumentoAcompañante { Cedula, Pasaporte }
 public class AcompañanteModel
 {
         public int Id { get; set; }
@@ -20,8 +21,7 @@ public class AcompañanteModel
         [RegularExpression(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$", ErrorMessage = "Solo letras y espacios.")]
         public string? SegundoApellido { get; set; }
 
-        [Required(ErrorMessage = "El tipo de documento es obligatorio.")]
-        public string? TipoDocumento { get; set; }
+        public TipoDocumentoAcompañante TipoDocumentoAcompañanteEnum { get; set; }
 
         [Required(ErrorMessage = "El número de cedula es obligatorio.")]
         [RegularExpression(@"^(\d{1,2}-\d{1,8}-\d{1,8}|PE-\d{1,8}-\d{1,8}|E-\d{1,8}-\d{1,8}|N-\d{1,8}-\d{1,8}|\d{1,8}AV-\d{1,8}-\d{1,8}|\d{1,8}PI-\d{1,8}-\d{1,8})$", 

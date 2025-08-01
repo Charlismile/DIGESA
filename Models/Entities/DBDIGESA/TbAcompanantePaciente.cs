@@ -25,5 +25,7 @@ public partial class TbAcompanantePaciente
 
     public string? Parentesco { get; set; }
 
+    public string? TelefonoMovil { get; set; }
+
     public virtual TbPaciente? Paciente { get; set; }
 }

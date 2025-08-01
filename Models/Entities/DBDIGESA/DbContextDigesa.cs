@@ -15,8 +15,6 @@ public partial class DbContextDigesa : DbContext
     {
     }
 
-    public virtual DbSet<EstadoSolicitud> EstadoSolicitud { get; set; }
-
     public virtual DbSet<TbAcompanantePaciente> TbAcompanantePaciente { get; set; }
 
     public virtual DbSet<TbCorregimiento> TbCorregimiento { get; set; }
@@ -26,6 +24,8 @@ public partial class DbContextDigesa : DbContext
     public virtual DbSet<TbDistrito> TbDistrito { get; set; }
 
     public virtual DbSet<TbDocumentoMedico> TbDocumentoMedico { get; set; }
+
+    public virtual DbSet<TbEstadoSolicitud> TbEstadoSolicitud { get; set; }
 
     public virtual DbSet<TbInstalacionSalud> TbInstalacionSalud { get; set; }
 
@@ -54,21 +54,10 @@ public partial class DbContextDigesa : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EstadoSolicitud>(entity =>
-        {
-            entity.HasKey(e => e.Estado).HasName("PK__EstadoSo__36DF552EC1858A2D");
-
-            entity.Property(e => e.Estado).ValueGeneratedNever();
-            entity.Property(e => e.Descripcion)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
-
         modelBuilder.Entity<TbAcompanantePaciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbAcompa__3214EC076F610B4F");
+            entity.HasKey(e => e.Id).HasName("PK__TbAcompa__3214EC07ED055AE0");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Nacionalidad)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -88,34 +77,33 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.SegundoNombre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.TelefonoMovil).HasMaxLength(15);
             entity.Property(e => e.TipoDocumento)
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbAcompanantePaciente)
                 .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK__TbAcompan__Pacie__36B12243");
+                .HasConstraintName("FK__TbAcompan__Pacie__0E391C95");
         });
 
         modelBuilder.Entity<TbCorregimiento>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbCorreg__3214EC0720BCC5F1");
+            entity.HasKey(e => e.Id).HasName("PK__TbCorreg__3214EC07631D7C17");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.NombreCorregimiento)
                 .HasMaxLength(150)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Distrito).WithMany(p => p.TbCorregimiento)
                 .HasForeignKey(d => d.DistritoId)
-                .HasConstraintName("FK__TbCorregi__Distr__2B3F6F97");
+                .HasConstraintName("FK__TbCorregi__Distr__73BA3083");
         });
 
         modelBuilder.Entity<TbDeclaracionJurada>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbDeclar__3214EC073C59DD2B");
+            entity.HasKey(e => e.Id).HasName("PK__TbDeclar__3214EC0707866399");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Detalle)
                 .HasMaxLength(300)
                 .IsUnicode(false);
@@ -125,28 +113,26 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.SolRegCannabis).WithMany(p => p.TbDeclaracionJurada)
                 .HasForeignKey(d => d.SolRegCannabisId)
-                .HasConstraintName("FK__TbDeclara__SolRe__4AB81AF0");
+                .HasConstraintName("FK__TbDeclara__SolRe__22401542");
         });
 
         modelBuilder.Entity<TbDistrito>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbDistri__3214EC0787D1227B");
+            entity.HasKey(e => e.Id).HasName("PK__TbDistri__3214EC073CF4F937");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.NombreDistrito)
                 .HasMaxLength(150)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Provincia).WithMany(p => p.TbDistrito)
                 .HasForeignKey(d => d.ProvinciaId)
-                .HasConstraintName("FK__TbDistrit__Provi__286302EC");
+                .HasConstraintName("FK__TbDistrit__Provi__70DDC3D8");
         });
 
         modelBuilder.Entity<TbDocumentoMedico>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbDocume__3214EC071825309D");
+            entity.HasKey(e => e.Id).HasName("PK__TbDocume__3214EC071C45AE4F");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Categoria)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -159,24 +145,32 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.Medico).WithMany(p => p.TbDocumentoMedico)
                 .HasForeignKey(d => d.MedicoId)
-                .HasConstraintName("FK__TbDocumen__Medic__5165187F");
+                .HasConstraintName("FK__TbDocumen__Medic__28ED12D1");
+        });
+
+        modelBuilder.Entity<TbEstadoSolicitud>(entity =>
+        {
+            entity.HasKey(e => e.Estado).HasName("PK__TbEstado__36DF552ED420BBA6");
+
+            entity.Property(e => e.Estado).ValueGeneratedNever();
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TbInstalacionSalud>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbInstal__3214EC075134E723");
+            entity.HasKey(e => e.Id).HasName("PK__TbInstal__3214EC0726EC2B63");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.NombreInstalacion)
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(200)
                 .IsUnicode(false);
         });
 
         modelBuilder.Entity<TbMedicoPaciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbMedico__3214EC074E2F9E7C");
+            entity.HasKey(e => e.Id).HasName("PK__TbMedico__3214EC07769B96EC");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.MedicoDisciplina)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -186,6 +180,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.MedicoInstalacion)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.MedicoTelefono).HasMaxLength(15);
             entity.Property(e => e.PrimerApellido)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -195,25 +190,26 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.Instalacion).WithMany(p => p.TbMedicoPaciente)
                 .HasForeignKey(d => d.InstalacionId)
-                .HasConstraintName("FK__TbMedico__Instal__4222D4EF");
-
-            entity.HasOne(d => d.Paciente).WithMany(p => p.TbMedicoPaciente)
-                .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK_TbMedicoPaciente_Paciente");
+                .HasConstraintName("FK__TbMedicoP__Insta__19AACF41");
 
             entity.HasOne(d => d.Region).WithMany(p => p.TbMedicoPaciente)
                 .HasForeignKey(d => d.RegionId)
-                .HasConstraintName("FK__TbMedico__Region__412EB0B6");
+                .HasConstraintName("FK__TbMedicoP__Regio__18B6AB08");
         });
 
         modelBuilder.Entity<TbNombreProductoPaciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbNombre__3214EC0795EE4B9D");
+            entity.HasKey(e => e.Id).HasName("PK__TbNombre__3214EC07B0CB565E");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CantidadConcentracion).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Concentracion)
                 .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.DetDosisPaciente)
+                .HasMaxLength(300)
+                .IsUnicode(false);
+            entity.Property(e => e.DuracionTratamiento)
+                .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.FormaFarmaceutica)
                 .HasMaxLength(150)
@@ -221,29 +217,22 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreProducto)
                 .HasMaxLength(200)
                 .IsUnicode(false);
-            entity.Property(e => e.Parentesco)
-                .HasMaxLength(100)
+            entity.Property(e => e.ViaConsumoProducto)
+                .HasMaxLength(200)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK__TbNombreP__Pacie__3C69FB99");
+                .HasConstraintName("FK__TbNombreP__Pacie__13F1F5EB");
         });
 
         modelBuilder.Entity<TbPaciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC073AA84CBD");
+            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC077E7A5487");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CorreoElectronico).HasMaxLength(200);
-            entity.Property(e => e.DetDosisPaciente)
-                .HasMaxLength(300)
-                .IsUnicode(false);
             entity.Property(e => e.DireccionExacta)
                 .HasMaxLength(300)
-                .IsUnicode(false);
-            entity.Property(e => e.DuracionTratamiento)
-                .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.InstalacionSalud)
                 .HasMaxLength(200)
@@ -274,73 +263,66 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Sexo)
                 .HasMaxLength(10)
                 .IsUnicode(false);
+            entity.Property(e => e.TelefonoLaboral).HasMaxLength(15);
+            entity.Property(e => e.TelefonoPersonal).HasMaxLength(15);
+            entity.Property(e => e.TelefonoResidencial).HasMaxLength(15);
             entity.Property(e => e.TipoDiscapacidad)
                 .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.TipoDocumento)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.ViaConsumoProducto)
-                .HasMaxLength(200)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.Corregimiento).WithMany(p => p.TbPaciente)
                 .HasForeignKey(d => d.CorregimientoId)
-                .HasConstraintName("FK__TbPacient__Corre__31EC6D26");
+                .HasConstraintName("FK__TbPacient__Corre__09746778");
 
             entity.HasOne(d => d.Distrito).WithMany(p => p.TbPaciente)
                 .HasForeignKey(d => d.DistritoId)
-                .HasConstraintName("FK__TbPacient__Distr__30F848ED");
+                .HasConstraintName("FK__TbPacient__Distr__0880433F");
 
             entity.HasOne(d => d.Instalacion).WithMany(p => p.TbPaciente)
                 .HasForeignKey(d => d.InstalacionId)
-                .HasConstraintName("FK__TbPacient__Insta__33D4B598");
+                .HasConstraintName("FK__TbPacient__Insta__0B5CAFEA");
 
             entity.HasOne(d => d.Provincia).WithMany(p => p.TbPaciente)
                 .HasForeignKey(d => d.ProvinciaId)
-                .HasConstraintName("FK__TbPacient__Provi__300424B4");
+                .HasConstraintName("FK__TbPacient__Provi__078C1F06");
 
             entity.HasOne(d => d.Region).WithMany(p => p.TbPaciente)
                 .HasForeignKey(d => d.RegionId)
-                .HasConstraintName("FK__TbPacient__Regio__32E0915F");
+                .HasConstraintName("FK__TbPacient__Regio__0A688BB1");
         });
 
         modelBuilder.Entity<TbPacienteComorbilidad>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC075CBF7B1F");
+            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC0751BC82A3");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.DetalleTratamiento)
                 .HasMaxLength(300)
                 .IsUnicode(false);
             entity.Property(e => e.NombreDiagnostico)
                 .HasMaxLength(200)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.Paciente).WithMany(p => p.TbPacienteComorbilidad)
-                .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK_TbPacienteComorbilidad_Paciente");
         });
 
         modelBuilder.Entity<TbPacienteDiagnostico>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC074F07F45F");
+            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC07BDB32093");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.NombreDiagnostico)
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbPacienteDiagnostico)
                 .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK__TbPacient__Pacie__398D8EEE");
+                .HasConstraintName("FK__TbPacient__Pacie__11158940");
         });
 
         modelBuilder.Entity<TbProvincia>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbProvin__3214EC0791200421");
+            entity.HasKey(e => e.Id).HasName("PK__TbProvin__3214EC0728D45CBD");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.NombreProvincia)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -348,19 +330,17 @@ public partial class DbContextDigesa : DbContext
 
         modelBuilder.Entity<TbRegionSalud>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbRegion__3214EC074BD32811");
+            entity.HasKey(e => e.Id).HasName("PK__TbRegion__3214EC079444EE4F");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.NombreRegion)
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(150)
                 .IsUnicode(false);
         });
 
         modelBuilder.Entity<TbSolRegCannabis>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbSolReg__3214EC077603B6AD");
+            entity.HasKey(e => e.Id).HasName("PK__TbSolReg__3214EC077CC4DD30");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.ComentarioRevision)
                 .HasMaxLength(300)
                 .IsUnicode(false);
@@ -383,14 +363,13 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbSolRegCannabis)
                 .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK__TbSolRegC__Pacie__44FF419A");
+                .HasConstraintName("FK__TbSolRegC__Pacie__1C873BEC");
         });
 
         modelBuilder.Entity<TbSolRegCannabisHistorial>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbSolReg__3214EC072D12416E");
+            entity.HasKey(e => e.Id).HasName("PK__TbSolReg__3214EC07723130FE");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Comentario)
                 .HasMaxLength(300)
                 .IsUnicode(false);
@@ -403,14 +382,12 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.SolRegCannabis).WithMany(p => p.TbSolRegCannabisHistorial)
                 .HasForeignKey(d => d.SolRegCannabisId)
-                .HasConstraintName("FK__TbSolRegC__SolRe__47DBAE45");
+                .HasConstraintName("FK__TbSolRegC__SolRe__1F63A897");
         });
 
         modelBuilder.Entity<TbSolSecuencia>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbSolSec__3214EC07C381F601");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasKey(e => e.Id).HasName("PK__TbSolSec__3214EC07D06EA5F4");
         });
 
         OnModelCreatingPartial(modelBuilder);
