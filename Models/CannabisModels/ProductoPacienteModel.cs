@@ -2,15 +2,22 @@
 
 namespace DIGESA.Models.CannabisModels;
 
+public enum NombreProductoE {CBD,THC, Otro}
+
 public class ProductoPacienteModel
 {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre del producto es obligatorio.")]
         public string? NombreProducto { get; set; }
+        public NombreProductoE NombreProductoEnum { get; set; }
         
-        [Required(ErrorMessage = "Seleccione la forma farmaceutica.")]
-        public string? FormaFarmaceutica { get; set; }
+        public int FormaId { get; set; }
+    
+        [Required(ErrorMessage = "La forma farmaceutica es obligatoria.")]
+        public string? NombreForma { get; set; }
+    
+        public bool IsSelectedForma { get; set; } = false;
 
         [Required(ErrorMessage = "La Cantidad de Concentracion es obligatoria.")]
         public decimal? CantidadConcentracion { get; set; }

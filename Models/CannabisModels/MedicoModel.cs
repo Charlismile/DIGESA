@@ -2,6 +2,7 @@
 
 namespace DIGESA.Models.CannabisModels;
 
+public enum MedicoDisciplina { General, Odontólogo, Especialista }
 public class MedicoModel
 {
     public int Id { get; set; }
@@ -13,17 +14,22 @@ public class MedicoModel
     public string? PrimerApellido { get; set; }
 
     [Required(ErrorMessage = "La disciplina es obligatoria.")]
-    public string? MedicoDisciplina { get; set; }
+    public MedicoDisciplina MedicoDisciplinaEnum { get; set; }
+    
+    [Required(ErrorMessage = "Especifique la especialidad.")]
+    public string? DetalleMedico { get; set; }
 
     [Required(ErrorMessage = "El número de idoneidad es obligatorio.")]
     public string? MedicoIdoneidad { get; set; }
 
     [Required(ErrorMessage = "El teléfono es obligatorio.")]
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public long? MedicoTelefono { get; set; }
+    public string? MedicoTelefono { get; set; }
 
     [Required(ErrorMessage = "La Instalacion es obligatorio.")]
     public string? MedicoInstalacion { get; set; }
+    
+    public int? medicoInstalacionId { get; set; }
     
 }
 

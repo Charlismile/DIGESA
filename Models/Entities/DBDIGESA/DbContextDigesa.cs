@@ -15,6 +15,8 @@ public partial class DbContextDigesa : DbContext
     {
     }
 
+    public virtual DbSet<ListaDiagnostico> ListaDiagnostico { get; set; }
+
     public virtual DbSet<TbAcompanantePaciente> TbAcompanantePaciente { get; set; }
 
     public virtual DbSet<TbCorregimiento> TbCorregimiento { get; set; }
@@ -26,6 +28,8 @@ public partial class DbContextDigesa : DbContext
     public virtual DbSet<TbDocumentoMedico> TbDocumentoMedico { get; set; }
 
     public virtual DbSet<TbEstadoSolicitud> TbEstadoSolicitud { get; set; }
+
+    public virtual DbSet<TbFormaFarmaceutica> TbFormaFarmaceutica { get; set; }
 
     public virtual DbSet<TbInstalacionSalud> TbInstalacionSalud { get; set; }
 
@@ -49,11 +53,23 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<TbSolSecuencia> TbSolSecuencia { get; set; }
 
+    public virtual DbSet<TbViaAdministracion> TbViaAdministracion { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ListaDiagnostico>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ListaDia__3214EC072680692B");
+
+            entity.Property(e => e.IsActivo).HasDefaultValue(true);
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<TbAcompanantePaciente>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TbAcompa__3214EC07ED055AE0");
@@ -158,6 +174,14 @@ public partial class DbContextDigesa : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<TbFormaFarmaceutica>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TbFormaF__3214EC07883CC9C6");
+
+            entity.Property(e => e.IsActivo).HasDefaultValue(true);
+            entity.Property(e => e.Nombre).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<TbInstalacionSalud>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TbInstal__3214EC0726EC2B63");
@@ -171,6 +195,10 @@ public partial class DbContextDigesa : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__TbMedico__3214EC07769B96EC");
 
+            entity.Property(e => e.DetalleMedico)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasDefaultValue("Sin detalle");
             entity.Property(e => e.MedicoDisciplina)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -388,6 +416,14 @@ public partial class DbContextDigesa : DbContext
         modelBuilder.Entity<TbSolSecuencia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TbSolSec__3214EC07D06EA5F4");
+        });
+
+        modelBuilder.Entity<TbViaAdministracion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TbViaAdm__3214EC07F8224C4B");
+
+            entity.Property(e => e.IsActivo).HasDefaultValue(true);
+            entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

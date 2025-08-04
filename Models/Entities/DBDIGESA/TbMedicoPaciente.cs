@@ -23,6 +23,8 @@ public partial class TbMedicoPaciente
 
     public int? InstalacionId { get; set; }
 
+    public string DetalleMedico { get; set; } = null!;
+
     public virtual TbInstalacionSalud? Instalacion { get; set; }
 
     public virtual TbRegionSalud? Region { get; set; }
