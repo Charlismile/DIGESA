@@ -1,4 +1,5 @@
-﻿using BlazorBootstrap;
+﻿using System.ComponentModel.DataAnnotations;
+using BlazorBootstrap;
 using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
@@ -19,6 +20,11 @@ public partial class Solicitud : ComponentBase
     private string instalacionFilterMedico = "";
 
     private bool tieneComorbilidad = false;
+    
+    private int? unidadSeleccionadaId { get; set; }
+    
+    [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
+    private string? unidadOtraTexto { get; set; }
     private PacienteModel paciente { get; set; } = new();
     private AcompañanteModel acompañante { get; set; } = new();
     
@@ -33,6 +39,10 @@ public partial class Solicitud : ComponentBase
     private List<PacienteDiagnosticoModel> pacienteDiagnosticolist { get; set; } = new();
     private List<ProductoPacienteModel> productoFormaList { get; set; } = new();
     
+    private List<ProductoPacienteModel> productoUnidadList { get; set; } = new();
+    
+    private List<ProductoPacienteModel> productoViaConsumoList { get; set; } = new();
+    
 
 
     #endregion
@@ -42,6 +52,8 @@ public partial class Solicitud : ComponentBase
         pacienteProvincicaslist = await _Commonservice.GetProvincias();
         await CargarDiagnosticoList();
         await CargarFormaList();
+        await CargarUnidadList();
+        await CargarViaConsumoList();
     }
 
     private async Task CargarDiagnosticoList()
@@ -69,6 +81,31 @@ public partial class Solicitud : ComponentBase
         });
     }
     
+    private async Task CargarViaConsumoList()
+    {
+        // 1) Traes los diagnósticos activos
+        var raw = await _context.TbViaAdministracion
+            .Where(x => x.IsActivo)
+            .ToListAsync();
+
+        // 2) Proyectas a tu modelo y ordenas alfabéticamente
+        productoViaConsumoList = raw
+            .Select(x => new ProductoPacienteModel() {
+                Id = x.Id,
+                ViaConsumoProducto = x.Nombre!,
+                 IsSelectedConsumo = false
+            })
+            .OrderBy(d => d.ViaConsumoProducto)    // ← aquí ordenas
+            .ToList();
+
+        // 3) Agregas “Otro” al final
+        productoViaConsumoList.Add(new ProductoPacienteModel() {
+            Id = 0,
+            ViaConsumoProducto = string.Empty,
+            IsSelectedConsumo = false
+        });
+    }
+    
     private async Task CargarFormaList()
     {
         // 1) Traes los diagnósticos activos
@@ -93,6 +130,34 @@ public partial class Solicitud : ComponentBase
             IsSelectedForma = false
         });
     }
+    
+    private async Task CargarUnidadList()
+    {
+        var raw = await _context.TbUnidades
+            .Where(x => x.IsActivo)
+            .ToListAsync();
+
+        productoUnidadList = raw
+            .Select(x => new ProductoPacienteModel
+            {
+                Id = x.Id,
+                ProductoUnidad = x.NombreUnidad!,
+                IsSelectedUnidad = false
+            })
+            .OrderBy(d => d.ProductoUnidad)
+            .ToList();
+
+        // Agrega la opción "Otro"
+        productoUnidadList.Add(new ProductoPacienteModel
+        {
+            Id = 0,
+            ProductoUnidad = string.Empty,
+            IsSelectedUnidad = false
+        });
+    }
+
+    // Ejemplo de cómo obtener el valor final
+    
 
 
     private async Task<AutoCompleteDataProviderResult<ListModel>> AutoCompleteDataProvider(
@@ -140,6 +205,236 @@ public partial class Solicitud : ComponentBase
         paciente.pacienteCorregimientoId = null;
     }
 
+    //     #region RENGLONES
+    //
+    // // VARIABLES
+    // private ProductosModel RenglonForm { get; set; } = new();
+    // private List<ProductosModel> Renglones { get; set; } = new();
+    //
+    // private ResultModel ResultRenglon { get; set; } = new ResultModel()
+    // {
+    //     Success = true,
+    // };
+    //
+    // // private bool RenglonFormValid { get; set; } = true;
+    // private bool RenglonEditing { get; set; } = false;
+    //
+    // // EVENTOS
+    // private void InsertItemSubmit()
+    // {
+    //     ResultRenglon.Errores.Clear();
+    //     ResultRenglon.Success = true;
+    //     
+    //     if (String.IsNullOrEmpty(RenglonForm.ProductoId))
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar la unidad.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //     
+    //     if (String.IsNullOrEmpty(RenglonForm.NombreProducto))
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar la unidad.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //     if (String.IsNullOrEmpty(RenglonForm.NombreProductoEnum))
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar la descripción.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //
+    //     if (RenglonForm.CantidadConcentracion == 0)
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar la cantidad.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //
+    //     if (String.IsNullOrEmpty(RenglonForm.NombreProductoEnum))
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar la descripción.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //
+    //     if (RenglonForm.PrecioUnitario == 0)
+    //     {
+    //         ResultRenglon.Errores.Add("Debe ingresar el precio unitario.");
+    //         ResultRenglon.Success = false;
+    //     }
+    //
+    //     if (ResultRenglon.Success)
+    //     {
+    //         if (RenglonForm.ITBMS)
+    //         {
+    //             decimal itbms = Convert.ToDecimal(0.07);
+    //             RenglonForm.ValorSubTotal = (decimal)RenglonForm.Cantidad * RenglonForm.PrecioUnitario;
+    //             RenglonForm.ValorImpuesto = RenglonForm.ValorSubTotal * itbms;
+    //             RenglonForm.ValorTotal = RenglonForm.ValorSubTotal + RenglonForm.ValorImpuesto;
+    //         }
+    //         else
+    //         {
+    //             RenglonForm.ValorImpuesto = 0;
+    //             RenglonForm.ValorSubTotal = (decimal)RenglonForm.Cantidad * RenglonForm.PrecioUnitario;
+    //             RenglonForm.ValorTotal = RenglonForm.ValorSubTotal;
+    //         }
+    //
+    //         RenglonForm.Codigo = RenglonForm.Codigo.ToUpper();
+    //         RenglonForm.Unidad = RenglonForm.Unidad.ToUpper();
+    //         RenglonForm.Descripcion = RenglonForm.Descripcion.ToUpper();
+    //
+    //         if (RenglonEditing)
+    //         {
+    //             int index = Renglones.FindIndex(x => x.TempId == RenglonForm.TempId);
+    //             if (index != -1)
+    //             {
+    //                 Renglones[index].Cantidad = RenglonForm.Cantidad;
+    //                 Renglones[index].Codigo = RenglonForm.Codigo;
+    //                 Renglones[index].Unidad = RenglonForm.Unidad;
+    //                 Renglones[index].Descripcion = RenglonForm.Descripcion;
+    //                 Renglones[index].PrecioUnitario = RenglonForm.PrecioUnitario;
+    //                 Renglones[index].ValorSubTotal = RenglonForm.ValorSubTotal;
+    //                 Renglones[index].ValorImpuesto = RenglonForm.ValorImpuesto;
+    //                 Renglones[index].ValorTotal = RenglonForm.ValorTotal;
+    //                 Renglones[index].ITBMS = RenglonForm.ITBMS;
+    //                 Renglones[index].UpdateRow = true;
+    //                 Renglones[index].InsertRow = false;
+    //                 Renglones[index].DeleteRow = false;
+    //                 Renglones[index].ShowRow = true;
+    //             }
+    //
+    //             RenglonEditing = false;
+    //         }
+    //         else
+    //         {
+    //             RenglonForm.UpdateRow = false;
+    //             RenglonForm.InsertRow = true;
+    //             RenglonForm.DeleteRow = false;
+    //             RenglonForm.ShowRow = true;
+    //             Renglones.Add(RenglonForm);
+    //         }
+    //
+    //         RequisicionData.Items = Renglones;
+    //         UpdateTotales();
+    //         RenglonForm = new();
+    //         ResultRenglon.Success = true;
+    //     }
+    // }
+    //
+    // private void EditRenglon(string Id)
+    // {
+    //     RenglonEditing = false;
+    //     var data = Renglones.Where(x => x.TempId == Id).FirstOrDefault();
+    //     if (data != null)
+    //     {
+    //         RenglonForm = new RequisicionItemsModel()
+    //         {
+    //             Id = data.Id,
+    //             TempId = data.TempId,
+    //             IdRequisicion = data.IdRequisicion,
+    //             Cantidad = data.Cantidad,
+    //             Codigo = data.Codigo,
+    //             Unidad = data.Unidad,
+    //             Descripcion = data.Descripcion,
+    //             PrecioUnitario = data.PrecioUnitario,
+    //             ValorImpuesto = data.ValorImpuesto,
+    //             ValorSubTotal = data.ValorSubTotal,
+    //             ValorTotal = data.ValorTotal,
+    //             ITBMS = data.ITBMS,
+    //             ShowRow = data.ShowRow,
+    //             UpdateRow = data.UpdateRow,
+    //             DeleteRow = data.DeleteRow,
+    //             InsertRow = data.InsertRow,
+    //         };
+    //         RenglonEditing = true;
+    //     }
+    // }
+    //
+    // private void DeleteRenglon(string Id)
+    // {
+    //     var Renglon = Renglones.Where(x => x.TempId == Id).FirstOrDefault();
+    //     Renglon.DeleteRow = true;
+    //     Renglon.ShowRow = false;
+    //     RequisicionData.Items = Renglones;
+    //     UpdateTotales();
+    // }
+    //
+    // private void CancelEditRenglon()
+    // {
+    //     RenglonForm = new();
+    //     Renglones = RequisicionData.Items;
+    //     RenglonEditing = false;
+    // }
+    //
+    // #endregion
+    //
+    // #region GUARDAR REQUISICION
+    //
+    // private ResultModel RequisicionResult { get; set; } = new ResultModel()
+    // {
+    //     Success = true,
+    // };
+    //
+    // private async Task CreateRequisicionSubmit()
+    // {
+    //     RequisicionResult.Success = true;
+    //     RequisicionResult.Errores.Clear();
+    //     if (Renglones == null || Renglones.Count == 0)
+    //     {
+    //         RequisicionResult.Success = false;
+    //         RequisicionResult.Errores.Add("Debe ingresar los renglones.");
+    //
+    //         await ModalFormulario.ShowAsync();
+    //         return;
+    //     }
+    //
+    //     RequisicionData.Items = Renglones;
+    //     int IdDirector = Convert.ToInt32(RequisicionData.IdDirector);
+    //     RequisicionData.DirectorName = Directores
+    //         .Where(x => x.Id == IdDirector)
+    //         .Select(x => x.Name)
+    //         .FirstOrDefault();
+    //
+    //     ResultModel Resultado = new ResultModel();
+    //
+    //     if (RequisicionData.Id == 0)
+    //     {
+    //         RequisicionData.IdUnidadEjecutora = RequisicionData.IdDireccion;
+    //         Resultado = await _RequisicionService.SaveRequisicion(RequisicionData);
+    //     }
+    //     else
+    //     {
+    //         Resultado = await _RequisicionService.UpdateRequisicion(RequisicionData);
+    //     }
+    //
+    //     _ToastService.Notify(new(Resultado.Success ? ToastType.Success : ToastType.Danger, "", $"Mensaje",
+    //         $"{DateTime.Now}",
+    //         Resultado.Message));
+    //
+    //     if (RequisicionData.EditMode == false)
+    //     {
+    //         NavigationProvider.NavigateTo("/requisiciones/index");
+    //     }
+    // }
+    //
+    // private async Task UpdateTotales()
+    // {
+    //     decimal impuesto = Convert.ToDecimal(0.07);
+    //     decimal subtotal = 0;
+    //     decimal total = 0;
+    //     decimal impuestoTotal = 0;
+    //
+    //     foreach (var item in Renglones.Where(x => x.DeleteRow == false))
+    //     {
+    //         subtotal += item.ValorSubTotal;
+    //         impuestoTotal += item.ValorImpuesto;
+    //     }
+    //
+    //     total = subtotal + impuestoTotal;
+    //     RequisicionData.PrecioITBMSRequisicion = impuestoTotal;
+    //     RequisicionData.PrecioSubTotalRequisicion = subtotal;
+    //     RequisicionData.PrecioTotalRequisicion = total;
+    //     RequisicionData.TotalTexto = await _CommonServices.GetTotalTexto(RequisicionData.PrecioTotalRequisicion);
+    // }
+    //
+    // #endregion
     private async Task RegisterForm()
     {
     }

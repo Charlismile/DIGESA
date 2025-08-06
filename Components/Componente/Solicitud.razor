@@ -59,7 +59,7 @@
             <ValidationMessage For="@(() => paciente.FechaNacimiento)"/>
 
             <label class="form-label">Sexo</label>
-            <input type="hidden" name="SexoEnum" @bind="paciente.SexoEnum"/>
+            <input type="hidden" name="SexoEnum"@bind="paciente.SexoEnum" />
 
             <div class="form-check">
                 <input type="checkbox"
@@ -361,8 +361,9 @@
                     }
                 </div>
             }
+            
             <!-- Producto del paciente -->
-            <label>Nombre Generico y Comercial del producto</label>
+            <label>Nombre Generico del producto</label>
             <InputRadioGroup @bind-Value="productoPaciente.NombreProductoEnum" class="d-flex gap-3">
                 <div class="form-check">
                     <InputRadio class="form-check-input" Value="NombreProductoE.CBD" id="CBD"/>
@@ -386,6 +387,9 @@
                     <ValidationMessage For="@(() => productoPaciente.NombreProducto)"/>
                 </div>
             }
+            
+            <label>Nombre comercial del producto</label>
+            <InputText @bind-Value="productoPaciente.NombreProducto"/>
 
             <h3 class="mb-0">Seleccione Forma Farmacéutica</h3>
             <hr/>
@@ -401,7 +405,7 @@
                     {
                         <!-- “Otro” va con checkbox + input juntos -->
                         <label class="form-check-label me-2" for="diag_0">
-                            Otro diagnóstico:
+                            Otro(s) cannabinoide, especifique:
                         </label>
                         <InputText @bind-Value="row.NombreForma"
                                    placeholder="Describa otro…"
@@ -419,12 +423,291 @@
                     }
                 </div>
             }
-
+            <!-- Renglones -->
+            @* <div class="card-body"> *@
+            @* <div class="mb-3"> *@
+            @*     <label class="fw-bold">Detalles del Grupo <span *@
+            @*             class="text-danger">(LEER TEXTO DE EJEMPLO)</span></label> *@
+            @*     <TextAreaInput @bind-Value="RequisicionData.GrupoBase" *@
+            @*                    class="form-control form-control-sm text-uppercase" Rows="6" *@
+            @*                    aria-required="true"/> *@
+            @*     <ValidationMessage For="() => RequisicionData.GrupoBase" class="text-danger"/> *@
+            @* </div> *@
+        @*     @if (!ResultRenglon.Success) *@
+        @*     { *@
+        @*         <div class="mb-3"> *@
+        @*             @foreach (var item in ResultRenglon.Errores) *@
+        @*             { *@
+        @*                 <p class="text-danger mb-0">@item</p> *@
+        @*             } *@
+        @*         </div> *@
+        @*     } *@
+        @*     <div class="row mb-2"> *@
+        @*         <div class="col-lg-2"> *@
+        @*             <label class="fw-bold">Cantidad</label> *@
+        @*             <input type="number" @bind="RenglonForm.Cantidad" *@
+        @*                    class="form-control form-control-sm text-uppercase" *@
+        @*                    id="RowCantidad"> *@
+        @*         </div> *@
+        @*         <div class="col-lg-3"> *@
+        @*             <label class="fw-bold">Código</label> *@
+        @*             <div class="input-group"> *@
+        @*                 <input *@
+        @*                     id="RowCodigo" *@
+        @*                     type="text" *@
+        @*                     @bind="RenglonForm.Codigo" *@
+        @*                     class="form-control form-control-sm text-uppercase"> *@
+        @*                 @if (RequisicionData.TipoRequisicionCode == "IS") *@
+        @*                 { *@
+        @*                     <button class="btn btn-sm btn-primary" type="button" @onclick="LoadFicha" *@
+        @*                             disabled="@(RequisicionData.TipoRequisicionCode != "IS")"> *@
+        @*                         <Tooltip Title="Buscar Datos de la Ficha Técnica"> *@
+        @*                             <i class="fa-solid fa-magnifying-glass"></i> *@
+        @*                         </Tooltip> *@
+        @*                     </button> *@
+        @*                 } *@
+        @*             </div> *@
+        @*             @if (RequisicionData.TipoRequisicionCode == "IS") *@
+        @*             { *@
+        @*                 <div class="alert alert-info pb-0 mt-1" role="alert"> *@
+        @*                     <p>Puede dar clic al botón para buscar los datos de la Ficha Técnica, cuando es Compra de *@
+        @*                         Insumos Sanitarios</p> *@
+        @*                 </div> *@
+        @*             } *@
+        @*         </div> *@
+        @*         <div class="col-lg-3"> *@
+        @*             <label class="fw-bold">Unidad</label> *@
+        @*             <input type="text" @bind="RenglonForm.Unidad" class="form-control form-control-sm text-uppercase" *@
+        @*                    id="RowUnidad"> *@
+        @*         </div> *@
+        @*         <div class="col-lg-2"> *@
+        @*             <label class="fw-bold">Precio Unitario</label> *@
+        @*             <input type="number" @bind="RenglonForm.PrecioUnitario" *@
+        @*                    class="form-control form-control-sm text-uppercase" *@
+        @*                    id="RowPrecioUnitario"> *@
+        @*         </div> *@
+        @*         <div class="col-lg-2"> *@
+        @*             <label class="fw-bold" for="RowITBMS">¿I.T.B.M.S.?</label> *@
+        @*             <div> *@
+        @*                 <input type="checkbox" @bind="RenglonForm.ITBMS" class="form-check-input" id="RowITBMS"> *@
+        @*                 <label class="form-check-label" for="RowITBMS">I.T.B.M.S.</label> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     </div> *@
+        @*     <div class="mb-2"> *@
+        @*         <label class="fw-bold">Descripción</label> *@
+        @*         <textarea id="RowDescripcion" @bind="RenglonForm.Descripcion" rows="6" *@
+        @*                   class="form-control form-control-sm text-uppercase text-uppercase"></textarea> *@
+        @*     </div> *@
+        @* </div> *@
+        @* <div class="card-footer border-bottom"> *@
+        @*     <button type="button" class="btn btn-primary text-white" @onclick="InsertItemSubmit"> *@
+        @*         <i class="fa-solid fa-floppy-disk me-1"></i>Guardar Renglón *@
+        @*     </button> *@
+        @*     @if (RenglonEditing) *@
+        @*     { *@
+        @*         <button type="button" class="btn btn-danger text-white ms-2" @onclick="CancelEditRenglon"> *@
+        @*             <i class="fa-solid fa-xmark me-1"></i> Cancelar Edición *@
+        @*         </button> *@
+        @*     } *@
+        @* </div> *@
+        @* <div class="card-body"> *@
+        @*     @if (Renglones == null || Renglones.Count == 0) *@
+        @*     { *@
+        @*         <h3 class="fw-bold my-3"><i class="fa-regular fa-folder-open me-1"></i>Sin registros</h3> *@
+        @*     } *@
+        @*     else *@
+        @*     { *@
+        @*         int row = 1; *@
+        @*         <div class="table-responsive" style="max-height: 350px; overflow-y: auto;"> *@
+        @*             <table class="table table-sm table-bordered"> *@
+        @*                 <thead> *@
+        @*                 <tr> *@
+        @*                     <th class="fw-bold text-center">#</th> *@
+        @*                     <th class="fw-bold text-center">Cantidad</th> *@
+        @*                     <th class="fw-bold text-center">Código</th> *@
+        @*                     <th class="fw-bold text-center">Unidad</th> *@
+        @*                     <th class="fw-bold text-center">Descripción</th> *@
+        @*                     <th class="fw-bold text-center">Precio Unitario</th> *@
+        @*                     <th class="fw-bold text-center">Sub Total</th> *@
+        @*                     <th class="fw-bold text-center">I.T.B.M.S.</th> *@
+        @*                     <th class="fw-bold text-center">Precio Total</th> *@
+        @*                     <th class="fw-bold text-center">Acciones</th> *@
+        @*                 </tr> *@
+        @*                 </thead> *@
+        @*                 <tbody> *@
+        @*                 @foreach (var item in Renglones.Where(x => x.ShowRow == true)) *@
+        @*                 { *@
+        @*                     <tr> *@
+        @*                         <td class="text-center">@row</td> *@
+        @*                         <td class="text-end">@item.Cantidad</td> *@
+        @*                         <td>@item.Codigo</td> *@
+        @*                         <td>@item.Unidad</td> *@
+        @*                         <td class="" style="white-space: pre-wrap;">@item.Descripcion</td> *@
+        @*                         <td class="text-end">@item.PrecioUnitario.ToString("#,##0.00##")</td> *@
+        @*                         <td class="text-end">@item.ValorSubTotal.ToString("#,##0.00##")</td> *@
+        @*                         <td class="text-center">@(item.ITBMS ? "SI" : "NO")</td> *@
+        @*                         <td class="text-end">@item.ValorTotal.ToString("#,##0.00##")</td> *@
+        @*                         <td class="text-center"> *@
+        @*                             <div class="btn-group" role="group" aria-label="acciones"> *@
+        @*                                 <button type="button" class="btn btn-light" *@
+        @*                                         @onclick="() => EditRenglon(item.TempId)"> *@
+        @*                                     <Tooltip Title="Editar Renglón"> *@
+        @*                                         <i class="fa-solid fa-pen-to-square text-primary"></i> *@
+        @*                                     </Tooltip> *@
+        @*                                 </button> *@
+        @*                                 <button type="button" class="btn btn-light" *@
+        @*                                         @onclick="() => DeleteRenglon(item.TempId)"> *@
+        @*                                     <Tooltip Title="Eliminar Renglón"> *@
+        @*                                         <i class="fa-solid fa-trash text-danger"></i> *@
+        @*                                     </Tooltip> *@
+        @*                                 </button> *@
+        @*                             </div> *@
+        @*                         </td> *@
+        @*                     </tr> *@
+        @*                     row++; *@
+        @*                 } *@
+        @*                 </tbody> *@
+        @*             </table> *@
+        @*         </div> *@
+        @*     } *@
+        @* </div> *@
+            
             <!-- Concentracion -->
-            <label>Concentración</label>
-            <InputText @bind-Value="productoPaciente.Concentracion" class="form-control"/>
-            <ValidationMessage For="@(() => productoPaciente.Concentracion)"/>
+            <h3>Concentración</h3>
+            <InputRadioGroup @bind-Value="productoPaciente.ConcentracionEnum" class="d-flex gap-3">
+                <div class="form-check">
+                    <InputRadio class="form-check-input" Value="ConcentracionE.CBD" id="CBD"/>
+                    <label class="form-check-label" for="CBD">CBD</label>
+                </div>
+                <div class="form-check">
+                    <InputRadio class="form-check-input" Value="ConcentracionE.THC" id="THC"/>
+                    <label class="form-check-label" for="THC">THC</label>
+                </div>
+                <div class="form-check">
+                    <InputRadio class="form-check-input" Value="ConcentracionE.otra" id="Otro"/>
+                    <label class="form-check-label" for="Otro">Otro</label>
+                </div>
+            </InputRadioGroup>
+                @if(productoPaciente.ConcentracionEnum == ConcentracionE.otra){
+                    <div class="mt-2">
+                        <label for="cedula">Especifique</label>
+                        <InputText id="cedula" class="form-control" @bind-Value="productoPaciente.Concentracion"/>
+                        <ValidationMessage For="@(() => productoPaciente.Concentracion)"/>
+                    </div>
+                }
+                <InputNumber type="number" class="form-control mt-2" @bind-Value="productoPaciente.CantidadConcentracion" placeholder="Ingrese la cantidad"/>
+                <ValidationMessage For="@(() => productoPaciente.CantidadConcentracion)"/>
+                <label class="mb-0">Seleccione Unidad de Concentracion</label>
 
+            <!-- Select principal -->
+            <div class="mb-3">
+                <label for="unidadSelect" class="form-label">Unidad</label>
+                <select id="unidadSelect"
+                        class="form-select"
+                        @bind="unidadSeleccionadaId">
+                    <option value="">-- Seleccione una unidad --</option>
+
+                    @foreach (var row in productoUnidadList.Where(p => p.Id != 0))
+                    {
+                        <option value="@row.Id">@row.ProductoUnidad</option>
+                    }
+
+                    <option value="0">Otra(s) unidad, especifique</option>
+                </select>
+            </div>
+
+            <!-- Campo de texto solo si seleccionó "Otro" -->
+            @if (unidadSeleccionadaId == 0)
+            {
+                <div class="mb-3">
+                    <label for="otraUnidad" class="form-label">Describa otra unidad</label>
+                    <InputText id="otraUnidad"
+                               class="form-control"
+                               placeholder="Escriba la unidad"
+                               @bind-Value="unidadOtraTexto" />
+                    <ValidationMessage For="() => unidadOtraTexto"/>
+                </div>
+            }
+            <!-- via administracion -->
+            <h3 class="mb-0">Seleccione Vía de administración:</h3>
+            <hr/>
+            @foreach (var row in productoViaConsumoList)
+            {
+                <div class="form-check mb-2">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="diag_@row.Id"
+                           @bind="row.IsSelectedConsumo"/>
+
+                    @if (row.Id == 0)
+                    {
+                        <!-- “Otro” va con checkbox + input juntos -->
+                        <label class="form-check-label me-2" for="diag_0">
+                            Otro diagnóstico:
+                        </label>
+                        <InputText @bind-Value="row.ViaConsumoProducto"
+                                   placeholder="Describa otro…"
+                                   class="form-control form-control-sm d-inline-block"
+                                   style="width: auto;"
+                                   disabled="@(!row.IsSelectedConsumo)"/>
+                        <ValidationMessage For="() => row.ViaConsumoProducto"/>
+                    }
+                    else
+                    {
+                        <!-- Diagnóstico estático: label dentro del form-check -->
+                        <label class="form-check-label" for="diag_@row.Id">
+                            @row.ViaConsumoProducto
+                        </label>
+                    }
+                </div>
+            }
+
+            <!-- Dosis -->
+            <h3 class="mb-0">Dosis:(Ejemplo: 3 gotas, 2 cápsulas, 4 puff…)</h3>
+            <InputText @bind-Value="productoPaciente.DetDosisPaciente"/>
+            
+            <label>¿Cuántas veces al día utiliza el medicamento y durante cuánto tiempo al mes?</label>
+            <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.DuracionTratamientoEnum"/>
+
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="chkveces"
+                       checked="@(productoPaciente.DuracionTratamientoEnum == DuracionTratamientoE.veces)"
+                       @onchange="() => productoPaciente.DuracionTratamientoEnum = DuracionTratamientoE.veces"/>
+                <label class="form-check-label" for="chkveces">veces al día (Responder un número del 1 al 6)</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="chkdias"
+                       checked="@(productoPaciente.DuracionTratamientoEnum == DuracionTratamientoE.dias)"
+                       @onchange="() => productoPaciente.DuracionTratamientoEnum = DuracionTratamientoE.dias"/>
+                <label class="form-check-label" for="chkdias">días al mes  (Responder un número del  1 al 31)</label>
+            </div>
+            
+            <!-- dosis rescate -->
+            <label>¿Utiliza dosis de rescate?</label>
+            <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.UsaDosisRescateEnum"/>
+
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="chkSi"
+                       checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si)"
+                       @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.Si"/>
+                <label class="form-check-label" for="chkSi">Si</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="chkNo"
+                       checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.No)"
+                       @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.No"/>
+                <label class="form-check-label" for="chkNo">No</label>
+            </div>
+            
             <!-- Cormobilidades del paciente -->
             <div class="form-check mb-3">
                 <input type="checkbox"
@@ -435,7 +718,7 @@
                     ¿Tiene alguna comorbilidad?
                 </label>
             </div>
-
+            
             @if (tieneComorbilidad)
             {
                 <div class="mb-3">
@@ -443,7 +726,7 @@
                     <InputText @bind-Value="pacienteComorbilidad.NombreDiagnostico" class="form-control"/>
                     <ValidationMessage For="@(() => pacienteComorbilidad.NombreDiagnostico)"/>
                 </div>
-
+            
                 <div class="mb-3">
                     <label class="form-label">Tratamientos</label>
                     <InputTextArea @bind-Value="pacienteComorbilidad.DetalleTratamiento" class="form-control"/>

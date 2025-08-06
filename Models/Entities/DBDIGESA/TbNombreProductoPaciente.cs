@@ -23,5 +23,9 @@ public partial class TbNombreProductoPaciente
 
     public string? DuracionTratamiento { get; set; }
 
+    public bool UsaDosisRescate { get; set; }
+
+    public string? ProductoUnidad { get; set; }
+
     public virtual TbPaciente? Paciente { get; set; }
 }

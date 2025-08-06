@@ -53,6 +53,8 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<TbSolSecuencia> TbSolSecuencia { get; set; }
 
+    public virtual DbSet<TbUnidades> TbUnidades { get; set; }
+
     public virtual DbSet<TbViaAdministracion> TbViaAdministracion { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -245,6 +247,9 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreProducto)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.ProductoUnidad)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.ViaConsumoProducto)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -416,6 +421,16 @@ public partial class DbContextDigesa : DbContext
         modelBuilder.Entity<TbSolSecuencia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TbSolSec__3214EC07D06EA5F4");
+        });
+
+        modelBuilder.Entity<TbUnidades>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TbUnidad__3214EC075C180C14");
+
+            entity.Property(e => e.IsActivo).HasDefaultValue(true);
+            entity.Property(e => e.NombreUnidad)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TbViaAdministracion>(entity =>

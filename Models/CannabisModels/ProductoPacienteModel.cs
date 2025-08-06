@@ -2,7 +2,11 @@
 
 namespace DIGESA.Models.CannabisModels;
 
+public enum DuracionTratamientoE {veces, dias}
+public enum ConcentracionE {CBD,THC, otra}
 public enum NombreProductoE {CBD,THC, Otro}
+
+public enum UsaDosisRescate {Si, No}
 
 public class ProductoPacienteModel
 {
@@ -23,15 +27,28 @@ public class ProductoPacienteModel
         public decimal? CantidadConcentracion { get; set; }
 
         [Required(ErrorMessage = "La Concentracion es obligatoria.")]
+        public ConcentracionE ConcentracionEnum { get; set; }
+        
+        public bool IsSelectedUnidad { get; set; } = false;
+        
+        public bool IsSelectedConsumo { get; set; } = false;
+        
         public string? Concentracion { get; set; }
+        
+        [Required(ErrorMessage = "La Unidad de Concentracion es obligatoria.")]
+        public string? ProductoUnidad { get; set; }
 
         [Required(ErrorMessage = "Seleccione una via de consumo.")]
         public string? ViaConsumoProducto { get; set; }
 
         [Required(ErrorMessage = "El detalle de la dosis del tratamiento es obligatoria.")]
         public string? DetDosisPaciente { get; set; }
-
-        [Required(ErrorMessage = "El tiempo de tratamiento es obligatoria.")]
+        
+        [Required(ErrorMessage = "La Duracion de Tratamiento es obligatoria.")]
+        
         public string? DuracionTratamiento { get; set; }
+        public DuracionTratamientoE DuracionTratamientoEnum { get; set; }
+        
+        public UsaDosisRescate UsaDosisRescateEnum{ get; set; }
 }
 
