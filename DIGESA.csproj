@@ -40,4 +40,8 @@
       <_ContentIncludedByDefault Remove="Components\Pages\Pages\Public\Seguimiento.razor" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Components\Pages\Public\Solicitud.razor" />
+    </ItemGroup>
+
 </Project>

@@ -21,3 +21,6 @@
     color: white;
     text-align: center;
 }
+.custom-card-header2 {
+    background-color: var(--bs-gray-200);
+}

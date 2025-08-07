@@ -27,7 +27,8 @@ public class PacienteModel
         ErrorMessage = "La cédula no tiene un formato válido. Ejemplos válidos: 1-123456-7, PE-123456-7, E-123456-7, N-123456-7, 1AV-123456-7, 1PI-123456-7")]
     public string? NumDocCedula { get; set; }
     
-    [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "El número de pasaporte es obligatorio.")]
+    [Required(ErrorMessage = "El número de pasaporte es obligatorio.")]
+    [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "El pasaporte no tiene un formato válido. Ejemplos válidos:")]
     public string NumDocPasaporte { get; set; } = "";
 
     [Required(ErrorMessage = "La nacionalidad es obligatoria.")]
