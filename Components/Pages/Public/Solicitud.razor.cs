@@ -4,6 +4,7 @@ using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 
 namespace DIGESA.Components.Pages.Public;
@@ -18,19 +19,14 @@ public partial class Solicitud : ComponentBase
 
     private string instalacionFilterPaciente = "";
     private string instalacionFilterMedico = "";
-
     private bool tieneComorbilidad = false;
-    
     private int? unidadSeleccionadaId { get; set; }
-    
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
     private string? unidadOtraTexto { get; set; }
     private PacienteModel paciente { get; set; } = new();
-    private AcompañanteModel acompañante { get; set; } = new();
-    
+    private AcompananteModel acompanante { get; set; } = new();
     private MedicoModel medico { get; set; } = new();
     private ProductoPacienteModel productoPaciente { get; set; } = new();
-    
     private PacienteComorbilidadModel pacienteComorbilidad { get; set; } = new();
     private List<ListModel> pacienteRegioneslist { get; set; } = new();
     private List<ListModel> pacienteProvincicaslist { get; set; } = new();
@@ -38,17 +34,25 @@ public partial class Solicitud : ComponentBase
     private List<ListModel> pacienteCorregimientolist { get; set; } = new();
     private List<PacienteDiagnosticoModel> pacienteDiagnosticolist { get; set; } = new();
     private List<ProductoPacienteModel> productoFormaList { get; set; } = new();
-    
     private List<ProductoPacienteModel> productoUnidadList { get; set; } = new();
-    
     private List<ProductoPacienteModel> productoViaConsumoList { get; set; } = new();
     
-
+    private EditContext editContext;
 
     #endregion
     
     protected override async Task OnInitializedAsync()
     {
+        var formData = new
+        {
+            Paciente = paciente,
+            Acompañante = acompanante,
+            Medico = medico,
+            ProductoPaciente = productoPaciente,
+            PacienteComorbilidad = pacienteComorbilidad
+        };
+        editContext = new EditContext(formData);
+        
         pacienteProvincicaslist = await _Commonservice.GetProvincias();
         await CargarDiagnosticoList();
         await CargarFormaList();
@@ -93,7 +97,7 @@ public partial class Solicitud : ComponentBase
             .Select(x => new ProductoPacienteModel() {
                 Id = x.Id,
                 ViaConsumoProducto = x.Nombre!,
-                 IsSelectedConsumo = false
+                IsSelectedViaConsumo = false
             })
             .OrderBy(d => d.ViaConsumoProducto)    // ← aquí ordenas
             .ToList();
@@ -102,7 +106,7 @@ public partial class Solicitud : ComponentBase
         productoViaConsumoList.Add(new ProductoPacienteModel() {
             Id = 0,
             ViaConsumoProducto = string.Empty,
-            IsSelectedConsumo = false
+            IsSelectedViaConsumo = false
         });
     }
     

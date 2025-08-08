@@ -1,7 +1,7 @@
 ﻿@page "/registro-paciente"
 @using DIGESA.Models.CannabisModels
 
-<EditForm Model="paciente" OnValidSubmit="RegisterForm">
+<EditForm EditContext="@editContext" OnValidSubmit="RegisterForm">
     <DataAnnotationsValidator/>
     <ValidationSummary Class="alert alert-danger mb-3"/>
     <div class="container-fluid my-4">
@@ -296,7 +296,7 @@
                             @if (paciente.MotivoRequerimientoAcompanante == MotivoRequerimientoAcompanante.PacienteDiscapacidad)
                             {
                                 <div class="col-sm-6">
-                                    <label for="TipoDiscapacidad" class="form-label">Especifiue la discapacidad</label>
+                                    <label for="TipoDiscapacidad" class="form-label">Especifique la discapacidad</label>
                                     <InputText id="TipoDiscapacidad"
                                                class="form-control"
                                                @bind-Value="paciente.TipoDiscapacidad"/>
@@ -319,28 +319,28 @@
                                     <div class="row g-3">
                                             <div class="col-sm-3">
                                                 <label>Primer Nombre</label>
-                                                <InputText @bind-Value="acompañante.PrimerNombre" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.PrimerNombre)"/>
+                                                <InputText @bind-Value="acompanante.PrimerNombre" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.PrimerNombre)"/>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Segundo Nombre</label>
-                                                <InputText @bind-Value="acompañante.SegundoNombre" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.SegundoNombre)"/>
+                                                <InputText @bind-Value="acompanante.SegundoNombre" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.SegundoNombre)"/>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Primer Apellido</label>
-                                                <InputText @bind-Value="acompañante.PrimerApellido" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.PrimerApellido)"/>
+                                                <InputText @bind-Value="acompanante.PrimerApellido" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.PrimerApellido)"/>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Segundo Apellido</label>
-                                                <InputText @bind-Value="acompañante.SegundoApellido" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.SegundoApellido)"/>
+                                                <InputText @bind-Value="acompanante.SegundoApellido" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.SegundoApellido)"/>
                                             </div>
                                             <div class="col-3">
                                                 <label>Tipo de Documento</label>
                                                 <div class="d-flex gap-4">
-                                                    <InputRadioGroup @bind-Value="acompañante.TipoDocumentoAcompañanteEnum">
+                                                    <InputRadioGroup @bind-Value="acompanante.TipoDocumentoAcompañanteEnum">
                                                         <div class="form-check">
                                                             <InputRadio class="form-check-input" Value="TipoDocumentoAcompañante.Cedula" id="Cedula"/>
                                                             <label class="form-check-label" for="Cedula">Cédula</label>
@@ -352,31 +352,31 @@
                                                     </InputRadioGroup>
                                                 </div>
                                             </div>
-                                            @if (acompañante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula)
+                                            @if (acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula)
                                             {
                                                 <div class="col-sm-3">
                                                     <label for="cedula">Número de Cédula</label>
-                                                    <InputText id="cedula" class="form-control" @bind-Value="acompañante.NumDocCedula"/>
-                                                    <ValidationMessage For="@(() => acompañante.NumDocCedula)"/>
+                                                    <InputText id="cedula" class="form-control" @bind-Value="acompanante.NumDocCedula"/>
+                                                    <ValidationMessage For="@(() => acompanante.NumDocCedula)"/>
                                                 </div>
                                             }
-                                            else if (acompañante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Pasaporte)
+                                            else if (acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Pasaporte)
                                             {
                                                 <div class="col-sm-3">
                                                     <label for="pasaporte">Número de Pasaporte</label>
-                                                    <InputText id="pasaporte" class="form-control" @bind-Value="acompañante.NumDocPasaporte"/>
-                                                    <ValidationMessage For="@(() => acompañante.NumDocPasaporte)"/>
+                                                    <InputText id="pasaporte" class="form-control" @bind-Value="acompanante.NumDocPasaporte"/>
+                                                    <ValidationMessage For="@(() => acompanante.NumDocPasaporte)"/>
                                                 </div>
                                             }
                                             <div class="col-sm-3">
                                                 <label>Nacionalidad</label>
-                                                <InputText @bind-Value="acompañante.Nacionalidad" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.Nacionalidad)"/>
+                                                <InputText @bind-Value="acompanante.Nacionalidad" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.Nacionalidad)"/>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Parentesco</label>
-                                                <InputText @bind-Value="acompañante.Parentesco" class="form-control"/>
-                                                <ValidationMessage For="@(() => acompañante.Parentesco)"/>
+                                                <InputText @bind-Value="acompanante.Parentesco" class="form-control"/>
+                                                <ValidationMessage For="@(() => acompanante.Parentesco)"/>
                                             </div>
                                     </div>
                                 </div>
@@ -386,7 +386,7 @@
                     else if (currentStepNumber == 3)
                     {
                         <div class="card px-0 mb-1">
-                            <div class="card-header custom-card-header2 fw-bold">Datos del Medico</div>
+                            <div class="card-header custom-card-header2 fw-bold">Datos del Medico que prescribe</div>
                             <div class="card-body">
                                 <div class="row g-3">
                                     <!-- DATOS DEL MEDICO -->
@@ -399,6 +399,16 @@
                                         <label class="form-label">Primer Apellido</label>
                                         <InputText class="form-control" @bind-Value="medico.PrimerApellido"/>
                                         <ValidationMessage For="@(() => medico.PrimerApellido)"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label">Número de registro de idoneidad</label>
+                                        <InputText class="form-control" @bind-Value="medico.MedicoIdoneidad"/>
+                                        <ValidationMessage For="@(() => medico.MedicoIdoneidad)"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label">Número de contacto del medico</label>
+                                        <InputText class="form-control" @bind-Value="medico.MedicoTelefono"/>
+                                        <ValidationMessage For="@(() => medico.MedicoTelefono)"/>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Disciplina del medico</label>
@@ -436,16 +446,6 @@
                                             </div>
                                         }
                                     </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label">Numero de registro de idoneidad</label>
-                                        <InputText class="form-control" @bind-Value="medico.MedicoIdoneidad"/>
-                                        <ValidationMessage For="@(() => medico.MedicoIdoneidad)"/>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label">Número de teléfono donde localizar al médico</label>
-                                        <InputText class="form-control" @bind-Value="medico.MedicoTelefono"/>
-                                        <ValidationMessage For="@(() => medico.MedicoTelefono)"/>
-                                    </div>
                                     <div class="col-12 col-sm-6 mb-3">
                                         <label class="form-label">Instalación de salud donde labora el médico</label>
                                         <AutoComplete @bind-Value="instalacionFilterMedico"
@@ -464,235 +464,239 @@
                     else if (currentStepNumber == 4)
                     {
                         <!-- Diagnostico -->
-                        <h3 class="mb-0">Seleccione diagnóstico(s) que justifica el uso de cannabis medicinal y sus derivados</h3>
-                        <hr/>
-                        @foreach (var row in pacienteDiagnosticolist)
-                        {
-                            <div class="form-check mb-2">
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="diag_@row.Id"
-                                       @bind="row.IsSelected"/>
+                        <div class="card px-0 mb-1">
+                            <div class="card-header custom-card-header2 fw-bold">Datos de uso del cannabis medicinal o derivados</div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <label class="mb-2 d-block">Seleccione diagnóstico(s) que justifica el uso de cannabis medicinal y sus derivados</label>
+                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2" style="max-height:420px; overflow:auto;">
+            @for (int i = 0; i < pacienteDiagnosticolist.Count; i++)
+            {
+                var row = pacienteDiagnosticolist[i];
+                <div class="col" @key="row.Id">
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- Chip / botón toggle -->
+                        <input type="checkbox"
+                               class="btn-check"
+                               id=@($"diag_{row.Id}_{i}")
+                               autocomplete="off"
+                               @bind="row.IsSelected" />
 
-                                @if (row.Id == 0)
-                                {
-                                    <label class="form-check-label me-2" for="diag_0">
-                                        Otro diagnóstico:
-                                    </label>
-                                    <InputText @bind-Value="row.NombreDiagnostico"
-                                               placeholder="Describa otro…"
-                                               class="form-control form-control-sm d-inline-block"
-                                               style="width: auto;"
-                                               disabled="@(!row.IsSelected)"/>
-                                    <ValidationMessage For="() => row.NombreDiagnostico"/>
-                                }
-                                else
-                                {
-                                    <label class="form-check-label" for="diag_@row.Id">
-                                        @row.NombreDiagnostico
-                                    </label>
+                        <label class="btn btn-outline-secondary btn-sm text-truncate"
+                               style="max-width:220px;"
+                               for=@($"diag_{row.Id}_{i}")>
+                            @row.NombreDiagnostico
+                        </label>
+
+                        @* Campo "Otro" inline (aparece a la derecha dentro de la misma columna) *@
+                        @if (row.Id == 0)
+                        {
+                            <div class="ms-auto" style="min-width:160px;">
+                                <InputText @bind-Value="row.NombreDiagnostico"
+                                           placeholder="Especifique"
+                                           class="form-control form-control-sm"
+                                           disabled="@(!row.IsSelected)" />
+                                @* Mostrar mensajes de validación de forma segura usando EditContext *@
+                                @{
+                                    if (editContext != null)
+                                    {
+                                        var field = new FieldIdentifier(row, nameof(row.NombreDiagnostico));
+                                        var messages = editContext.GetValidationMessages(field).ToArray();
+                                        if (messages.Length > 0)
+                                        {
+                                            <div class="text-danger small mt-1">@messages[0]</div>
+                                        }
+                                    }
                                 }
                             </div>
                         }
+                    </div>
+                </div>
+            }
+        </div>
 
-                        <!-- Producto del paciente -->
-                        <label>Nombre Generico del producto</label>
-                        <InputRadioGroup @bind-Value="productoPaciente.NombreProductoEnum" class="d-flex gap-3">
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="NombreProductoE.CBD" id="CBD"/>
-                                <label class="form-check-label" for="CBD">CBD (Cannabidiol)</label>
+                                    <!-- Producto del paciente -->
+                                    <label>Nombre Generico</label>
+                                    <InputRadioGroup @bind-Value="productoPaciente.NombreProductoEnum" class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="NombreProductoE.CBD" id="CBD"/>
+                                            <label class="form-check-label" for="CBD">CBD (Cannabidiol)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="NombreProductoE.THC" id="THC"/>
+                                            <label class="form-check-label" for="THC">THC (delta-9-tetrahidrocannabinol)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="NombreProductoE.OTRO" id="Otro"/>
+                                            <label class="form-check-label" for="Otro">Otro</label>
+                                        </div>
+                                    </InputRadioGroup>
+
+                                    @if (productoPaciente.NombreProductoEnum == NombreProductoE.OTRO)
+                                    {
+                                        <div class="mt-2">
+                                            <InputText placeholder="especifique" class="form-control" @bind-Value="productoPaciente.NombreProducto"/>
+                                            <ValidationMessage For="@(() => productoPaciente.NombreProducto)"/>
+                                        </div>
+                                    }
+
+                                    <label>Nombre comercial</label>
+                                    <InputText @bind-Value="productoPaciente.NombreComercialProd"/>
+                                    <ValidationMessage For="@(() => productoPaciente.NombreComercialProd)"/>
+                        
+                                    <label class="mb-0">Seleccione Forma Farmacéutica</label>
+                                    <hr/>
+                                    @foreach (var row in productoFormaList)
+                                    {
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   id="diag_@row.Id"
+                                                   @bind="row.IsSelectedForma"/>
+
+                                            @if (row.Id == 0)
+                                            {
+                                                <label class="form-check-label me-2" for="diag_0">
+                                                    Otro
+                                                </label>
+                                                <InputText @bind-Value="row.NombreForma"
+                                                           placeholder="especifique"
+                                                           class="form-control form-control-sm d-inline-block"
+                                                           style="width: auto;"
+                                                           disabled="@(!row.IsSelectedForma)"/>
+                                                <ValidationMessage For="() => row.NombreForma"/>
+                                            }
+                                            else
+                                            {
+                                                <label class="form-check-label" for="diag_@row.Id">
+                                                    @row.NombreForma
+                                                </label>
+                                            }
+                                        </div>
+                                    }
+
+                                    <!-- Concentracion -->
+                                    <h3>Concentración</h3>
+                                    <InputRadioGroup @bind-Value="productoPaciente.ConcentracionEnum" class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="ConcentracionE.CBD" id="CBD"/>
+                                            <label class="form-check-label" for="CBD">CBD</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="ConcentracionE.THC" id="THC"/>
+                                            <label class="form-check-label" for="THC">THC</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <InputRadio class="form-check-input" Value="ConcentracionE.OTRO" id="Otro"/>
+                                            <label class="form-check-label" for="Otro">Otro(s) cannabinoide</label>
+                                        </div>
+                                    </InputRadioGroup>
+                                    @if (productoPaciente.ConcentracionEnum == ConcentracionE.OTRO)
+                                    {
+                                        <div class="mt-2">
+                                            <InputText placeholder="especifique" class="form-control" @bind-Value="productoPaciente.NombreConcentracion"/>
+                                            <ValidationMessage For="@(() => productoPaciente.NombreConcentracion)"/>
+                                        </div>
+                                    }
+
+                                    <InputNumber type="number" class="form-control mt-2" @bind-Value="productoPaciente.CantidadConcentracion" placeholder="Ingrese la cantidad"/>
+                                    <ValidationMessage For="@(() => productoPaciente.CantidadConcentracion)"/>
+                        
+                                    <div class="mb-3">
+                                        <label for="unidadSelect" class="form-label">Unidad</label>
+                                        <select id="unidadSelect"
+                                                class="form-select"
+                                                @bind="unidadSeleccionadaId">
+                                            <option value="">-- Seleccione una unidad --</option>
+
+                                            @foreach (var row in productoUnidadList.Where(p => p.Id != 0))
+                                            {
+                                                <option value="@row.Id">@row.ProductoUnidad</option>
+                                            }
+
+                                            <option value="0">Otra unidad</option>
+                                        </select>
+                                    </div>
+                                    @if (unidadSeleccionadaId == 0)
+                                    {
+                                        <div class="mb-3">
+                                            <InputText id="otraUnidad"
+                                                       class="form-control"
+                                                       placeholder="especifique"
+                                                       @bind-Value="unidadOtraTexto"/>
+                                            <ValidationMessage For="() => unidadOtraTexto"/>
+                                        </div>
+                                    }
+                                    <label class="mb-0">Seleccione vía de administración</label>
+                                    <hr/>
+                                    @foreach (var row in productoViaConsumoList)
+                                    {
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   id="diag_@row.Id"
+                                                   @bind="row.IsSelectedViaConsumo"/>
+
+                                            @if (row.Id == 0)
+                                            {
+                                                <label class="form-check-label me-2" for="diag_0">
+                                                    Otro
+                                                </label>
+                                                <InputText @bind-Value="row.ViaConsumoProducto"
+                                                           placeholder="especifique"
+                                                           class="form-control form-control-sm d-inline-block"
+                                                           style="width: auto;"
+                                                           disabled="@(!row.IsSelectedViaConsumo)"/>
+                                                <ValidationMessage For="() => row.ViaConsumoProducto"/>
+                                            }
+                                            else
+                                            {
+                                                <label class="form-check-label" for="diag_@row.Id">
+                                                    @row.ViaConsumoProducto
+                                                </label>
+                                            }
+                                        </div>
+                                    }
+
+                                    <!-- Dosis -->
+                                    <label class="mb-0">Dosis (Indicacion del medico)</label>
+                                    <InputText placeholder="Ejemplo: 3 gotas, 2 capsulas, 4 puff" @bind-Value="productoPaciente.DetDosisPaciente"/>
+                        
+                                    <label>¿Cuántas veces al día utiliza el medicamento y durante cuánto tiempo al mes?</label>
+                                    <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.DuracionTratamientoEnum"/>
+
+                                    <label class="form-label">Frecuencia de la dosis</label>
+                                    <InputNumber @bind-Value="productoPaciente.DosisFrecuencia" class="form-control mt-2"/>
+                                    <div class="form-text">veces al día (indicar del 1 al 6)</div>
+                                    <ValidationMessage For="@(() => productoPaciente.DosisFrecuencia)" />
+
+                                    <label class="form-label mt-3">Duración de la dosis</label>
+                                    <InputNumber @bind-Value="productoPaciente.DosisDuracion" class="form-control mt-2"/>
+                                    <div class="form-text">días al mes (indicar del 1 al 31)</div>
+                                    <ValidationMessage For="@(() => productoPaciente.DosisDuracion)" />
+
+                                    <!-- dosis rescate -->
+                                    <label>¿Utiliza dosis de rescate?</label>
+                                    <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.UsaDosisRescateEnum"/>
+
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               id="chkSi"
+                                               checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si)"
+                                               @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.Si"/>
+                                        <label class="form-check-label" for="chkSi">Si</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               id="chkNo"
+                                               checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.No)"
+                                               @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.No"/>
+                                        <label class="form-check-label" for="chkNo">No</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="NombreProductoE.THC" id="THC"/>
-                                <label class="form-check-label" for="THC">THC (delta-9-tetrahidrocannabinol)</label>
-                            </div>
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="NombreProductoE.Otro" id="Otro"/>
-                                <label class="form-check-label" for="Otro">Otro</label>
-                            </div>
-                        </InputRadioGroup>
-
-                        @if (productoPaciente.NombreProductoEnum == NombreProductoE.Otro)
-                        {
-                            <div class="mt-2">
-                                <label for="cedula">Especifique</label>
-                                <InputText id="cedula" class="form-control" @bind-Value="productoPaciente.NombreProducto"/>
-                                <ValidationMessage For="@(() => productoPaciente.NombreProducto)"/>
-                            </div>
-                        }
-
-                        <label>Nombre comercial del producto</label>
-                        <InputText @bind-Value="productoPaciente.NombreProducto"/>
-
-                        <h3 class="mb-0">Seleccione Forma Farmacéutica</h3>
-                        <hr/>
-                        @foreach (var row in productoFormaList)
-                        {
-                            <div class="form-check mb-2">
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="diag_@row.Id"
-                                       @bind="row.IsSelectedForma"/>
-
-                                @if (row.Id == 0)
-                                {
-                                    <!-- “Otro” va con checkbox + input juntos -->
-                                    <label class="form-check-label me-2" for="diag_0">
-                                        Otro(s) cannabinoide, especifique:
-                                    </label>
-                                    <InputText @bind-Value="row.NombreForma"
-                                               placeholder="Describa otro…"
-                                               class="form-control form-control-sm d-inline-block"
-                                               style="width: auto;"
-                                               disabled="@(!row.IsSelectedForma)"/>
-                                    <ValidationMessage For="() => row.NombreForma"/>
-                                }
-                                else
-                                {
-                                    <!-- Diagnóstico estático: label dentro del form-check -->
-                                    <label class="form-check-label" for="diag_@row.Id">
-                                        @row.NombreForma
-                                    </label>
-                                }
-                            </div>
-                        }
-
-                        <!-- Concentracion -->
-                        <h3>Concentración</h3>
-                        <InputRadioGroup @bind-Value="productoPaciente.ConcentracionEnum" class="d-flex gap-3">
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="ConcentracionE.CBD" id="CBD"/>
-                                <label class="form-check-label" for="CBD">CBD</label>
-                            </div>
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="ConcentracionE.THC" id="THC"/>
-                                <label class="form-check-label" for="THC">THC</label>
-                            </div>
-                            <div class="form-check">
-                                <InputRadio class="form-check-input" Value="ConcentracionE.otra" id="Otro"/>
-                                <label class="form-check-label" for="Otro">Otro</label>
-                            </div>
-                        </InputRadioGroup>
-                        @if (productoPaciente.ConcentracionEnum == ConcentracionE.otra)
-                        {
-                            <div class="mt-2">
-                                <label for="cedula">Especifique</label>
-                                <InputText id="cedula" class="form-control" @bind-Value="productoPaciente.Concentracion"/>
-                                <ValidationMessage For="@(() => productoPaciente.Concentracion)"/>
-                            </div>
-                        }
-
-                        <InputNumber type="number" class="form-control mt-2" @bind-Value="productoPaciente.CantidadConcentracion" placeholder="Ingrese la cantidad"/>
-                        <ValidationMessage For="@(() => productoPaciente.CantidadConcentracion)"/>
-                        <label class="mb-0">Seleccione Unidad de Concentracion</label>
-
-                        <!-- Select principal -->
-                        <div class="mb-3">
-                            <label for="unidadSelect" class="form-label">Unidad</label>
-                            <select id="unidadSelect"
-                                    class="form-select"
-                                    @bind="unidadSeleccionadaId">
-                                <option value="">-- Seleccione una unidad --</option>
-
-                                @foreach (var row in productoUnidadList.Where(p => p.Id != 0))
-                                {
-                                    <option value="@row.Id">@row.ProductoUnidad</option>
-                                }
-
-                                <option value="0">Otra(s) unidad, especifique</option>
-                            </select>
-                        </div>
-
-                        <!-- Campo de texto solo si seleccionó "Otro" -->
-                        @if (unidadSeleccionadaId == 0)
-                        {
-                            <div class="mb-3">
-                                <label for="otraUnidad" class="form-label">Describa otra unidad</label>
-                                <InputText id="otraUnidad"
-                                           class="form-control"
-                                           placeholder="Escriba la unidad"
-                                           @bind-Value="unidadOtraTexto"/>
-                                <ValidationMessage For="() => unidadOtraTexto"/>
-                            </div>
-                        }
-
-                        <!-- via administracion -->
-                        <h3 class="mb-0">Seleccione Vía de administración:</h3>
-                        <hr/>
-                        @foreach (var row in productoViaConsumoList)
-                        {
-                            <div class="form-check mb-2">
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="diag_@row.Id"
-                                       @bind="row.IsSelectedConsumo"/>
-
-                                @if (row.Id == 0)
-                                {
-                                    <!-- “Otro” va con checkbox + input juntos -->
-                                    <label class="form-check-label me-2" for="diag_0">
-                                        Otro diagnóstico:
-                                    </label>
-                                    <InputText @bind-Value="row.ViaConsumoProducto"
-                                               placeholder="Describa otro…"
-                                               class="form-control form-control-sm d-inline-block"
-                                               style="width: auto;"
-                                               disabled="@(!row.IsSelectedConsumo)"/>
-                                    <ValidationMessage For="() => row.ViaConsumoProducto"/>
-                                }
-                                else
-                                {
-                                    <!-- Diagnóstico estático: label dentro del form-check -->
-                                    <label class="form-check-label" for="diag_@row.Id">
-                                        @row.ViaConsumoProducto
-                                    </label>
-                                }
-                            </div>
-                        }
-
-                        <!-- Dosis -->
-                        <h3 class="mb-0">Dosis:(Ejemplo: 3 gotas, 2 cápsulas, 4 puff…)</h3>
-                        <InputText @bind-Value="productoPaciente.DetDosisPaciente"/>
-
-                        <label>¿Cuántas veces al día utiliza el medicamento y durante cuánto tiempo al mes?</label>
-                        <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.DuracionTratamientoEnum"/>
-
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   id="chkveces"
-                                   checked="@(productoPaciente.DuracionTratamientoEnum == DuracionTratamientoE.veces)"
-                                   @onchange="() => productoPaciente.DuracionTratamientoEnum = DuracionTratamientoE.veces"/>
-                            <label class="form-check-label" for="chkveces">veces al día (Responder un número del 1 al 6)</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   id="chkdias"
-                                   checked="@(productoPaciente.DuracionTratamientoEnum == DuracionTratamientoE.dias)"
-                                   @onchange="() => productoPaciente.DuracionTratamientoEnum = DuracionTratamientoE.dias"/>
-                            <label class="form-check-label" for="chkdias">días al mes (Responder un número del 1 al 31)</label>
-                        </div>
-
-                        <!-- dosis rescate -->
-                        <label>¿Utiliza dosis de rescate?</label>
-                        <input type="hidden" name="UsaDosisRescateEnum" @bind="productoPaciente.UsaDosisRescateEnum"/>
-
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   id="chkSi"
-                                   checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si)"
-                                   @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.Si"/>
-                            <label class="form-check-label" for="chkSi">Si</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   id="chkNo"
-                                   checked="@(productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.No)"
-                                   @onchange="() => productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.No"/>
-                            <label class="form-check-label" for="chkNo">No</label>
                         </div>
                     }
                     else if (currentStepNumber == 5)

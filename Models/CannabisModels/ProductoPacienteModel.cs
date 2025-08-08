@@ -2,9 +2,9 @@
 
 namespace DIGESA.Models.CannabisModels;
 
-public enum DuracionTratamientoE {veces, dias}
-public enum ConcentracionE {CBD,THC, otra}
-public enum NombreProductoE {CBD,THC, Otro}
+public enum DuracionTratamientoE {VECES, DIAS}
+public enum ConcentracionE {CBD,THC, OTRO}
+public enum NombreProductoE {CBD,THC, OTRO}
 
 public enum UsaDosisRescate {Si, No}
 
@@ -16,24 +16,21 @@ public class ProductoPacienteModel
         public string? NombreProducto { get; set; }
         public NombreProductoE NombreProductoEnum { get; set; }
         
-        public int FormaId { get; set; }
+        [Required(ErrorMessage = "El nombre comercial del producto es obligatorio.")]
+        public string? NombreComercialProd { get; set; }
     
         [Required(ErrorMessage = "La forma farmaceutica es obligatoria.")]
         public string? NombreForma { get; set; }
-    
         public bool IsSelectedForma { get; set; } = false;
+        public string? NombreConcentracion { get; set; }
 
         [Required(ErrorMessage = "La Cantidad de Concentracion es obligatoria.")]
         public decimal? CantidadConcentracion { get; set; }
 
         [Required(ErrorMessage = "La Concentracion es obligatoria.")]
         public ConcentracionE ConcentracionEnum { get; set; }
-        
         public bool IsSelectedUnidad { get; set; } = false;
-        
-        public bool IsSelectedConsumo { get; set; } = false;
-        
-        public string? Concentracion { get; set; }
+        public bool IsSelectedViaConsumo { get; set; } = false;
         
         [Required(ErrorMessage = "La Unidad de Concentracion es obligatoria.")]
         public string? ProductoUnidad { get; set; }
@@ -45,10 +42,13 @@ public class ProductoPacienteModel
         public string? DetDosisPaciente { get; set; }
         
         [Required(ErrorMessage = "La Duracion de Tratamiento es obligatoria.")]
+        [Range(1, 6, ErrorMessage = "Indique un valor entre 1 y 6.")]
+        public int DosisDuracion { get; set; }
         
-        public string? DuracionTratamiento { get; set; }
+        [Required(ErrorMessage = "La Frecuencia de Tratamiento es obligatoria.")]
+        [Range(1, 31, ErrorMessage = "Indique un valor entre 1 y 31.")]
+        public int DosisFrecuencia { get; set; }
         public DuracionTratamientoE DuracionTratamientoEnum { get; set; }
-        
         public UsaDosisRescate UsaDosisRescateEnum{ get; set; }
 }
 

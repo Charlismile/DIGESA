@@ -15,17 +15,21 @@ public partial class TbNombreProductoPaciente
 
     public decimal? CantidadConcentracion { get; set; }
 
-    public string? Concentracion { get; set; }
+    public string? NombreConcentracion { get; set; }
 
     public string? ViaConsumoProducto { get; set; }
 
     public string? DetDosisPaciente { get; set; }
 
-    public string? DuracionTratamiento { get; set; }
-
     public bool UsaDosisRescate { get; set; }
 
     public string? ProductoUnidad { get; set; }
+
+    public int? DosisDuracion { get; set; }
+
+    public int? DosisFrecuencia { get; set; }
+
+    public string? NombreComercialProd { get; set; }
 
     public virtual TbPaciente? Paciente { get; set; }
 }
