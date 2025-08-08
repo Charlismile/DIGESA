@@ -3,7 +3,7 @@
 namespace DIGESA.Models.CannabisModels;
 
 public enum TipoDocumentoAcompañante { Cedula, Pasaporte }
-public class AcompañanteModel
+public class AcompananteModel
 {
         public int Id { get; set; }
 

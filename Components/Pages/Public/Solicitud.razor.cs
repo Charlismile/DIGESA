@@ -23,11 +23,8 @@ public partial class Solicitud : ComponentBase
     private int? unidadSeleccionadaId { get; set; }
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
     private string? unidadOtraTexto { get; set; }
-    private PacienteModel paciente { get; set; } = new();
-    private AcompananteModel acompanante { get; set; } = new();
-    private MedicoModel medico { get; set; } = new();
-    private ProductoPacienteModel productoPaciente { get; set; } = new();
-    private PacienteComorbilidadModel pacienteComorbilidad { get; set; } = new();
+    
+    private RegistroCanabisUnionModel registro { get; set; } = new();
     private List<ListModel> pacienteRegioneslist { get; set; } = new();
     private List<ListModel> pacienteProvincicaslist { get; set; } = new();
     private List<ListModel> pacienteDistritolist { get; set; } = new();
@@ -43,15 +40,7 @@ public partial class Solicitud : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-        var formData = new
-        {
-            Paciente = paciente,
-            Acompañante = acompanante,
-            Medico = medico,
-            ProductoPaciente = productoPaciente,
-            PacienteComorbilidad = pacienteComorbilidad
-        };
-        editContext = new EditContext(formData);
+        editContext = new EditContext(registro);
         
         pacienteProvincicaslist = await _Commonservice.GetProvincias();
         await CargarDiagnosticoList();
