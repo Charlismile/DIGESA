@@ -7,4 +7,5 @@ public class RegistroCanabisUnionModel
     public MedicoModel medico { get; set; } = new();
     public ProductoPacienteModel productoPaciente { get; set; } = new();
     public PacienteComorbilidadModel pacienteComorbilidad { get; set; } = new();
+    public PacienteDiagnosticoModel pacienteDiagnostico { get; set; } = new();
 }

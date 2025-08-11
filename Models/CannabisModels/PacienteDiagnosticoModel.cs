@@ -4,10 +4,7 @@ namespace DIGESA.Models.CannabisModels;
 
 public class PacienteDiagnosticoModel
 {
-    public int Id { get; set; }
-    
-    [Required(ErrorMessage = "El diagnóstico es obligatorio.")]
-    public string? NombreDiagnostico { get; set; }
-    
-    public bool IsSelected { get; set; } = false;
+    public bool IsOtroDiagSelected { get; set; } = false;
+    public List<int> SelectedDiagnosticosIds { get; set; } = new();
+    public string? NombreOtroDiagnostico { get; set; }
 }

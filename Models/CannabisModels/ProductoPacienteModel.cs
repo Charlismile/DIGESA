@@ -18,10 +18,9 @@ public class ProductoPacienteModel
         
         [Required(ErrorMessage = "El nombre comercial del producto es obligatorio.")]
         public string? NombreComercialProd { get; set; }
-    
-        [Required(ErrorMessage = "La forma farmaceutica es obligatoria.")]
-        public string? NombreForma { get; set; }
-        public bool IsSelectedForma { get; set; } = false;
+        public bool IsOtraFormaSelected { get; set; } = false;
+        public List<int> SelectedFormaIds { get; set; } = new();
+        public string? NombreOtraForma { get; set; }
         public string? NombreConcentracion { get; set; }
 
         [Required(ErrorMessage = "La Cantidad de Concentracion es obligatoria.")]
@@ -30,13 +29,13 @@ public class ProductoPacienteModel
         [Required(ErrorMessage = "La Concentracion es obligatoria.")]
         public ConcentracionE ConcentracionEnum { get; set; }
         public bool IsSelectedUnidad { get; set; } = false;
-        public bool IsSelectedViaConsumo { get; set; } = false;
+        public bool IsOtraViaAdmSelected { get; set; } = false;
+        public List<int> SelectedViaAdmIds { get; set; } = new();
+        public string? NombreOtraViaAdm { get; set; }
         
         [Required(ErrorMessage = "La Unidad de Concentracion es obligatoria.")]
         public string? ProductoUnidad { get; set; }
 
-        [Required(ErrorMessage = "Seleccione una via de consumo.")]
-        public string? ViaConsumoProducto { get; set; }
 
         [Required(ErrorMessage = "El detalle de la dosis del tratamiento es obligatoria.")]
         public string? DetDosisPaciente { get; set; }

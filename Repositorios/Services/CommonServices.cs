@@ -104,9 +104,6 @@ public class CommonServices : ICommon
         return Lista;
     }
 
-   
-
-
     public async Task<List<ListModel>> GetCorregimientos(int DistritoId)
     {
         List<ListModel> Lista = new List<ListModel>();
@@ -128,5 +125,28 @@ public class CommonServices : ICommon
         {
         }
         return Lista;
+    }
+    public async Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync()
+    {
+        await using var context = _Context.CreateDbContext();
+        return await context.ListaDiagnostico
+            .OrderBy(c => c.Nombre)
+            .ToListAsync();
+    }
+    
+    public async Task<List<TbFormaFarmaceutica>> GetAllFormasAsync()
+    {
+        await using var context = _Context.CreateDbContext();
+        return await context.TbFormaFarmaceutica
+            .OrderBy(c => c.Nombre)
+            .ToListAsync();
+    }
+
+    public async Task<List<TbViaAdministracion>> GetAllViaAdmAsync()
+    {
+        await using var context = _Context.CreateDbContext();
+        return await context.TbViaAdministracion
+            .OrderBy(c => c.Nombre)
+            .ToListAsync();
     }
 }

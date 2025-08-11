@@ -29,13 +29,13 @@ public partial class Solicitud : ComponentBase
     private List<ListModel> pacienteProvincicaslist { get; set; } = new();
     private List<ListModel> pacienteDistritolist { get; set; } = new();
     private List<ListModel> pacienteCorregimientolist { get; set; } = new();
-    private List<PacienteDiagnosticoModel> pacienteDiagnosticolist { get; set; } = new();
-    private List<ProductoPacienteModel> productoFormaList { get; set; } = new();
+    private List<ListaDiagnostico> pacienteDiagnosticolist { get; set; } = new();
+    private List<TbFormaFarmaceutica> productoFormaList { get; set; } = new();
     private List<ProductoPacienteModel> productoUnidadList { get; set; } = new();
-    private List<ProductoPacienteModel> productoViaConsumoList { get; set; } = new();
+    private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
     
     private EditContext editContext;
-
+    
     #endregion
     
     protected override async Task OnInitializedAsync()
@@ -43,85 +43,12 @@ public partial class Solicitud : ComponentBase
         editContext = new EditContext(registro);
         
         pacienteProvincicaslist = await _Commonservice.GetProvincias();
-        await CargarDiagnosticoList();
-        await CargarFormaList();
+        
+        pacienteDiagnosticolist = await _Commonservice.GetAllDiagnosticsAsync();
+        productoFormaList = await _Commonservice.GetAllFormasAsync();
+        productoViaConsumoList = await _Commonservice.GetAllViaAdmAsync();
+
         await CargarUnidadList();
-        await CargarViaConsumoList();
-    }
-
-    private async Task CargarDiagnosticoList()
-    {
-        // 1) Traes los diagnósticos activos
-        var raw = await _context.ListaDiagnostico
-            .Where(x => x.IsActivo)
-            .ToListAsync();
-
-        // 2) Proyectas a tu modelo y ordenas alfabéticamente
-        pacienteDiagnosticolist = raw
-            .Select(x => new PacienteDiagnosticoModel {
-                Id = x.Id,
-                NombreDiagnostico = x.Nombre!,
-                IsSelected = false
-            })
-            .OrderBy(d => d.NombreDiagnostico)    // ← aquí ordenas
-            .ToList();
-
-        // 3) Agregas “Otro” al final
-        pacienteDiagnosticolist.Add(new PacienteDiagnosticoModel {
-            Id = 0,
-            NombreDiagnostico = string.Empty,
-            IsSelected = false
-        });
-    }
-    
-    private async Task CargarViaConsumoList()
-    {
-        // 1) Traes los diagnósticos activos
-        var raw = await _context.TbViaAdministracion
-            .Where(x => x.IsActivo)
-            .ToListAsync();
-
-        // 2) Proyectas a tu modelo y ordenas alfabéticamente
-        productoViaConsumoList = raw
-            .Select(x => new ProductoPacienteModel() {
-                Id = x.Id,
-                ViaConsumoProducto = x.Nombre!,
-                IsSelectedViaConsumo = false
-            })
-            .OrderBy(d => d.ViaConsumoProducto)    // ← aquí ordenas
-            .ToList();
-
-        // 3) Agregas “Otro” al final
-        productoViaConsumoList.Add(new ProductoPacienteModel() {
-            Id = 0,
-            ViaConsumoProducto = string.Empty,
-            IsSelectedViaConsumo = false
-        });
-    }
-    
-    private async Task CargarFormaList()
-    {
-        // 1) Traes los diagnósticos activos
-        var raw = await _context.TbFormaFarmaceutica
-            .Where(x => x.IsActivo)
-            .ToListAsync();
-    
-        // 2) Proyectas a tu modelo y ordenas alfabéticamente
-        productoFormaList = raw
-            .Select(x => new ProductoPacienteModel() {
-                Id = x.Id,
-                NombreForma = x.Nombre!,
-                IsSelectedForma = false
-            })
-            .OrderBy(d => d.NombreForma)   
-            .ToList();
-    
-        // 3) Agregas “Otro” al final
-        productoFormaList.Add(new ProductoPacienteModel() {
-            Id = 0,
-            NombreForma = string.Empty,
-            IsSelectedForma = false
-        });
     }
     
     private async Task CargarUnidadList()
@@ -175,27 +102,27 @@ public partial class Solicitud : ComponentBase
 
     private void OnAutoCompletePacienteChanged(ListModel? sel)
     {
-        paciente.pacienteInstalacionId = sel?.Id;
+        registro.paciente.pacienteInstalacionId = sel?.Id;
     }
 
     private void OnAutoCompleteMedicoChanged(ListModel? sel)
     {
-        medico.medicoInstalacionId = sel?.Id;
+        registro.medico.medicoInstalacionId = sel?.Id;
     }
 
     private async Task pacienteProvinciaChanged(int id)
     {
-        paciente.pacienteProvinciaId = id;
+        registro.paciente.pacienteProvinciaId = id;
         pacienteDistritolist = await _Commonservice.GetDistritos(id);
         pacienteCorregimientolist.Clear();
-        paciente.pacienteCorregimientoId = null;
+        registro.paciente.pacienteCorregimientoId = null;
     }
 
     private async Task pacienteDistritoChanged(int id)
     {
-        paciente.pacienteDistritoId = id;
+        registro.paciente.pacienteDistritoId = id;
         pacienteCorregimientolist = await _Commonservice.GetCorregimientos(id);
-        paciente.pacienteCorregimientoId = null;
+        registro.paciente.pacienteCorregimientoId = null;
     }
     private async Task RegisterForm()
     {
@@ -213,25 +140,77 @@ public partial class Solicitud : ComponentBase
     };
 
     private int currentStep => (int)Math.Round((double)currentStepNumber / steps.Count * 100);
-
-    private void NextStep()
+    private void OnRequiereAcompananteChanged()
     {
-        if (currentStepNumber < steps.Count)
+        if (registro.paciente.RequiereAcompanante == RequiereAcompanante.No && currentStepNumber == 2)
         {
-            currentStepNumber++;
-        }
-        else
-        {
-            // Handle finish action
-            // Navigate to completion page or generate document
+            currentStepNumber = 3;
         }
     }
-
     private void PreviousStep()
     {
         if (currentStepNumber > 1)
         {
             currentStepNumber--;
+
+            if (currentStepNumber == 2 && registro.paciente.RequiereAcompanante == RequiereAcompanante.No)
+            {
+                currentStepNumber = 1;
+            }
+        }
+    }
+    private void NextStep()
+    {
+        if (currentStepNumber < steps.Count)
+        {
+            currentStepNumber++;
+
+            if (currentStepNumber == 2 && registro.paciente.RequiereAcompanante == RequiereAcompanante.No)
+            {
+                currentStepNumber = 3;
+            }
+        }
+    }
+    
+    public void DiagnosticoCheckboxChanged(ChangeEventArgs e, PacienteDiagnosticoModel block, int categoryId)
+    {
+        bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
+        if (isChecked)
+        {
+            if (!block.SelectedDiagnosticosIds.Contains(categoryId))
+                block.SelectedDiagnosticosIds.Add(categoryId);
+        }
+        else
+        {
+            block.SelectedDiagnosticosIds.Remove(categoryId);
+        }
+    }
+    
+    public void FormaCheckboxChanged(ChangeEventArgs e, ProductoPacienteModel block, int categoryId)
+    {
+        bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
+        if (isChecked)
+        {
+            if (!block.SelectedFormaIds.Contains(categoryId))
+                block.SelectedFormaIds.Add(categoryId);
+        }
+        else
+        {
+            block.SelectedFormaIds.Remove(categoryId);
+        }
+    }
+    
+    public void ViaAdmCheckboxChanged(ChangeEventArgs e, ProductoPacienteModel block, int categoryId)
+    {
+        bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
+        if (isChecked)
+        {
+            if (!block.SelectedViaAdmIds.Contains(categoryId))
+                block.SelectedViaAdmIds.Add(categoryId);
+        }
+        else
+        {
+            block.SelectedViaAdmIds.Remove(categoryId);
         }
     }
 }
