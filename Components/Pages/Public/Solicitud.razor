@@ -3,7 +3,7 @@
 
 <EditForm EditContext="@editContext" OnValidSubmit="RegisterForm">
     <DataAnnotationsValidator/>
-    <ValidationSummary Class="alert alert-danger mb-3"/>
+    <ValidationSummary/>
     <div class="container-fluid my-4">
     <div class="card shadow-sm h-100">
         <div class="row g-0 h-100">
@@ -142,6 +142,7 @@
                                                 <label class="form-check-label" for="sexoFemenino">Femenino</label>
                                             </div>
                                         </div>
+                                        <ValidationMessage For="@(() => registro.paciente.SexoEnum)" />
                                     </div>
                                 </div>
                             </div>

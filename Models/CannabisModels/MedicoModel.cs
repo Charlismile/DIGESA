@@ -5,6 +5,9 @@ namespace DIGESA.Models.CannabisModels;
 public enum MedicoDisciplina { General, Odontólogo, Especialista }
 public class MedicoModel
 {
+    [Required(ErrorMessage = "La disciplina es obligatoria.")]
+    public MedicoDisciplina? MedicoDisciplinaEnum { get; set; }
+    
     public int Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es obligatorio.")]
@@ -12,9 +15,6 @@ public class MedicoModel
 
     [Required(ErrorMessage = "El apellido es obligatorio.")]
     public string? PrimerApellido { get; set; }
-
-    [Required(ErrorMessage = "La disciplina es obligatoria.")]
-    public MedicoDisciplina MedicoDisciplinaEnum { get; set; }
     
     [Required(ErrorMessage = "Especifique la especialidad.")]
     public string? DetalleMedico { get; set; }
