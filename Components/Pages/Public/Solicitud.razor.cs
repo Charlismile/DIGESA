@@ -148,7 +148,8 @@ public partial class Solicitud : ComponentBase
         "DATOS PERSONALES DEL ACOMPAÑANTE AUTORIZADO",
         "DATOS DEL EL MÉDICO QUE PRESCRIBE",
         "DATOS DEL PACIENTE Y USO DEL CANNABIS MEDICINAL O DERIVADOS",
-        "DATOS DE OTRAS ENFERMEDADES QUE PADECE EL PACIENTE"
+        "DATOS DE OTRAS ENFERMEDADES QUE PADECE EL PACIENTE",
+        "ADJUNTAR DOCUMENTOS REQUERIDOS"
     };
 
     private int currentStep => (int)Math.Round((double)currentStepNumber / steps.Count * 100);
