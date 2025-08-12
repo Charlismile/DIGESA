@@ -17,6 +17,9 @@ public partial class Solicitud : ComponentBase
 
     #region variables
 
+    private string tipoTramite;
+    private DocumentosModel documentos = new();
+    
     private string instalacionFilterPaciente = "";
     private string instalacionFilterMedico = "";
     private bool tieneComorbilidad = false;
@@ -300,5 +303,31 @@ public partial class Solicitud : ComponentBase
         editContext?.NotifyValidationStateChanged();
 
         return isValid;
+    }
+    
+    private void OnFileChange(InputFileChangeEventArgs e, string campo)
+    {
+        var file = e.File;
+        // Aquí podrías guardarlo en memoria o en base de datos
+        Console.WriteLine($"Archivo recibido para {campo}: {file.Name}");
+    }
+
+    private void OnSubmit()
+    {
+        Console.WriteLine("Formulario enviado con éxito.");
+    }
+
+    public class DocumentosModel
+    {
+        public IBrowserFile CedulaPaciente { get; set; }
+        public IBrowserFile CertificacionMedica { get; set; }
+        public IBrowserFile FotoPaciente { get; set; }
+        public IBrowserFile CedulaAcompanante { get; set; }
+        public IBrowserFile SentenciaTutor { get; set; }
+        public IBrowserFile Antecedentes { get; set; }
+        public IBrowserFile IdentidadMenor { get; set; }
+        public IBrowserFile ConsentimientoPadres { get; set; }
+        public IBrowserFile CertificadoNacimientoMenor { get; set; }
+        public IBrowserFile FotoAcompanante { get; set; }
     }
 }

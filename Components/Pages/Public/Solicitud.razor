@@ -744,17 +744,77 @@
                             </div>
                         }
                     }
+                    else if (currentStepNumber == 6)
+                    {
+                        <div class="mb-3">
+                            <label>Tipo de trámite:</label>
+                            <select class="form-select" @bind="tipoTramite">
+                                <option value="">Seleccione...</option>
+                                <option value="MayorPaciente">Paciente mayor con discapacidad</option>
+                                <option value="MayorAcompanante">Acompañante de mayor con discapacidad</option>
+                                <option value="MenorPaciente">Paciente menor</option>
+                                <option value="MenorAcompanante">Acompañante de menor</option>
+                                <option value="Renovacion">Documentos para emisión/renovación</option>
+                            </select>
+                        </div>
+
+                            @if (tipoTramite == "MayorPaciente")
+                            {
+                                <h5>Requisitos para paciente mayor con discapacidad</h5>
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
+                            }
+                            else if (tipoTramite == "MayorAcompanante")
+                            {
+                                <h5>Requisitos para acompañante de mayor con discapacidad</h5>
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "Antecedentes"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" />
+                            }
+                            else if (tipoTramite == "MenorPaciente")
+                            {
+                                <h5>Requisitos para paciente menor</h5>
+                                <InputFile OnChange="@((e) => OnFileChange(e, "IdentidadMenor"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "ConsentimientoPadres"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
+                            }
+                            else if (tipoTramite == "MenorAcompanante")
+                            {
+                                <h5>Requisitos para acompañante de menor</h5>
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CertificadoNacimientoMenor"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "Antecedentes"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" />
+                            }
+                            else if (tipoTramite == "Renovacion")
+                            {
+                                <h5>Documentos para emisión/renovación</h5>
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
+                                <InputFile OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
+                            }
+
+                            @if (!string.IsNullOrEmpty(tipoTramite))
+                            {
+                                <button class="btn btn-primary mt-3" type="submit">Enviar</button>
+                            }
+                    }
+                    
                 }
                 <!-- Navigation Buttons -->
                 <div class="d-flex justify-content-between mt-5">
                     <button class="btn btn-outline-primary px-4" 
                             @onclick="PreviousStep" 
                             disabled="@(currentStepNumber == 1)">
-                        BACK
+                        ATRAS
                     </button>
                     <button class="btn btn-primary px-4" 
                             @onclick="NextStep">
-                        @(currentStepNumber == steps.Count ? "FINISH" : "NEXT")
+                        @(currentStepNumber == steps.Count ? "FINALIZAR" : "SIGUIENTE")
                     </button>
                 </div>
             </div>
