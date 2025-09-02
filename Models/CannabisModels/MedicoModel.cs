@@ -25,8 +25,7 @@ public class MedicoModel
     [Required(ErrorMessage = "El teléfono es obligatorio.")]
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
     public string? MedicoTelefono { get; set; }
-
-    [Required(ErrorMessage = "La Instalacion es obligatorio.")]
+    
     public string? MedicoInstalacion { get; set; }
     
     public int? medicoInstalacionId { get; set; }

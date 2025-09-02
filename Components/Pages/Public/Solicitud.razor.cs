@@ -186,6 +186,22 @@ public partial class Solicitud : ComponentBase
                 return;
             }
         }
+        if (currentStepNumber == 2)
+        {
+            if (!ValidateStep2())
+            {
+                // no avanzamos, los errores se muestran en UI
+                return;
+            }
+        }
+        if (currentStepNumber == 3)
+        {
+            if (!ValidateStep3())
+            {
+                // no avanzamos, los errores se muestran en UI
+                return;
+            }
+        }
 
         // Si pasa la validación (o no es step1), avanzar como antes
         if (currentStepNumber < steps.Count)
@@ -297,6 +313,84 @@ public partial class Solicitud : ComponentBase
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteInstalacionId)),
                 "Seleccione la instalación de salud donde es atendido.");
+            isValid = false;
+        }
+
+        // Notificar a Blazor que los mensajes cambiaron
+        editContext?.NotifyValidationStateChanged();
+
+        return isValid;
+    }
+    
+    private bool ValidateStep2()
+    {
+        // Borra errores previos relacionados
+        messageStore?.Clear();
+
+        var subModel = registro.acompanante;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        // Ejecuta DataAnnotations + IValidatableObject
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        // Reportar errores al EditContext
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                // error: modelo general
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        // Notificar a Blazor que los mensajes cambiaron
+        editContext?.NotifyValidationStateChanged();
+
+        return isValid;
+    }
+    
+    private bool ValidateStep3()
+    {
+        // Borra errores previos relacionados
+        messageStore?.Clear();
+
+        var subModel = registro.medico;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        // Ejecuta DataAnnotations + IValidatableObject
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        // Reportar errores al EditContext
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                // error: modelo general
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        // Instalación (autocomplete) — validamos que se haya seleccionado una opción
+        if (registro.paciente.pacienteInstalacionId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)),
+                "Seleccione la instalación de salud donde labora el medico.");
             isValid = false;
         }
 
