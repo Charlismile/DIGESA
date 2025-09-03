@@ -15,7 +15,7 @@ public class PacienteModel: IValidatableObject
         public Sexo? SexoEnum { get; set; }
         
         [Required(ErrorMessage = "Indique si requiere acompañante.")]
-        public RequiereAcompanante? RequiereAcompanante { get; set; }
+        public RequiereAcompanante? RequiereAcompananteEnum { get; set; }
         public MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
         
         public int Id { get; set; }
@@ -44,10 +44,7 @@ public class PacienteModel: IValidatableObject
         public string? TipoDiscapacidad { get; set; }
 
         [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-        public string? TelefonoResidencial { get; set; }
-
-        [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-        public string? TelefonoPersonal { get; set; }
+        public string? TelefonoResidencialPersonal { get; set; }
 
         [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
         public string? TelefonoLaboral { get; set; }
@@ -86,7 +83,7 @@ public class PacienteModel: IValidatableObject
                         new[] { nameof(NumDocPasaporte) });
             }
 
-            if (RequiereAcompanante == CannabisModels.RequiereAcompanante.Si)
+            if (RequiereAcompananteEnum == CannabisModels.RequiereAcompanante.Si)
             {
                 if (MotivoRequerimientoAcompanante == null)
                 {

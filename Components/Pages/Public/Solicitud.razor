@@ -154,14 +154,9 @@
                                 <div class="row g-3">
                                     <!-- Contacto -->
                                     <div class="col-sm-3">
-                                        <label class="form-label">Teléfono Personal</label>
-                                        <InputText class="form-control" @bind-Value="registro.paciente.TelefonoPersonal" />
-                                        <ValidationMessage For="@(() => registro.paciente.TelefonoPersonal)" />
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label">Teléfono Residencia</label>
-                                        <InputText class="form-control" @bind-Value="registro.paciente.TelefonoResidencial" />
-                                        <ValidationMessage For="@(() => registro.paciente.TelefonoResidencial)" />
+                                        <label class="form-label">Teléfono Personal/Residencial</label>
+                                        <InputText class="form-control" @bind-Value="registro.paciente.TelefonoResidencialPersonal" />
+                                        <ValidationMessage For="@(() => registro.paciente.TelefonoResidencialPersonal)" />
                                     </div>
                                     <div class="col-sm-3">
                                         <label class="form-label">Teléfono Laboral</label>
@@ -257,7 +252,7 @@
                         <div class="col-12">
                             <label class="form-label">¿Requiere acompañante autorizado?</label>
                             <div class="d-flex gap-4">
-                                <InputRadioGroup @bind-Value="registro.paciente.RequiereAcompanante"
+                                <InputRadioGroup @bind-Value="registro.paciente.RequiereAcompananteEnum"
                                                  @bind-Value:after="OnRequiereAcompananteChanged">
                                     <div class="form-check form-check-inline">
                                         <InputRadio class="form-check-input" Value="RequiereAcompanante.Si" id="reqSi"/>
@@ -268,11 +263,11 @@
                                         <label class="form-check-label" for="reqNo">No</label>
                                     </div>
                                 </InputRadioGroup>
-                                <ValidationMessage For="@(() => registro.paciente.RequiereAcompanante)"/>
+                                <ValidationMessage For="@(() => registro.paciente.RequiereAcompananteEnum)"/>
                             </div>
                         </div>
 
-                        @if (registro.paciente.RequiereAcompanante == RequiereAcompanante.Si)
+                        @if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si)
                         {
                             <div class="col-12">
                                 <label class="form-label">Especifique el motivo</label>
@@ -312,7 +307,7 @@
                 {
                     @if (currentStepNumber == 2)
                     {
-                        @if (registro.paciente.RequiereAcompanante == RequiereAcompanante.Si)
+                        @if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si)
                         {
                             <!-- DATOS DEL ACOMPANANTE -->
                             <div class="card px-0 mb-1">
@@ -380,6 +375,25 @@
                                                 <InputText @bind-Value="registro.acompanante.Parentesco" class="form-control"/>
                                                 <ValidationMessage For="@(() => registro.acompanante.Parentesco)"/>
                                             </div>
+                                            <div class="col-3">
+                                                <label>Parentesco</label>
+                                                <div class="d-flex gap-4">
+                                                    <InputRadioGroup @bind-Value="registro.acompanante.ParentescoEnum">
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input" Value="Parentesco.Madre" id="Madre"/>
+                                                            <label class="form-check-label" for="Madre">Madre con patria potestad</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input" Value="Parentesco.Padre" id="Padre"/>
+                                                            <label class="form-check-label" for="Padre">Padre con patria potestad</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input" Value="Parentesco.Tutor" id="Tutor"/>
+                                                            <label class="form-check-label" for="Tutor">Tutor designado</label>
+                                                        </div>
+                                                    </InputRadioGroup>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -419,20 +433,20 @@
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
                                                                 Value="@MedicoDisciplina.General"
-                                                                id="Especialidad"/>
-                                                    <label class="form-check-label" for="Especialidad">General</label>
+                                                                id="General"/>
+                                                    <label class="form-check-label" for="General">General</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
-                                                                Value="@MedicoDisciplina.Odontólogo"
-                                                                id="Especialidad"/>
-                                                    <label class="form-check-label" for="Especialidad">Odontólogo</label>
+                                                                Value="@MedicoDisciplina.Odontologo"
+                                                                id="Odontologo"/>
+                                                    <label class="form-check-label" for="Odontologo">Odontólogo</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
                                                                 Value="@MedicoDisciplina.Especialista"
-                                                                id="Especialidad"/>
-                                                    <label class="form-check-label" for="Especialidad">Especialista</label>
+                                                                id="Especialista"/>
+                                                    <label class="form-check-label" for="Especialista">Especialista</label>
                                                 </div>
                                             </InputRadioGroup>
                                             <ValidationMessage For="@(() => registro.medico.MedicoDisciplinaEnum)"/>
@@ -706,6 +720,13 @@
                                                        @onchange="() => registro.productoPaciente.UsaDosisRescateEnum = UsaDosisRescate.Si"/>
                                                 <label class="form-check-label" for="chkSi">Si</label>
                                             </div>
+                                            @if (registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si)
+                                            {
+                                                <div class="mt-2 col-9">
+                                                    <InputText class="form-control" placeholder="Especifique" @bind-Value="registro.productoPaciente.DetDosisPaciente"/>
+                                                    <ValidationMessage For="@(() => registro.productoPaciente.DetDosisPaciente)"/>
+                                                </div>
+                                            }
                                             <div class="form-check">
                                                 <input type="checkbox"
                                                        class="form-check-input"
@@ -723,26 +744,34 @@
                     else if (currentStepNumber == 5)
                     {
                         <!-- Cormobilidades del paciente -->
-                        <div class="form-check mb-3">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   id="chkComorbilidad"
-                                   @bind="tieneComorbilidad"/>
-                            <label class="form-check-label" for="chkComorbilidad">¿Tiene alguna comorbilidad?</label>
+                        <div class="col-4">
+                            <label class="mb-2">¿Tiene alguna comorbilidad?</label>
+                            <div class="d-flex gap-4">
+                                <InputRadioGroup @bind-Value="registro.pacienteComorbilidad.TieneComorbilidadEnum" class="d-flex gap-3">
+                                    <div class="form-check form-check-inline">
+                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.Si" id="CBD"/>
+                                        <label class="form-check-label" for="CBD">CBD</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.No" id="THC"/>
+                                        <label class="form-check-label" for="THC">THC</label>
+                                    </div>
+                                </InputRadioGroup>
+                                <ValidationMessage For="@(() => registro.productoPaciente.NombreConcentracion)"/>
+                            </div>
+                            @if (registro.pacienteComorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si)
+                             {
+                                 <div class="col-6">
+                                     <label class="form-label">Nombre de diagnostico</label>
+                                     <InputText class="form-control" @bind-Value="registro.pacienteComorbilidad.NombreDiagnostico"/>
+                                     <ValidationMessage For="@(() => registro.pacienteComorbilidad.NombreDiagnostico)"/>
+                                 </div>
+                                 <div class="col-6">
+                                     <label class="form-label">Tratamientos</label>
+                                     <InputTextArea class="form-control" @bind-Value="registro.pacienteComorbilidad.DetalleTratamiento"/>
+                                 </div>
+                             }
                         </div>
-                        @if (tieneComorbilidad)
-                        {
-                            <div class="col-6">
-                                <label class="form-label">Nombre de diagnostico</label>
-                                <InputText class="form-control" @bind-Value="registro.pacienteComorbilidad.NombreDiagnostico"/>
-                                <ValidationMessage For="@(() => registro.pacienteComorbilidad.NombreDiagnostico)"/>
-                            </div>
-                            
-                            <div class="col-6">
-                                <label class="form-label">Tratamientos</label>
-                                <InputTextArea class="form-control" @bind-Value="registro.pacienteComorbilidad.DetalleTratamiento"/>
-                            </div>
-                        }
                     }
                     else if (currentStepNumber == 6)
                     {

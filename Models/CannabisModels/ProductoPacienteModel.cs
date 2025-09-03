@@ -14,7 +14,7 @@ public class ProductoPacienteModel
         
         [Required(ErrorMessage = "La concentracion es obligatoria.")]
         public ConcentracionE ConcentracionEnum { get; set; }
-        public UsaDosisRescate UsaDosisRescateEnum{ get; set; }
+        public UsaDosisRescate? UsaDosisRescateEnum{ get; set; }
         
         
         public bool IsOtraFormaSelected { get; set; } = false;

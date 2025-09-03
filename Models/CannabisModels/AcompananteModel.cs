@@ -3,6 +3,8 @@
 namespace DIGESA.Models.CannabisModels;
 
 public enum TipoDocumentoAcompañante { Cedula, Pasaporte }
+
+public enum Parentesco { Padre, Madre, Tutor }
 public class AcompananteModel
 {
         public int Id { get; set; }
@@ -34,6 +36,8 @@ public class AcompananteModel
         [Required(ErrorMessage = "La nacionalidad es obligatoria.")]
         [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", ErrorMessage = "La nacionalidad solo debe contener letras.")]
         public string? Nacionalidad { get; set; }
+        
+        public Parentesco? ParentescoEnum { get; set; }
 
         [Required(ErrorMessage = "El parentesco es obligatorio.")]
         public string? Parentesco { get; set; }

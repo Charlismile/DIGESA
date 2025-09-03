@@ -37,8 +37,6 @@ public partial class TbPaciente
 
     public string? TipoDiscapacidad { get; set; }
 
-    public string? TelefonoResidencial { get; set; }
-
     public string? TelefonoPersonal { get; set; }
 
     public string? TelefonoLaboral { get; set; }

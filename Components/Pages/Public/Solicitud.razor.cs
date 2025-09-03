@@ -22,7 +22,6 @@ public partial class Solicitud : ComponentBase
     
     private string instalacionFilterPaciente = "";
     private string instalacionFilterMedico = "";
-    private bool tieneComorbilidad = false;
     private int? unidadSeleccionadaId { get; set; }
 
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
@@ -156,7 +155,7 @@ public partial class Solicitud : ComponentBase
 
     private void OnRequiereAcompananteChanged()
     {
-        if (registro.paciente.RequiereAcompanante == RequiereAcompanante.No && currentStepNumber == 2)
+        if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No && currentStepNumber == 2)
         {
             currentStepNumber = 3;
         }
@@ -168,7 +167,7 @@ public partial class Solicitud : ComponentBase
         {
             currentStepNumber--;
 
-            if (currentStepNumber == 2 && registro.paciente.RequiereAcompanante == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No)
             {
                 currentStepNumber = 1;
             }
@@ -203,12 +202,20 @@ public partial class Solicitud : ComponentBase
             }
         }
 
+        if (currentStepNumber == 5)
+        {
+            if (!ValidateStep5())
+            {
+                // no avanzamos, los errores se muestran en UI
+                return;
+            }
+        }
         // Si pasa la validación (o no es step1), avanzar como antes
         if (currentStepNumber < steps.Count)
         {
             currentStepNumber++;
 
-            if (currentStepNumber == 2 && registro.paciente.RequiereAcompanante == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No)
             {
                 currentStepNumber = 3;
             }
@@ -394,6 +401,40 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
+        // Notificar a Blazor que los mensajes cambiaron
+        editContext?.NotifyValidationStateChanged();
+
+        return isValid;
+    }
+    
+    private bool ValidateStep5()
+    {
+        // Borra errores previos relacionados
+        messageStore?.Clear();
+
+        var subModel = registro.pacienteComorbilidad;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        // Ejecuta DataAnnotations + IValidatableObject
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        // Reportar errores al EditContext
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                // error: modelo general
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
         // Notificar a Blazor que los mensajes cambiaron
         editContext?.NotifyValidationStateChanged();
 

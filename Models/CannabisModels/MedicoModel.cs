@@ -2,8 +2,8 @@
 
 namespace DIGESA.Models.CannabisModels;
 
-public enum MedicoDisciplina { General, Odontólogo, Especialista }
-public class MedicoModel
+public enum MedicoDisciplina { General, Odontologo, Especialista }
+public class MedicoModel : IValidatableObject
 {
     [Required(ErrorMessage = "La disciplina es obligatoria.")]
     public MedicoDisciplina? MedicoDisciplinaEnum { get; set; }
@@ -15,8 +15,6 @@ public class MedicoModel
 
     [Required(ErrorMessage = "El apellido es obligatorio.")]
     public string? PrimerApellido { get; set; }
-    
-    [Required(ErrorMessage = "Especifique la especialidad.")]
     public string? DetalleMedico { get; set; }
 
     [Required(ErrorMessage = "El número de idoneidad es obligatorio.")]
@@ -30,6 +28,15 @@ public class MedicoModel
     
     public int? medicoInstalacionId { get; set; }
     
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (MedicoDisciplinaEnum == MedicoDisciplina.Especialista)
+        {
+            if (string.IsNullOrWhiteSpace(DetalleMedico))
+                yield return new ValidationResult("Especifique la especialidad.",
+                    new[] { nameof(DetalleMedico) });
+        }
+    }
 }
 
 
