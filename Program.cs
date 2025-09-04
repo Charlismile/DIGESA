@@ -63,6 +63,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 builder.Services.AddScoped<ICommon, CommonServices>();
+builder.Services.AddScoped<IPaciente, PacienteService>();
 // Enable CORS
 builder.Services.AddCors(options =>
 {

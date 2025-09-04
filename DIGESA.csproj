@@ -44,4 +44,8 @@
       <AdditionalFiles Include="Components\Pages\Public\Solicitud.razor" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Components\Pages\Admin\" />
+    </ItemGroup>
+
 </Project>

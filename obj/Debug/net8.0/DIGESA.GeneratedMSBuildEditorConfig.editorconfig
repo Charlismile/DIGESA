@@ -186,8 +186,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/ListaInstalacionesSalud.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YUluc3RhbGFjaW9uZXNTYWx1ZC5yYXpvcg==
+[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Public/Verificacion.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcVmVyaWZpY2FjaW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Routes.razor]

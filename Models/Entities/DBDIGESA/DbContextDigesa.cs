@@ -382,6 +382,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.EstadoSolicitud)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.FechaAprobacion).HasColumnType("datetime");
             entity.Property(e => e.FechaSolicitud).HasColumnType("datetime");
             entity.Property(e => e.ModificadaPor)
                 .HasMaxLength(100)

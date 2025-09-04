@@ -1,103 +1,144 @@
 ﻿@page "/"
-@inject NavigationManager NavManager
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
 
-<div class="container py-5" xmlns="http://www.w3.org/1999/html">
-    <div class="row justify-content-center g-4">
-        <section id="home" class="hero-section bg-gradient-primary">
-                    <div class="col-lg-12 text-center">
-                        <div class="hero-content justify-content-center">
-                            <h1 class="display-4 fw-bold mb-3 animate-fadeInUp" style="animation-delay: 0.1s;">
-                                Solicitud de Usuarios de <span style="color: green"> Cannabis Medicinal </span> y Acompañantes Autorizados
-                            </h1>
-                            <p class="lead mb-4 animate-fadeInUp" style="animation-delay: 0.2s;">
-                                El propósito principal de la solicitud es permitir el seguimiento clínico y administrativo
-                                de los pacientes que hacen uso de cannabis medicinal,
-                                así como recopilar datos estadísticos que permitan conocer la demanda real de este producto en el sistema de salud nacional.
-                                Además, se busca formalizar el proceso de prescripción por parte de profesionales autorizados y establecer mecanismos de control y trazabilidad.
-                            </p>
-                            @* <Carousel Autoplay="CarouselAutoPlay.StartOnPageLoad"> *@
-                            @*     <CarouselItem Active="true" Interval="5000"> *@
-                            @*         <Image Src="images/1.jpeg"/> *@
-                            @*     </CarouselItem> *@
-                            @*     <CarouselItem Interval="5000"> *@
-                            @*         <Image Src="images/2.jpeg"/> *@
-                            @*     </CarouselItem> *@
-                            @*     <CarouselItem Interval="5000"> *@
-                            @*         <Image Src="images/3.jpeg"/> *@
-                            @*     </CarouselItem > *@
-                            @* </Carousel> *@
-                        </div>
-                    </div>
-        </section>
+<div class="header-strip"></div>
 
-        <!-- Features Section -->
-        <section id="about" class="py-5 bg-light">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm hover-lift">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon bg-primary bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                    <i class="bi bi-lightbulb text-white fs-3"></i>
-                                </div>
-                                <h5 class="card-title fw-bold">Innovación</h5>
-                                <p class="card-text text-muted">
-                                    Generamos soluciones tecnológicas innovadoras que facilitan el acceso a tratamientos médicos con cannabis.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+<div class="main-container">
+    <!-- Hero Section -->
+    <section class="hero-section fade-in-up">
+        <h1 class="hero-title">
+            Solicitud de Usuarios de
+            <span class="medical-cannabis">Cannabis Medicinal</span>
+            <span class="medical-symbol">⚕️</span>
+            <br>
+            y Acompañantes Autorizados
+        </h1>
 
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm hover-lift">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon bg-success bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                    <i class="bi bi-people text-white fs-3"></i>
-                                </div>
-                                <h5 class="card-title fw-bold">Equipo Experto</h5>
-                                <p class="card-text text-muted">
-                                    Profesionales altamente calificados y debidamente titulados, con años de
-                                    experiencia en temas de la salud.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="decorative-line"></div>
 
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm hover-lift">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon bg-warning bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                    <i class="bi bi-clock text-white fs-3"></i>
-                                </div>
-                                <h5 class="card-title fw-bold">Renovacion</h5>
-                                <p class="card-text text-muted">
-                                    Realizar renovaciones del registro cada dos (2) años.
-                                </p>
-                            </div>
-                        </div>
+        <p class="hero-description">
+            El propósito principal de la solicitud es permitir el seguimiento clínico y administrativo
+            de los pacientes que hacen uso de cannabis medicinal, así como recopilar datos estadísticos
+            que permitan conocer la demanda real de este producto en el sistema de salud nacional.
+            Además, se busca formalizar el proceso de prescripción por parte de profesionales autorizados
+            y establecer mecanismos de control y trazabilidad.
+        </p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="row g-4">
+            <div class="col-md-4">
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon innovation">
+                        <i class="bi bi-person-wheelchair"></i>
                     </div>
+                    <h3 class="feature-title">Paciente mayor de edad con discapacidad</h3>
+                    <ol class="feature-description">
+                        <li><i class="bi bi-file-earmark-text"></i> Copia de la cédula de identidad o pasaporte autenticado.</li>
+                        <li><i class="bi bi-clipboard2-pulse"></i> Certificación médica emitida por un médico idóneo.</li>
+                        <li><i class="bi bi-image"></i> Foto tamaño carnet.</li>
+                    </ol>
                 </div>
             </div>
-        </section>
-        <h3 class="mb-6 text-center">Elija una opción de registro</h3>
-
-        <!-- Card: Solicitud -->
-        <div class="col-12 col-md-6 mb-4">
-                <div class="card-body d-flex flex-column align-items-center text-center">
-                    <i class="bi bi-people-fill display-4 text-success mb-3"></i>
-                    <p class="card-text">Registre una nueva solicitud o consulte el estado de una existente.</p>
-
-                    <div class="d-grid gap-3 w-100 mt-4">
-                        <a class="btn btn-outline-success btn-lg shadow-sm transition" href="/registro-paciente">
-                            <i class="bi bi-pencil-square me-2"></i> Registrar solicitud
-                        </a>
-                        <a class="btn btn-outline-primary btn-lg shadow-sm transition" href="/seguimiento-solicitud">
-                            <i class="bi bi-search me-2"></i> Consultar estado
-                        </a>
+            <div class="col-md-4">
+                <div class="feature-card fade-in-up-delay-1">
+                    <div class="feature-icon team">
+                        <i class="bi bi-person-badge"></i>
                     </div>
+                    <h3 class="feature-title">Acompañante autorizado de un mayor de edad con discapacidad</h3>
+                    <ol class="feature-description">
+                        <li><i class="bi bi-file-earmark-person"></i> Copia autenticada de cédula o pasaporte vigente.</li>
+                        <li><i class="bi bi-file-earmark-lock2"></i> Copia autenticada de la sentencia judicial de tutoría.</li>
+                        <li><i class="bi bi-shield-check"></i> Certificado de antecedentes penales.</li>
+                        <li><i class="bi bi-image"></i> Foto tamaño carnet.</li>
+                    </ol>
                 </div>
-        </div>
-
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card fade-in-up-delay-2">
+                    <div class="feature-icon renewal">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <h3 class="feature-title">Paciente menor de edad</h3>
+                    <ol class="feature-description">
+                        <li><i class="bi bi-file-earmark-text"></i> Copia de cédula, pasaporte o certificado de nacimiento.</li>
+                        <li><i class="bi bi-pen"></i> Consentimiento escrito de padres o tutor legal.</li>
+                        <li><i class="bi bi-clipboard2-pulse"></i> Certificación médica emitida por un médico idóneo.</li>
+                        <li><i class="bi bi-image"></i> Foto tamaño carnet.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon innovation">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+        <h3 class="feature-title">Acompañante autorizado de un menor de edad</h3>
+        <ol class="feature-description">
+            <li><i class="bi bi-file-earmark-person"></i> Copia autenticada de cédula o pasaporte vigente.</li>
+            <li><i class="bi bi-file-earmark-text"></i> Certificado de nacimiento del paciente menor.</li>
+            <li><i class="bi bi-file-earmark-lock2"></i> Copia autenticada de sentencia judicial de tutoría o patria potestad.</li>
+            <li><i class="bi bi-shield-check"></i> Certificado de antecedentes penales.</li>
+            <li><i class="bi bi-image"></i> Foto tamaño carnet.</li>
+        </ol>
     </div>
 </div>
 
+<div class="col-md-4">
+    <div class="feature-card fade-in-up-delay-1">
+        <div class="feature-icon team">
+            <i class="bi bi-file-medical"></i>
+        </div>
+        <h3 class="feature-title">Documentos para paciente (emisión y renovación)</h3>
+        <ol class="feature-description">
+            <li><i class="bi bi-file-earmark-text"></i> Copia de cédula o pasaporte autenticado.</li>
+            <li><i class="bi bi-clipboard2-pulse"></i> Certificación médica emitida por un médico idóneo.</li>
+            <li><i class="bi bi-image"></i> Foto tamaño carnet.</li>
+        </ol>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="feature-card fade-in-up-delay-2">
+        <div class="feature-icon renewal">
+            <i class="bi bi-arrow-repeat"></i>
+        </div>
+        <h3 class="feature-title">Renovación Periódica</h3>
+        <p class="feature-description">
+            El registro debe renovarse cada dos (2) años para mantener la validez y actualización de la información médica.
+        </p>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- Section Title -->
+    <h2 class="section-title">Opciones de Registro</h2>
+
+    <!-- Action Section -->
+    <section class="action-section fade-in-up">
+        <div class="text-center">
+            <i class="bi bi-clipboard2-plus action-icon"></i>
+            <p class="action-description">
+                Registre una nueva solicitud de usuario para cannabis medicinal
+                o consulte el estado de una solicitud existente en el sistema.
+            </p>
+
+            <div class="btn-group-custom">
+                <a href="/registro-paciente" class="btn-custom btn-primary-custom">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Registrar Solicitud
+                </a>
+                <a href="/seguimiento-solicitud" class="btn-custom btn-secondary-custom">
+                    <i class="bi bi-search me-2"></i>
+                    Consultar Estado
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

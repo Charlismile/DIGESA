@@ -1,0 +1,38 @@
+﻿@page "/buscar-paciente"
+
+<h3>Buscar Paciente</h3>
+
+<div class="mb-3">
+    <input type="text" class="form-control" placeholder="Ingrese cédula o pasaporte"
+           @bind="documentoBusqueda" />
+</div>
+
+<button class="btn btn-primary" @onclick="BuscarPaciente">Buscar</button>
+
+@if (busquedaRealizada)
+{
+    @if (pacienteEstado.Activo)
+    {
+        <div class="alert alert-success mt-3">
+            ✅ Paciente <strong>@pacienteEstado.Nombre</strong> está <strong>ACTIVO</strong><br />
+            Vigente hasta: <strong>@pacienteEstado.FechaVencimiento?.ToString("dd/MM/yyyy")</strong>
+        </div>
+    }
+    else if (pacienteEstado.FechaVencimiento != null)
+    {
+        <div class="alert alert-danger mt-3">
+            ❌ Paciente <strong>@pacienteEstado.Nombre</strong> está <strong>INACTIVO</strong><br />
+            Certificación venció el: <strong>@pacienteEstado.FechaVencimiento?.ToString("dd/MM/yyyy")</strong>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-3">
+            ⚠ No se encontró una solicitud aprobada para el documento: <strong>@documentoBusqueda</strong>
+        </div>
+    }
+}
+
+@code {
+    
+}

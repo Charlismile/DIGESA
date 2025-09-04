@@ -33,6 +33,8 @@ public partial class TbSolRegCannabis
 
     public string? ModificadaPor { get; set; }
 
+    public DateTime? FechaAprobacion { get; set; }
+
     public virtual TbPaciente? Paciente { get; set; }
 
     public virtual ICollection<TbDeclaracionJurada> TbDeclaracionJurada { get; set; } = new List<TbDeclaracionJurada>();
