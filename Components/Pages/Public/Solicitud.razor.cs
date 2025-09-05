@@ -174,43 +174,34 @@ public partial class Solicitud : ComponentBase
         }
     }
 
-    private void NextStep()
+    private async Task NextStep()
     {
-        // Si estamos en el step 1, validar completo
+        // Validaciones por paso
         if (currentStepNumber == 1)
         {
-            if (!ValidateStep1())
-            {
-                // no avanzamos, los errores se muestran en UI
-                return;
-            }
+            if (!ValidateStep1()) return;
         }
         if (currentStepNumber == 2)
         {
-            if (!ValidateStep2())
-            {
-                // no avanzamos, los errores se muestran en UI
-                return;
-            }
+            if (!ValidateStep2()) return;
         }
         if (currentStepNumber == 3)
         {
-            if (!ValidateStep3())
-            {
-                // no avanzamos, los errores se muestran en UI
-                return;
-            }
+            if (!ValidateStep3()) return;
         }
-
         if (currentStepNumber == 5)
         {
-            if (!ValidateStep5())
-            {
-                // no avanzamos, los errores se muestran en UI
-                return;
-            }
+            if (!ValidateStep5()) return;
         }
-        // Si pasa la validación (o no es step1), avanzar como antes
+
+        // Si es el último paso, guardar en BD
+        if (currentStepNumber == steps.Count)
+        {
+            await SaveFormData();
+            return;
+        }
+
+        // Avanzar al siguiente paso
         if (currentStepNumber < steps.Count)
         {
             currentStepNumber++;
@@ -441,6 +432,213 @@ public partial class Solicitud : ComponentBase
         return isValid;
     }
     
+    private async Task SaveFormData()
+{
+    try
+    {
+        // Validar el formulario completo
+        if (!ValidateCompleteForm())
+        {
+            // Mostrar mensaje de error
+            return;
+        }
+
+        // Iniciar transacción
+        using var transaction = await _context.Database.BeginTransactionAsync();
+
+        try
+        {
+            // 1. Guardar Paciente
+            var paciente = new TbPaciente
+            {
+                PrimerNombre = registro.paciente.PrimerNombre,
+                SegundoNombre = registro.paciente.SegundoNombre,
+                PrimerApellido = registro.paciente.PrimerApellido,
+                SegundoApellido = registro.paciente.SegundoApellido,
+                TipoDocumento = registro.paciente.TipoDocumentoPacienteEnum.ToString(),
+                NumDocCedula = registro.paciente.NumDocCedula,
+                NumDocPasaporte = registro.paciente.NumDocPasaporte,
+                Nacionalidad = registro.paciente.Nacionalidad,
+                FechaNacimiento = registro.paciente.FechaNacimiento.HasValue 
+                    ? DateOnly.FromDateTime(registro.paciente.FechaNacimiento.Value) 
+                    : null,
+                Sexo = registro.paciente.SexoEnum.ToString(),
+                TelefonoPersonal = registro.paciente.TelefonoResidencialPersonal,
+                TelefonoLaboral = registro.paciente.TelefonoLaboral,
+                CorreoElectronico = registro.paciente.CorreoElectronico,
+                ProvinciaId = registro.paciente.pacienteProvinciaId,
+                DistritoId = registro.paciente.pacienteDistritoId,
+                CorregimientoId = registro.paciente.pacienteCorregimientoId,
+                RegionId = registro.paciente.pacienteRegionId,
+                InstalacionId = registro.paciente.pacienteInstalacionId,
+                DireccionExacta = registro.paciente.DireccionExacta,
+                RequiereAcompanante = registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si,
+                MotivoRequerimientoAcompanante = registro.paciente.MotivoRequerimientoAcompanante?.ToString(),
+                TipoDiscapacidad = registro.paciente.TipoDiscapacidad
+            };
+
+            _context.TbPaciente.Add(paciente);
+            await _context.SaveChangesAsync();
+
+            // 2. Guardar Acompañante si es necesario
+            if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si)
+            {
+                var acompanante = new TbAcompanantePaciente
+                {
+                    PacienteId = paciente.Id,
+                    PrimerNombre = registro.acompanante.PrimerNombre,
+                    SegundoNombre = registro.acompanante.SegundoNombre,
+                    PrimerApellido = registro.acompanante.PrimerApellido,
+                    SegundoApellido = registro.acompanante.SegundoApellido,
+                    TipoDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum.ToString(),
+                    NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula 
+                        ? registro.acompanante.NumDocCedula 
+                        : registro.acompanante.NumDocPasaporte,
+                    Nacionalidad = registro.acompanante.Nacionalidad,
+                    Parentesco = registro.acompanante.ParentescoEnum?.ToString() ?? registro.acompanante.Parentesco,
+                    TelefonoMovil = registro.acompanante.TelefonoPersonal
+                };
+
+                _context.TbAcompanantePaciente.Add(acompanante);
+                await _context.SaveChangesAsync();
+            }
+
+            // 3. Guardar Médico
+            var medico = new TbMedicoPaciente
+            {
+                PrimerNombre = registro.medico.PrimerNombre,
+                PrimerApellido = registro.medico.PrimerApellido,
+                MedicoDisciplina = registro.medico.MedicoDisciplinaEnum.ToString(),
+                MedicoIdoneidad = registro.medico.MedicoIdoneidad,
+                MedicoTelefono = registro.medico.MedicoTelefono,
+                InstalacionId = registro.medico.medicoInstalacionId,
+                DetalleMedico = registro.medico.DetalleMedico
+            };
+
+            _context.TbMedicoPaciente.Add(medico);
+            await _context.SaveChangesAsync();
+
+            // 4. Guardar Diagnósticos del Paciente
+            foreach (var diagnosticoId in registro.pacienteDiagnostico.SelectedDiagnosticosIds)
+            {
+                var diagnostico = new TbPacienteDiagnostico
+                {
+                    PacienteId = paciente.Id,
+                    NombreDiagnostico = pacienteDiagnosticolist.FirstOrDefault(d => d.Id == diagnosticoId)?.Nombre
+                };
+
+                _context.TbPacienteDiagnostico.Add(diagnostico);
+            }
+
+            // Guardar diagnóstico "Otro" si existe
+            if (registro.pacienteDiagnostico.IsOtroDiagSelected && 
+                !string.IsNullOrEmpty(registro.pacienteDiagnostico.NombreOtroDiagnostico))
+            {
+                var otroDiagnostico = new TbPacienteDiagnostico
+                {
+                    PacienteId = paciente.Id,
+                    NombreDiagnostico = registro.pacienteDiagnostico.NombreOtroDiagnostico
+                };
+
+                _context.TbPacienteDiagnostico.Add(otroDiagnostico);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // 5. Guardar Producto del Paciente
+            var productoPaciente = new TbNombreProductoPaciente
+            {
+                PacienteId = paciente.Id,
+                NombreProducto = registro.productoPaciente.NombreProductoEnum == NombreProductoE.OTRO 
+                    ? registro.productoPaciente.NombreProducto 
+                    : registro.productoPaciente.NombreProductoEnum.ToString(),
+                NombreComercialProd = registro.productoPaciente.NombreComercialProd,
+                CantidadConcentracion = registro.productoPaciente.CantidadConcentracion,
+                NombreConcentracion = registro.productoPaciente.ConcentracionEnum == ConcentracionE.OTRO 
+                    ? registro.productoPaciente.NombreConcentracion 
+                    : registro.productoPaciente.ConcentracionEnum.ToString(),
+                ProductoUnidad = unidadSeleccionadaId == 0 ? unidadOtraTexto : 
+                    productoUnidadList.FirstOrDefault(u => u.Id == unidadSeleccionadaId)?.ProductoUnidad,
+                DetDosisPaciente = registro.productoPaciente.DetDosisPaciente,
+                DosisFrecuencia = registro.productoPaciente.DosisFrecuencia,
+                DosisDuracion = registro.productoPaciente.DosisDuracion,
+                UsaDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si
+            };
+
+            _context.TbNombreProductoPaciente.Add(productoPaciente);
+            await _context.SaveChangesAsync();
+
+            // 6. Guardar Comorbilidades si existen
+            if (registro.pacienteComorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si)
+            {
+                var comorbilidad = new TbPacienteComorbilidad
+                {
+                    NombreDiagnostico = registro.pacienteComorbilidad.NombreDiagnostico,
+                    DetalleTratamiento = registro.pacienteComorbilidad.DetalleTratamiento
+                };
+
+                _context.TbPacienteComorbilidad.Add(comorbilidad);
+                await _context.SaveChangesAsync();
+            }
+
+            // 7. Crear Solicitud de Registro
+            var solicitud = new TbSolRegCannabis
+            {
+                PacienteId = paciente.Id,
+                FechaSolicitud = DateTime.Now,
+                EstadoSolicitud = "Pendiente",
+                CreadaPor = "Sistema", // Aquí puedes poner el usuario actual si tienes autenticación
+                NumSolAnio = DateTime.Now.Year,
+                NumSolMes = DateTime.Now.Month
+            };
+
+            // Generar número de solicitud
+            var secuencia = await _context.TbSolSecuencia
+                .FirstOrDefaultAsync(s => s.Anio == DateTime.Now.Year && s.IsActivo == true);
+
+            if (secuencia == null)
+            {
+                secuencia = new TbSolSecuencia
+                {
+                    Anio = DateTime.Now.Year,
+                    Numeracion = 1,
+                    IsActivo = true
+                };
+                _context.TbSolSecuencia.Add(secuencia);
+            }
+            else
+            {
+                secuencia.Numeracion++;
+            }
+
+            solicitud.NumSolSecuencia = secuencia.Numeracion;
+            solicitud.NumSolCompleta = $"{secuencia.Numeracion:0000}-{DateTime.Now.Year}";
+
+            _context.TbSolRegCannabis.Add(solicitud);
+            await _context.SaveChangesAsync();
+
+            // Confirmar transacción
+            await transaction.CommitAsync();
+
+            // Mostrar mensaje de éxito
+            Console.WriteLine("Solicitud guardada exitosamente. Número: " + solicitud.NumSolCompleta);
+            
+            // Aquí puedes redirigir a una página de éxito o mostrar un mensaje
+            // NavigationManager.NavigateTo("/exito");
+
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            Console.WriteLine($"Error al guardar: {ex.Message}");
+            // Mostrar mensaje de error al usuario
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error general: {ex.Message}");
+    }
+}
     private void OnFileChange(InputFileChangeEventArgs e, string campo)
     {
         var file = e.File;
@@ -453,6 +651,42 @@ public partial class Solicitud : ComponentBase
         Console.WriteLine("Formulario enviado con éxito.");
     }
 
+    private bool ValidateCompleteForm()
+    {
+        messageStore?.Clear();
+        bool isValid = true;
+
+        // Validar todos los pasos
+        if (!ValidateStep1()) isValid = false;
+    
+        // Corregir esta línea
+        bool requiereAcompanante = registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si;
+        if (requiereAcompanante && !ValidateStep2()) 
+        {
+            isValid = false;
+        }
+    
+        if (!ValidateStep3()) isValid = false;
+        if (!ValidateStep5()) isValid = false;
+
+        // Validaciones adicionales para el último paso
+        if (unidadSeleccionadaId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
+                "Seleccione una unidad.");
+            isValid = false;
+        }
+
+        if (unidadSeleccionadaId == 0 && string.IsNullOrEmpty(unidadOtraTexto))
+        {
+            messageStore?.Add(new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
+                "Debe especificar la unidad.");
+            isValid = false;
+        }
+
+        editContext?.NotifyValidationStateChanged();
+        return isValid;
+    }
     public class DocumentosModel
     {
         public IBrowserFile CedulaPaciente { get; set; }

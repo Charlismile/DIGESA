@@ -41,5 +41,8 @@ public class AcompananteModel
 
         [Required(ErrorMessage = "El parentesco es obligatorio.")]
         public string? Parentesco { get; set; }
+        
+        [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
+        public string? TelefonoPersonal { get; set; }
 }
 

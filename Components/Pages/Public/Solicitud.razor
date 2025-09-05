@@ -773,138 +773,137 @@
                              }
                         </div>
                     }
-                    else if (currentStepNumber == 6)
-                    {
-                        <div class="mb-3">
-                            <label>Tipo de trámite:</label>
-                            <select class="form-select" @bind="tipoTramite">
-                                <option value="">Seleccione...</option>
-                                <option value="MayorPaciente">Paciente mayor con discapacidad</option>
-                                <option value="MayorAcompanante">Acompañante de mayor con discapacidad</option>
-                                <option value="MenorPaciente">Paciente menor</option>
-                                <option value="MenorAcompanante">Acompañante de menor</option>
-                                <option value="Renovacion">Documentos para emisión/renovación</option>
-                            </select>
-                        </div>
-
-                            @if (tipoTramite == "MayorPaciente")
-                            {
-                                <h5>Requisitos para paciente mayor con discapacidad</h5>
-
-                                <label class="btn btn-outline-primary mb-2">
-                                    Cédula del paciente
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Certificación médica
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Foto del paciente
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
-                                </label>
-                            }
-                            else if (tipoTramite == "MayorAcompanante")
-                            {
-                                <h5>Requisitos para acompañante de mayor con discapacidad</h5>
-
-                                <label class="btn btn-outline-primary mb-2">
-                                    Cédula del acompañante
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Sentencia de tutoría
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Antecedentes penales
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "Antecedentes"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Foto del acompañante
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" />
-                                </label>
-                            }
-                            else if (tipoTramite == "MenorPaciente")
-                            {
-                                <h5>Requisitos para paciente menor</h5>
-
-                                <label class="btn btn-outline-primary mb-2">
-                                    Documento de identidad del menor
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "IdentidadMenor"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Consentimiento de los padres
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "ConsentimientoPadres"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Certificación médica
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Foto del paciente
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
-                                </label>
-                            }
-                            else if (tipoTramite == "MenorAcompanante")
-                            {
-                                <h5>Requisitos para acompañante de menor</h5>
-
-                                <label class="btn btn-outline-primary mb-2">
-                                    Cédula del acompañante
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Certificado de nacimiento del menor
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificadoNacimientoMenor"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Sentencia de tutoría
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Antecedentes penales
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "Antecedentes"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Foto del acompañante
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" />
-                                </label>
-                            }
-                            else if (tipoTramite == "Renovacion")
-                            {
-                                <h5>Documentos para emisión/renovación</h5>
-
-                                <label class="btn btn-outline-primary mb-2">
-                                    Cédula del paciente
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Certificación médica
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" />
-                                </label>
-                                <br/>
-                                <label class="btn btn-outline-primary mb-2">
-                                    Foto del paciente
-                                    <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" />
-                                </label>
-                            }
-
-                    }
-                    
+                    @* else if (currentStepNumber == 6) *@
+                    @* { *@
+                    @*     <div class="mb-3"> *@
+                    @*         <label>Tipo de trámite:</label> *@
+                    @*         <select class="form-select" @bind="tipoTramite"> *@
+                    @*             <option value="">Seleccione...</option> *@
+                    @*             <option value="MayorPaciente">Paciente mayor con discapacidad</option> *@
+                    @*             <option value="MayorAcompanante">Acompañante de mayor con discapacidad</option> *@
+                    @*             <option value="MenorPaciente">Paciente menor</option> *@
+                    @*             <option value="MenorAcompanante">Acompañante de menor</option> *@
+                    @*             <option value="Renovacion">Documentos para emisión/renovación</option> *@
+                    @*         </select> *@
+                    @*     </div> *@
+                    @* *@
+                    @*         @if (tipoTramite == "MayorPaciente") *@
+                    @*         { *@
+                    @*             <h5>Requisitos para paciente mayor con discapacidad</h5> *@
+                    @* *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Cédula del paciente *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Certificación médica *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Foto del paciente *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" /> *@
+                    @*             </label> *@
+                    @*         } *@
+                    @*         else if (tipoTramite == "MayorAcompanante") *@
+                    @*         { *@
+                    @*             <h5>Requisitos para acompañante de mayor con discapacidad</h5> *@
+                    @* *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Cédula del acompañante *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Sentencia de tutoría *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Antecedentes penales *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "Antecedentes"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Foto del acompañante *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" /> *@
+                    @*             </label> *@
+                    @*         } *@
+                    @*         else if (tipoTramite == "MenorPaciente") *@
+                    @*         { *@
+                    @*             <h5>Requisitos para paciente menor</h5> *@
+                    @* *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Documento de identidad del menor *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "IdentidadMenor"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Consentimiento de los padres *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "ConsentimientoPadres"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Certificación médica *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Foto del paciente *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" /> *@
+                    @*             </label> *@
+                    @*         } *@
+                    @*         else if (tipoTramite == "MenorAcompanante") *@
+                    @*         { *@
+                    @*             <h5>Requisitos para acompañante de menor</h5> *@
+                    @* *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Cédula del acompañante *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaAcompanante"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Certificado de nacimiento del menor *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificadoNacimientoMenor"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Sentencia de tutoría *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "SentenciaTutor"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Antecedentes penales *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "Antecedentes"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Foto del acompañante *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoAcompanante"))" /> *@
+                    @*             </label> *@
+                    @*         } *@
+                    @*         else if (tipoTramite == "Renovacion") *@
+                    @*         { *@
+                    @*             <h5>Documentos para emisión/renovación</h5> *@
+                    @* *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Cédula del paciente *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CedulaPaciente"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Certificación médica *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "CertificacionMedica"))" /> *@
+                    @*             </label> *@
+                    @*             <br/> *@
+                    @*             <label class="btn btn-outline-primary mb-2"> *@
+                    @*                 Foto del paciente *@
+                    @*                 <InputFile class="d-none" OnChange="@((e) => OnFileChange(e, "FotoPaciente"))" /> *@
+                    @*             </label> *@
+                    @*         } *@
+                    @* *@
+                    @* } *@
                 }
                 <!-- Navigation Buttons -->
                 <div class="d-flex justify-content-between mt-5">
@@ -915,7 +914,7 @@
                     </button>
                     <button class="btn btn-success px-4" 
                             @onclick="NextStep">
-                        @(currentStepNumber == steps.Count ? "FINALIZAR" : "SIGUIENTE")
+                        @(currentStepNumber == steps.Count ? "GUARDAR SOLICITUD" : "SIGUIENTE")
                     </button>
                 </div>
             </div>
