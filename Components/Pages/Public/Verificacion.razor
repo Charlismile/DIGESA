@@ -2,37 +2,140 @@
 
 <h3>Buscar Paciente</h3>
 
-<div class="mb-3">
-    <input type="text" class="form-control" placeholder="Ingrese cédula o pasaporte"
-           @bind="documentoBusqueda" />
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="form-label">Ingrese cédula o pasaporte</label>
+                    <input type="text" class="form-control" 
+                           placeholder="Ej: 8-800-0000 o PAS123456" 
+                           @bind="documentoBusqueda" 
+                           @onkeypress="HandleKeyPress" />
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" @onclick="BuscarPaciente" 
+                        disabled="@string.IsNullOrEmpty(documentoBusqueda)">
+                    <i class="fas fa-search me-2"></i>Buscar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
-
-<button class="btn btn-primary" @onclick="BuscarPaciente">Buscar</button>
 
 @if (busquedaRealizada)
 {
-    @if (pacienteEstado.Activo)
-    {
-        <div class="alert alert-success mt-3">
-            ✅ Paciente <strong>@pacienteEstado.Nombre</strong> está <strong>ACTIVO</strong><br />
-            Vigente hasta: <strong>@pacienteEstado.FechaVencimiento?.ToString("dd/MM/yyyy")</strong>
-        </div>
-    }
-    else if (pacienteEstado.FechaVencimiento != null)
-    {
-        <div class="alert alert-danger mt-3">
-            ❌ Paciente <strong>@pacienteEstado.Nombre</strong> está <strong>INACTIVO</strong><br />
-            Certificación venció el: <strong>@pacienteEstado.FechaVencimiento?.ToString("dd/MM/yyyy")</strong>
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-warning mt-3">
-            ⚠ No se encontró una solicitud aprobada para el documento: <strong>@documentoBusqueda</strong>
-        </div>
-    }
+    <div class="mt-4">
+        @if (pacienteEncontrado && pacienteEstado != null)
+        {
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Resultado de la Búsqueda</h5>
+                </div>
+                <div class="card-body">
+                    @if (pacienteEstado.Activo)
+                    {
+                        <div class="alert alert-success">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle fa-2x me-3"></i>
+                                <div>
+                                    <h5 class="alert-heading">✅ PACIENTE ACTIVO</h5>
+                                    <p class="mb-1">Paciente: <strong>@pacienteEstado.Nombre @pacienteEstado.Apellido</strong></p>
+                                    <p class="mb-1">Documento: <strong>@pacienteEstado.Documento</strong></p>
+                                    <p class="mb-1">Estado: <span class="badge bg-success">ACTIVO</span></p>
+                                    <p class="mb-0">Vigente hasta: <strong>@pacienteEstado.FechaVencimiento?.ToString("dd/MM/yyyy")</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-times-circle fa-2x me-3"></i>
+                                <div>
+                                    <h5 class="alert-heading">❌ PACIENTE INACTIVO</h5>
+                                    <p class="mb-1">Paciente: <strong>@pacienteEstado.Nombre @pacienteEstado.Apellido</strong></p>
+                                    <p class="mb-1">Documento: <strong>@pacienteEstado.Documento</strong></p>
+                                    <p class="mb-1">Estado: <span class="badge bg-danger">INACTIVO</span></p>
+                                    @if (pacienteEstado.FechaVencimiento.HasValue)
+                                    {
+                                        <p class="mb-0">Certificación venció el: <strong>@pacienteEstado.FechaVencimiento.Value.ToString("dd/MM/yyyy")</strong></p>
+                                    }
+                                    else
+                                    {
+                                        <p class="mb-0">No tiene certificación aprobada</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Información adicional si está disponible -->
+                    @if (pacienteDetalle != null)
+                    {
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6>Información Personal</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <th>Nombre completo:</th>
+                                        <td>@pacienteDetalle.PrimerNombre @pacienteDetalle.SegundoNombre @pacienteDetalle.PrimerApellido @pacienteDetalle.SegundoApellido</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tipo documento:</th>
+                                        <td>@pacienteDetalle.TipoDocumentoPacienteEnum</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nacionalidad:</th>
+                                        <td>@pacienteDetalle.Nacionalidad</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Contacto</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <th>Teléfono personal:</th>
+                                        <td>@pacienteDetalle.TelefonoResidencialPersonal</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Teléfono laboral:</th>
+                                        <td>@pacienteDetalle.TelefonoLaboral</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>@pacienteDetalle.CorreoElectronico</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                    <div>
+                        <h5 class="alert-heading">⚠ NO ENCONTRADO</h5>
+                        <p class="mb-0">No se encontró una solicitud para el documento: <strong>@documentoBusqueda</strong></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
-@code {
-    
+@if (loading)
+{
+    <div class="text-center mt-3">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Buscando...</span>
+        </div>
+        <p class="mt-2">Buscando paciente...</p>
+    </div>
 }
