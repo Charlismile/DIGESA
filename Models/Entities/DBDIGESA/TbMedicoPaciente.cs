@@ -25,6 +25,8 @@ public partial class TbMedicoPaciente
 
     public string DetalleMedico { get; set; } = null!;
 
+    public string? NombreInstalacion { get; set; }
+
     public virtual TbInstalacionSalud? Instalacion { get; set; }
 
     public virtual TbRegionSalud? Region { get; set; }

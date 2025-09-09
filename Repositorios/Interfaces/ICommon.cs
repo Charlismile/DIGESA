@@ -13,4 +13,5 @@ public interface ICommon
     Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync();
     Task<List<TbFormaFarmaceutica>> GetAllFormasAsync();
     Task<List<TbViaAdministracion>> GetAllViaAdmAsync();
+    Task<List<ListModel>> GetUnidadId();
 }

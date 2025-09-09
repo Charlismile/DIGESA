@@ -27,7 +27,6 @@ public class MedicoModel : IValidatableObject
     public string? MedicoInstalacion { get; set; }
     
     public int? medicoInstalacionId { get; set; }
-    // En tu modelo MedicoPacienteModel
     public int? medicoRegionId { get; set; }
     
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

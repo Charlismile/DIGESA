@@ -211,6 +211,9 @@ public partial class DbContextDigesa : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.MedicoTelefono).HasMaxLength(15);
+            entity.Property(e => e.NombreInstalacion)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.PrimerApellido)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -235,6 +238,9 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.DetDosisPaciente)
                 .HasMaxLength(300)
                 .IsUnicode(false);
+            entity.Property(e => e.DetDosisRescate)
+                .HasMaxLength(300)
+                .IsUnicode(false);
             entity.Property(e => e.FormaFarmaceutica)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -257,6 +263,10 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.PacienteId)
                 .HasConstraintName("FK__TbNombreP__Pacie__0D7A0286");
+
+            entity.HasOne(d => d.ProductoUnidadNavigation).WithMany(p => p.TbNombreProductoPaciente)
+                .HasForeignKey(d => d.ProductoUnidadId)
+                .HasConstraintName("FK_TbNombreProductoPaciente_TbUnidades");
         });
 
         modelBuilder.Entity<TbPaciente>(entity =>
@@ -275,6 +285,9 @@ public partial class DbContextDigesa : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Nacionalidad)
                 .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NombreInstalacion)
+                .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.NumDocCedula).HasMaxLength(100);
             entity.Property(e => e.NumDocPasaporte).HasMaxLength(100);

@@ -31,5 +31,11 @@ public partial class TbNombreProductoPaciente
 
     public string? NombreComercialProd { get; set; }
 
+    public string? DetDosisRescate { get; set; }
+
+    public int? ProductoUnidadId { get; set; }
+
     public virtual TbPaciente? Paciente { get; set; }
+
+    public virtual TbUnidades? ProductoUnidadNavigation { get; set; }
 }

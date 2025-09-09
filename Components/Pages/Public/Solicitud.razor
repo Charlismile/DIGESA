@@ -89,7 +89,7 @@
                                                         <InputRadio class="form-check-input" Value="TipoDocumentoPaciente.Pasaporte" id="Pasaporte"/>
                                                         <label class="form-check-label" for="Pasaporte">Pasaporte</label>
                                                     </div>
-                                            </InputRadioGroup> 
+                                            </InputRadioGroup>
                                         </div>
                                     </div>
 
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="card px-0 mb-1">
                             <div class="card-header custom-card-header2 fw-bold">Datos de contacto del solicitante</div>
                             <div class="card-body">
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="card px-0 mb-1">
                             <div class="card-header custom-card-header2 fw-bold">Datos de residencia y lugar de atención del solicitante</div>
                             <div class="card-body">
@@ -241,14 +241,32 @@
                                                       DataProvider="AutoCompleteDataProvider"
                                                       OnChanged="OnAutoCompletePacienteChanged"
                                                       PropertyName="Name"
-                                                      class="form-control"
+                                                      class="form-control mb-2"
                                                       Placeholder="Busque por instalación de salud"/>
                                         <ValidationMessage For="@(() => registro.paciente.pacienteInstalacionId)" class="text-danger"/>
                                     </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               id="otraInstalacionCheckbox"
+                                               @bind="mostrarOtraInstalacionPaciente" />
+                                        <label class="form-check-label" for="otraInstalacionCheckbox">
+                                            Mi instalación no aparece en la lista
+                                        </label>
+                                    </div>
+                                    @if (mostrarOtraInstalacionPaciente)
+                                    {
+                                        <div class="mb-2">
+                                            <InputText class="form-control"
+                                                       @bind-Value="registro.paciente.pacienteInstalacion"
+                                                       placeholder="Especifique el nombre de la instalación de salud"/>
+                                            <ValidationMessage For="@(() => registro.paciente.pacienteInstalacion)"/>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-12">
                             <label class="form-label">¿Requiere acompañante autorizado?</label>
                             <div class="d-flex gap-4">
@@ -464,15 +482,42 @@
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3">
                                         <label class="form-label">Instalación de salud donde labora el médico</label>
+
+                                        <!-- AutoComplete deshabilitado cuando mostrarOtraInstalacionMedico == true -->
                                         <AutoComplete @bind-Value="instalacionFilterMedico"
                                                       TItem="ListModel"
                                                       DataProvider="AutoCompleteDataProvider"
                                                       OnChanged="OnAutoCompleteMedicoChanged"
                                                       PropertyName="Name"
-                                                      class="form-control"
-                                                      Placeholder="Busque por instalación de salud"/>
-                                        <ValidationMessage For="@(() => registro.medico.MedicoInstalacion)" class="text-danger"/>
+                                                      class="form-control mb-2"
+                                                      Placeholder="Busque por instalación de salud"
+                                                      disabled="@mostrarOtraInstalacionMedico" />
+
+                                        <ValidationMessage For="@(() => registro.medico.medicoInstalacionId)" class="text-danger"/>
                                     </div>
+
+                                    <div class="form-check mb-2">
+                                        <!-- Usar onchange para manejar la lógica; checked mantiene el estado visual -->
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               id="otraInstalacionMedicoCheckbox"
+                                               checked="@mostrarOtraInstalacionMedico"
+                                               @onchange="OnMostrarOtraInstalacionMedicoChanged" />
+                                        <label class="form-check-label" for="otraInstalacionMedicoCheckbox">
+                                            Mi instalación no aparece en la lista
+                                        </label>
+                                    </div>
+
+                                    @if (mostrarOtraInstalacionMedico)
+                                    {
+                                        <div class="mb-2">
+                                            <InputText class="form-control"
+                                                       @bind-Value="registro.medico.MedicoInstalacion"
+                                                       placeholder="Especifique el nombre de la instalación de salud"/>
+                                            <ValidationMessage For="@(() => registro.medico.MedicoInstalacion)" />
+                                        </div>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -547,7 +592,7 @@
                                             </div>
                                         }
                                     </div>
-                                    
+
                                     <div class="col-12 col-sm-6">
                                         <label class="form-label">Nombre comercial</label>
                                         <InputText class="form-control" @bind-Value="registro.productoPaciente.NombreComercialProd"/>
@@ -624,31 +669,31 @@
                                         <ValidationMessage For="@(() => registro.productoPaciente.CantidadConcentracion)"/>
                                     </div>
 
-                                    <div class="col-sm-4">
-                                        <label for="unidadSelect" class="form-label">Unidad</label>
-                                        <select id="unidadSelect"
-                                                class="form-select"
-                                                @bind="unidadSeleccionadaId">
-                                            <option value="">-- Seleccione una unidad --</option>
-
-                                            @foreach (var row in productoUnidadList.Where(p => p.Id != 0))
+                                    <div class="col-sm-3">
+                                        <label class="form-label">Unidad</label>
+                                        <InputSelect TValue="int?" class="form-select"
+                                                     @bind-Value="registro.productoPaciente.ProductoUnidadId">
+                                            <option value="">--Seleccione--</option>
+                                            @foreach (var x in productoUnidadList)
                                             {
-                                                <option value="@row.Id">@row.ProductoUnidad</option>
+                                                <option value="@x.Id">@x.Name</option>
                                             }
-
-                                            <option value="0">Otra unidad</option>
-                                        </select>
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => registro.productoPaciente.ProductoUnidadId)" class="text-danger"/>
                                     </div>
-                                    @if (unidadSeleccionadaId == 0)
+
+                                    @if (registro.productoPaciente.ProductoUnidadId == 6)
                                     {
                                         <div class="mb-3">
                                             <InputText id="otraUnidad"
                                                        class="form-control"
-                                                       placeholder="especifique"
-                                                       @bind-Value="unidadOtraTexto"/>
-                                            <ValidationMessage For="() => unidadOtraTexto"/>
+                                                       placeholder="Especifique la unidad"
+                                                       @bind-Value="registro.productoPaciente.ProductoUnidad"/>
+                                            <ValidationMessage For="@(() => registro.productoPaciente.ProductoUnidad)" class="text-danger"/>
                                         </div>
                                     }
+
+
                                     <hr>
                                     <div class="col-12">
                                         <label class="mb-2">Seleccione vía de administración</label>
@@ -685,7 +730,7 @@
                                         <ValidationMessage For="@(() => registro.productoPaciente.SelectedViaAdmIds)"/>
                                     </div>
                                     <hr>
-                                    
+
                                     <!-- Dosis -->
                                     <div class="col-6">
                                         <label class="form-label">Dosis (Indicacion del medico)</label>
@@ -698,15 +743,15 @@
                                         <label class="form-label">Frecuencia de la dosis</label>
                                         <InputNumber type="number"  class="form-control" @bind-Value="registro.productoPaciente.DosisFrecuencia" placeholder="Ingrese la frecuencia"/>
                                         <p class="form-text">veces al día (indicar del 1 al 6)</p>
-                                        <ValidationMessage For="@(() => registro.productoPaciente.DosisFrecuencia)"/>
+                                        <ValidationMessage For="@(() => registro.productoPaciente.DosisDuracion)"/>
                                     </div>
                                     <div class="col-2">
                                         <label class="form-label">Duración de la dosis</label>
                                         <InputNumber class="form-control" @bind-Value="registro.productoPaciente.DosisDuracion" placeholder="Ingrese la dosis"/>
                                         <p class="form-text">días al mes (indicar del 1 al 31)</p>
-                                        <ValidationMessage For="@(() => registro.productoPaciente.DosisDuracion)"/>
+                                        <ValidationMessage For="@(() => registro.productoPaciente.DosisFrecuencia)"/>
                                     </div>
-                                    
+
                                     <!-- dosis rescate -->
                                     <div class="col-12">
                                         <label>¿Utiliza dosis de rescate?</label>
@@ -723,8 +768,8 @@
                                             @if (registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si)
                                             {
                                                 <div class="mt-2 col-9">
-                                                    <InputText class="form-control" placeholder="Especifique" @bind-Value="registro.productoPaciente.DetDosisPaciente"/>
-                                                    <ValidationMessage For="@(() => registro.productoPaciente.DetDosisPaciente)"/>
+                                                    <InputText class="form-control" placeholder="Especifique" @bind-Value="registro.productoPaciente.DetDosisRescate"/>
+                                                    <ValidationMessage For="@(() => registro.productoPaciente.DetDosisRescate)"/>
                                                 </div>
                                             }
                                             <div class="form-check">
@@ -749,15 +794,15 @@
                             <div class="d-flex gap-4">
                                 <InputRadioGroup @bind-Value="registro.pacienteComorbilidad.TieneComorbilidadEnum" class="d-flex gap-3">
                                     <div class="form-check form-check-inline">
-                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.Si" id="CBD"/>
-                                        <label class="form-check-label" for="CBD">CBD</label>
+                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.Si" id="comorbilidadSi"/>
+                                        <label class="form-check-label" for="comorbilidadSi">Sí</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.No" id="THC"/>
-                                        <label class="form-check-label" for="THC">THC</label>
+                                        <InputRadio class="form-check-input" Value="TieneComorbilidad.No" id="comorbilidadNo"/>
+                                        <label class="form-check-label" for="comorbilidadNo">No</label>
                                     </div>
                                 </InputRadioGroup>
-                                <ValidationMessage For="@(() => registro.productoPaciente.NombreConcentracion)"/>
+                                <ValidationMessage For="@(() => registro.pacienteComorbilidad.TieneComorbilidadEnum)"/>
                             </div>
                             @if (registro.pacienteComorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si)
                              {
@@ -907,12 +952,12 @@
                 }
                 <!-- Navigation Buttons -->
                 <div class="d-flex justify-content-between mt-5">
-                    <button class="btn btn-outline-success px-4" 
-                            @onclick="PreviousStep" 
+                    <button class="btn btn-outline-success px-4"
+                            @onclick="PreviousStep"
                             disabled="@(currentStepNumber == 1)">
                         ATRAS
                     </button>
-                    <button class="btn btn-success px-4" 
+                    <button class="btn btn-success px-4"
                             @onclick="NextStep">
                         @(currentStepNumber == steps.Count ? "GUARDAR SOLICITUD" : "SIGUIENTE")
                     </button>

@@ -16,7 +16,7 @@ public class ProductoPacienteModel
         public ConcentracionE ConcentracionEnum { get; set; }
         public UsaDosisRescate? UsaDosisRescateEnum{ get; set; }
         
-        
+        public string? DetDosisRescate { get; set; }
         public bool IsOtraFormaSelected { get; set; } = false;
         public List<int> SelectedFormaIds { get; set; } = new();
         public string? NombreOtraForma { get; set; }
@@ -37,8 +37,8 @@ public class ProductoPacienteModel
         public decimal? CantidadConcentracion { get; set; }
         public bool IsSelectedUnidad { get; set; } = false;
         
-        [Required(ErrorMessage = "La unidad de concentracion es obligatoria.")]
-        public string? ProductoUnidad { get; set; }
+       
+        // public string? ProductoUnidad { get; set; }
 
         [Required(ErrorMessage = "El detalle de la dosis del tratamiento es obligatoria.")]
         public string? DetDosisPaciente { get; set; }
@@ -50,5 +50,7 @@ public class ProductoPacienteModel
         [Required(ErrorMessage = "La frecuencia de tratamiento es obligatoria.")]
         [Range(1, 31, ErrorMessage = "Indique un valor entre 1 y 31.")]
         public int DosisFrecuencia { get; set; }
+        public int? ProductoUnidadId { get; set; }
+        public string? ProductoUnidad { get; set; }
 }
 

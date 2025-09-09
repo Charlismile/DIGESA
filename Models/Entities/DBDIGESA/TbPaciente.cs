@@ -55,6 +55,8 @@ public partial class TbPaciente
 
     public int? InstalacionId { get; set; }
 
+    public string? NombreInstalacion { get; set; }
+
     public virtual TbCorregimiento? Corregimiento { get; set; }
 
     public virtual TbDistrito? Distrito { get; set; }

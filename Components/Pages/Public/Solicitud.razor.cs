@@ -19,14 +19,18 @@ public partial class Solicitud : ComponentBase
 
     private string tipoTramite;
     private DocumentosModel documentos = new();
-    
+    private bool mostrarOtraInstalacionPaciente { get; set; }
+    private bool mostrarOtraInstalacionMedico { get; set; }
+
+    // Variables faltantes añadidas
+    private string otraInstalacionPaciente;
+    private int? unidadSeleccionadaId;
+    private string unidadOtraTexto;
+
     private string instalacionFilterPaciente = "";
     private string instalacionFilterMedico = "";
-    private int? unidadSeleccionadaId { get; set; }
 
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
-    private string? unidadOtraTexto { get; set; }
-
     private ValidationMessageStore? messageStore;
 
     private RegistroCanabisUnionModel registro { get; set; } = new();
@@ -36,7 +40,7 @@ public partial class Solicitud : ComponentBase
     private List<ListModel> pacienteCorregimientolist { get; set; } = new();
     private List<ListaDiagnostico> pacienteDiagnosticolist { get; set; } = new();
     private List<TbFormaFarmaceutica> productoFormaList { get; set; } = new();
-    private List<ProductoPacienteModel> productoUnidadList { get; set; } = new();
+    private List<ListModel> productoUnidadList { get; set; } = new();
     private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
 
     private EditContext editContext;
@@ -54,34 +58,9 @@ public partial class Solicitud : ComponentBase
         pacienteDiagnosticolist = await _Commonservice.GetAllDiagnosticsAsync();
         productoFormaList = await _Commonservice.GetAllFormasAsync();
         productoViaConsumoList = await _Commonservice.GetAllViaAdmAsync();
-
-        await CargarUnidadList();
+        productoUnidadList = await _Commonservice.GetUnidadId();
     }
 
-    private async Task CargarUnidadList()
-    {
-        var raw = await _context.TbUnidades
-            .Where(x => x.IsActivo)
-            .ToListAsync();
-
-        productoUnidadList = raw
-            .Select(x => new ProductoPacienteModel
-            {
-                Id = x.Id,
-                ProductoUnidad = x.NombreUnidad!,
-                IsSelectedUnidad = false
-            })
-            .OrderBy(d => d.ProductoUnidad)
-            .ToList();
-
-        // Agrega la opción "Otro"
-        productoUnidadList.Add(new ProductoPacienteModel
-        {
-            Id = 0,
-            ProductoUnidad = string.Empty,
-            IsSelectedUnidad = false
-        });
-    }
 
     private async Task<AutoCompleteDataProviderResult<ListModel>> AutoCompleteDataProvider(
         AutoCompleteDataProviderRequest<ListModel> request)
@@ -104,12 +83,22 @@ public partial class Solicitud : ComponentBase
 
     private void OnAutoCompletePacienteChanged(ListModel? sel)
     {
-        registro.paciente.pacienteInstalacionId = sel?.Id;
+        if (sel != null)
+        {
+            registro.paciente.pacienteInstalacionId = sel.Id;
+            mostrarOtraInstalacionPaciente = false;
+            otraInstalacionPaciente = null;
+        }
     }
 
     private void OnAutoCompleteMedicoChanged(ListModel? sel)
     {
-        registro.medico.medicoInstalacionId = sel?.Id;
+        if (sel != null)
+        {
+            registro.medico.medicoInstalacionId = sel.Id;
+            mostrarOtraInstalacionMedico = false;
+            registro.medico.MedicoInstalacion = null;
+        }
     }
 
     private async Task pacienteProvinciaChanged(int id)
@@ -125,6 +114,65 @@ public partial class Solicitud : ComponentBase
         registro.paciente.pacienteDistritoId = id;
         pacienteCorregimientolist = await _Commonservice.GetCorregimientos(id);
         registro.paciente.pacienteCorregimientoId = null;
+    }
+
+    private void OnUnidadSeleccionadaChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int selectedId))
+        {
+            unidadSeleccionadaId = selectedId;
+            registro.productoPaciente.ProductoUnidadId = selectedId;
+
+            // Si se selecciona "Otro" (ID 6), limpiar el texto personalizado
+            if (selectedId == 6)
+            {
+                registro.productoPaciente.ProductoUnidad = string.Empty;
+            }
+        }
+        else
+        {
+            unidadSeleccionadaId = null;
+            registro.productoPaciente.ProductoUnidadId = null;
+        }
+    }
+
+    private void OnMostrarOtraInstalacionPacienteChanged(ChangeEventArgs e)
+    {
+        mostrarOtraInstalacionPaciente = (bool)e.Value;
+        if (mostrarOtraInstalacionPaciente)
+        {
+            // Si selecciona "otra instalación", limpiar la selección del autocomplete
+            registro.paciente.pacienteInstalacionId = null;
+            instalacionFilterPaciente = "";
+        }
+    }
+
+    private void OnMostrarOtraInstalacionMedicoChanged(ChangeEventArgs e)
+    {
+        // Convertir correctamente el valor del checkbox
+        bool nuevoValor = false;
+        if (e?.Value != null && bool.TryParse(e.Value.ToString(), out var b))
+            nuevoValor = b;
+
+        mostrarOtraInstalacionMedico = nuevoValor;
+
+        if (mostrarOtraInstalacionMedico)
+        {
+            // Si es "otra", limpiar selección proveniente del autocomplete
+            registro.medico.medicoInstalacionId = null;
+            instalacionFilterMedico = string.Empty;
+        }
+        else
+        {
+            // Si vuelve a modo "lista", limpiar el texto libre
+            registro.medico.MedicoInstalacion = null;
+        }
+
+        // Limpiar mensajes previos de validación para estos campos
+        messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)));
+        messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.MedicoInstalacion)));
+
+        editContext?.NotifyValidationStateChanged();
     }
 
     private async Task RegisterForm()
@@ -174,18 +222,22 @@ public partial class Solicitud : ComponentBase
         {
             if (!ValidateStep1()) return;
         }
+
         if (currentStepNumber == 2)
         {
             if (!ValidateStep2()) return;
         }
+
         if (currentStepNumber == 3)
         {
             if (!ValidateStep3()) return;
         }
+
         if (currentStepNumber == 4)
         {
             if (!ValidateStep4()) return;
         }
+
         if (currentStepNumber == 5)
         {
             if (!ValidateStep5()) return;
@@ -276,6 +328,22 @@ public partial class Solicitud : ComponentBase
             }
         }
 
+        // Validación de instalación de salud del paciente - MODIFICADA
+        if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteInstalacionId)),
+                "Seleccione o especifique una instalación de salud donde es atendido.");
+            isValid = false;
+        }
+
+        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
+        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
+        {
+            messageStore?.Add(new FieldIdentifier(this, nameof(registro.paciente.pacienteInstalacion)),
+                "Especifique el nombre de la instalación de salud donde es atendido.");
+            isValid = false;
+        }
+
         if (registro.paciente.pacienteProvinciaId == null)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteProvinciaId)),
@@ -297,17 +365,10 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        if (registro.paciente.pacienteInstalacionId == null)
-        {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteInstalacionId)),
-                "Seleccione la instalación de salud donde es atendido.");
-            isValid = false;
-        }
-
         editContext?.NotifyValidationStateChanged();
         return isValid;
     }
-    
+
     private bool ValidateStep2()
     {
         messageStore?.Clear();
@@ -335,16 +396,20 @@ public partial class Solicitud : ComponentBase
         editContext?.NotifyValidationStateChanged();
         return isValid;
     }
-    
+
     private bool ValidateStep3()
     {
+        // limpia sólo los mensajes previos y prepara validación general
         messageStore?.Clear();
+
         var subModel = registro.medico;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
+        // Validación por DataAnnotations del modelo
         bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
 
+        // Añadir errores estándar al messageStore
         foreach (var r in results)
         {
             if (r.MemberNames != null && r.MemberNames.Any())
@@ -360,11 +425,30 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        if (registro.medico.medicoInstalacionId == null)
+        // Limpiar mensajes previos sólo de los campos de instalación para no duplicar
+        messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)));
+        messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)));
+
+        // Validación condicional:
+        if (mostrarOtraInstalacionMedico)
         {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)),
-                "Seleccione la instalación de salud donde labora el medico.");
-            isValid = false;
+            // cuando es "otra", exigir texto y NO exigir Id
+            if (string.IsNullOrWhiteSpace(subModel.MedicoInstalacion))
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)),
+                    "Especifique el nombre de la instalación de salud.");
+                isValid = false;
+            }
+        }
+        else
+        {
+            // cuando no es "otra", exigir que venga seleccionado un Id desde el autocomplete
+            if (subModel.medicoInstalacionId == null)
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)),
+                    "Seleccione una instalación de salud de la lista.");
+                isValid = false;
+            }
         }
 
         editContext?.NotifyValidationStateChanged();
@@ -391,7 +475,23 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        if (registro.productoPaciente.SelectedFormaIds.Count == 0 && 
+        // Validación de unidad
+        if (registro.productoPaciente.ProductoUnidadId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProductoUnidadId)),
+                "Seleccione una unidad.");
+            isValid = false;
+        }
+
+        if (registro.productoPaciente.ProductoUnidadId == 6 &&
+            string.IsNullOrEmpty(registro.productoPaciente.ProductoUnidad))
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProductoUnidad)),
+                "Debe especificar la unidad.");
+            isValid = false;
+        }
+
+        if (registro.productoPaciente.SelectedFormaIds.Count == 0 &&
             !registro.productoPaciente.IsOtraFormaSelected)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.SelectedFormaIds)),
@@ -399,25 +499,18 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        if (registro.productoPaciente.SelectedViaAdmIds.Count == 0 && 
+        if (registro.productoPaciente.SelectedViaAdmIds.Count == 0 &&
             !registro.productoPaciente.IsOtraViaAdmSelected)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.SelectedViaAdmIds)),
                 "Seleccione al menos una vía de administración.");
             isValid = false;
         }
-        
-        if (registro.paciente.pacienteRegionId == null)
-        {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteRegionId)),
-                "La región de salud es requerida.");
-            isValid = false;
-        }
 
         editContext?.NotifyValidationStateChanged();
         return isValid;
     }
-    
+
     private bool ValidateStep5()
     {
         messageStore?.Clear();
@@ -441,11 +534,11 @@ public partial class Solicitud : ComponentBase
                 messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
             }
         }
-        
+
         editContext?.NotifyValidationStateChanged();
         return isValid;
     }
-    
+
     private async Task SaveFormData()
     {
         try
@@ -460,6 +553,20 @@ public partial class Solicitud : ComponentBase
 
             try
             {
+                // Manejar instalación personalizada del paciente si se seleccionó "Otra"
+                if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(otraInstalacionPaciente))
+                {
+                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(otraInstalacionPaciente);
+                    registro.paciente.pacienteInstalacionId = instalacionId;
+                }
+
+                // Manejar instalación personalizada del médico si se seleccionó "Otra"
+                if (mostrarOtraInstalacionMedico && !string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
+                {
+                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.medico.MedicoInstalacion);
+                    registro.medico.medicoInstalacionId = instalacionId;
+                }
+
                 // 1. Guardar Paciente
                 var paciente = new TbPaciente
                 {
@@ -471,8 +578,8 @@ public partial class Solicitud : ComponentBase
                     NumDocCedula = registro.paciente.NumDocCedula,
                     NumDocPasaporte = registro.paciente.NumDocPasaporte,
                     Nacionalidad = registro.paciente.Nacionalidad,
-                    FechaNacimiento = registro.paciente.FechaNacimiento.HasValue 
-                        ? DateOnly.FromDateTime(registro.paciente.FechaNacimiento.Value) 
+                    FechaNacimiento = registro.paciente.FechaNacimiento.HasValue
+                        ? DateOnly.FromDateTime(registro.paciente.FechaNacimiento.Value)
                         : null,
                     Sexo = registro.paciente.SexoEnum.ToString(),
                     TelefonoPersonal = registro.paciente.TelefonoResidencialPersonal,
@@ -503,8 +610,9 @@ public partial class Solicitud : ComponentBase
                         PrimerApellido = registro.acompanante.PrimerApellido,
                         SegundoApellido = registro.acompanante.SegundoApellido,
                         TipoDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum.ToString(),
-                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula 
-                            ? registro.acompanante.NumDocCedula 
+                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum ==
+                                          TipoDocumentoAcompañante.Cedula
+                            ? registro.acompanante.NumDocCedula
                             : registro.acompanante.NumDocPasaporte,
                         Nacionalidad = registro.acompanante.Nacionalidad,
                         Parentesco = registro.acompanante.ParentescoEnum?.ToString() ?? registro.acompanante.Parentesco,
@@ -546,7 +654,7 @@ public partial class Solicitud : ComponentBase
                     }
                 }
 
-                if (registro.pacienteDiagnostico.IsOtroDiagSelected && 
+                if (registro.pacienteDiagnostico.IsOtroDiagSelected &&
                     !string.IsNullOrEmpty(registro.pacienteDiagnostico.NombreOtroDiagnostico))
                 {
                     var otroDiagnostico = new TbPacienteDiagnostico
@@ -556,6 +664,7 @@ public partial class Solicitud : ComponentBase
                     };
                     _context.TbPacienteDiagnostico.Add(otroDiagnostico);
                 }
+
                 await _context.SaveChangesAsync();
 
                 // 5. Guardar Formas Farmacéuticas
@@ -569,7 +678,7 @@ public partial class Solicitud : ComponentBase
                     }
                 }
 
-                if (registro.productoPaciente.IsOtraFormaSelected && 
+                if (registro.productoPaciente.IsOtraFormaSelected &&
                     !string.IsNullOrEmpty(registro.productoPaciente.NombreOtraForma))
                 {
                     formasSeleccionadas.Add(registro.productoPaciente.NombreOtraForma);
@@ -586,28 +695,28 @@ public partial class Solicitud : ComponentBase
                     }
                 }
 
-                if (registro.productoPaciente.IsOtraViaAdmSelected && 
+                if (registro.productoPaciente.IsOtraViaAdmSelected &&
                     !string.IsNullOrEmpty(registro.productoPaciente.NombreOtraViaAdm))
                 {
                     viasSeleccionadas.Add(registro.productoPaciente.NombreOtraViaAdm);
                 }
 
                 // 7. Guardar Producto del Paciente
-                var productoUnidadFinal = unidadSeleccionadaId == 0 ? 
-                    unidadOtraTexto : 
-                    productoUnidadList.FirstOrDefault(u => u.Id == unidadSeleccionadaId)?.ProductoUnidad;
+                var productoUnidadFinal = registro.productoPaciente.ProductoUnidadId == 6
+                    ? registro.productoPaciente.ProductoUnidad
+                    : productoUnidadList.FirstOrDefault(u => u.Id == registro.productoPaciente.ProductoUnidadId)?.Name;
 
                 var productoPaciente = new TbNombreProductoPaciente
                 {
                     PacienteId = paciente.Id,
-                    NombreProducto = registro.productoPaciente.NombreProductoEnum == NombreProductoE.OTRO 
-                        ? registro.productoPaciente.NombreProducto 
+                    NombreProducto = registro.productoPaciente.NombreProductoEnum == NombreProductoE.OTRO
+                        ? registro.productoPaciente.NombreProducto
                         : registro.productoPaciente.NombreProductoEnum.ToString(),
                     NombreComercialProd = registro.productoPaciente.NombreComercialProd,
                     FormaFarmaceutica = string.Join(", ", formasSeleccionadas),
                     CantidadConcentracion = registro.productoPaciente.CantidadConcentracion,
-                    NombreConcentracion = registro.productoPaciente.ConcentracionEnum == ConcentracionE.OTRO 
-                        ? registro.productoPaciente.NombreConcentracion 
+                    NombreConcentracion = registro.productoPaciente.ConcentracionEnum == ConcentracionE.OTRO
+                        ? registro.productoPaciente.NombreConcentracion
                         : registro.productoPaciente.ConcentracionEnum.ToString(),
                     ViaConsumoProducto = string.Join(", ", viasSeleccionadas),
                     ProductoUnidad = productoUnidadFinal,
@@ -653,6 +762,7 @@ public partial class Solicitud : ComponentBase
                     secuencia.Numeracion++;
                     _context.TbSolSecuencia.Update(secuencia);
                 }
+
                 await _context.SaveChangesAsync();
 
                 var solicitud = new TbSolRegCannabis
@@ -687,7 +797,6 @@ public partial class Solicitud : ComponentBase
 
                 Console.WriteLine($"Solicitud guardada exitosamente. Número: {solicitud.NumSolCompleta}");
                 NavigationManager.NavigateTo($"/exito/{solicitud.NumSolCompleta}", forceLoad: true);
-
             }
             catch (Exception ex)
             {
@@ -708,34 +817,73 @@ public partial class Solicitud : ComponentBase
         bool isValid = true;
 
         if (!ValidateStep1()) isValid = false;
-        
-        if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si && !ValidateStep2()) 
+
+        if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si && !ValidateStep2())
         {
             isValid = false;
         }
-        
+
         if (!ValidateStep3()) isValid = false;
         if (!ValidateStep4()) isValid = false;
         if (!ValidateStep5()) isValid = false;
 
-        if (unidadSeleccionadaId == null)
+        if (registro.productoPaciente.ProductoUnidadId == null)
         {
-            messageStore?.Add(new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
+            messageStore?.Add(
+                new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidadId)),
                 "Seleccione una unidad.");
             isValid = false;
         }
 
-        if (unidadSeleccionadaId == 0 && string.IsNullOrEmpty(unidadOtraTexto))
+        if (registro.productoPaciente.ProductoUnidadId == 6 &&
+            string.IsNullOrEmpty(registro.productoPaciente.ProductoUnidad))
         {
-            messageStore?.Add(new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
+            messageStore?.Add(
+                new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
                 "Debe especificar la unidad.");
             isValid = false;
         }
 
-        if (registro.pacienteDiagnostico.SelectedDiagnosticosIds.Count == 0 && 
+        // Validación de instalación de salud del paciente - MODIFICADA
+        // Solo es requerido si NO se seleccionó "Otra instalación"
+        if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
+        {
+            messageStore?.Add(new FieldIdentifier(registro.paciente, nameof(registro.paciente.pacienteInstalacionId)),
+                "Seleccione o especifique una instalación de salud.");
+            isValid = false;
+        }
+
+        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
+        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(otraInstalacionPaciente))
+        {
+            messageStore?.Add(new FieldIdentifier(this, nameof(otraInstalacionPaciente)),
+                "Especifique el nombre de la instalación de salud.");
+            isValid = false;
+        }
+
+        // Validación de instalación de salud del médico - MODIFICADA
+        // Solo es requerido si NO se seleccionó "Otra instalación"
+        if (registro.medico.medicoInstalacionId == null && !mostrarOtraInstalacionMedico)
+        {
+            messageStore?.Add(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)),
+                "Seleccione o especifique una instalación de salud.");
+            isValid = false;
+        }
+
+        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
+        if (mostrarOtraInstalacionMedico && string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
+        {
+            messageStore?.Add(new FieldIdentifier(this, nameof(registro.medico.MedicoInstalacion)),
+                "Especifique el nombre de la instalación de salud.");
+            isValid = false;
+        }
+
+        if (registro.pacienteDiagnostico.SelectedDiagnosticosIds.Count == 0 &&
             !registro.pacienteDiagnostico.IsOtroDiagSelected)
         {
-            messageStore?.Add(new FieldIdentifier(registro.pacienteDiagnostico, nameof(registro.pacienteDiagnostico.SelectedDiagnosticosIds)),
+            messageStore?.Add(
+                new FieldIdentifier(registro.pacienteDiagnostico,
+                    nameof(registro.pacienteDiagnostico.SelectedDiagnosticosIds)),
                 "Seleccione al menos un diagnóstico.");
             isValid = false;
         }
@@ -753,6 +901,30 @@ public partial class Solicitud : ComponentBase
     private void OnSubmit()
     {
         Console.WriteLine("Formulario enviado con éxito.");
+    }
+
+    private async Task<int?> CrearOGuardarInstalacionPersonalizada(string nombreInstalacion)
+    {
+        if (string.IsNullOrEmpty(nombreInstalacion))
+            return null;
+
+        // Verificar si ya existe
+        var instalacionExistente = await _context.TbInstalacionSalud
+            .FirstOrDefaultAsync(i => i.Nombre.ToLower() == nombreInstalacion.ToLower());
+
+        if (instalacionExistente != null)
+            return instalacionExistente.Id;
+
+        // Crear nueva instalación
+        var nuevaInstalacion = new TbInstalacionSalud
+        {
+            Nombre = nombreInstalacion.Trim()
+        };
+
+        _context.TbInstalacionSalud.Add(nuevaInstalacion);
+        await _context.SaveChangesAsync();
+
+        return nuevaInstalacion.Id;
     }
 
     public class DocumentosModel

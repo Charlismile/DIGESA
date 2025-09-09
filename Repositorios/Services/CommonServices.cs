@@ -126,6 +126,27 @@ public class CommonServices : ICommon
         }
         return Lista;
     }
+    
+    public async Task<List<ListModel>> GetUnidadId()
+    {
+        List<ListModel> Lista = new List<ListModel>();
+        try
+        {
+            using (var localContext = await _Context.CreateDbContextAsync())
+            {
+                Lista = await localContext.TbUnidades
+                    .Select(x => new ListModel()
+                    {
+                        Id = x.Id,
+                        Name = x.NombreUnidad ?? "",
+                    }).ToListAsync();
+            }
+        }
+        catch (Exception)
+        {
+        }
+        return Lista;
+    }
     public async Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync()
     {
         await using var context = _Context.CreateDbContext();

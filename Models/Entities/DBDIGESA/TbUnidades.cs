@@ -10,4 +10,6 @@ public partial class TbUnidades
     public string NombreUnidad { get; set; } = null!;
 
     public bool IsActivo { get; set; }
+
+    public virtual ICollection<TbNombreProductoPaciente> TbNombreProductoPaciente { get; set; } = new List<TbNombreProductoPaciente>();
 }
