@@ -25,6 +25,8 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<TbDistrito> TbDistrito { get; set; }
 
+    public virtual DbSet<TbDocumentoAdjunto> TbDocumentoAdjunto { get; set; }
+
     public virtual DbSet<TbDocumentoMedico> TbDocumentoMedico { get; set; }
 
     public virtual DbSet<TbEstadoSolicitud> TbEstadoSolicitud { get; set; }
@@ -52,6 +54,8 @@ public partial class DbContextDigesa : DbContext
     public virtual DbSet<TbSolRegCannabisHistorial> TbSolRegCannabisHistorial { get; set; }
 
     public virtual DbSet<TbSolSecuencia> TbSolSecuencia { get; set; }
+
+    public virtual DbSet<TbTipoDocumentoAdjunto> TbTipoDocumentoAdjunto { get; set; }
 
     public virtual DbSet<TbUnidades> TbUnidades { get; set; }
 
@@ -145,6 +149,36 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.Provincia).WithMany(p => p.TbDistrito)
                 .HasForeignKey(d => d.ProvinciaId)
                 .HasConstraintName("FK__TbDistrit__Provi__07C12930");
+        });
+
+        modelBuilder.Entity<TbDocumentoAdjunto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TbDocume__3214EC07044A41B7");
+
+            entity.Property(e => e.FechaSubidaUtc)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsValido).HasDefaultValue(false);
+            entity.Property(e => e.NombreGuardado)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.NombreOriginal)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.SubidoPor)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Url).HasMaxLength(300);
+
+            entity.HasOne(d => d.SolRegCannabis).WithMany(p => p.TbDocumentoAdjunto)
+                .HasForeignKey(d => d.SolRegCannabisId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TbDocumen__SolRe__08B54D69");
+
+            entity.HasOne(d => d.TipoDocumento).WithMany(p => p.TbDocumentoAdjunto)
+                .HasForeignKey(d => d.TipoDocumentoId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TbDocumen__TipoD__09A971A2");
         });
 
         modelBuilder.Entity<TbDocumentoMedico>(entity =>
@@ -434,6 +468,26 @@ public partial class DbContextDigesa : DbContext
         modelBuilder.Entity<TbSolSecuencia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TbSolSec__3214EC07FC4B29BC");
+        });
+
+        modelBuilder.Entity<TbTipoDocumentoAdjunto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TbTipoDo__3214EC076A7EB456");
+
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(300)
+                .IsUnicode(false);
+            entity.Property(e => e.EsObligatorio).HasDefaultValue(true);
+            entity.Property(e => e.EsParaMayorEdad).HasDefaultValue(false);
+            entity.Property(e => e.EsParaMenorEdad).HasDefaultValue(false);
+            entity.Property(e => e.EsParaRenovacion).HasDefaultValue(false);
+            entity.Property(e => e.EsRequisitoParaAcompanante).HasDefaultValue(false);
+            entity.Property(e => e.EsRequisitoParaPaciente).HasDefaultValue(false);
+            entity.Property(e => e.EsSoloMedico).HasDefaultValue(false);
+            entity.Property(e => e.IsActivo).HasDefaultValue(true);
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(200)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TbUnidades>(entity =>

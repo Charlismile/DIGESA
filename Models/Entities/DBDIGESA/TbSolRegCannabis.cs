@@ -39,5 +39,7 @@ public partial class TbSolRegCannabis
 
     public virtual ICollection<TbDeclaracionJurada> TbDeclaracionJurada { get; set; } = new List<TbDeclaracionJurada>();
 
+    public virtual ICollection<TbDocumentoAdjunto> TbDocumentoAdjunto { get; set; } = new List<TbDocumentoAdjunto>();
+
     public virtual ICollection<TbSolRegCannabisHistorial> TbSolRegCannabisHistorial { get; set; } = new List<TbSolRegCannabisHistorial>();
 }

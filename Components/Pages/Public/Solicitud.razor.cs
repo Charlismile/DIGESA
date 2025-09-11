@@ -6,11 +6,13 @@ using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 
 namespace DIGESA.Components.Pages.Public;
 
 public partial class Solicitud : ComponentBase
 {
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
     [Inject] private ICommon _Commonservice { get; set; } = default!;
     [Inject] private DbContextDigesa _context { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
@@ -21,11 +23,7 @@ public partial class Solicitud : ComponentBase
     private DocumentosModel documentos = new();
     private bool mostrarOtraInstalacionPaciente { get; set; }
     private bool mostrarOtraInstalacionMedico { get; set; }
-
-    // Variables faltantes añadidas
-    private string otraInstalacionPaciente;
-    private int? unidadSeleccionadaId;
-    private string unidadOtraTexto;
+    private Dictionary<string, int> tipoDocumentoMap = new Dictionary<string, int>();
 
     private string instalacionFilterPaciente = "";
     private string instalacionFilterMedico = "";
@@ -59,8 +57,31 @@ public partial class Solicitud : ComponentBase
         productoFormaList = await _Commonservice.GetAllFormasAsync();
         productoViaConsumoList = await _Commonservice.GetAllViaAdmAsync();
         productoUnidadList = await _Commonservice.GetUnidadId();
+
+        // Cargar tipos de documento
+        await CargarTiposDocumento();
     }
 
+    private async Task CargarTiposDocumento()
+    {
+        try
+        {
+            var tipos = await _context.TbTipoDocumentoAdjunto
+                .Where(t => t.IsActivo == true)
+                .ToListAsync();
+
+            tipoDocumentoMap = tipos.ToDictionary(
+                t => t.Nombre.Trim(), 
+                t => t.Id
+            );
+
+            Console.WriteLine($"Tipos de documento cargados: {tipoDocumentoMap.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar tipos de documento: {ex.Message}");
+        }
+    }
 
     private async Task<AutoCompleteDataProviderResult<ListModel>> AutoCompleteDataProvider(
         AutoCompleteDataProviderRequest<ListModel> request)
@@ -87,7 +108,6 @@ public partial class Solicitud : ComponentBase
         {
             registro.paciente.pacienteInstalacionId = sel.Id;
             mostrarOtraInstalacionPaciente = false;
-            otraInstalacionPaciente = null;
         }
     }
 
@@ -120,10 +140,8 @@ public partial class Solicitud : ComponentBase
     {
         if (int.TryParse(e.Value?.ToString(), out int selectedId))
         {
-            unidadSeleccionadaId = selectedId;
             registro.productoPaciente.ProductoUnidadId = selectedId;
 
-            // Si se selecciona "Otro" (ID 6), limpiar el texto personalizado
             if (selectedId == 6)
             {
                 registro.productoPaciente.ProductoUnidad = string.Empty;
@@ -131,7 +149,6 @@ public partial class Solicitud : ComponentBase
         }
         else
         {
-            unidadSeleccionadaId = null;
             registro.productoPaciente.ProductoUnidadId = null;
         }
     }
@@ -141,7 +158,6 @@ public partial class Solicitud : ComponentBase
         mostrarOtraInstalacionPaciente = (bool)e.Value;
         if (mostrarOtraInstalacionPaciente)
         {
-            // Si selecciona "otra instalación", limpiar la selección del autocomplete
             registro.paciente.pacienteInstalacionId = null;
             instalacionFilterPaciente = "";
         }
@@ -149,7 +165,6 @@ public partial class Solicitud : ComponentBase
 
     private void OnMostrarOtraInstalacionMedicoChanged(ChangeEventArgs e)
     {
-        // Convertir correctamente el valor del checkbox
         bool nuevoValor = false;
         if (e?.Value != null && bool.TryParse(e.Value.ToString(), out var b))
             nuevoValor = b;
@@ -158,25 +173,18 @@ public partial class Solicitud : ComponentBase
 
         if (mostrarOtraInstalacionMedico)
         {
-            // Si es "otra", limpiar selección proveniente del autocomplete
             registro.medico.medicoInstalacionId = null;
             instalacionFilterMedico = string.Empty;
         }
         else
         {
-            // Si vuelve a modo "lista", limpiar el texto libre
             registro.medico.MedicoInstalacion = null;
         }
 
-        // Limpiar mensajes previos de validación para estos campos
         messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)));
         messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.MedicoInstalacion)));
 
         editContext?.NotifyValidationStateChanged();
-    }
-
-    private async Task RegisterForm()
-    {
     }
 
     private int currentStepNumber = 1;
@@ -217,7 +225,6 @@ public partial class Solicitud : ComponentBase
 
     private async Task NextStep()
     {
-        // Validaciones por paso
         if (currentStepNumber == 1)
         {
             if (!ValidateStep1()) return;
@@ -243,14 +250,12 @@ public partial class Solicitud : ComponentBase
             if (!ValidateStep5()) return;
         }
 
-        // Si es el último paso, guardar en BD
         if (currentStepNumber == steps.Count)
         {
             await SaveFormData();
             return;
         }
 
-        // Avanzar al siguiente paso
         if (currentStepNumber < steps.Count)
         {
             currentStepNumber++;
@@ -328,7 +333,6 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        // Validación de instalación de salud del paciente - MODIFICADA
         if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteInstalacionId)),
@@ -336,7 +340,6 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
         if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
         {
             messageStore?.Add(new FieldIdentifier(this, nameof(registro.paciente.pacienteInstalacion)),
@@ -399,17 +402,14 @@ public partial class Solicitud : ComponentBase
 
     private bool ValidateStep3()
     {
-        // limpia sólo los mensajes previos y prepara validación general
         messageStore?.Clear();
 
         var subModel = registro.medico;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
-        // Validación por DataAnnotations del modelo
         bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
 
-        // Añadir errores estándar al messageStore
         foreach (var r in results)
         {
             if (r.MemberNames != null && r.MemberNames.Any())
@@ -425,14 +425,11 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        // Limpiar mensajes previos sólo de los campos de instalación para no duplicar
         messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)));
         messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)));
 
-        // Validación condicional:
         if (mostrarOtraInstalacionMedico)
         {
-            // cuando es "otra", exigir texto y NO exigir Id
             if (string.IsNullOrWhiteSpace(subModel.MedicoInstalacion))
             {
                 messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)),
@@ -442,7 +439,6 @@ public partial class Solicitud : ComponentBase
         }
         else
         {
-            // cuando no es "otra", exigir que venga seleccionado un Id desde el autocomplete
             if (subModel.medicoInstalacionId == null)
             {
                 messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)),
@@ -475,7 +471,6 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        // Validación de unidad
         if (registro.productoPaciente.ProductoUnidadId == null)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProductoUnidadId)),
@@ -539,6 +534,106 @@ public partial class Solicitud : ComponentBase
         return isValid;
     }
 
+    private async Task SaveAttachedFiles(int solicitudId)
+    {
+        try
+        {
+            var archivosAGuardar = new List<TbDocumentoAdjunto>();
+
+            async Task ProcessFiles(List<IBrowserFile> files, string tipoDocumentoNombre)
+            {
+                if (files == null || !files.Any()) return;
+
+                var tipoDocumentoEntry = tipoDocumentoMap.FirstOrDefault(x => 
+                    x.Key.Equals(tipoDocumentoNombre, StringComparison.OrdinalIgnoreCase));
+                
+                if (tipoDocumentoEntry.Value == 0)
+                {
+                    Console.WriteLine($"Tipo de documento no encontrado: {tipoDocumentoNombre}");
+                    return;
+                }
+
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        var rutaAlmacenada = await SaveFileAsync(file, solicitudId);
+                        var nombreGuardado = Path.GetFileName(rutaAlmacenada);
+
+                        var documento = new TbDocumentoAdjunto
+                        {
+                            SolRegCannabisId = solicitudId,
+                            TipoDocumentoId = tipoDocumentoEntry.Value,
+                            NombreOriginal = file.Name,
+                            NombreGuardado = nombreGuardado,
+                            Url = rutaAlmacenada,
+                            FechaSubidaUtc = DateTime.UtcNow,
+                            SubidoPor = "Sistema",
+                            IsValido = false
+                        };
+
+                        archivosAGuardar.Add(documento);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error al procesar archivo {file.Name}: {ex.Message}");
+                    }
+                }
+            }
+
+            await ProcessFiles(documentos.CedulaPaciente, "CedulaPaciente");
+            await ProcessFiles(documentos.CertificacionMedica, "CertificacionMedica");
+            await ProcessFiles(documentos.FotoPaciente, "FotoPaciente");
+            await ProcessFiles(documentos.CedulaAcompanante, "CedulaAcompanante");
+            await ProcessFiles(documentos.SentenciaTutor, "SentenciaTutor");
+            await ProcessFiles(documentos.Antecedentes, "Antecedentes");
+            await ProcessFiles(documentos.IdentidadMenor, "IdentidadMenor");
+            await ProcessFiles(documentos.ConsentimientoPadres, "ConsentimientoPadres");
+            await ProcessFiles(documentos.CertificadoNacimientoMenor, "CertificadoNacimientoMenor");
+            await ProcessFiles(documentos.FotoAcompanante, "FotoAcompanante");
+
+            if (archivosAGuardar.Any())
+            {
+                await _context.TbDocumentoAdjunto.AddRangeAsync(archivosAGuardar);
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"Archivos guardados: {archivosAGuardar.Count}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error en SaveAttachedFiles: {ex.Message}");
+            throw;
+        }
+    }
+
+    private async Task<string> SaveFileAsync(IBrowserFile file, int solicitudId)
+    {
+        try
+        {
+            if (file.Size > 10 * 1024 * 1024)
+                throw new Exception($"El archivo {file.Name} excede el tamaño máximo permitido (10MB)");
+
+            var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", solicitudId.ToString());
+            
+            if (!Directory.Exists(uploadDirectory))
+                Directory.CreateDirectory(uploadDirectory);
+
+            var fileExtension = Path.GetExtension(file.Name);
+            var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
+            var filePath = Path.Combine(uploadDirectory, uniqueFileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(stream);
+
+            return $"/uploads/{solicitudId}/{uniqueFileName}";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al guardar archivo {file.Name}: {ex.Message}");
+            throw;
+        }
+    }
+
     private async Task SaveFormData()
     {
         try
@@ -553,14 +648,12 @@ public partial class Solicitud : ComponentBase
 
             try
             {
-                // Manejar instalación personalizada del paciente si se seleccionó "Otra"
-                if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(otraInstalacionPaciente))
+                if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
                 {
-                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(otraInstalacionPaciente);
+                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.paciente.pacienteInstalacion);
                     registro.paciente.pacienteInstalacionId = instalacionId;
                 }
 
-                // Manejar instalación personalizada del médico si se seleccionó "Otra"
                 if (mostrarOtraInstalacionMedico && !string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
                 {
                     var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.medico.MedicoInstalacion);
@@ -780,7 +873,10 @@ public partial class Solicitud : ComponentBase
                 _context.TbSolRegCannabis.Add(solicitud);
                 await _context.SaveChangesAsync();
 
-                // 10. Crear historial
+                // 10. GUARDAR ARCHIVOS ADJUNTOS - ¡NUEVO!
+                await SaveAttachedFiles(solicitud.Id);
+
+                // 11. Crear historial
                 var historial = new TbSolRegCannabisHistorial
                 {
                     SolRegCannabisId = solicitud.Id,
@@ -796,7 +892,7 @@ public partial class Solicitud : ComponentBase
                 await transaction.CommitAsync();
 
                 Console.WriteLine($"Solicitud guardada exitosamente. Número: {solicitud.NumSolCompleta}");
-                NavigationManager.NavigateTo($"/exito/{solicitud.NumSolCompleta}", forceLoad: true);
+                NavigationManager.NavigateTo("/", forceLoad: true);
             }
             catch (Exception ex)
             {
@@ -844,8 +940,6 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        // Validación de instalación de salud del paciente - MODIFICADA
-        // Solo es requerido si NO se seleccionó "Otra instalación"
         if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
         {
             messageStore?.Add(new FieldIdentifier(registro.paciente, nameof(registro.paciente.pacienteInstalacionId)),
@@ -853,16 +947,13 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
-        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(otraInstalacionPaciente))
+        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
         {
-            messageStore?.Add(new FieldIdentifier(this, nameof(otraInstalacionPaciente)),
+            messageStore?.Add(new FieldIdentifier(this, nameof(registro.paciente.pacienteInstalacion)),
                 "Especifique el nombre de la instalación de salud.");
             isValid = false;
         }
 
-        // Validación de instalación de salud del médico - MODIFICADA
-        // Solo es requerido si NO se seleccionó "Otra instalación"
         if (registro.medico.medicoInstalacionId == null && !mostrarOtraInstalacionMedico)
         {
             messageStore?.Add(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)),
@@ -870,7 +961,6 @@ public partial class Solicitud : ComponentBase
             isValid = false;
         }
 
-        // Si seleccionó "Otra instalación", validar que haya escrito el nombre
         if (mostrarOtraInstalacionMedico && string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
         {
             messageStore?.Add(new FieldIdentifier(this, nameof(registro.medico.MedicoInstalacion)),
@@ -892,12 +982,79 @@ public partial class Solicitud : ComponentBase
         return isValid;
     }
 
-    private void OnFileChange(InputFileChangeEventArgs e, string campo)
+   private void OnFileChange(InputFileChangeEventArgs e, string campo)
+{
+    var files = e.GetMultipleFiles();
+    const long maxFileSize = 5 * 1024 * 1024; // 512KB
+
+    foreach (var file in files)
     {
-        var file = e.File;
-        Console.WriteLine($"Archivo recibido para {campo}: {file.Name}");
+        Console.WriteLine($"Archivo recibido para {campo}: {file.Name} - Tamaño: {file.Size} bytes");
+
+        // Validar tamaño máximo
+        if (file.Size > maxFileSize)
+        {
+            // Mostrar advertencia al usuario
+            MostrarAdvertencia($"El archivo '{file.Name}' excede el tamaño máximo permitido de 5MB. " +
+                              $"Tamaño actual: {(file.Size / 2048f):F2}KB");
+            continue; // Saltar este archivo
+        }
+
+        switch (campo)
+        {
+            case "CedulaPaciente":
+                documentos.CedulaPaciente.Add(file);
+                break;
+            case "CertificacionMedica":
+                documentos.CertificacionMedica.Add(file);
+                break;
+            case "FotoPaciente":
+                documentos.FotoPaciente.Add(file);
+                break;
+            case "CedulaAcompanante":
+                documentos.CedulaAcompanante.Add(file);
+                break;
+            case "SentenciaTutor":
+                documentos.SentenciaTutor.Add(file);
+                break;
+            case "Antecedentes":
+                documentos.Antecedentes.Add(file);
+                break;
+            case "IdentidadMenor":
+                documentos.IdentidadMenor.Add(file);
+                break;
+            case "ConsentimientoPadres":
+                documentos.ConsentimientoPadres.Add(file);
+                break;
+            case "CertificadoNacimientoMenor":
+                documentos.CertificadoNacimientoMenor.Add(file);
+                break;
+            case "FotoAcompanante":
+                documentos.FotoAcompanante.Add(file);
+                break;
+            default:
+                Console.WriteLine($"Campo de archivo desconocido: {campo}");
+                break;
+        }
     }
 
+    StateHasChanged();
+}
+
+private async void MostrarAdvertencia(string mensaje)
+{
+    // Puedes usar JavaScript para mostrar un alert o implementar un sistema de notificaciones
+    try
+    {
+        // Si estás usando JavaScript interop
+        await JSRuntime.InvokeVoidAsync("alert", mensaje);
+    }
+    catch
+    {
+        // Fallback: mostrar en consola
+        Console.WriteLine($"ADVERTENCIA: {mensaje}");
+    }
+}
     private void OnSubmit()
     {
         Console.WriteLine("Formulario enviado con éxito.");
@@ -908,14 +1065,12 @@ public partial class Solicitud : ComponentBase
         if (string.IsNullOrEmpty(nombreInstalacion))
             return null;
 
-        // Verificar si ya existe
         var instalacionExistente = await _context.TbInstalacionSalud
             .FirstOrDefaultAsync(i => i.Nombre.ToLower() == nombreInstalacion.ToLower());
 
         if (instalacionExistente != null)
             return instalacionExistente.Id;
 
-        // Crear nueva instalación
         var nuevaInstalacion = new TbInstalacionSalud
         {
             Nombre = nombreInstalacion.Trim()
@@ -929,15 +1084,15 @@ public partial class Solicitud : ComponentBase
 
     public class DocumentosModel
     {
-        public IBrowserFile CedulaPaciente { get; set; }
-        public IBrowserFile CertificacionMedica { get; set; }
-        public IBrowserFile FotoPaciente { get; set; }
-        public IBrowserFile CedulaAcompanante { get; set; }
-        public IBrowserFile SentenciaTutor { get; set; }
-        public IBrowserFile Antecedentes { get; set; }
-        public IBrowserFile IdentidadMenor { get; set; }
-        public IBrowserFile ConsentimientoPadres { get; set; }
-        public IBrowserFile CertificadoNacimientoMenor { get; set; }
-        public IBrowserFile FotoAcompanante { get; set; }
+        public List<IBrowserFile> CedulaPaciente { get; set; } = new();
+        public List<IBrowserFile> CertificacionMedica { get; set; } = new();
+        public List<IBrowserFile> FotoPaciente { get; set; } = new();
+        public List<IBrowserFile> CedulaAcompanante { get; set; } = new();
+        public List<IBrowserFile> SentenciaTutor { get; set; } = new();
+        public List<IBrowserFile> Antecedentes { get; set; } = new();
+        public List<IBrowserFile> IdentidadMenor { get; set; } = new();
+        public List<IBrowserFile> ConsentimientoPadres { get; set; } = new();
+        public List<IBrowserFile> CertificadoNacimientoMenor { get; set; } = new();
+        public List<IBrowserFile> FotoAcompanante { get; set; } = new();
     }
 }

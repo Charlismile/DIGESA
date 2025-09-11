@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9vrfXGvEf1rkPwtX8CWPpODlD5UZ1AaShaTfAI9QXHY=",
+  "Hash": "Vb2t1hVOQl29T+Fw58SYt93JAyuhUJW7XjMSZXXj2YY=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -708,6 +708,69 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\README.md"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cazrs8q1yl",
+      "Integrity": "ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf"
     }
   ],
   "Endpoints": [
@@ -3287,6 +3350,252 @@
         {
           "Name": "integrity",
           "Value": "sha256-c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.cazrs8q1yl.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "474339"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cazrs8q1yl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "474339"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 11 Sep 2025 19:30:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
         }
       ]
     }
