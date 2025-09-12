@@ -1,0 +1,36 @@
+﻿@page "/Admin"
+@using DIGESA.Repositorios.Interfaces
+@inject IActiveDirectory ADService
+
+<h3>Administrar Usuarios AD</h3>
+
+<input class="form-control mb-2" @bind="searchTerm" placeholder="Buscar por nombre, correo..." />
+<button class="btn btn-primary mb-3" @onclick="Search">Buscar</button>
+
+@if (isLoading) { <p>Cargando...</p> }
+else {
+    <table class="table">
+        <thead>
+            <tr><th>Nombre</th><th>Email</th><th>Último inicio</th><th>Estado</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+        @foreach(var u in users)
+        {
+            <tr>
+                <td>@(u.FirstName) @(u.LastName)</td>
+                <td>@u.Email</td>
+                <td>@(u.LastLoginDate?.ToString("g") ?? "-")</td>
+                <td>@(u.Enabled ? "Activo" : "Inactivo")</td>
+                <td>
+                    <button class="btn btn-sm btn-secondary" @onclick="() => ToggleEnable(u)">@((u.Enabled) ? "Deshabilitar" : "Habilitar")</button>
+                    <button class="btn btn-sm btn-info" @onclick="() => EditUser(u)">Editar</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+}

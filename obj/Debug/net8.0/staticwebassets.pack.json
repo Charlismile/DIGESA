@@ -93,6 +93,34 @@
       "PackagePath": "staticwebassets\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac",
+      "PackagePath": "staticwebassets\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac",
+      "PackagePath": "staticwebassets\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac",
+      "PackagePath": "staticwebassets\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf",
+      "PackagePath": "staticwebassets\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf",
+      "PackagePath": "staticwebassets\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf",
+      "PackagePath": "staticwebassets\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac",
+      "PackagePath": "staticwebassets\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

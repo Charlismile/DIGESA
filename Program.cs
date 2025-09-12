@@ -1,39 +1,27 @@
 using Blazored.Toast;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using DIGESA.Components;
 using DIGESA.Components.Account;
+using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
+using DIGESA.Models.ActiveDirectory;
 using DIGESA.Repositorios.Interfaces;
 using DIGESA.Repositorios.Services;
 
-// using DIGESA.Validadores;
-using FluentValidation;
-
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Add services to the container.
 builder.Services.AddControllers();
-
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-// builder.Services.AddScoped<ISolicitudService, SolicitudService>();
+
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
-
-// builder.Services.AddScoped<IPacienteService, PacienteService>();
-builder.Services.AddScoped<IdentityUserAccessor>();
-builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddBlazoredToast();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -43,11 +31,7 @@ builder.Services.AddDbContextFactory<DbContextDigesa>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionDigesa"));
 });
 
-// RegistroDto del contexto de tu dominio (Pacientes, Médicos, etc.)
-builder.Services.AddDbContext<DbContextDigesa>(options =>
-    options.UseSqlServer(connectionString));
-
-// RegistroDto de Identity (usa ApplicationUser si lo personalizaste)
+// ✅ Identity para usuarios externos
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
@@ -55,16 +39,29 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// ✅ Autenticación híbrida (Identity + Active Directory local)
+builder.Services.AddAuthentication(options =>
+{
+    // Identity por defecto
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    // Pero si el usuario está en AD, usar Negotiate
+    options.DefaultChallengeScheme = NegotiateDefaults.AuthenticationScheme;
+})
+.AddNegotiate()            // Usuarios internos (AD local)
+.AddIdentityCookies();     // Usuarios externos (Identity)
 
-// Si usas roles, asegúrate de tener esta línea
-builder.Services.AddAuthorization();
+// ✅ Autorización
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = options.DefaultPolicy;
+});
 
-// RegistroDto de servicios adicionales
-builder.Services.AddControllers();
+// Servicios propios
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 builder.Services.AddScoped<ICommon, CommonServices>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
-// Enable CORS
+
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -75,19 +72,25 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add Swagger/OpenAPI
-builder.Services.AddEndpointsApiExplorer();
+// Configuración de tu servicio externo de AD (si lo necesitas todavía)
+builder.Services.Configure<ActiveDirectoryApiModel>(builder.Configuration.GetSection("API_INFO"));
+builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>(client =>
+{
+    var cfg = builder.Configuration.GetSection("API_INFO").Get<ActiveDirectoryApiModel>();
+    client.BaseAddress = new Uri(cfg.BaseUrl);
+});
 
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Crear roles iniciales (solo en desarrollo)
+// Crear roles iniciales
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    foreach (var roleName in new[] { "Administrador", "Médico", "Solicitud" })
+    foreach (var roleName in new[] { "Administrador", "Médico", "Solicitud", "Externo" })
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {
@@ -95,9 +98,6 @@ if (app.Environment.IsDevelopment())
         }
     }
 }
-
-// Configure the HTTP request pipeline.
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -111,7 +111,6 @@ app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-// Mapea los endpoints de Identity (Razor Pages)
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();

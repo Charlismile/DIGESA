@@ -414,5 +414,131 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\6\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>94u6v4vrun</Fingerprint>
+      <Integrity>B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/110268a5-f0e5-4085-8b65-31718c1f981e.bacpac</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>94u6v4vrun</Fingerprint>
+      <Integrity>B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>94u6v4vrun</Fingerprint>
+      <Integrity>B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\75f4469d-63d9-418c-b200-0a104da9d5de.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/75f4469d-63d9-418c-b200-0a104da9d5de.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>azyzg24nv0</Fingerprint>
+      <Integrity>KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\75f4469d-63d9-418c-b200-0a104da9d5de.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>azyzg24nv0</Fingerprint>
+      <Integrity>KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>azyzg24nv0</Fingerprint>
+      <Integrity>KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac'))">
+      <SourceType>Package</SourceType>
+      <SourceId>DIGESA</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/DIGESA</BasePath>
+      <RelativePath>uploads/7/ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>94u6v4vrun</Fingerprint>
+      <Integrity>B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac'))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>
