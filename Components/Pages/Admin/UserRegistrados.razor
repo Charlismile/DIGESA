@@ -1,0 +1,79 @@
+﻿@page "/UserRegistrados"
+@using DIGESA.Data
+@using DIGESA.Repositorios.Interfaces
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize (Roles = "user_administrador")]
+@attribute [StreamRendering]
+@inject IUserData _UserService
+
+<div class="container-fluid py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-gob-blue text-white d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <Icon Name="IconName.PersonFill" Class="me-1" Size="IconSize.x5" />
+                <h2 class="mb-0">Usuarios del Sistema</h2>
+            </div>
+            <NavLink class="btn btn-light" href="/Create/{UserName?}" Match="NavLinkMatch.All">
+                <i class="fa-solid fa-user-plus me-1"></i>Registrar
+            </NavLink>
+        </div>
+        <div class="card-body">
+            <!-- Filtro compacto con botón al lado -->
+            <div class="input-group input-group-sm mb-4" style="max-width:480px;">
+                <InputText @bind-Value="Filter"
+                           class="form-control"
+                           placeholder="Buscar por nombre, apellido o correo"/>
+                <button class="btn btn-gob-blue" @onclick="ReloadGrid" type="button">
+                    <i class="fa-solid fa-magnifying-glass me-1"></i>Filtrar
+                </button>
+            </div>
+
+            <!-- Tabla responsiva con paginación integrada -->
+            <Grid TItem="ApplicationUser"
+                  @ref="GridUsers"
+                  Class="table table-hover table-bordered table-striped"
+                  DataProvider="UsersDataProvider"
+                  AllowPaging="true"
+                  PageSize="10"
+                  Responsive="true"
+                  PaginationItemsTextFormat="{0} - {1} de {2} usuarios">
+
+                <GridColumn TItem="ApplicationUser" HeaderText="Id" PropertyName="Id">
+                    @context.Id
+                </GridColumn>
+
+                <GridColumn TItem="ApplicationUser" HeaderText="Nombre">
+                    @context.FirstName @context.LastName
+                </GridColumn>
+
+                <GridColumn TItem="ApplicationUser" HeaderText="Correo">
+                    @context.Email
+                </GridColumn>
+
+                <GridColumn TItem="ApplicationUser" HeaderText="Activo">
+                    @(context.IsAproved ? "SI" : "NO")
+                </GridColumn>
+
+                <GridColumn TItem="ApplicationUser"
+                            HeaderText="Acciones"
+                            TextAlignment="Alignment.Center">
+                    <ChildContent>
+                        <div class="btn-group" role="group" aria-label="acciones">
+                            <a class="btn btn-sm btn-light"
+                               href="@($"/Create/{context.UserName}")">
+                                <Tooltip Title="Editar Usuario">
+                                    <i class="fa-solid fa-pen-to-square text-flat-blue"></i>
+                                </Tooltip>
+                            </a>
+                        </div>
+                    </ChildContent>
+                </GridColumn>
+            </Grid>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+}

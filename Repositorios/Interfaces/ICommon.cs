@@ -14,4 +14,5 @@ public interface ICommon
     Task<List<TbFormaFarmaceutica>> GetAllFormasAsync();
     Task<List<TbViaAdministracion>> GetAllViaAdmAsync();
     Task<List<ListModel>> GetUnidadId();
+    Task<string> GetFakePassword();
 }

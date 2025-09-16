@@ -8,12 +8,18 @@ namespace DIGESA.Repositorios.Services;
 public class CommonServices : ICommon
 {
     private readonly IDbContextFactory<DbContextDigesa> _Context;
+    private readonly IConfiguration _Configuration;
     public CommonServices(IDbContextFactory<DbContextDigesa> Context)
     {
         _Context = Context;
        
     }
 
+    public async Task<string> GetFakePassword()
+    {
+        string Password = _Configuration.GetSection("FakePass").Value ?? "";
+        return await Task.FromResult(Password);
+    }
     public async Task<List<ListModel>> GetInstalaciones(string filtro)
     {
         try
