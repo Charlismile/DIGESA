@@ -836,7 +836,7 @@ public partial class Solicitud : ComponentBase
                     await _context.SaveChangesAsync();
                 }
 
-                // 9. Crear Solicitud de Registro
+                // 9. Crear SolicitudModel de Registro
                 var secuencia = await _context.TbSolSecuencia
                     .FirstOrDefaultAsync(s => s.Anio == DateTime.Now.Year && s.IsActivo == true);
 
@@ -881,7 +881,7 @@ public partial class Solicitud : ComponentBase
                 {
                     SolRegCannabisId = solicitud.Id,
                     EstadoSolicitud = "Pendiente",
-                    Comentario = "Solicitud creada",
+                    Comentario = "SolicitudModel creada",
                     UsuarioRevisor = "Sistema",
                     FechaCambio = DateOnly.FromDateTime(DateTime.Now)
                 };
@@ -891,7 +891,7 @@ public partial class Solicitud : ComponentBase
 
                 await transaction.CommitAsync();
 
-                Console.WriteLine($"Solicitud guardada exitosamente. Número: {solicitud.NumSolCompleta}");
+                Console.WriteLine($"SolicitudModel guardada exitosamente. Número: {solicitud.NumSolCompleta}");
                 NavigationManager.NavigateTo("/", forceLoad: true);
             }
             catch (Exception ex)

@@ -95,6 +95,7 @@ builder.Services.AddScoped<IPaciente, PacienteService>();
 builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
 builder.Services.AddScoped<IUserData, UserDataService>();
 builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 
 
 // ==========================
@@ -144,7 +145,7 @@ if (app.Environment.IsDevelopment())
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    foreach (var roleName in new[] { "Administrador", "Médico", "Solicitud", "Externo" })
+    foreach (var roleName in new[] { "Administrador", "Médico", "SolicitudModel", "Externo" })
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {

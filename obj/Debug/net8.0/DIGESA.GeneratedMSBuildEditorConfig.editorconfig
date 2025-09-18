@@ -182,12 +182,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Admin/Admin.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBZG1pbi5yYXpvcg==
+[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/DynamicModal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEeW5hbWljTW9kYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Admin/Create.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxDcmVhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Admin/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Admin/Solicitudes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxTb2xpY2l0dWRlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Admin/UserRegistrados.razor]
