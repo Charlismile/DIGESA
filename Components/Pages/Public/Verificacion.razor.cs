@@ -8,20 +8,20 @@ namespace DIGESA.Components.Pages.Public;
 public partial class Verificacion : ComponentBase
 {
     [Inject]
-    public IPaciente PacienteService { get; set; }
+    public IPaciente PacienteService { get; set; } = default!;
 
     private string documentoBusqueda = string.Empty;
-    private PacienteEstadoModel pacienteEstado = new();
-    private PacienteModel pacienteDetalle = new();
-    private bool busquedaRealizada = false;
-    private bool pacienteEncontrado = false;
-    private bool loading = false;
+    private PacienteEstadoModel? pacienteEstado;
+    private PacienteModel? pacienteDetalle;
+    private bool busquedaRealizada;
+    private bool pacienteEncontrado;
+    private bool loading;
 
-    private void HandleKeyPress(KeyboardEventArgs e)
+    private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
-            BuscarPaciente();
+            await BuscarPaciente();
         }
     }
 
@@ -33,23 +33,18 @@ public partial class Verificacion : ComponentBase
         loading = true;
         busquedaRealizada = false;
         pacienteEncontrado = false;
-        pacienteEstado = new();
-        pacienteDetalle = new();
+        pacienteEstado = null;
+        pacienteDetalle = null;
 
         try
         {
-            // Buscar estado de la solicitud
             pacienteEstado = await PacienteService.GetEstadoPacienteAsync(documentoBusqueda);
-            
-            // Buscar detalles del paciente
             pacienteDetalle = await PacienteService.BuscarPorDocumentoAsync(documentoBusqueda);
-            
-            pacienteEncontrado = pacienteEstado != null && !string.IsNullOrEmpty(pacienteEstado.Documento);
+            pacienteEncontrado = pacienteEstado is not null && !string.IsNullOrEmpty(pacienteEstado.Documento);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error al buscar paciente: {ex.Message}");
-            // Puedes mostrar un mensaje de error al usuario
         }
         finally
         {

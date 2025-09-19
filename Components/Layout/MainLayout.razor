@@ -1,5 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using ToastService = BlazorBootstrap.ToastService
+@inherits LayoutComponentBase
 @inject IHttpContextAccessor _HttpContextAccessor;
+@inject ToastService ToastService
+
 <PageTitle>DIGESA</PageTitle>
 <header>
     <div class="container-fluid" style="height: 120px;">
@@ -67,3 +70,4 @@
 <div class="container-fluid p-2">
     @Body
 </div>
+<Toasts class="p-3" Placement="ToastsPlacement.TopRight" Delay="5000" AutoHide="true" />

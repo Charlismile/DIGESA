@@ -1,11 +1,13 @@
 ﻿@page "/Index"
 @using DIGESA.Models.Entities.DBDIGESA
 @using DIGESA.Repositorios.Interfaces
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IUserData _UserService
 @inject IDbContextFactory<DbContextDigesa> ContextFactory
+@attribute [Authorize(Roles = "user_administrador")]
 
 <div class="row mt-0">
     <div class="col-lg-6 col-md-12 col-sm-12">

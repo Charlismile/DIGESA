@@ -3,7 +3,6 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @using DIGESA.Repositorios.Interfaces
 @using DIGESA.Data
 
@@ -20,31 +19,38 @@
 <div class="container">
     <div class="card card-body mx-auto my-5" style="width: min(100%, 400px);">
         <StatusMessage Message="@errorMessage" />
-        <EditForm Model="LoginData" method="post" OnValidSubmit="LoginUser" FormName="login">
+
+        <!-- EditForm con FormName único -->
+        <EditForm Model="LoginData" OnValidSubmit="LoginUser" FormName="login">
             <DataAnnotationsValidator />
             <div class="mx-auto rounded-circle bg-flat-blue my-3 d-flex justify-content-center align-items-center"
                  style="width: 80px; height: 80px;">
-                <img src="images/logo-minsa.png" style="width: min(100%, 80px);" alt=""/>
+                <img src="images/logo-minsa.png" style="width: min(100%, 80px);" alt="logo MINSA"/>
             </div>
+            
             <ValidationSummary class="mb-0 alert alert-danger" role="alert" />
+            
             <div class="form-floating mb-3">
                 <InputText @bind-Value="LoginData.Email" class="form-control form-control-sm rounded-3"
                            autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label for="email" class="form-label">Correo</label>
                 <ValidationMessage For="() => LoginData.Email" class="text-danger" />
             </div>
+            
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="LoginData.Password" class="form-control form-control-sm rounded-3"
                            autocomplete="current-password" aria-required="true" placeholder="password" />
                 <label for="password" class="form-label">Contraseña</label>
                 <ValidationMessage For="() => LoginData.Password" class="text-danger" />
             </div>
+            
             <div class="checkbox mb-3">
                 <label class="form-label">
                     <InputCheckbox @bind-Value="LoginData.RememberMe" class="darker-border-checkbox form-check-input" />
                     Recordarme?
                 </label>
             </div>
+            
             <div>
                 @if (IsAccessing)
                 {
@@ -56,8 +62,7 @@
                 else
                 {
                     <button type="submit" class="w-100 btn btn-lg btn-success text-white">
-                        <i
-                            class="fa-solid fa-right-to-bracket"></i> Acceder
+                        <i class="fa-solid fa-right-to-bracket"></i> Acceder
                     </button>
                 }
             </div>
@@ -65,7 +70,7 @@
     </div>
 </div>
 
-@code { 
+@code {
     private string? errorMessage;
     private bool IsAccessing { get; set; } = false;
 
@@ -83,9 +88,11 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity is { IsAuthenticated: true })
         {
-            Navigation.NavigateTo("/dashboard");
+            Navigation.NavigateTo("/Index");
         }
+
         IsAccessing = false;
+
         if (HttpMethods.IsGet(HttpContext.Request.Method))
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -115,7 +122,7 @@
                 return;
             }
 
-            // Login con contraseña fake
+            // Login con contraseña fake para AD
             string fakePassword = await CommonService.GetFakePassword();
             var result = await SignInManager.PasswordSignInAsync(LoginData.Email, fakePassword, LoginData.RememberMe, lockoutOnFailure: true);
 
@@ -123,7 +130,7 @@
             {
                 user.LastLoginDate = DateTime.Now;
                 await UserManager.UpdateAsync(user);
-                RedirectManager.RedirectTo("/dashboard");
+                RedirectManager.RedirectTo("/Index");
             }
             else
             {
@@ -146,21 +153,21 @@
                 }
                 else
                 {
-                    RedirectManager.RedirectTo("/dashboard");
+                    RedirectManager.RedirectTo("/Index");
                 }
             }
             else
             {
-                errorMessage = "Error: Fallo en el inicio de sesión con Active Directory.";
+                errorMessage = "Error: Fallo en el inicio de sesión, verifique sus credenciales.";
                 IsAccessing = false;
             }
         }
     }
-    
+
     private sealed class LoginModel
     {
         [Required(ErrorMessage = "El correo es requerido")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Ingrese un correo válido")]
         public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "La contraseña es requerida")]
@@ -171,4 +178,3 @@
         public bool RememberMe { get; set; }
     }
 }
-

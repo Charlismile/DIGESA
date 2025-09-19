@@ -35,7 +35,6 @@ public partial class Create : ComponentBase
         public bool IsPaciente { get; set; } = false;
         public bool IsAdministrador { get; set; } = false;
         public bool IsExterno { get; set; } = false; 
-        public bool IsAdminUser { get; set; } = false;
         public bool IsFromActiveDirectory { get; set; } = true;
     }
 
@@ -59,7 +58,7 @@ public partial class Create : ComponentBase
         FormData = new();
         EditContext = new EditContext(FormData);
 
-        if (!String.IsNullOrEmpty(UserName))
+        if (!string.IsNullOrEmpty(UserName))
         {
             ApplicationUser UserData = await _UserService.GetUser(UserName);
             if (UserData != null)
@@ -75,10 +74,10 @@ public partial class Create : ComponentBase
                 if (IdentityUserData != null)
                 {
                     var roles = await _UserManager.GetRolesAsync(IdentityUserData);
-                    FormData.IsMedico = roles.Contains("user_medico");
-                    FormData.IsPaciente = roles.Contains("user_paciente");
-                    FormData.IsAdministrador = roles.Contains("user_administrador");
-                    FormData.IsExterno = roles.Contains("user_externo");
+                    FormData.IsMedico = roles.Contains("Medico");
+                    FormData.IsPaciente = roles.Contains("Paciente");
+                    FormData.IsAdministrador = roles.Contains("Administrador");
+                    FormData.IsExterno = roles.Contains("Externo");
                 }
                 UpdatingUser = true;
             }
@@ -92,7 +91,7 @@ public partial class Create : ComponentBase
         var SearchUser = await _UserManager.FindByEmailAsync(FormData.Email);
         if (SearchUser != null)
         {
-            ErrorsFormMessages.Add("El usuario ya esta registrado en el sistema.");
+            ErrorsFormMessages.Add("El usuario ya está registrado en el sistema.");
             return;
         }
 
@@ -111,10 +110,17 @@ public partial class Create : ComponentBase
             // Usuario externo permitido
             UserFound = true;
             FormData.IsFromActiveDirectory = false;
-            _ToastService.Notify(new(ToastType.Info, "", $"Usuario no encontrado en el AD", $"{DateTime.Now}", "Será registrado como usuario local."));
-        }
 
+            _ToastService.Notify(new ToastMessage
+            {
+                Type = ToastType.Info,
+                Title = "Usuario externo",
+                HelpText = DateTime.Now.ToString("g"),
+                Message = "Usuario no encontrado en el AD. Será registrado como usuario local."
+            });
+        }
     }
+
     private async Task RegisterUser()
     {
         ApplicationUser UserData = new ApplicationUser()
@@ -129,25 +135,25 @@ public partial class Create : ComponentBase
             IsFromActiveDirectory = FormData.IsFromActiveDirectory,
         };
 
-        List<string> Roles = new List<string>();
+        List<string> Roles = new();
         if (FormData.IsMedico)
         {
-            Roles.Add("user_medico");
+            Roles.Add("Medico");
         }
         
         if (FormData.IsPaciente)
         {
-            Roles.Add("user_paciente");
+            Roles.Add("Paciente");
         }
         
         if (FormData.IsAdministrador)
         {
-            Roles.Add("user_administrador");
+            Roles.Add("Administrador");
         }
         
         if (FormData.IsExterno)
         {
-            Roles.Add("user_externo");
+            Roles.Add("Externo");
         }
 
         ResultModel Resultado;
@@ -160,9 +166,13 @@ public partial class Create : ComponentBase
             Resultado = await _UserService.CreateUser(UserData, Roles);
         }
 
-        _ToastService.Notify(new(Resultado.Success ? ToastType.Success : ToastType.Danger, "", $"Mensaje",
-            $"{DateTime.Now}",
-            Resultado.Message));
+        _ToastService.Notify(new ToastMessage
+        {
+            Type = Resultado.Success ? ToastType.Success : ToastType.Danger,
+            Title = "Registro de usuario",
+            HelpText = DateTime.Now.ToString("g"),
+            Message = Resultado.Message
+        });
 
         if (Resultado.Success)
         {

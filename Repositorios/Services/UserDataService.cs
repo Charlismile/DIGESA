@@ -11,253 +11,200 @@ namespace DIGESA.Repositorios.Services;
 
 public class UserDataService : IUserData
 {
-    private readonly IConfiguration _Configuration;
-    private readonly UserManager<ApplicationUser> _UserManager;
-    private readonly string FakePassword = "";
-    private readonly ActiveDirectoryApiModel ActiveDirectoryModel;
-    private readonly HttpClient _HttpClient;
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly HttpClient _httpClient;
+    private readonly ActiveDirectoryApiModel _adModel;
+    private readonly string _fakePassword;
 
-    public UserDataService(UserManager<ApplicationUser> UserManager, IConfiguration Configuration,
-        HttpClient HttpClient)
+    public UserDataService(
+        UserManager<ApplicationUser> userManager,
+        ApplicationDbContext context,
+        IConfiguration configuration,
+        HttpClient httpClient)
     {
-        _UserManager = UserManager;
-        _Configuration = Configuration;
-        FakePassword = _Configuration["FakePass"] ?? "";
-        ActiveDirectoryModel = new ActiveDirectoryApiModel()
+        _userManager = userManager;
+        _context = context;
+        _httpClient = httpClient;
+
+        _fakePassword = configuration["FakePass"] ?? "";
+        _adModel = new ActiveDirectoryApiModel
         {
-            BaseUrl = _Configuration["API_INFO:URL"] ?? "",
-            Token = _Configuration["API_INFO:Token"] ?? "",
+            BaseUrl = configuration["API_INFO:URL"] ?? "",
+            Token = configuration["API_INFO:Token"] ?? ""
         };
-        _HttpClient = HttpClient;
-        _HttpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", ActiveDirectoryModel.Token);
-        _HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", _adModel.Token);
+        _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
     }
 
+    // Obtiene un usuario por email
     public async Task<ApplicationUser> GetUser(string UserName)
     {
-        ApplicationUser UserData = new ApplicationUser();
-        var user = await _UserManager.FindByEmailAsync(UserName);
+        var user = await _userManager.FindByEmailAsync(UserName);
+        if (user == null) return null!;
 
-        if (user != null)
+        return new ApplicationUser
         {
-            UserData = new ApplicationUser()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                UserName = user.UserName,
-                CreatedOn = user.CreatedOn,
-                LastLoginDate = user.LastLoginDate,
-                IsAproved = user.IsAproved,
-            };
-        }
-
-        return UserData;
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            UserName = user.UserName,
+            CreatedOn = user.CreatedOn,
+            LastLoginDate = user.LastLoginDate,
+            IsAproved = user.IsAproved
+        };
     }
 
+    // Obtiene todos los usuarios filtrando por nombre, apellido o email
     public async Task<List<ApplicationUser>> GetAllUsers(string Filter)
     {
-        List<ApplicationUser> Users = new List<ApplicationUser>();
-        var user = await _UserManager.Users.ToListAsync();
-        foreach (var item in user)
+        var query = _context.Users.AsNoTracking().AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(Filter))
         {
-            ApplicationUser UserData = new ApplicationUser()
-            {
-                Id = item.Id,
-                FirstName = item.FirstName,
-                LastName = item.LastName,
-                Email = item.Email,
-                UserName = item.UserName,
-                CreatedOn = item.CreatedOn,
-                LastLoginDate = item.LastLoginDate,
-                IsAproved = item.IsAproved,
-            };
-            Users.Add(UserData);
+            var lowerFilter = Filter.ToLower();
+            query = query.Where(u =>
+                (u.FirstName ?? "").ToLower().Contains(lowerFilter) ||
+                (u.LastName ?? "").ToLower().Contains(lowerFilter) ||
+                (u.Email ?? "").ToLower().Contains(lowerFilter));
         }
 
-        if (Users.Count > 0 && !String.IsNullOrEmpty(Filter))
+        return await query.Select(u => new ApplicationUser
         {
-            Users = Users.Where(x =>
-                (x.FirstName ?? "").ToLower().Contains(Filter.ToLower()) ||
-                (x.LastName ?? "").ToLower().Contains(Filter.ToLower()) ||
-                (x.Email ?? "").ToLower().Contains(Filter.ToLower())).ToList();
-        }
-
-        return Users;
+            Id = u.Id,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            Email = u.Email,
+            UserName = u.UserName,
+            CreatedOn = u.CreatedOn,
+            LastLoginDate = u.LastLoginDate,
+            IsAproved = u.IsAproved
+        }).ToListAsync();
     }
 
+    // Crear usuario
     public async Task<ResultModel> CreateUser(ApplicationUser UserData, List<string> Roles)
     {
-        ResultModel ResultModel;
         try
         {
-            var checkUser = await _UserManager.FindByEmailAsync(UserData.Email);
-            if (checkUser != null)
-            {
-                return ResultModel = new ResultModel()
-                {
-                    Success = false,
-                    Message = "El usuario ya existe",
-                };
-            }
+            var existingUser = await _userManager.FindByEmailAsync(UserData.Email);
+            if (existingUser != null)
+                return new ResultModel { Success = false, Message = "El usuario ya existe" };
 
-            var user = await _UserManager.CreateAsync(UserData, FakePassword);
-            if (!user.Succeeded)
-            {
-                ResultModel = new ResultModel()
-                {
-                    Success = false,
-                    Message = "Error creando el usuario.",
-                };
-            }
+            var result = await _userManager.CreateAsync(UserData, _fakePassword);
+            if (!result.Succeeded)
+                return new ResultModel { Success = false, Message = "Error creando el usuario" };
 
-            if (!user.Succeeded)
+            foreach (var role in Roles)
             {
-                return ResultModel = new ResultModel()
-                {
-                    Success = false,
-                    Message = "Error creando el usuario.",
-                };
-            }
-
-            foreach (var Rol in Roles)
-            {
-                var userToRol = await _UserManager.AddToRoleAsync(UserData, Rol);
-                if (!userToRol.Succeeded)
-                {
-                    return ResultModel = new ResultModel()
+                var roleResult = await _userManager.AddToRoleAsync(UserData, role);
+                if (!roleResult.Succeeded)
+                    return new ResultModel
                     {
                         Success = false,
-                        Message = $"Error agregando el usuario al rol: {Rol}.",
+                        Message = $"Error agregando el usuario al rol: {role}"
                     };
-                }
             }
 
-            return ResultModel = new ResultModel()
-            {
-                Success = true,
-                Message = $"El usuario fue creado correctamente.",
-            };
+            return new ResultModel { Success = true, Message = "El usuario fue creado correctamente." };
         }
         catch (Exception ex)
         {
-            return ResultModel = new ResultModel()
-            {
-                Success = false,
-                Message = $"Error: {ex.Message}.",
-            };
+            return new ResultModel { Success = false, Message = $"Error: {ex.Message}" };
         }
     }
 
+    // Actualizar usuario
     public async Task<ResultModel> UpdateUser(ApplicationUser UserData, List<string> Roles)
     {
-        ResultModel ResultModel;
         try
         {
-            var IdentityUserData = await _UserManager.FindByEmailAsync(UserData.Email);
-            IdentityUserData.FirstName = UserData.FirstName;
-            IdentityUserData.LastName = UserData.LastName;
-            IdentityUserData.IsAproved = UserData.IsAproved;
-            await _UserManager.UpdateAsync(IdentityUserData);
+            var identityUser = await _userManager.FindByEmailAsync(UserData.Email);
+            if (identityUser == null)
+                return new ResultModel { Success = false, Message = "Usuario no encontrado." };
 
-            var roles = await _UserManager.GetRolesAsync(IdentityUserData);
-            //Then remove all the assigned roles for this user
-            var result = await _UserManager.RemoveFromRolesAsync(IdentityUserData, roles);
+            identityUser.FirstName = UserData.FirstName;
+            identityUser.LastName = UserData.LastName;
+            identityUser.IsAproved = UserData.IsAproved;
+            await _userManager.UpdateAsync(identityUser);
 
-            if (!result.Succeeded)
+            var currentRoles = await _userManager.GetRolesAsync(identityUser);
+            await _userManager.RemoveFromRolesAsync(identityUser, currentRoles);
+
+            foreach (var role in Roles)
             {
-                return ResultModel = new ResultModel()
-                {
-                    Success = false,
-                    Message = $"Cannot remove user existing roles",
-                };
-            }
-
-            foreach (var Rol in Roles)
-            {
-                var userToRol = await _UserManager.AddToRoleAsync(IdentityUserData, Rol);
-                if (!userToRol.Succeeded)
-                {
-                    return ResultModel = new ResultModel()
+                var addRoleResult = await _userManager.AddToRoleAsync(identityUser, role);
+                if (!addRoleResult.Succeeded)
+                    return new ResultModel
                     {
                         Success = false,
-                        Message = $"Error agregando el usuario al rol: {Rol}.",
+                        Message = $"Error agregando el usuario al rol: {role}"
                     };
-                }
             }
 
-            return ResultModel = new ResultModel()
-            {
-                Success = true,
-                Message = $"El usuario fue actualizado correctamente.",
-            };
+            return new ResultModel { Success = true, Message = "El usuario fue actualizado correctamente." };
         }
         catch (Exception ex)
         {
-            return ResultModel = new ResultModel()
-            {
-                Success = false,
-                Message = $"Error: {ex.Message}.",
-            };
+            return new ResultModel { Success = false, Message = $"Error: {ex.Message}" };
         }
     }
 
+    // Login Active Directory
     public async Task<ResultModel> LoginAD(string UserName, string Password)
     {
         try
         {
-            string EncodedUserName = WebUtility.UrlEncode(UserName);
-            string EncodedPassword = WebUtility.UrlEncode(Password);
-            string LoginUrl = $"{ActiveDirectoryModel.BaseUrl}login/{EncodedUserName}/{EncodedPassword}";
-            string Result = await _HttpClient.GetFromJsonAsync<string>(LoginUrl) ?? "";
-            return new ResultModel()
-            {
-                Success = true,
-                Message = Result,
-            };
+            var EncodedUserName = WebUtility.UrlEncode(UserName);
+            var EncodedPassword = WebUtility.UrlEncode(Password);
+            var LoginUrl = $"{_adModel.BaseUrl}login/{EncodedUserName}/{EncodedPassword}";
+            var Result = await _httpClient.GetFromJsonAsync<string>(LoginUrl) ?? "";
+            return new ResultModel { Success = true, Message = Result };
         }
         catch (HttpRequestException ex)
         {
-            return new ResultModel()
+            return new ResultModel
             {
                 Success = false,
-                Message = ex.StatusCode == System.Net.HttpStatusCode.Unauthorized ? "Error: Acceso denegado." : "",
+                Message = ex.StatusCode == HttpStatusCode.Unauthorized ? "Error: Acceso denegado." : ex.Message
             };
         }
     }
 
+    // Buscar usuario en AD por email
     public async Task<ResultGenericModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email)
     {
-        ResultGenericModel<ActiveDirectoryUserModel> ResultUserModel =
-            new ResultGenericModel<ActiveDirectoryUserModel>();
+        var resultUserModel = new ResultGenericModel<ActiveDirectoryUserModel>();
         try
         {
-            string EncodedEmail = WebUtility.UrlEncode(Email);
-            string FindUrl = $"{ActiveDirectoryModel.BaseUrl}findbyemail/{EncodedEmail}";
-            var data = await _HttpClient.GetFromJsonAsync<ActiveDirectoryUserModel>(FindUrl);
+            var EncodedEmail = WebUtility.UrlEncode(Email);
+            var FindUrl = $"{_adModel.BaseUrl}findbyemail/{EncodedEmail}";
+            var data = await _httpClient.GetFromJsonAsync<ActiveDirectoryUserModel>(FindUrl);
+
             if (data == null)
             {
-                ResultUserModel.Success = false;
-                ResultUserModel.Message = "No se encontro el usuario.";
-                ResultUserModel.Data = null;
+                resultUserModel.Success = false;
+                resultUserModel.Message = "No se encontró el usuario.";
+                resultUserModel.Data = null;
             }
             else
             {
-                ResultUserModel.Success = true;
-                ResultUserModel.Message = "Se encontro el usuario.";
-                ResultUserModel.Data = data;
+                resultUserModel.Success = true;
+                resultUserModel.Message = "Se encontró el usuario.";
+                resultUserModel.Data = data;
             }
         }
         catch (HttpRequestException ex)
         {
-            ResultUserModel.Success = false;
-            ResultUserModel.Message =
-                ex.StatusCode == System.Net.HttpStatusCode.Unauthorized ? "Error: Acceso denegado." : ex.Message;
-            ResultUserModel.Data = null;
+            resultUserModel.Success = false;
+            resultUserModel.Message =
+                ex.StatusCode == HttpStatusCode.Unauthorized ? "Error: Acceso denegado." : ex.Message;
+            resultUserModel.Data = null;
         }
 
-        return ResultUserModel;
+        return resultUserModel;
     }
 }

@@ -9,12 +9,12 @@
 
 <div class="container-fluid py-4">
     <div class="card shadow-sm">
-        <div class="card-header bg-gob-blue text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-gob-blue text-white d-flex justify-content-between align-items-center" style="background-color: #2b5205; color: white;">
             <div class="d-flex align-items-center">
                 <Icon Name="IconName.PersonFill" Class="me-1" Size="IconSize.x5" />
                 <h2 class="mb-0">Usuarios del Sistema</h2>
             </div>
-            <NavLink class="btn btn-light" href="/Create/{UserName?}" Match="NavLinkMatch.All">
+            <NavLink class="btn btn-light" href="/Create" Match="NavLinkMatch.All">
                 <i class="fa-solid fa-user-plus me-1"></i>Registrar
             </NavLink>
         </div>
@@ -37,7 +37,7 @@
                   AllowPaging="true"
                   PageSize="10"
                   Responsive="true"
-                  PaginationItemsTextFormat="{0} - {1} de {2} usuarios">
+                  PaginationItemsTextFormat="{0} - {1} de {2} usuarios" >
 
                 <GridColumn TItem="ApplicationUser" HeaderText="Id" PropertyName="Id">
                     @context.Id
@@ -63,7 +63,7 @@
                             <a class="btn btn-sm btn-light"
                                href="@($"/Create/{context.UserName}")">
                                 <Tooltip Title="Editar Usuario">
-                                    <i class="fa-solid fa-pen-to-square text-flat-blue"></i>
+                                    <i class="bi bi-pencil-square"></i>
                                 </Tooltip>
                             </a>
                         </div>

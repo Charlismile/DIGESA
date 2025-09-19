@@ -10,8 +10,8 @@ public interface IUserData
     Task<List<ApplicationUser>> GetAllUsers(string Filter);
     Task<ResultModel> CreateUser(ApplicationUser UserData, List<string> Roles);
     Task<ResultModel> UpdateUser(ApplicationUser UserData, List<string> Roles);
-    
-    // ACTIVE DIRECTORY
+
+    // Active Directory
     Task<ResultModel> LoginAD(string UserName, string Password);
     Task<ResultGenericModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email);
 }
