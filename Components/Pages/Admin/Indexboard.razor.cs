@@ -1,30 +1,33 @@
-﻿using DIGESA.Data;
-using DIGESA.Models.CannabisModels;
+﻿using DIGESA.Models.Entities.DBDIGESA;
+using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
-using DIGESA.Models.Entities.DBDIGESA;
-using DIGESA.Repositorios.Interfaces;
-using DIGESA.Repositorios.Services;
+using System.Web;
+using DIGESA.Data;
 
 namespace DIGESA.Components.Pages.Admin;
 
-public partial class Index : ComponentBase
+public partial class Indexboard : ComponentBase
 {
-    [Inject] 
-    private ISolicitudService SolicitudService { get; set; } = default!;
+    private bool isLoading = true;
 
     private DynamicModal ModalForm = default!;
     private ApplicationUser LoggedUser = new();
     private List<AccionPanel> PanelAcciones { get; set; } = new();
     private List<EstadoPanel> PanelEstados { get; set; } = new();
 
-    // Configuración de panel de acciones
+    [Inject] private ISolicitudService SolicitudService { get; set; } = default!;
+    [Inject] private IUserData _UserService { get; set; } = default!;
+    [Inject] private IDbContextFactory<DbContextDigesa> ContextFactory { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] private AuthenticationStateProvider AuthStateProvider { get; set; } = default!;
+
     private void InicializarAcciones()
     {
         PanelAcciones = new List<AccionPanel>
         {
-            new() { Titulo="Registrar Paciente", Icono="fa-user-plus", Color="primary", Borde="#0d6efd", Route="/registropaciente" },
+            new() { Titulo="Registrar Paciente", Icono="fa-user-plus", Color="primary", Borde="#0d6efd", Route="/registro-paciente" },
             new() { Titulo="Ver Solicitudes", Icono="fa-file-invoice", Color="success", Borde="#198754", Route="/admin/solicitudes_registros" },
         };
     }
@@ -60,7 +63,7 @@ public partial class Index : ComponentBase
         };
 
     private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud e) =>
-        EstadoConfig.TryGetValue((byte)e.Estado, out var cfg) // 👈 conversión explícita
+        EstadoConfig.TryGetValue((byte)e.Estado, out var cfg)
             ? new EstadoPanel
             {
                 Clave = (byte)e.Estado,
@@ -84,54 +87,50 @@ public partial class Index : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
+        isLoading = true;
+
         InicializarAcciones();
 
-        var auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var uid = auth.User.FindFirst(c => c.Type.EndsWith("nameidentifier"))?.Value;
-
-        if (string.IsNullOrEmpty(uid))
-            return;
-
-        LoggedUser = await _UserService.GetUser(auth.User.Identity?.Name ?? "");
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var username = auth.User.Identity?.Name;
+        if (!string.IsNullOrEmpty(username))
+        {
+            LoggedUser = await _UserService.GetUser(username);
+        }
 
         await using var db = await ContextFactory.CreateDbContextAsync();
-
         var estadosDb = await db.TbEstadoSolicitud
             .Where(e => e.Descripcion != "Archivada")
             .ToListAsync();
 
         PanelEstados = estadosDb.Select(CrearEstadoPanel).ToList();
 
-        // --- Conteo desde SolicitudService
         var counts = await SolicitudService.ObtenerConteoPorEstadoAsync();
-
         foreach (var panel in PanelEstados)
         {
-            if (counts.TryGetValue(panel.Titulo, out int cantidad))
-                panel.Cantidad = cantidad;
-            else
-                panel.Cantidad = 0;
+            panel.Cantidad = counts.TryGetValue(panel.Titulo, out var c) ? c : 0;
         }
 
-
-        // --- Modal si cambió contraseña
-        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        // Modal contraseña
+        var uri = new Uri(NavigationManager.Uri);
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
         if (query.Get("passwordChanged") == "true")
         {
             ModalForm.ShowSuccess("Tu contraseña ha sido cambiada con éxito.");
-            Navigation.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
+            NavigationManager.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
         }
+
+        isLoading = false;
     }
 
     private void IrA(string route)
     {
         if (!string.IsNullOrWhiteSpace(route))
-            Navigation.NavigateTo(route);
+            NavigationManager.NavigateTo(route);
     }
 
     private void IrAPanelEstado(byte estado)
     {
-        Navigation.NavigateTo($"/admin/solicitudes_registros?estado={estado}", forceLoad: true);
+        NavigationManager.NavigateTo($"/admin/solicitudes_registros?estado={estado}", forceLoad: true);
     }
 }

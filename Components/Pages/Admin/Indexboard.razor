@@ -1,0 +1,53 @@
+﻿@page "/Indexboard"
+@using DIGESA.Models.Entities.DBDIGESA
+@using DIGESA.Repositorios.Interfaces
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Administrador")]
+
+@if (isLoading)
+{
+    <div class="d-flex justify-content-center align-items-center" style="height:300px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <!-- Panel de Acciones -->
+        <div class="row">
+            @foreach (var accion in PanelAcciones)
+            {
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm card-fade" style="border-top: 3px solid @accion.Borde;">
+                        <div class="card-body">
+                            <i class="fa @accion.Icono fa-2x mb-2" style="color:@accion.Borde;"></i>
+                            <h5 class="card-title">@accion.Titulo</h5>
+                            <button class="btn btn-@accion.Color" @onclick="() => IrA(accion.Route)">Ir</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Panel de Estados -->
+        <div class="row mt-4">
+            @foreach (var estado in PanelEstados)
+            {
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center shadow-sm card-fade" style="background:@estado.Fondo; border-top: 3px solid @estado.Borde;">
+                        <div class="card-body">
+                            <i class="fa @estado.Icono fa-2x mb-2" style="color:@estado.Borde;"></i>
+                            <h5 class="card-title">@estado.Subtitulo</h5>
+                            <p class="card-text">@estado.Cantidad solicitudes</p>
+                            <button class="btn btn-outline-@estado.Color" @onclick="() => IrAPanelEstado(estado.Clave)">Ver</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<DynamicModal @ref="ModalForm" />

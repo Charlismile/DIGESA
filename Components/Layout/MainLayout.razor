@@ -25,40 +25,54 @@
                 </ul>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/buscar-paciente"><i
-                                class="bi bi-house-door"></i>
+                        <a class="nav-link active" aria-current="page" href="/buscar-paciente"><i class="bi bi-house-door"></i>
                             Verificacion</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-theme="light">
-                    <AuthorizeView>
-                        <Authorized>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle active" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    @context.User.Identity?.Name
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
-                                    <li>
-                                        <NavLink class="dropdown-item" href="/dashboard" Match="NavLinkMatch.All">
-                                            <i class="fa-solid fa-computer me-1"></i> Sistema
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <form action="account/custom-logout" method="post">
-                                        <AntiforgeryToken/>
-                                        <button type="submit" class="dropdown-item">
-                                            <i class="fa-solid fa-right-from-bracket text-danger"></i> Salir
-                                        </button>
-                                    </form>
-                                </ul>
+                <AuthorizeView>
+                    <Authorized>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Indexboard"><i class="bi bi-file-earmark"></i>
+                                    Solicitudes</a>
                             </li>
-                        </Authorized>
-                    </AuthorizeView>
+                        </ul>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/UserRegistrados"><i class="bi bi-file-earmark"></i>
+                                    Usuarios Administrativos</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Create/{UserName?}"><i class="bi bi-file-earmark"></i>
+                                    Registrar</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-theme="light">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                @context.User.Identity?.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <form action="/" method="post">
+                                    <AntiforgeryToken/>
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fa-solid fa-right-from-bracket text-danger"></i> Salir
+                                    </button>
+                                </form>
+                            </ul>
+                        </li>
+                        </ul>
+                    </Authorized>
+                </AuthorizeView>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <NavLink class="nav-link active" href="/UserRegistrados">
+                        <NavLink class="nav-link active" href="/Indexboard">
                             <i class="fa-solid fa-right-to-bracket me-1"></i> Acceder
                         </NavLink>
                     </li>

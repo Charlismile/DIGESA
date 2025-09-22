@@ -24,13 +24,15 @@ builder.Services.AddCascadingAuthenticationState();
 // ==========================
 // Bases de datos
 // ==========================
-var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection") 
+var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection")
                         ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+// Identity DB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(defaultConnection));
 
-builder.Services.AddDbContext<DbContextDigesa>(options =>
+// DIGESA DB
+builder.Services.AddDbContextFactory<DbContextDigesa>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
 
 // Identity
@@ -60,6 +62,7 @@ builder.Services.AddScoped<IUserData, UserDataService>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 
 // HttpClient para Active Directory

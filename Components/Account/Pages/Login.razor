@@ -8,7 +8,6 @@
 
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
-@inject IdentityRedirectManager RedirectManager
 @inject IUserData UserDataService
 @inject ICommon CommonService
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -88,7 +87,7 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity is { IsAuthenticated: true })
         {
-            Navigation.NavigateTo("/Index");
+            Navigation.NavigateTo("/Indexboard", true);
         }
 
         IsAccessing = false;
@@ -102,7 +101,7 @@
     public async Task LoginUser()
     {
         IsAccessing = true;
-        errorMessage = "";
+        errorMessage = null;
 
         var user = await UserManager.FindByEmailAsync(LoginData.Email);
         if (user == null)
@@ -130,7 +129,7 @@
             {
                 user.LastLoginDate = DateTime.Now;
                 await UserManager.UpdateAsync(user);
-                RedirectManager.RedirectTo("/Index");
+                NavigateAfterLogin(user);
             }
             else
             {
@@ -146,21 +145,31 @@
             {
                 user.LastLoginDate = DateTime.Now;
                 await UserManager.UpdateAsync(user);
-
-                if (user.MustChangePassword)
-                {
-                    RedirectManager.RedirectTo("/change-password?force=true");
-                }
-                else
-                {
-                    RedirectManager.RedirectTo("/Index");
-                }
+                NavigateAfterLogin(user);
             }
             else
             {
                 errorMessage = "Error: Fallo en el inicio de sesión, verifique sus credenciales.";
                 IsAccessing = false;
             }
+        }
+    }
+
+    private void NavigateAfterLogin(ApplicationUser user)
+    {
+        errorMessage = null;
+        IsAccessing = false;
+
+        if (user.MustChangePassword)
+        {
+            Navigation.NavigateTo("/change-password?force=true", true);
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(ReturnUrl))
+                Navigation.NavigateTo(ReturnUrl!, true);
+            else
+                Navigation.NavigateTo("/Indexboard", true);
         }
     }
 
@@ -177,4 +186,10 @@
         [Display(Name = "Recordarme?")]
         public bool RememberMe { get; set; }
     }
+    public async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+        Navigation.NavigateTo("/", true); // redirige al Home
+    }
+
 }

@@ -121,6 +121,22 @@
       "PackagePath": "staticwebassets\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx",
+      "PackagePath": "staticwebassets\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf",
+      "PackagePath": "staticwebassets\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf",
+      "PackagePath": "staticwebassets\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf"
+    },
+    {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf",
+      "PackagePath": "staticwebassets\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DIGESA.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

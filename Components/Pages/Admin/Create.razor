@@ -7,7 +7,7 @@
 @inject UserManager<ApplicationUser> _UserManager
 @inject IUserData _UserService
 @attribute [StreamRendering]
-@attribute [Authorize(Roles = "user_administrador")]
+@attribute [Authorize(Roles = "Administrador")]
 
 <div class="container-fluid py-4">
     <EditForm EditContext="EditContext" OnValidSubmit="RegisterUser">
