@@ -1,35 +1,81 @@
-﻿@using BlazorBootstrap
+﻿@using Microsoft.AspNetCore.Components.Server
+@implements IDisposable
+@inject NavigationManager NavigationManager
 
-<div class="pos-f-t">
-    <!-- Botón para abrir/colapsar -->
-    <nav class="navbar navbar-dark bg-dark">
-        <button class="navbar-toggler" @onclick="() => collapse.ToggleAsync()">
+<nav class="navbar navbar-expand-lg d-flex navbar-dark" style="background-color: #2c5530;">
+    <div class="container">
+        <NavLink class="navbar-brand justify-content-start" href="" Match="NavLinkMatch.All">
+            <i class="bi bi-house-door"></i> Inicio
+        </NavLink>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-    </nav>
 
-    <!-- Menú colapsable -->
-    <Collapse @ref="collapse" Show="auto">
-        <div class="bg-dark p-4">
-            <h4 class="text-white">Menú</h4>
-            <ul class="nav flex-column text-white">
-                <li class="nav-item mb-2">
-                    <NavLink class="nav-link text-white" href="/">Inicio</NavLink>
-                </li>
-                <li class="nav-item mb-2">
-                    <NavLink class="nav-link text-white" href="/index">Panel de Control</NavLink>
-                </li>
-                <li class="nav-item mb-2">
-                    <NavLink class="nav-link text-white" href="/paciente">SolicitudModel</NavLink>
-                </li>
-                <li class="nav-item mb-2">
-                    <NavLink class="nav-link text-white" href="/tabla">tablas</NavLink>
-                </li>
+        <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item">
+                            <NavLink class="nav-link active" href="/Admin/Indexboard" Match="NavLinkMatch.All">
+                                <i class="bi bi-clipboard2-data-fill"></i> Panel
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link active" href="/Admin/Solicitudes" Match="NavLinkMatch.All">
+                                <i class="bi bi-clipboard2"></i> Solicitudes
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link active" href="/Admin/UserRegistrados" Match="NavLinkMatch.All">
+                                <i class="bi bi-people"></i> Usuarios
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link active" href="/Admin/Create" Match="NavLinkMatch.All">
+                                <i class="bi bi-person-add"></i> Crear Usuario
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="/account/customlogout" class="d-inline">
+                                <button type="submit" class="btn btn-link nav-link active p-0 border-0">
+                                    <i class="bi bi-box-arrow-right"></i> Salir
+                                </button>
+                            </form>
+                        </li>
+                    </Authorized>
+
+                    <NotAuthorized>
+                        <li class="nav-item">
+                            <NavLink class="nav-link active" href="/account/login" Match="NavLinkMatch.All">
+                                <i class="bi bi-door-open"></i> Acceder
+                            </NavLink>
+                        </li>
+                    </NotAuthorized>
+                </AuthorizeView>
             </ul>
         </div>
-    </Collapse>
-</div>
+    </div>
+</nav>
 
 @code {
-    private Collapse? collapse;
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
 }

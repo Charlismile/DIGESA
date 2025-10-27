@@ -1,40 +1,64 @@
-﻿@page "/Solicitudes"
+﻿@page "/Admin/Solicitudes"
 
-<h3>Solicitudes</h3>
+<h3 class="mb-4">Solicitudes Pendientes o en Revisión</h3>
 
-<table class="table table-striped">
-    <thead class="table-dark">
-    <tr>
-        <th>ID</th>
-        <th>Paciente</th>
-        <th>Fecha Solicitud</th>
-        <th>Estado</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if (SolicitudesLista is null)
-    {
-        <tr>
-            <td colspan="4" class="text-center">Cargando solicitudes...</td>
-        </tr>
-    }
-    else if (!SolicitudesLista.Any())
-    {
-        <tr>
-            <td colspan="4" class="text-center">No hay solicitudes registradas.</td>
-        </tr>
-    }
-    else
-    {
-        @foreach (var item in SolicitudesLista)
-        {
+@if (SolicitudesLista is null)
+{
+    <div class="text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando solicitudes...</p>
+    </div>
+}
+else if (!SolicitudesLista.Any())
+{
+    <div class="alert alert-info text-center">
+        No hay solicitudes pendientes o en revisión.
+    </div>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
-                <td>@item.Id</td>
-                <td>@item.PacienteNombre</td>
-                <td>@item.FechaSolicitud:dd/MM/yyyy</td>
-                <td>@item.EstadoSolicitud</td>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Cédula</th>
+                <th>Fecha Solicitud</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
-        }
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in SolicitudesLista)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.PacienteNombre</td>
+                    <td>@item.PacienteCedula</td>
+                    <td>@item.FechaSolicitud:dd/MM/yyyy</td>
+                    <td>
+                        <span class="badge @(item.EstadoSolicitud == "Pendiente" ? "bg-warning text-dark" : "bg-info")">
+                            @item.EstadoSolicitud
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-sm me-2" @onclick="@(() => CambiarEstado(item.Id, "Aprobada"))">
+                            <i class="fa-solid fa-check"></i> Aprobar
+                        </button>
+                        <button class="btn btn-danger btn-sm" @onclick="@(() => CambiarEstado(item.Id, "Rechazada"))">
+                            <i class="fa-solid fa-xmark"></i> Rechazar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(Mensaje))
+{
+    <div class="alert alert-success mt-3">@Mensaje</div>
+}
+

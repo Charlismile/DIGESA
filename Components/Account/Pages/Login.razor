@@ -12,66 +12,50 @@
 @inject ICommon CommonService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager Navigation
+@inject IdentityRedirectManager RedirectManager
 
 <PageTitle>Iniciar Sesión</PageTitle>
 
 <div class="container">
     <div class="card card-body mx-auto my-5" style="width: min(100%, 400px);">
         <StatusMessage Message="@errorMessage" />
-
-        <!-- EditForm con FormName único -->
-        <EditForm Model="LoginData" OnValidSubmit="LoginUser" FormName="login">
+        <EditForm Model="LoginData" method="post" OnValidSubmit="LoginUser" FormName="login">
             <DataAnnotationsValidator />
             <div class="mx-auto rounded-circle bg-flat-blue my-3 d-flex justify-content-center align-items-center"
                  style="width: 80px; height: 80px;">
-                <img src="images/logo-minsa.png" style="width: min(100%, 80px);" alt="logo MINSA"/>
+                <img src="/images/logo-minsa.png" alt="lgserp" style="width: 80px; "/>
             </div>
-            
             <ValidationSummary class="mb-0 alert alert-danger" role="alert" />
-            
             <div class="form-floating mb-3">
                 <InputText @bind-Value="LoginData.Email" class="form-control form-control-sm rounded-3"
                            autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label for="email" class="form-label">Correo</label>
                 <ValidationMessage For="() => LoginData.Email" class="text-danger" />
             </div>
-            
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="LoginData.Password" class="form-control form-control-sm rounded-3"
                            autocomplete="current-password" aria-required="true" placeholder="password" />
                 <label for="password" class="form-label">Contraseña</label>
                 <ValidationMessage For="() => LoginData.Password" class="text-danger" />
             </div>
-            
             <div class="checkbox mb-3">
                 <label class="form-label">
                     <InputCheckbox @bind-Value="LoginData.RememberMe" class="darker-border-checkbox form-check-input" />
                     Recordarme?
                 </label>
             </div>
-            
             <div>
-                @if (IsAccessing)
-                {
-                    <button class="w-100 btn btn-lg btn-success text-white" type="button" disabled>
-                        <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
-                        <span role="status">Accediendo...</span>
-                    </button>
-                }
-                else
-                {
-                    <button type="submit" class="w-100 btn btn-lg btn-success text-white">
-                        <i class="fa-solid fa-right-to-bracket"></i> Acceder
-                    </button>
-                }
+                <button type="submit" class="w-100 btn-custom btn-primary-custom text-white">
+                    <i
+                        class="fa-solid fa-right-to-bracket"></i> Acceder
+                </button>
             </div>
         </EditForm>
     </div>
 </div>
 
-@code {
+@code { 
     private string? errorMessage;
-    private bool IsAccessing { get; set; } = false;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -87,11 +71,8 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity is { IsAuthenticated: true })
         {
-            Navigation.NavigateTo("/Indexboard", true);
+            Navigation.NavigateTo("/Admin/Indexboard");
         }
-
-        IsAccessing = false;
-
         if (HttpMethods.IsGet(HttpContext.Request.Method))
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -100,14 +81,12 @@
 
     public async Task LoginUser()
     {
-        IsAccessing = true;
-        errorMessage = null;
+        errorMessage = "";
 
         var user = await UserManager.FindByEmailAsync(LoginData.Email);
         if (user == null)
         {
             errorMessage = "Error: El usuario no está registrado en el sistema.";
-            IsAccessing = false;
             return;
         }
 
@@ -117,11 +96,10 @@
             if (!resultado.Success)
             {
                 errorMessage = "Error: No se pudo validar con el Active Directory.";
-                IsAccessing = false;
                 return;
             }
 
-            // Login con contraseña fake para AD
+            // Login con contraseña fake
             string fakePassword = await CommonService.GetFakePassword();
             var result = await SignInManager.PasswordSignInAsync(LoginData.Email, fakePassword, LoginData.RememberMe, lockoutOnFailure: true);
 
@@ -129,12 +107,11 @@
             {
                 user.LastLoginDate = DateTime.Now;
                 await UserManager.UpdateAsync(user);
-                NavigateAfterLogin(user);
+                RedirectManager.RedirectTo("/Admin/Indexboard");
             }
             else
             {
                 errorMessage = "Error: Fallo en el inicio de sesión con Active Directory.";
-                IsAccessing = false;
             }
         }
         else
@@ -145,38 +122,27 @@
             {
                 user.LastLoginDate = DateTime.Now;
                 await UserManager.UpdateAsync(user);
-                NavigateAfterLogin(user);
+
+                if (user.MustChangePassword)
+                {
+                    RedirectManager.RedirectTo("/Account/Manage/Change-password?force=true");
+                }
+                else
+                {
+                    RedirectManager.RedirectTo("/Admin/Indexboard");
+                }
             }
             else
             {
-                errorMessage = "Error: Fallo en el inicio de sesión, verifique sus credenciales.";
-                IsAccessing = false;
+                errorMessage = "Error: Fallo en el inicio de sesión con Active Directory.";
             }
         }
     }
-
-    private void NavigateAfterLogin(ApplicationUser user)
-    {
-        errorMessage = null;
-        IsAccessing = false;
-
-        if (user.MustChangePassword)
-        {
-            Navigation.NavigateTo("/change-password?force=true", true);
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(ReturnUrl))
-                Navigation.NavigateTo(ReturnUrl!, true);
-            else
-                Navigation.NavigateTo("/Indexboard", true);
-        }
-    }
-
+    
     private sealed class LoginModel
     {
         [Required(ErrorMessage = "El correo es requerido")]
-        [EmailAddress(ErrorMessage = "Ingrese un correo válido")]
+        [EmailAddress]
         public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "La contraseña es requerida")]
@@ -186,10 +152,4 @@
         [Display(Name = "Recordarme?")]
         public bool RememberMe { get; set; }
     }
-    public async Task Logout()
-    {
-        await SignInManager.SignOutAsync();
-        Navigation.NavigateTo("/", true); // redirige al Home
-    }
-
 }

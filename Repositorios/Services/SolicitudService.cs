@@ -33,4 +33,33 @@ public class SolicitudService : ISolicitudService
             .Select(g => new { Estado = g.Key ?? "Desconocido", Cantidad = g.Count() })
             .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
     }
+    
+    public async Task<List<SolicitudModel>> ObtenerSolicitudesPendientesORevisionAsync()
+    {
+        return await _context.TbSolRegCannabis
+            .Include(s => s.Paciente)
+            .Where(s => s.EstadoSolicitud == "Pendiente" || s.EstadoSolicitud == "En Revisión")
+            .Select(s => new SolicitudModel
+            {
+                Id = s.Id,
+                NumSolCompleta = s.NumSolCompleta,
+                FechaSolicitud = s.FechaSolicitud,
+                EstadoSolicitud = s.EstadoSolicitud,
+                PacienteNombre = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
+                PacienteCedula = s.Paciente.NumDocCedula
+            })
+            .ToListAsync();
+    }
+
+    public async Task<bool> ActualizarEstadoSolicitudAsync(int id, string nuevoEstado)
+    {
+        var solicitud = await _context.TbSolRegCannabis.FindAsync(id);
+        if (solicitud == null) return false;
+
+        solicitud.EstadoSolicitud = nuevoEstado;
+        _context.TbSolRegCannabis.Update(solicitud);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
 }

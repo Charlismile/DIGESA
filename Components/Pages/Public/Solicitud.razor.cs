@@ -703,8 +703,7 @@ public partial class Solicitud : ComponentBase
                         PrimerApellido = registro.acompanante.PrimerApellido,
                         SegundoApellido = registro.acompanante.SegundoApellido,
                         TipoDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum.ToString(),
-                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum ==
-                                          TipoDocumentoAcompañante.Cedula
+                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula
                             ? registro.acompanante.NumDocCedula
                             : registro.acompanante.NumDocPasaporte,
                         Nacionalidad = registro.acompanante.Nacionalidad,

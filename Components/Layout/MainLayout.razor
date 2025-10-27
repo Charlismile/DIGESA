@@ -5,83 +5,12 @@
 
 <PageTitle>DIGESA</PageTitle>
 <header>
-    <div class="container-fluid" style="height: 120px;">
-        <img src="images/logo-gob.png" class="img-fluid" alt="Logo Gobierno" style="height: 120px;">
+    <div class="container">
+        <img src="images/logo-gob.png" class="img-fluid" alt="logo gobierno" height="120" style="height: 120px">
     </div>
-    <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #2b5205;">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/"><i class="bi bi-house-door"></i>
-                            Inicio</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/buscar-paciente"><i class="bi bi-house-door"></i>
-                            Verificacion</a>
-                    </li>
-                </ul>
-                <AuthorizeView>
-                    <Authorized>
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/Indexboard"><i class="bi bi-file-earmark"></i>
-                                    Solicitudes</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/UserRegistrados"><i class="bi bi-file-earmark"></i>
-                                    Usuarios Administrativos</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/Create/{UserName?}"><i class="bi bi-file-earmark"></i>
-                                    Registrar</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-theme="light">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                @context.User.Identity?.Name
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <form action="/" method="post">
-                                    <AntiforgeryToken/>
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="fa-solid fa-right-from-bracket text-danger"></i> Salir
-                                    </button>
-                                </form>
-                            </ul>
-                        </li>
-                        </ul>
-                    </Authorized>
-                </AuthorizeView>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <NavLink class="nav-link active" href="/Indexboard">
-                            <i class="fa-solid fa-right-to-bracket me-1"></i> Acceder
-                        </NavLink>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <NavMenu/>
 </header>
-<div class="container-fluid p-2">
+<div class="py-5">
     @Body
 </div>
 <Toasts class="p-3" Placement="ToastsPlacement.TopRight" Delay="5000" AutoHide="true" />

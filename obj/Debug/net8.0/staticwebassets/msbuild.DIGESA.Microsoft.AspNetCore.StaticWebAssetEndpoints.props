@@ -63,14 +63,14 @@
     <StaticWebAssetEndpoint Include="_content/DIGESA/css/custom.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\custom.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PRb\u002BAPpmawTGvy0c3nAiTseu08cqQM9ZhOyyph4LswY="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"6764"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022PRb\u002BAPpmawTGvy0c3nAiTseu08cqQM9ZhOyyph4LswY=\u0022"},{"Name":"Last-Modified","Value":"Wed, 17 Sep 2025 20:53:15 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BbyfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"6830"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022\u002BbyfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 27 Oct 2025 15:43:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DIGESA/css/custom.zkxjp00kyh.css">
+    <StaticWebAssetEndpoint Include="_content/DIGESA/css/custom.tbhd8jrh25.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\custom.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"zkxjp00kyh"},{"Name":"integrity","Value":"sha256-PRb\u002BAPpmawTGvy0c3nAiTseu08cqQM9ZhOyyph4LswY="},{"Name":"label","Value":"_content/DIGESA/css/custom.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6764"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022PRb\u002BAPpmawTGvy0c3nAiTseu08cqQM9ZhOyyph4LswY=\u0022"},{"Name":"Last-Modified","Value":"Wed, 17 Sep 2025 20:53:15 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tbhd8jrh25"},{"Name":"integrity","Value":"sha256-\u002BbyfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="},{"Name":"label","Value":"_content/DIGESA/css/custom.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6830"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022\u002BbyfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 27 Oct 2025 15:43:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DIGESA/DIGESA.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\DIGESA.p387nqjzg2.bundle.scp.css'))</AssetFile>
