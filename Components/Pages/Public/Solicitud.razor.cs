@@ -668,8 +668,8 @@ public partial class Solicitud : ComponentBase
                     PrimerApellido = registro.paciente.PrimerApellido,
                     SegundoApellido = registro.paciente.SegundoApellido,
                     TipoDocumento = registro.paciente.TipoDocumentoPacienteEnum.ToString(),
-                    NumDocCedula = registro.paciente.NumDocCedula,
-                    NumDocPasaporte = registro.paciente.NumDocPasaporte,
+                    DocumentoCedula = registro.paciente.NumDocCedula,
+                    DocumentoPasaporte = registro.paciente.NumDocPasaporte,
                     Nacionalidad = registro.paciente.Nacionalidad,
                     FechaNacimiento = registro.paciente.FechaNacimiento.HasValue
                         ? DateOnly.FromDateTime(registro.paciente.FechaNacimiento.Value)
@@ -879,7 +879,7 @@ public partial class Solicitud : ComponentBase
                 var historial = new TbSolRegCannabisHistorial
                 {
                     SolRegCannabisId = solicitud.Id,
-                    EstadoSolicitud = "Pendiente",
+                    EstadoSolicitudIdHistorialNavigation = "Pendiente",
                     Comentario = "SolicitudModel creada",
                     UsuarioRevisor = "Sistema",
                     FechaCambio = DateOnly.FromDateTime(DateTime.Now)

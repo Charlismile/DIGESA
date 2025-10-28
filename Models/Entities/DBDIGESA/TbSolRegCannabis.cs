@@ -11,8 +11,6 @@ public partial class TbSolRegCannabis
 
     public int? PacienteId { get; set; }
 
-    public string? EstadoSolicitud { get; set; }
-
     public DateOnly? FechaRevision { get; set; }
 
     public string? UsuarioRevisor { get; set; }
@@ -34,6 +32,10 @@ public partial class TbSolRegCannabis
     public string? ModificadaPor { get; set; }
 
     public DateTime? FechaAprobacion { get; set; }
+
+    public int? EstadoSolicitudId { get; set; }
+
+    public virtual TbEstadoSolicitud? EstadoSolicitud { get; set; }
 
     public virtual TbPaciente? Paciente { get; set; }
 

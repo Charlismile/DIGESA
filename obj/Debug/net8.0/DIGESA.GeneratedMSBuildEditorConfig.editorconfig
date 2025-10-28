@@ -202,6 +202,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxVc2VyUmVnaXN0cmFkb3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Componentes/SolicitudLista.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21wb25lbnRlc1xTb2xpY2l0dWRMaXN0YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cabernalo/Documents/PROJECT GIT/DIGESA/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

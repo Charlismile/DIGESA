@@ -7,7 +7,7 @@ namespace DIGESA.Repositorios.Services;
 
 public class PacienteService : IPaciente
 {
-   private readonly DbContextDigesa _context;
+    private readonly DbContextDigesa _context;
 
     public PacienteService(DbContextDigesa context)
     {
@@ -19,8 +19,8 @@ public class PacienteService : IPaciente
         var documentoNormalizado = documento.Trim();
 
         var pacienteEntity = await _context.TbPaciente
-            .FirstOrDefaultAsync(p => p.NumDocCedula == documentoNormalizado || 
-                                     p.NumDocPasaporte == documentoNormalizado);
+            .FirstOrDefaultAsync(p => p.DocumentoCedula == documentoNormalizado || 
+                                     p.DocumentoPasaporte == documentoNormalizado);
 
         if (pacienteEntity == null)
             return null;
@@ -32,14 +32,43 @@ public class PacienteService : IPaciente
             SegundoNombre = pacienteEntity.SegundoNombre,
             PrimerApellido = pacienteEntity.PrimerApellido,
             SegundoApellido = pacienteEntity.SegundoApellido,
-            NumDocCedula = pacienteEntity.NumDocCedula,
-            NumDocPasaporte = pacienteEntity.NumDocPasaporte,
+            NumDocCedula = pacienteEntity.DocumentoCedula,
+            NumDocPasaporte = pacienteEntity.DocumentoPasaporte,
             Nacionalidad = pacienteEntity.Nacionalidad,
             TelefonoResidencialPersonal = pacienteEntity.TelefonoPersonal,
             TelefonoLaboral = pacienteEntity.TelefonoLaboral,
             CorreoElectronico = pacienteEntity.CorreoElectronico,
-            TipoDocumentoPacienteEnum = string.IsNullOrEmpty(pacienteEntity.NumDocCedula) ? 
-                TipoDocumentoPaciente.Pasaporte : TipoDocumentoPaciente.Cedula
+            DireccionExacta = pacienteEntity.DireccionExacta,
+            FechaNacimiento = pacienteEntity.FechaNacimiento?.ToDateTime(TimeOnly.MinValue),
+            TipoDiscapacidad = pacienteEntity.TipoDiscapacidad,
+            pacienteInstalacionId = pacienteEntity.InstalacionId,
+            pacienteRegionId = pacienteEntity.RegionId,
+            pacienteProvinciaId = pacienteEntity.ProvinciaId,
+            pacienteDistritoId = pacienteEntity.DistritoId,
+            pacienteCorregimientoId = pacienteEntity.CorregimientoId,
+            pacienteInstalacion = pacienteEntity.NombreInstalacion,
+            
+            // Mapeo de enums desde strings
+            TipoDocumentoPacienteEnum = string.IsNullOrEmpty(pacienteEntity.DocumentoCedula) ? 
+                TipoDocumentoPaciente.Pasaporte : TipoDocumentoPaciente.Cedula,
+                
+            SexoEnum = pacienteEntity.Sexo?.ToLower() switch
+            {
+                "masculino" => Sexo.Masculino,
+                "femenino" => Sexo.Femenino,
+                _ => null
+            },
+            
+            RequiereAcompananteEnum = pacienteEntity.RequiereAcompanante.HasValue ? 
+                (pacienteEntity.RequiereAcompanante.Value ? RequiereAcompanante.Si : RequiereAcompanante.No) 
+                : null,
+                
+            MotivoRequerimientoAcompanante = pacienteEntity.MotivoRequerimientoAcompanante?.ToLower() switch
+            {
+                "pacientemenoredad" => MotivoRequerimientoAcompanante.PacienteMenorEdad,
+                "pacientediscapacidad" => MotivoRequerimientoAcompanante.PacienteDiscapacidad,
+                _ => null
+            }
         };
     }
 
@@ -50,9 +79,10 @@ public class PacienteService : IPaciente
         // Buscar la última solicitud aprobada para este documento
         var solicitud = await _context.TbSolRegCannabis
             .Include(s => s.Paciente)
-            .Where(s => (s.Paciente.NumDocCedula == documentoNormalizado || 
-                        s.Paciente.NumDocPasaporte == documentoNormalizado) &&
-                        s.EstadoSolicitud == "Aprobada")
+            .Include(s => s.EstadoSolicitud) // Incluir la navegación al estado
+            .Where(s => (s.Paciente.DocumentoCedula == documentoNormalizado || 
+                        s.Paciente.DocumentoPasaporte == documentoNormalizado) &&
+                        s.EstadoSolicitud.NombreEstado == "Aprobada")
             .OrderByDescending(s => s.FechaAprobacion)
             .FirstOrDefaultAsync();
 
@@ -60,11 +90,11 @@ public class PacienteService : IPaciente
         {
             return new PacienteEstadoModel
             {
-                Activo = false,
-                FechaVencimiento = null,
+                Documento = documentoNormalizado,
                 Nombre = null,
                 Apellido = null,
-                Documento = documentoNormalizado
+                FechaVencimiento = null,
+                Activo = false
             };
         }
 
@@ -74,12 +104,12 @@ public class PacienteService : IPaciente
 
         return new PacienteEstadoModel
         {
-            Activo = estaActivo,
-            FechaVencimiento = fechaVencimiento,
+            Documento = string.IsNullOrEmpty(solicitud.Paciente.DocumentoCedula) ? 
+                solicitud.Paciente.DocumentoPasaporte : solicitud.Paciente.DocumentoCedula,
             Nombre = solicitud.Paciente.PrimerNombre,
             Apellido = solicitud.Paciente.PrimerApellido,
-            Documento = string.IsNullOrEmpty(solicitud.Paciente.NumDocCedula) ? 
-                solicitud.Paciente.NumDocPasaporte : solicitud.Paciente.NumDocCedula
+            FechaVencimiento = fechaVencimiento,
+            Activo = estaActivo
         };
-    } 
+    }
 }

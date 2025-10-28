@@ -106,7 +106,7 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbAcompanantePaciente)
                 .HasForeignKey(d => d.PacienteId)
-                .HasConstraintName("FK__TbAcompan__Pacie__04E4BC85");
+                .HasConstraintName("FK_TbAcompanantePaciente_TbPaciente");
         });
 
         modelBuilder.Entity<TbCorregimiento>(entity =>
@@ -202,10 +202,11 @@ public partial class DbContextDigesa : DbContext
 
         modelBuilder.Entity<TbEstadoSolicitud>(entity =>
         {
-            entity.HasKey(e => e.Estado).HasName("PK__TbEstado__36DF552EC7C72BD8");
+            entity.HasKey(e => e.IdEstado).HasName("PK__TbEstado__FBB0EDC18804FB2D");
 
-            entity.Property(e => e.Estado).ValueGeneratedNever();
-            entity.Property(e => e.Descripcion)
+            entity.HasIndex(e => e.NombreEstado, "UQ__TbEstado__6CE5061507E4B90E").IsUnique();
+
+            entity.Property(e => e.NombreEstado)
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
@@ -311,6 +312,8 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.DireccionExacta)
                 .HasMaxLength(300)
                 .IsUnicode(false);
+            entity.Property(e => e.DocumentoCedula).HasMaxLength(100);
+            entity.Property(e => e.DocumentoPasaporte).HasMaxLength(100);
             entity.Property(e => e.InstalacionSalud)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -323,8 +326,6 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreInstalacion)
                 .HasMaxLength(200)
                 .IsUnicode(false);
-            entity.Property(e => e.NumDocCedula).HasMaxLength(100);
-            entity.Property(e => e.NumDocPasaporte).HasMaxLength(100);
             entity.Property(e => e.PrimerApellido)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -426,9 +427,6 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.CreadaPor)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.EstadoSolicitud)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.FechaAprobacion).HasColumnType("datetime");
             entity.Property(e => e.FechaSolicitud).HasColumnType("datetime");
             entity.Property(e => e.ModificadaPor)
@@ -440,6 +438,10 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.UsuarioRevisor)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.TbSolRegCannabis)
+                .HasForeignKey(d => d.EstadoSolicitudId)
+                .HasConstraintName("FK_TbSolRegCannabis_EstadoSolicitud");
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbSolRegCannabis)
                 .HasForeignKey(d => d.PacienteId)
@@ -453,12 +455,13 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Comentario)
                 .HasMaxLength(300)
                 .IsUnicode(false);
-            entity.Property(e => e.EstadoSolicitud)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.UsuarioRevisor)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.EstadoSolicitudIdHistorialNavigation).WithMany(p => p.TbSolRegCannabisHistorial)
+                .HasForeignKey(d => d.EstadoSolicitudIdHistorial)
+                .HasConstraintName("FK_TbSolRegCannabisHistorial_EstadoSolicitudHistorial");
 
             entity.HasOne(d => d.SolRegCannabis).WithMany(p => p.TbSolRegCannabisHistorial)
                 .HasForeignKey(d => d.SolRegCannabisId)

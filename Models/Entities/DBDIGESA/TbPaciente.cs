@@ -17,9 +17,9 @@ public partial class TbPaciente
 
     public string? TipoDocumento { get; set; }
 
-    public string? NumDocCedula { get; set; }
+    public string? DocumentoCedula { get; set; }
 
-    public string? NumDocPasaporte { get; set; }
+    public string? DocumentoPasaporte { get; set; }
 
     public string? Nacionalidad { get; set; }
 

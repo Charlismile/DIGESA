@@ -1,27 +1,66 @@
-﻿using DIGESA.Models.Entities.DBDIGESA;
+﻿using DIGESA.Data;
+using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Web;
-using DIGESA.Data;
 
 namespace DIGESA.Components.Pages.Admin;
 
 public partial class Indexboard : ComponentBase
 {
     private bool isLoading = true;
-
     private DynamicModal ModalForm = default!;
     private ApplicationUser LoggedUser = new();
+
     private List<AccionPanel> PanelAcciones { get; set; } = new();
     private List<EstadoPanel> PanelEstados { get; set; } = new();
 
     [Inject] private ISolicitudService SolicitudService { get; set; } = default!;
-    [Inject] private IUserData _UserService { get; set; } = default!;
+    [Inject] private IUserData UserService { get; set; } = default!;
     [Inject] private IDbContextFactory<DbContextDigesa> ContextFactory { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private AuthenticationStateProvider AuthStateProvider { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        InicializarAcciones();
+
+        // Obtener usuario autenticado
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var username = auth.User.Identity?.Name;
+        if (!string.IsNullOrEmpty(username))
+        {
+            LoggedUser = await UserService.GetUser(username);
+        }
+
+        // Cargar estados desde base de datos
+        await using var db = await ContextFactory.CreateDbContextAsync();
+        var estadosDb = await db.TbEstadoSolicitud
+            .Where(e => e.Descripcion != "Archivada")
+            .ToListAsync();
+
+        PanelEstados = estadosDb.Select(CrearEstadoPanel).ToList();
+
+        // Cargar conteos por estado
+        var counts = await SolicitudService.ObtenerConteoPorEstadoAsync();
+        foreach (var panel in PanelEstados)
+        {
+            panel.Cantidad = counts.TryGetValue(panel.Titulo, out var c) ? c : 0;
+        }
+
+        // Mostrar mensaje si la contraseña fue cambiada
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        if (query.Get("passwordChanged") == "true")
+        {
+            ModalForm.ShowSuccess("Tu contraseña ha sido cambiada con éxito.");
+            NavigationManager.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
+        }
+
+        isLoading = false;
+    }
 
     private void InicializarAcciones()
     {
@@ -56,10 +95,9 @@ public partial class Indexboard : ComponentBase
     private static readonly Dictionary<byte, (string Subtitulo, string Icono, string Color, string Fondo, string Borde)> EstadoConfig
         = new()
         {
-            { 0, ("Pendientes", "fa-paper-plane", "info",    "rgba(13,202,240,0.05)", "#0dcaf0") },
-            { 1, ("Procesando", "fa-clock",       "warning", "rgba(255,193,7,0.05)",  "#ffc107") },
-            { 2, ("Completadas","fa-check-circle","success", "rgba(25,135,84,0.05)",  "#198754") },
-            { 3, ("Denegadas",  "fa-times-circle","danger",  "rgba(220,53,69,0.05)",  "#dc3545") }
+            { 0, ("Pendientes", "fa-paper-plane", "info", "rgba(13,202,240,0.05)", "#0dcaf0") },
+            { 1, ("Aprobadas", "fa-check-circle", "success", "rgba(25,135,84,0.05)", "#198754") },
+            { 2, ("Rechazadas", "fa-times-circle", "danger", "rgba(220,53,69,0.05)", "#dc3545") }
         };
 
     private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud e) =>
@@ -84,44 +122,6 @@ public partial class Indexboard : ComponentBase
                 Fondo = "rgba(108,117,125,0.05)",
                 Borde = "#6c757d"
             };
-
-    protected override async Task OnParametersSetAsync()
-    {
-        isLoading = true;
-
-        InicializarAcciones();
-
-        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
-        var username = auth.User.Identity?.Name;
-        if (!string.IsNullOrEmpty(username))
-        {
-            LoggedUser = await _UserService.GetUser(username);
-        }
-
-        await using var db = await ContextFactory.CreateDbContextAsync();
-        var estadosDb = await db.TbEstadoSolicitud
-            .Where(e => e.Descripcion != "Archivada")
-            .ToListAsync();
-
-        PanelEstados = estadosDb.Select(CrearEstadoPanel).ToList();
-
-        var counts = await SolicitudService.ObtenerConteoPorEstadoAsync();
-        foreach (var panel in PanelEstados)
-        {
-            panel.Cantidad = counts.TryGetValue(panel.Titulo, out var c) ? c : 0;
-        }
-
-        // Modal contraseña
-        var uri = new Uri(NavigationManager.Uri);
-        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        if (query.Get("passwordChanged") == "true")
-        {
-            ModalForm.ShowSuccess("Tu contraseña ha sido cambiada con éxito.");
-            NavigationManager.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
-        }
-
-        isLoading = false;
-    }
 
     private void IrA(string route)
     {
