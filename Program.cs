@@ -64,6 +64,7 @@ builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 // HttpClient para Active Directory
 builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();
