@@ -1,4 +1,5 @@
-﻿using DIGESA.Models.CannabisModels;
+﻿using DIGESA.Components.Pages.Public;
+using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ public class SolicitudService : ISolicitudService
         _commonService = commonService;
     }
 
-    public async Task<int> CrearSolicitudCompletaAsync(RegistroCanabisUnionModel registro, DocumentoMedicoModel documentos)
+    public async Task<int> CrearSolicitudCompletaAsync(RegistroCanabisUnionModel registro,
+        Solicitud.DocumentosModel documentos)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -35,7 +37,7 @@ public class SolicitudService : ISolicitudService
                 await GuardarAcompananteAsync(registro.acompanante, pacienteId);
 
             // 4. Guardar médico
-            await GuardarMedicoAsync(registro.medico, pacienteId);
+            var medicoId = await GuardarMedicoAsync(registro.medico, pacienteId);
 
             // 5. Guardar diagnósticos
             await GuardarDiagnosticosAsync(registro.pacienteDiagnostico, pacienteId);
@@ -94,11 +96,11 @@ public class SolicitudService : ISolicitudService
             PrimerApellido = pacienteModel.PrimerApellido ?? "",
             SegundoApellido = pacienteModel.SegundoApellido,
             TipoDocumento = pacienteModel.TipoDocumentoPacienteEnum.ToString(),
-            DocumentoCedula = pacienteModel.TipoDocumentoPacienteEnum == TipoDocumentoPaciente.Cedula 
-                ? pacienteModel.NumDocCedula 
+            DocumentoCedula = pacienteModel.TipoDocumentoPacienteEnum == TipoDocumentoPaciente.Cedula
+                ? pacienteModel.NumDocCedula
                 : null,
-            DocumentoPasaporte = pacienteModel.TipoDocumentoPacienteEnum == TipoDocumentoPaciente.Pasaporte 
-                ? pacienteModel.NumDocPasaporte 
+            DocumentoPasaporte = pacienteModel.TipoDocumentoPacienteEnum == TipoDocumentoPaciente.Pasaporte
+                ? pacienteModel.NumDocPasaporte
                 : null,
             Nacionalidad = pacienteModel.Nacionalidad ?? "",
             FechaNacimiento = pacienteModel.FechaNacimiento.HasValue
@@ -115,7 +117,7 @@ public class SolicitudService : ISolicitudService
             InstalacionId = pacienteModel.pacienteInstalacionId,
             DireccionExacta = pacienteModel.DireccionExacta ?? "",
             RequiereAcompanante = pacienteModel.RequiereAcompananteEnum == RequiereAcompanante.Si,
-            MotivoRequerimientoAcompanante = pacienteModel.MotivoRequerimientoAcompanante?.ToString(),
+            MotivoRequerimientoAcompanante = pacienteModel.MotivoRequerimientoAcompananteEnum?.ToString(),
             TipoDiscapacidad = pacienteModel.TipoDiscapacidad,
             NombreInstalacion = pacienteModel.pacienteInstalacion
         };
@@ -147,11 +149,10 @@ public class SolicitudService : ISolicitudService
         await _context.SaveChangesAsync();
     }
 
-    private async Task GuardarMedicoAsync(MedicoModel medicoModel, int pacienteId)
+    private async Task<int> GuardarMedicoAsync(MedicoModel medicoModel, int pacienteId)
     {
         var medico = new TbMedicoPaciente
         {
-            // CORRECCIÓN: No usar pacienteId como Id del médico
             PrimerNombre = medicoModel.PrimerNombre ?? "",
             PrimerApellido = medicoModel.PrimerApellido ?? "",
             MedicoDisciplina = medicoModel.MedicoDisciplinaEnum?.ToString() ?? "",
@@ -159,12 +160,14 @@ public class SolicitudService : ISolicitudService
             MedicoTelefono = medicoModel.MedicoTelefono ?? "",
             InstalacionId = medicoModel.medicoInstalacionId,
             RegionId = medicoModel.medicoRegionId,
-            DetalleMedico = medicoModel.DetalleMedico,
-            NombreInstalacion = medicoModel.MedicoInstalacion
+            DetalleMedico = medicoModel.DetalleMedico ?? "Sin detalle",
+            NombreInstalacion = medicoModel.MedicoInstalacion,
+            PacienteId = pacienteId
         };
 
         _context.TbMedicoPaciente.Add(medico);
         await _context.SaveChangesAsync();
+        return medico.Id;
     }
 
     private async Task GuardarDiagnosticosAsync(PacienteDiagnosticoModel diagnosticoModel, int pacienteId)
@@ -247,8 +250,8 @@ public class SolicitudService : ISolicitudService
             DosisFrecuencia = productoModel.DosisFrecuencia,
             DosisDuracion = productoModel.DosisDuracion,
             UsaDosisRescate = productoModel.UsaDosisRescateEnum == UsaDosisRescate.Si,
-            DetDosisRescate = productoModel.UsaDosisRescateEnum == UsaDosisRescate.Si 
-                ? productoModel.DetDosisRescate 
+            DetDosisRescate = productoModel.UsaDosisRescateEnum == UsaDosisRescate.Si
+                ? productoModel.DetDosisRescate
                 : null
         };
 
@@ -263,9 +266,9 @@ public class SolicitudService : ISolicitudService
         {
             var comorbilidad = new TbPacienteComorbilidad
             {
-                // CORRECCIÓN: No usar pacienteId como Id de comorbilidad
                 NombreDiagnostico = comorbilidadModel.NombreDiagnostico,
-                DetalleTratamiento = comorbilidadModel.DetalleTratamiento
+                DetalleTratamiento = comorbilidadModel.DetalleTratamiento,
+                PacienteId = pacienteId
             };
 
             _context.TbPacienteComorbilidad.Add(comorbilidad);
@@ -309,7 +312,7 @@ public class SolicitudService : ISolicitudService
         {
             PacienteId = pacienteId,
             FechaSolicitud = DateTime.Now,
-            EstadoSolicitudId = estadoPendiente.IdEstado, // CORRECCIÓN: Usar ID del estado
+            EstadoSolicitudId = estadoPendiente.IdEstado,
             CreadaPor = "Sistema",
             NumSolAnio = DateTime.Now.Year,
             NumSolMes = DateTime.Now.Month,
@@ -337,7 +340,7 @@ public class SolicitudService : ISolicitudService
         var historial = new TbSolRegCannabisHistorial
         {
             SolRegCannabisId = solicitudId,
-            EstadoSolicitudIdHistorial = estadoPendiente.IdEstado, // CORRECCIÓN: Usar ID del estado
+            EstadoSolicitudIdHistorial = estadoPendiente.IdEstado,
             Comentario = "Solicitud creada",
             UsuarioRevisor = "Sistema",
             FechaCambio = DateOnly.FromDateTime(DateTime.Now)
@@ -353,7 +356,7 @@ public class SolicitudService : ISolicitudService
         if (registro.paciente == null)
             return false;
 
-        if (string.IsNullOrWhiteSpace(registro.paciente.PrimerNombre) || 
+        if (string.IsNullOrWhiteSpace(registro.paciente.PrimerNombre) ||
             string.IsNullOrWhiteSpace(registro.paciente.PrimerApellido))
             return false;
 
@@ -361,7 +364,7 @@ public class SolicitudService : ISolicitudService
             return false;
 
         // Validar que tenga al menos un diagnóstico
-        if (registro.pacienteDiagnostico?.SelectedDiagnosticosIds?.Any() != true && 
+        if (registro.pacienteDiagnostico?.SelectedDiagnosticosIds?.Any() != true &&
             string.IsNullOrWhiteSpace(registro.pacienteDiagnostico?.NombreOtroDiagnostico))
             return false;
 
@@ -397,5 +400,124 @@ public class SolicitudService : ISolicitudService
             .ToListAsync();
 
         return tipos.ToDictionary(t => t.Nombre.Trim(), t => t.Id);
+    }
+
+    public async Task<List<SolicitudModel>> ObtenerSolicitudesAsync()
+    {
+        var solicitudes = await _context.TbSolRegCannabis
+            .Include(s => s.Paciente)
+            .Include(s => s.EstadoSolicitud)
+            .OrderByDescending(s => s.FechaSolicitud)
+            .Select(s => new SolicitudModel
+            {
+                Id = s.Id,
+                NumSolCompleta = s.NumSolCompleta,
+                FechaSolicitud = s.FechaSolicitud,
+                EstadoSolicitud = s.EstadoSolicitud != null ? s.EstadoSolicitud.NombreEstado : "Desconocido",
+                PacienteNombre = $"{s.Paciente.PrimerNombre} {s.Paciente.PrimerApellido}",
+                PacienteCedula = s.Paciente.DocumentoCedula ?? s.Paciente.DocumentoPasaporte ?? "N/A"
+            })
+            .ToListAsync();
+
+        return solicitudes;
+    }
+
+    public async Task<bool> ActualizarEstadoSolicitudAsync(int solicitudId, string nuevoEstado, string usuarioRevisor,
+        string comentario)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        try
+        {
+            // Buscar la solicitud
+            var solicitud = await _context.TbSolRegCannabis
+                .Include(s => s.EstadoSolicitud)
+                .FirstOrDefaultAsync(s => s.Id == solicitudId);
+
+            if (solicitud == null)
+            {
+                return false;
+            }
+
+            // Buscar el nuevo estado en la base de datos
+            var estadoNuevo = await _context.TbEstadoSolicitud
+                .FirstOrDefaultAsync(e => e.NombreEstado == nuevoEstado);
+
+            if (estadoNuevo == null)
+            {
+                return false;
+            }
+
+            // Actualizar el estado de la solicitud
+            solicitud.EstadoSolicitudId = estadoNuevo.IdEstado;
+            solicitud.FechaRevision = DateOnly.FromDateTime(DateTime.Now);
+            solicitud.UsuarioRevisor = usuarioRevisor;
+            solicitud.ComentarioRevision = comentario;
+
+            if (nuevoEstado == "Aprobada")
+            {
+                solicitud.FechaAprobacion = DateTime.Now;
+            }
+
+            _context.TbSolRegCannabis.Update(solicitud);
+
+            // Crear registro en el historial
+            var historial = new TbSolRegCannabisHistorial
+            {
+                SolRegCannabisId = solicitudId,
+                EstadoSolicitudIdHistorial = estadoNuevo.IdEstado,
+                Comentario = comentario,
+                UsuarioRevisor = usuarioRevisor,
+                FechaCambio = DateOnly.FromDateTime(DateTime.Now)
+            };
+
+            _context.TbSolRegCannabisHistorial.Add(historial);
+
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return true;
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            return false;
+        }
+    }
+    public async Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync()
+    {
+        try
+        {
+            var conteos = await _context.TbSolRegCannabis
+                .Include(s => s.EstadoSolicitud)
+                .Where(s => s.EstadoSolicitud != null)
+                .GroupBy(s => s.EstadoSolicitud.NombreEstado)
+                .Select(g => new
+                {
+                    Estado = g.Key,
+                    Cantidad = g.Count()
+                })
+                .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
+
+            // Asegurarse de que todos los estados tengan al menos 0
+            var todosEstados = await _context.TbEstadoSolicitud
+                .Select(e => e.NombreEstado)
+                .ToListAsync();
+
+            foreach (var estado in todosEstados)
+            {
+                if (!conteos.ContainsKey(estado))
+                {
+                    conteos[estado] = 0;
+                }
+            }
+
+            return conteos;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al obtener conteos por estado: {ex.Message}");
+            return new Dictionary<string, int>();
+        }
     }
 }

@@ -36,7 +36,7 @@ public class PacienteModel : IValidatableObject
     [Required(ErrorMessage = "Indique si requiere acompañante.")]
     public RequiereAcompanante? RequiereAcompananteEnum { get; set; }
 
-    public MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
+    public MotivoRequerimientoAcompanante? MotivoRequerimientoAcompananteEnum { get; set; }
 
     public int Id { get; set; }
 
@@ -105,15 +105,14 @@ public class PacienteModel : IValidatableObject
                     new[] { nameof(NumDocPasaporte) });
         }
 
-        if (RequiereAcompananteEnum == CannabisModels.RequiereAcompanante.Si)
+        if (RequiereAcompananteEnum == RequiereAcompanante.Si) // CORREGIDO: Removí CannabisModels.
         {
-            if (MotivoRequerimientoAcompanante == null)
+            if (MotivoRequerimientoAcompananteEnum == null)
             {
                 yield return new ValidationResult("Especifique el motivo por el que se requiere acompañante.",
                     new[] { nameof(MotivoRequerimientoAcompanante) });
             }
-            else if (MotivoRequerimientoAcompanante ==
-                     CannabisModels.MotivoRequerimientoAcompanante.PacienteDiscapacidad)
+            else if (MotivoRequerimientoAcompananteEnum == MotivoRequerimientoAcompanante.PacienteDiscapacidad) // CORREGIDO
             {
                 if (string.IsNullOrWhiteSpace(TipoDiscapacidad))
                     yield return new ValidationResult("Especifique la discapacidad.",

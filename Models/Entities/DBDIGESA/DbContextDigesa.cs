@@ -260,6 +260,10 @@ public partial class DbContextDigesa : DbContext
                 .HasForeignKey(d => d.InstalacionId)
                 .HasConstraintName("FK__TbMedicoP__Insta__0C85DE4D");
 
+            entity.HasOne(d => d.Paciente).WithMany(p => p.TbMedicoPaciente)
+                .HasForeignKey(d => d.PacienteId)
+                .HasConstraintName("FK_TbMedicoPaciente_TbPaciente");
+
             entity.HasOne(d => d.Region).WithMany(p => p.TbMedicoPaciente)
                 .HasForeignKey(d => d.RegionId)
                 .HasConstraintName("FK__TbMedicoP__Regio__0B91BA14");
@@ -384,6 +388,10 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreDiagnostico)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.Paciente).WithMany(p => p.TbPacienteComorbilidad)
+                .HasForeignKey(d => d.PacienteId)
+                .HasConstraintName("FK_TbPacienteComorbilidad_TbPaciente");
         });
 
         modelBuilder.Entity<TbPacienteDiagnostico>(entity =>

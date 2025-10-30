@@ -38,7 +38,7 @@ public partial class Indexboard : ComponentBase
         // Cargar estados desde base de datos
         await using var db = await ContextFactory.CreateDbContextAsync();
         var estadosDb = await db.TbEstadoSolicitud
-            .Where(e => e.Descripcion != "Archivada")
+            .Where(e => e.NombreEstado != "Archivada") // CORREGIDO: Cambié Descripcion por NombreEstado
             .ToListAsync();
 
         PanelEstados = estadosDb.Select(CrearEstadoPanel).ToList();
@@ -95,17 +95,22 @@ public partial class Indexboard : ComponentBase
     private static readonly Dictionary<byte, (string Subtitulo, string Icono, string Color, string Fondo, string Borde)> EstadoConfig
         = new()
         {
-            { 0, ("Pendientes", "fa-paper-plane", "info", "rgba(13,202,240,0.05)", "#0dcaf0") },
-            { 1, ("Aprobadas", "fa-check-circle", "success", "rgba(25,135,84,0.05)", "#198754") },
-            { 2, ("Rechazadas", "fa-times-circle", "danger", "rgba(220,53,69,0.05)", "#dc3545") }
+            { 1, ("Pendientes", "fa-paper-plane", "info", "rgba(13,202,240,0.05)", "#0dcaf0") },
+            { 2, ("Aprobadas", "fa-check-circle", "success", "rgba(25,135,84,0.05)", "#198754") },
+            { 3, ("Rechazadas", "fa-times-circle", "danger", "rgba(220,53,69,0.05)", "#dc3545") },
+            { 4, ("En Revisión", "fa-search", "warning", "rgba(255,193,7,0.05)", "#ffc107") }
         };
 
-    private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud e) =>
-        EstadoConfig.TryGetValue((byte)e.Estado, out var cfg)
+    private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud estado) // CORREGIDO: Cambié el parámetro de 'e' a 'estado'
+    {
+        // Usar el IdEstado como clave en lugar de una propiedad 'Estado' que no existe
+        var clave = (byte)estado.IdEstado;
+        
+        return EstadoConfig.TryGetValue(clave, out var cfg)
             ? new EstadoPanel
             {
-                Clave = (byte)e.Estado,
-                Titulo = e.Descripcion,
+                Clave = clave,
+                Titulo = estado.NombreEstado, // CORREGIDO: Cambié Descripcion por NombreEstado
                 Subtitulo = cfg.Subtitulo,
                 Icono = cfg.Icono,
                 Color = cfg.Color,
@@ -114,14 +119,15 @@ public partial class Indexboard : ComponentBase
             }
             : new EstadoPanel
             {
-                Clave = (byte)e.Estado,
-                Titulo = e.Descripcion,
-                Subtitulo = "",
+                Clave = clave,
+                Titulo = estado.NombreEstado, // CORREGIDO: Cambié Descripcion por NombreEstado
+                Subtitulo = "Solicitudes",
                 Icono = "fa-question-circle",
                 Color = "secondary",
                 Fondo = "rgba(108,117,125,0.05)",
                 Borde = "#6c757d"
             };
+    }
 
     private void IrA(string route)
     {
@@ -131,6 +137,6 @@ public partial class Indexboard : ComponentBase
 
     private void IrAPanelEstado(byte estado)
     {
-        NavigationManager.NavigateTo($"/admin/solicitudes_registros?estado={estado}", forceLoad: true);
+        NavigationManager.NavigateTo($"/Admin/Solicitudes", forceLoad: true);
     }
 }

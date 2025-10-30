@@ -69,7 +69,11 @@ public partial class TbPaciente
 
     public virtual ICollection<TbAcompanantePaciente> TbAcompanantePaciente { get; set; } = new List<TbAcompanantePaciente>();
 
+    public virtual ICollection<TbMedicoPaciente> TbMedicoPaciente { get; set; } = new List<TbMedicoPaciente>();
+
     public virtual ICollection<TbNombreProductoPaciente> TbNombreProductoPaciente { get; set; } = new List<TbNombreProductoPaciente>();
+
+    public virtual ICollection<TbPacienteComorbilidad> TbPacienteComorbilidad { get; set; } = new List<TbPacienteComorbilidad>();
 
     public virtual ICollection<TbPacienteDiagnostico> TbPacienteDiagnostico { get; set; } = new List<TbPacienteDiagnostico>();
 

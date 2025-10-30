@@ -71,7 +71,7 @@ public partial class Solicitud : ComponentBase
                 .ToListAsync();
 
             tipoDocumentoMap = tipos.ToDictionary(
-                t => t.Nombre.Trim(), 
+                t => t.Nombre.Trim(),
                 t => t.Id
             );
 
@@ -544,9 +544,9 @@ public partial class Solicitud : ComponentBase
             {
                 if (files == null || !files.Any()) return;
 
-                var tipoDocumentoEntry = tipoDocumentoMap.FirstOrDefault(x => 
+                var tipoDocumentoEntry = tipoDocumentoMap.FirstOrDefault(x =>
                     x.Key.Equals(tipoDocumentoNombre, StringComparison.OrdinalIgnoreCase));
-                
+
                 if (tipoDocumentoEntry.Value == 0)
                 {
                     Console.WriteLine($"Tipo de documento no encontrado: {tipoDocumentoNombre}");
@@ -613,8 +613,9 @@ public partial class Solicitud : ComponentBase
             if (file.Size > 10 * 1024 * 1024)
                 throw new Exception($"El archivo {file.Name} excede el tamaño máximo permitido (10MB)");
 
-            var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", solicitudId.ToString());
-            
+            var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads",
+                solicitudId.ToString());
+
             if (!Directory.Exists(uploadDirectory))
                 Directory.CreateDirectory(uploadDirectory);
 
@@ -650,7 +651,8 @@ public partial class Solicitud : ComponentBase
             {
                 if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
                 {
-                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.paciente.pacienteInstalacion);
+                    var instalacionId =
+                        await CrearOGuardarInstalacionPersonalizada(registro.paciente.pacienteInstalacion);
                     registro.paciente.pacienteInstalacionId = instalacionId;
                 }
 
@@ -685,7 +687,7 @@ public partial class Solicitud : ComponentBase
                     InstalacionId = registro.paciente.pacienteInstalacionId,
                     DireccionExacta = registro.paciente.DireccionExacta,
                     RequiereAcompanante = registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si,
-                    MotivoRequerimientoAcompanante = registro.paciente.MotivoRequerimientoAcompanante?.ToString(),
+                    MotivoRequerimientoAcompanante = registro.paciente.MotivoRequerimientoAcompananteEnum?.ToString(),
                     TipoDiscapacidad = registro.paciente.TipoDiscapacidad
                 };
 
@@ -703,7 +705,8 @@ public partial class Solicitud : ComponentBase
                         PrimerApellido = registro.acompanante.PrimerApellido,
                         SegundoApellido = registro.acompanante.SegundoApellido,
                         TipoDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum.ToString(),
-                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula
+                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum ==
+                                          TipoDocumentoAcompañante.Cedula
                             ? registro.acompanante.NumDocCedula
                             : registro.acompanante.NumDocPasaporte,
                         Nacionalidad = registro.acompanante.Nacionalidad,
@@ -725,7 +728,8 @@ public partial class Solicitud : ComponentBase
                     MedicoTelefono = registro.medico.MedicoTelefono,
                     InstalacionId = registro.medico.medicoInstalacionId,
                     RegionId = registro.medico.medicoRegionId,
-                    DetalleMedico = registro.medico.DetalleMedico
+                    DetalleMedico = registro.medico.DetalleMedico,
+                    PacienteId = paciente.Id // Agregar relación con paciente
                 };
 
                 _context.TbMedicoPaciente.Add(medico);
@@ -812,10 +816,16 @@ public partial class Solicitud : ComponentBase
                         : registro.productoPaciente.ConcentracionEnum.ToString(),
                     ViaConsumoProducto = string.Join(", ", viasSeleccionadas),
                     ProductoUnidad = productoUnidadFinal,
+                    ProductoUnidadId = registro.productoPaciente.ProductoUnidadId == 6
+                        ? null
+                        : registro.productoPaciente.ProductoUnidadId,
                     DetDosisPaciente = registro.productoPaciente.DetDosisPaciente,
                     DosisFrecuencia = registro.productoPaciente.DosisFrecuencia,
                     DosisDuracion = registro.productoPaciente.DosisDuracion,
-                    UsaDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si
+                    UsaDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si,
+                    DetDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si
+                        ? registro.productoPaciente.DetDosisRescate
+                        : null
                 };
 
                 _context.TbNombreProductoPaciente.Add(productoPaciente);
@@ -828,14 +838,15 @@ public partial class Solicitud : ComponentBase
                     var comorbilidad = new TbPacienteComorbilidad
                     {
                         NombreDiagnostico = registro.pacienteComorbilidad.NombreDiagnostico,
-                        DetalleTratamiento = registro.pacienteComorbilidad.DetalleTratamiento
+                        DetalleTratamiento = registro.pacienteComorbilidad.DetalleTratamiento,
+                        PacienteId = paciente.Id // Agregar relación con paciente
                     };
 
                     _context.TbPacienteComorbilidad.Add(comorbilidad);
                     await _context.SaveChangesAsync();
                 }
 
-                // 9. Crear SolicitudModel de Registro
+                // 9. Crear Solicitud de Registro
                 var secuencia = await _context.TbSolSecuencia
                     .FirstOrDefaultAsync(s => s.Anio == DateTime.Now.Year && s.IsActivo == true);
 
@@ -857,11 +868,20 @@ public partial class Solicitud : ComponentBase
 
                 await _context.SaveChangesAsync();
 
+                // Obtener el estado "Pendiente" de la base de datos
+                var estadoPendiente = await _context.TbEstadoSolicitud
+                    .FirstOrDefaultAsync(e => e.NombreEstado == "Pendiente");
+
+                if (estadoPendiente == null)
+                {
+                    throw new InvalidOperationException("No se encontró el estado 'Pendiente' en la base de datos");
+                }
+
                 var solicitud = new TbSolRegCannabis
                 {
                     PacienteId = paciente.Id,
                     FechaSolicitud = DateTime.Now,
-                    EstadoSolicitud = "Pendiente",
+                    EstadoSolicitudId = estadoPendiente.IdEstado, // CORREGIDO: Usar ID del estado
                     CreadaPor = "Sistema",
                     NumSolAnio = DateTime.Now.Year,
                     NumSolMes = DateTime.Now.Month,
@@ -872,15 +892,15 @@ public partial class Solicitud : ComponentBase
                 _context.TbSolRegCannabis.Add(solicitud);
                 await _context.SaveChangesAsync();
 
-                // 10. GUARDAR ARCHIVOS ADJUNTOS - ¡NUEVO!
+                // 10. GUARDAR ARCHIVOS ADJUNTOS
                 await SaveAttachedFiles(solicitud.Id);
 
                 // 11. Crear historial
                 var historial = new TbSolRegCannabisHistorial
                 {
                     SolRegCannabisId = solicitud.Id,
-                    EstadoSolicitudIdHistorialNavigation = "Pendiente",
-                    Comentario = "SolicitudModel creada",
+                    EstadoSolicitudIdHistorial = estadoPendiente.IdEstado, // CORREGIDO: Usar ID del estado
+                    Comentario = "Solicitud creada",
                     UsuarioRevisor = "Sistema",
                     FechaCambio = DateOnly.FromDateTime(DateTime.Now)
                 };
@@ -890,7 +910,7 @@ public partial class Solicitud : ComponentBase
 
                 await transaction.CommitAsync();
 
-                Console.WriteLine($"SolicitudModel guardada exitosamente. Número: {solicitud.NumSolCompleta}");
+                Console.WriteLine($"Solicitud guardada exitosamente. Número: {solicitud.NumSolCompleta}");
                 NavigationManager.NavigateTo("/", forceLoad: true);
             }
             catch (Exception ex)
@@ -981,79 +1001,80 @@ public partial class Solicitud : ComponentBase
         return isValid;
     }
 
-   private void OnFileChange(InputFileChangeEventArgs e, string campo)
-{
-    var files = e.GetMultipleFiles();
-    const long maxFileSize = 5 * 1024 * 1024; // 512KB
-
-    foreach (var file in files)
+    private void OnFileChange(InputFileChangeEventArgs e, string campo)
     {
-        Console.WriteLine($"Archivo recibido para {campo}: {file.Name} - Tamaño: {file.Size} bytes");
+        var files = e.GetMultipleFiles();
+        const long maxFileSize = 5 * 1024 * 1024; // 512KB
 
-        // Validar tamaño máximo
-        if (file.Size > maxFileSize)
+        foreach (var file in files)
         {
-            // Mostrar advertencia al usuario
-            MostrarAdvertencia($"El archivo '{file.Name}' excede el tamaño máximo permitido de 5MB. " +
-                              $"Tamaño actual: {(file.Size / 2048f):F2}KB");
-            continue; // Saltar este archivo
+            Console.WriteLine($"Archivo recibido para {campo}: {file.Name} - Tamaño: {file.Size} bytes");
+
+            // Validar tamaño máximo
+            if (file.Size > maxFileSize)
+            {
+                // Mostrar advertencia al usuario
+                MostrarAdvertencia($"El archivo '{file.Name}' excede el tamaño máximo permitido de 5MB. " +
+                                   $"Tamaño actual: {(file.Size / 2048f):F2}KB");
+                continue; // Saltar este archivo
+            }
+
+            switch (campo)
+            {
+                case "CedulaPaciente":
+                    documentos.CedulaPaciente.Add(file);
+                    break;
+                case "CertificacionMedica":
+                    documentos.CertificacionMedica.Add(file);
+                    break;
+                case "FotoPaciente":
+                    documentos.FotoPaciente.Add(file);
+                    break;
+                case "CedulaAcompanante":
+                    documentos.CedulaAcompanante.Add(file);
+                    break;
+                case "SentenciaTutor":
+                    documentos.SentenciaTutor.Add(file);
+                    break;
+                case "Antecedentes":
+                    documentos.Antecedentes.Add(file);
+                    break;
+                case "IdentidadMenor":
+                    documentos.IdentidadMenor.Add(file);
+                    break;
+                case "ConsentimientoPadres":
+                    documentos.ConsentimientoPadres.Add(file);
+                    break;
+                case "CertificadoNacimientoMenor":
+                    documentos.CertificadoNacimientoMenor.Add(file);
+                    break;
+                case "FotoAcompanante":
+                    documentos.FotoAcompanante.Add(file);
+                    break;
+                default:
+                    Console.WriteLine($"Campo de archivo desconocido: {campo}");
+                    break;
+            }
         }
 
-        switch (campo)
+        StateHasChanged();
+    }
+
+    private async void MostrarAdvertencia(string mensaje)
+    {
+        // Puedes usar JavaScript para mostrar un alert o implementar un sistema de notificaciones
+        try
         {
-            case "CedulaPaciente":
-                documentos.CedulaPaciente.Add(file);
-                break;
-            case "CertificacionMedica":
-                documentos.CertificacionMedica.Add(file);
-                break;
-            case "FotoPaciente":
-                documentos.FotoPaciente.Add(file);
-                break;
-            case "CedulaAcompanante":
-                documentos.CedulaAcompanante.Add(file);
-                break;
-            case "SentenciaTutor":
-                documentos.SentenciaTutor.Add(file);
-                break;
-            case "Antecedentes":
-                documentos.Antecedentes.Add(file);
-                break;
-            case "IdentidadMenor":
-                documentos.IdentidadMenor.Add(file);
-                break;
-            case "ConsentimientoPadres":
-                documentos.ConsentimientoPadres.Add(file);
-                break;
-            case "CertificadoNacimientoMenor":
-                documentos.CertificadoNacimientoMenor.Add(file);
-                break;
-            case "FotoAcompanante":
-                documentos.FotoAcompanante.Add(file);
-                break;
-            default:
-                Console.WriteLine($"Campo de archivo desconocido: {campo}");
-                break;
+            // Si estás usando JavaScript interop
+            await JSRuntime.InvokeVoidAsync("alert", mensaje);
+        }
+        catch
+        {
+            // Fallback: mostrar en consola
+            Console.WriteLine($"ADVERTENCIA: {mensaje}");
         }
     }
 
-    StateHasChanged();
-}
-
-private async void MostrarAdvertencia(string mensaje)
-{
-    // Puedes usar JavaScript para mostrar un alert o implementar un sistema de notificaciones
-    try
-    {
-        // Si estás usando JavaScript interop
-        await JSRuntime.InvokeVoidAsync("alert", mensaje);
-    }
-    catch
-    {
-        // Fallback: mostrar en consola
-        Console.WriteLine($"ADVERTENCIA: {mensaje}");
-    }
-}
     private void OnSubmit()
     {
         Console.WriteLine("Formulario enviado con éxito.");

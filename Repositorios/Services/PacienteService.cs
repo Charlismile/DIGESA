@@ -63,7 +63,7 @@ public class PacienteService : IPaciente
                 (pacienteEntity.RequiereAcompanante.Value ? RequiereAcompanante.Si : RequiereAcompanante.No) 
                 : null,
                 
-            MotivoRequerimientoAcompanante = pacienteEntity.MotivoRequerimientoAcompanante?.ToLower() switch
+            MotivoRequerimientoAcompananteEnum = pacienteEntity.MotivoRequerimientoAcompanante?.ToLower() switch
             {
                 "pacientemenoredad" => MotivoRequerimientoAcompanante.PacienteMenorEdad,
                 "pacientediscapacidad" => MotivoRequerimientoAcompanante.PacienteDiscapacidad,

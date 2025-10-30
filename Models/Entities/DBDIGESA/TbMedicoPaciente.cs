@@ -27,7 +27,11 @@ public partial class TbMedicoPaciente
 
     public string? NombreInstalacion { get; set; }
 
+    public int? PacienteId { get; set; }
+
     public virtual TbInstalacionSalud? Instalacion { get; set; }
+
+    public virtual TbPaciente? Paciente { get; set; }
 
     public virtual TbRegionSalud? Region { get; set; }
 

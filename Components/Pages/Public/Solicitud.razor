@@ -336,7 +336,7 @@
                                         <label class="form-label">Especifique el motivo</label>
                                         <div class="d-flex gap-4">
                                             <InputRadioGroup
-                                                @bind-Value="registro.paciente.MotivoRequerimientoAcompanante">
+                                                @bind-Value="registro.paciente.MotivoRequerimientoAcompananteEnum">
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
                                                                 Value="@MotivoRequerimientoAcompanante.PacienteDiscapacidad"
@@ -353,11 +353,11 @@
                                                 </div>
                                             </InputRadioGroup>
                                             <ValidationMessage
-                                                For="@(() => registro.paciente.MotivoRequerimientoAcompanante)"/>
+                                                For="@(() => registro.paciente.MotivoRequerimientoAcompananteEnum)"/>
                                         </div>
                                     </div>
 
-                                    @if (registro.paciente.MotivoRequerimientoAcompanante == MotivoRequerimientoAcompanante.PacienteDiscapacidad)
+                                    @if (registro.paciente.MotivoRequerimientoAcompananteEnum == MotivoRequerimientoAcompanante.PacienteDiscapacidad)
                                     {
                                         <div class="col-sm-6">
                                             <label for="TipoDiscapacidad" class="form-label">Especifique la
