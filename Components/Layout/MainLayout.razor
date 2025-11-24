@@ -4,13 +4,27 @@
 @inject ToastService ToastService
 
 <PageTitle>DIGESA</PageTitle>
-<header>
-    <div class="container">
-        <img src="images/logo-gob.png" class="img-fluid" alt="logo gobierno" height="120" style="height: 120px">
-    </div>
-    <NavMenu/>
-</header>
-<div class="py-5">
-    @Body
+
+<div class="layout-container">
+    <header class="layout-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <img src="images/logo-gob.png" class="img-fluid header-logo" alt="logo gobierno" height="120">
+                </div>
+                <div class="col">
+                    <h1 class="header-title">Sistema DIGESA</h1>
+                </div>
+            </div>
+        </div>
+        <NavMenu />
+    </header>
+
+    <main class="layout-main">
+        <div class="container-fluid py-4">
+            @Body
+        </div>
+    </main>
 </div>
+
 <Toasts class="p-3" Placement="ToastsPlacement.TopRight" Delay="5000" AutoHide="true" />
