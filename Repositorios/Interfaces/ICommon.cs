@@ -15,4 +15,5 @@ public interface ICommon
     Task<List<TbViaAdministracion>> GetAllViaAdmAsync();
     Task<List<ListModel>> GetUnidadId();
     Task<string> GetFakePassword();
+    Task<List<ListModel>> GetAllUnidadesAsync();
 }

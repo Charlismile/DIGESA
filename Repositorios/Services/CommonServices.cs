@@ -16,6 +16,23 @@ public class CommonServices : ICommon
         _configuration = configuration;
     }
 
+    // MÉTODO FALTANTE AGREGADO
+    public async Task<List<ListModel>> GetAllUnidadesAsync()
+    {
+        return await _context.TbUnidades
+            .Where(u => u.IsActivo)
+            .Select(x => new ListModel { Id = x.Id, Name = x.NombreUnidad ?? "" })
+            .OrderBy(x => x.Name)
+            .ToListAsync();
+    }
+
+    // MÉTODO ACTUALIZADO para usar GetAllUnidadesAsync
+    public async Task<List<ListModel>> GetUnidadId()
+    {
+        return await GetAllUnidadesAsync(); // Reutiliza la misma lógica
+    }
+
+    // Los demás métodos permanecen igual...
     public Task<string> GetFakePassword()
         => Task.FromResult(_configuration["FakePass"] ?? "");
 
@@ -48,15 +65,12 @@ public class CommonServices : ICommon
                                          .OrderBy(x => x.Name)
                                          .ToListAsync();
 
-    public async Task<List<ListModel>> GetUnidadId()
-        => await _context.TbUnidades.Select(x => new ListModel { Id = x.Id, Name = x.NombreUnidad ?? "" }).ToListAsync();
-
     public async Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync()
-        => await _context.ListaDiagnostico.OrderBy(c => c.Nombre).ToListAsync();
+        => await _context.ListaDiagnostico.Where(d => d.IsActivo).OrderBy(c => c.Nombre).ToListAsync();
 
     public async Task<List<TbFormaFarmaceutica>> GetAllFormasAsync()
-        => await _context.TbFormaFarmaceutica.OrderBy(c => c.Nombre).ToListAsync();
+        => await _context.TbFormaFarmaceutica.Where(f => f.IsActivo).OrderBy(c => c.Nombre).ToListAsync();
 
     public async Task<List<TbViaAdministracion>> GetAllViaAdmAsync()
-        => await _context.TbViaAdministracion.OrderBy(c => c.Nombre).ToListAsync();
+        => await _context.TbViaAdministracion.Where(v => v.IsActivo).OrderBy(c => c.Nombre).ToListAsync();
 }

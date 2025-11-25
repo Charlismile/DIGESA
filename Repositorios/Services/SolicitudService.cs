@@ -11,13 +11,20 @@ public class SolicitudService : ISolicitudService
     private readonly DbContextDigesa _context;
     private readonly IFileService _fileService;
     private readonly ICommon _commonService;
+    private readonly IEmailService _emailService;
+    private readonly ILogger<SolicitudService> _logger;
 
-    public SolicitudService(DbContextDigesa context, IFileService fileService, ICommon commonService)
+    public SolicitudService(DbContextDigesa context, IFileService fileService,
+        ICommon commonService, IEmailService emailService, ILogger<SolicitudService> logger)
     {
         _context = context;
         _fileService = fileService;
         _commonService = commonService;
+        _emailService = emailService;
+        _logger = logger;
     }
+
+    // IMPLEMENTACIÓN DE TODOS LOS MÉTODOS DE LA INTERFACE
 
     public async Task<int> CrearSolicitudCompletaAsync(RegistroCanabisUnionModel registro,
         Solicitud.DocumentosModel documentos)
@@ -70,6 +77,196 @@ public class SolicitudService : ISolicitudService
         }
     }
 
+    public async Task<bool> ValidarSolicitudCompletaAsync(RegistroCanabisUnionModel registro)
+    {
+        // Validaciones básicas
+        if (registro.paciente == null)
+            return false;
+
+        if (string.IsNullOrWhiteSpace(registro.paciente.PrimerNombre) ||
+            string.IsNullOrWhiteSpace(registro.paciente.PrimerApellido))
+            return false;
+
+        if (registro.paciente.FechaNacimiento == null)
+            return false;
+
+        // Validar que tenga al menos un diagnóstico
+        if (registro.pacienteDiagnostico?.SelectedDiagnosticosIds?.Any() != true &&
+            string.IsNullOrWhiteSpace(registro.pacienteDiagnostico?.NombreOtroDiagnostico))
+            return false;
+
+        return await Task.FromResult(true);
+    }
+
+    public async Task<int?> CrearOGuardarInstalacionPersonalizadaAsync(string nombreInstalacion)
+    {
+        if (string.IsNullOrWhiteSpace(nombreInstalacion))
+            return null;
+
+        var instalacionExistente = await _context.TbInstalacionSalud
+            .FirstOrDefaultAsync(i => i.Nombre.ToLower() == nombreInstalacion.Trim().ToLower());
+
+        if (instalacionExistente != null)
+            return instalacionExistente.Id;
+
+        var nuevaInstalacion = new TbInstalacionSalud
+        {
+            Nombre = nombreInstalacion.Trim()
+        };
+
+        _context.TbInstalacionSalud.Add(nuevaInstalacion);
+        await _context.SaveChangesAsync();
+
+        return nuevaInstalacion.Id;
+    }
+
+    public async Task<Dictionary<string, int>> ObtenerTiposDocumentoAsync()
+    {
+        var tipos = await _context.TbTipoDocumentoAdjunto
+            .Where(t => t.IsActivo == true)
+            .ToListAsync();
+
+        return tipos.ToDictionary(t => t.Nombre.Trim(), t => t.Id);
+    }
+
+    public async Task<List<SolicitudModel>> ObtenerSolicitudesAsync()
+    {
+        var solicitudes = await _context.TbSolRegCannabis
+            .Include(s => s.Paciente)
+            .Include(s => s.EstadoSolicitud)
+            .OrderByDescending(s => s.FechaSolicitud)
+            .Select(s => new SolicitudModel
+            {
+                Id = s.Id,
+                NumSolCompleta = s.NumSolCompleta,
+                FechaSolicitud = s.FechaSolicitud,
+                EstadoSolicitud = s.EstadoSolicitud != null ? s.EstadoSolicitud.NombreEstado : "Desconocido",
+                PacienteNombre = $"{s.Paciente.PrimerNombre} {s.Paciente.PrimerApellido}",
+                PacienteCedula = s.Paciente.DocumentoCedula ?? s.Paciente.DocumentoPasaporte ?? "N/A"
+            })
+            .ToListAsync();
+
+        return solicitudes;
+    }
+
+     public async Task<bool> ActualizarEstadoSolicitudAsync(int solicitudId, string nuevoEstado, string usuarioRevisor,
+        string comentario)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        try
+        {
+            var solicitud = await _context.TbSolRegCannabis
+                .Include(s => s.Paciente)
+                .FirstOrDefaultAsync(s => s.Id == solicitudId);
+
+            if (solicitud == null) return false;
+
+            var estadoNuevo = await _context.TbEstadoSolicitud
+                .FirstOrDefaultAsync(e => e.NombreEstado == nuevoEstado);
+
+            if (estadoNuevo == null) return false;
+
+            // Actualizar solicitud
+            solicitud.EstadoSolicitudId = estadoNuevo.IdEstado;
+            solicitud.FechaRevision = DateOnly.FromDateTime(DateTime.Now);
+            solicitud.UsuarioRevisor = usuarioRevisor;
+            solicitud.ComentarioRevision = comentario;
+
+            if (nuevoEstado == "Aprobada")
+                solicitud.FechaAprobacion = DateTime.Now;
+
+            _context.TbSolRegCannabis.Update(solicitud);
+
+            var historial = new TbSolRegCannabisHistorial
+            {
+                SolRegCannabisId = solicitudId,
+                EstadoSolicitudIdHistorial = estadoNuevo.IdEstado,
+                Comentario = comentario,
+                UsuarioRevisor = usuarioRevisor,
+                FechaCambio = DateOnly.FromDateTime(DateTime.Now)
+            };
+
+            _context.TbSolRegCannabisHistorial.Add(historial);
+
+            await _context.SaveChangesAsync();
+
+            // ENVIAR CORREO CON MANEJO DE ERRORES
+            if (!string.IsNullOrEmpty(solicitud.Paciente.CorreoElectronico))
+            {
+                try
+                {
+                    string asunto = $"Resultado de su solicitud de Cannabis Medicinal: {nuevoEstado}";
+                    string cuerpo = $@"
+            <h2>Estimado/a {solicitud.Paciente.PrimerNombre} {solicitud.Paciente.PrimerApellido}</h2>
+            <p>Su solicitud <strong>{solicitud.NumSolCompleta}</strong> fue <strong>{nuevoEstado}</strong>.</p>
+            <p><b>Motivo:</b> {comentario}</p>
+            <br>
+            <p>Atentamente,<br>DIGESA - Plataforma de Cannabis Medicinal</p>";
+
+                    bool correoEnviado = await _emailService.EnviarCorreoAsync(
+                        solicitud.Paciente.CorreoElectronico, asunto, cuerpo);
+
+                    if (!correoEnviado)
+                    {
+                        _logger.LogWarning($"No se pudo enviar el correo a: {solicitud.Paciente.CorreoElectronico}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Error enviando correo a: {solicitud.Paciente.CorreoElectronico}");
+                }
+            }
+
+            await transaction.CommitAsync();
+            return true;
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync()
+    {
+        try
+        {
+            var conteos = await _context.TbSolRegCannabis
+                .Include(s => s.EstadoSolicitud)
+                .Where(s => s.EstadoSolicitud != null)
+                .GroupBy(s => s.EstadoSolicitud.NombreEstado)
+                .Select(g => new
+                {
+                    Estado = g.Key,
+                    Cantidad = g.Count()
+                })
+                .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
+
+            // Asegurarse de que todos los estados tengan al menos 0
+            var todosEstados = await _context.TbEstadoSolicitud
+                .Select(e => e.NombreEstado)
+                .ToListAsync();
+
+            foreach (var estado in todosEstados)
+            {
+                if (!conteos.ContainsKey(estado))
+                {
+                    conteos[estado] = 0;
+                }
+            }
+
+            return conteos;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al obtener conteos por estado: {ex.Message}");
+            return new Dictionary<string, int>();
+        }
+    }
+
+    // MÉTODOS PRIVADOS AUXILIARES
+
     private async Task ProcesarInstalacionesPersonalizadasAsync(RegistroCanabisUnionModel registro)
     {
         // Procesar instalación del paciente
@@ -118,8 +315,7 @@ public class SolicitudService : ISolicitudService
             DireccionExacta = pacienteModel.DireccionExacta ?? "",
             RequiereAcompanante = pacienteModel.RequiereAcompananteEnum == RequiereAcompanante.Si,
             MotivoRequerimientoAcompanante = pacienteModel.MotivoRequerimientoAcompananteEnum?.ToString(),
-            TipoDiscapacidad = pacienteModel.TipoDiscapacidad,
-            NombreInstalacion = pacienteModel.pacienteInstalacion
+            TipoDiscapacidad = pacienteModel.TipoDiscapacidad
         };
 
         _context.TbPaciente.Add(paciente);
@@ -129,6 +325,10 @@ public class SolicitudService : ISolicitudService
 
     private async Task GuardarAcompananteAsync(AcompananteModel acompananteModel, int pacienteId)
     {
+        string numeroDocumento = acompananteModel.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula
+            ? acompananteModel.NumDocCedula ?? ""
+            : acompananteModel.NumDocPasaporte ?? "";
+
         var acompanante = new TbAcompanantePaciente
         {
             PacienteId = pacienteId,
@@ -137,9 +337,7 @@ public class SolicitudService : ISolicitudService
             PrimerApellido = acompananteModel.PrimerApellido ?? "",
             SegundoApellido = acompananteModel.SegundoApellido,
             TipoDocumento = acompananteModel.TipoDocumentoAcompañanteEnum.ToString(),
-            NumeroDocumento = acompananteModel.TipoDocumentoAcompañanteEnum == TipoDocumentoAcompañante.Cedula
-                ? acompananteModel.NumDocCedula
-                : acompananteModel.NumDocPasaporte,
+            NumeroDocumento = numeroDocumento,
             Nacionalidad = acompananteModel.Nacionalidad ?? "",
             Parentesco = acompananteModel.ParentescoEnum?.ToString() ?? acompananteModel.Parentesco ?? "",
             TelefonoMovil = acompananteModel.TelefonoPersonal
@@ -161,7 +359,6 @@ public class SolicitudService : ISolicitudService
             InstalacionId = medicoModel.medicoInstalacionId,
             RegionId = medicoModel.medicoRegionId,
             DetalleMedico = medicoModel.DetalleMedico ?? "Sin detalle",
-            NombreInstalacion = medicoModel.MedicoInstalacion,
             PacienteId = pacienteId
         };
 
@@ -205,7 +402,7 @@ public class SolicitudService : ISolicitudService
     {
         var formasList = await _commonService.GetAllFormasAsync();
         var viasList = await _commonService.GetAllViaAdmAsync();
-        var unidadesList = await _commonService.GetUnidadId();
+        var unidadesList = await _commonService.GetAllUnidadesAsync();
 
         var formasSeleccionadas = formasList
             .Where(f => productoModel.SelectedFormaIds.Contains(f.Id))
@@ -299,7 +496,6 @@ public class SolicitudService : ISolicitudService
 
         await _context.SaveChangesAsync();
 
-        // Obtener el estado "Pendiente" de la base de datos
         var estadoPendiente = await _context.TbEstadoSolicitud
             .FirstOrDefaultAsync(e => e.NombreEstado == "Pendiente");
 
@@ -328,7 +524,6 @@ public class SolicitudService : ISolicitudService
 
     private async Task CrearHistorialSolicitudAsync(int solicitudId)
     {
-        // Obtener el estado "Pendiente" de la base de datos
         var estadoPendiente = await _context.TbEstadoSolicitud
             .FirstOrDefaultAsync(e => e.NombreEstado == "Pendiente");
 
@@ -348,176 +543,5 @@ public class SolicitudService : ISolicitudService
 
         _context.TbSolRegCannabisHistorial.Add(historial);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task<bool> ValidarSolicitudCompletaAsync(RegistroCanabisUnionModel registro)
-    {
-        // Validaciones básicas
-        if (registro.paciente == null)
-            return false;
-
-        if (string.IsNullOrWhiteSpace(registro.paciente.PrimerNombre) ||
-            string.IsNullOrWhiteSpace(registro.paciente.PrimerApellido))
-            return false;
-
-        if (registro.paciente.FechaNacimiento == null)
-            return false;
-
-        // Validar que tenga al menos un diagnóstico
-        if (registro.pacienteDiagnostico?.SelectedDiagnosticosIds?.Any() != true &&
-            string.IsNullOrWhiteSpace(registro.pacienteDiagnostico?.NombreOtroDiagnostico))
-            return false;
-
-        return await Task.FromResult(true);
-    }
-
-    public async Task<int?> CrearOGuardarInstalacionPersonalizadaAsync(string nombreInstalacion)
-    {
-        if (string.IsNullOrWhiteSpace(nombreInstalacion))
-            return null;
-
-        var instalacionExistente = await _context.TbInstalacionSalud
-            .FirstOrDefaultAsync(i => i.Nombre.ToLower() == nombreInstalacion.Trim().ToLower());
-
-        if (instalacionExistente != null)
-            return instalacionExistente.Id;
-
-        var nuevaInstalacion = new TbInstalacionSalud
-        {
-            Nombre = nombreInstalacion.Trim()
-        };
-
-        _context.TbInstalacionSalud.Add(nuevaInstalacion);
-        await _context.SaveChangesAsync();
-
-        return nuevaInstalacion.Id;
-    }
-
-    public async Task<Dictionary<string, int>> ObtenerTiposDocumentoAsync()
-    {
-        var tipos = await _context.TbTipoDocumentoAdjunto
-            .Where(t => t.IsActivo == true)
-            .ToListAsync();
-
-        return tipos.ToDictionary(t => t.Nombre.Trim(), t => t.Id);
-    }
-
-    public async Task<List<SolicitudModel>> ObtenerSolicitudesAsync()
-    {
-        var solicitudes = await _context.TbSolRegCannabis
-            .Include(s => s.Paciente)
-            .Include(s => s.EstadoSolicitud)
-            .OrderByDescending(s => s.FechaSolicitud)
-            .Select(s => new SolicitudModel
-            {
-                Id = s.Id,
-                NumSolCompleta = s.NumSolCompleta,
-                FechaSolicitud = s.FechaSolicitud,
-                EstadoSolicitud = s.EstadoSolicitud != null ? s.EstadoSolicitud.NombreEstado : "Desconocido",
-                PacienteNombre = $"{s.Paciente.PrimerNombre} {s.Paciente.PrimerApellido}",
-                PacienteCedula = s.Paciente.DocumentoCedula ?? s.Paciente.DocumentoPasaporte ?? "N/A"
-            })
-            .ToListAsync();
-
-        return solicitudes;
-    }
-
-    public async Task<bool> ActualizarEstadoSolicitudAsync(int solicitudId, string nuevoEstado, string usuarioRevisor,
-        string comentario)
-    {
-        await using var transaction = await _context.Database.BeginTransactionAsync();
-
-        try
-        {
-            // Buscar la solicitud
-            var solicitud = await _context.TbSolRegCannabis
-                .Include(s => s.EstadoSolicitud)
-                .FirstOrDefaultAsync(s => s.Id == solicitudId);
-
-            if (solicitud == null)
-            {
-                return false;
-            }
-
-            // Buscar el nuevo estado en la base de datos
-            var estadoNuevo = await _context.TbEstadoSolicitud
-                .FirstOrDefaultAsync(e => e.NombreEstado == nuevoEstado);
-
-            if (estadoNuevo == null)
-            {
-                return false;
-            }
-
-            // Actualizar el estado de la solicitud
-            solicitud.EstadoSolicitudId = estadoNuevo.IdEstado;
-            solicitud.FechaRevision = DateOnly.FromDateTime(DateTime.Now);
-            solicitud.UsuarioRevisor = usuarioRevisor;
-            solicitud.ComentarioRevision = comentario;
-
-            if (nuevoEstado == "Aprobada")
-            {
-                solicitud.FechaAprobacion = DateTime.Now;
-            }
-
-            _context.TbSolRegCannabis.Update(solicitud);
-
-            // Crear registro en el historial
-            var historial = new TbSolRegCannabisHistorial
-            {
-                SolRegCannabisId = solicitudId,
-                EstadoSolicitudIdHistorial = estadoNuevo.IdEstado,
-                Comentario = comentario,
-                UsuarioRevisor = usuarioRevisor,
-                FechaCambio = DateOnly.FromDateTime(DateTime.Now)
-            };
-
-            _context.TbSolRegCannabisHistorial.Add(historial);
-
-            await _context.SaveChangesAsync();
-            await transaction.CommitAsync();
-
-            return true;
-        }
-        catch
-        {
-            await transaction.RollbackAsync();
-            return false;
-        }
-    }
-    public async Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync()
-    {
-        try
-        {
-            var conteos = await _context.TbSolRegCannabis
-                .Include(s => s.EstadoSolicitud)
-                .Where(s => s.EstadoSolicitud != null)
-                .GroupBy(s => s.EstadoSolicitud.NombreEstado)
-                .Select(g => new
-                {
-                    Estado = g.Key,
-                    Cantidad = g.Count()
-                })
-                .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
-
-            // Asegurarse de que todos los estados tengan al menos 0
-            var todosEstados = await _context.TbEstadoSolicitud
-                .Select(e => e.NombreEstado)
-                .ToListAsync();
-
-            foreach (var estado in todosEstados)
-            {
-                if (!conteos.ContainsKey(estado))
-                {
-                    conteos[estado] = 0;
-                }
-            }
-
-            return conteos;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error al obtener conteos por estado: {ex.Message}");
-            return new Dictionary<string, int>();
-        }
     }
 }

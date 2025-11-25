@@ -104,13 +104,4 @@ namespace DIGESA.Repositorios.Services
                 .ToListAsync();
         }
     }
-
-    // Additional model for region statistics
-    public class EstadisticasPorRegion
-    {
-        public string Region { get; set; }
-        public int TotalSolicitudes { get; set; }
-        public int Aprobadas { get; set; }
-        public int Pendientes { get; set; }
-    }
 }

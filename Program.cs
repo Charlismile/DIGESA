@@ -56,7 +56,7 @@ builder.Services.AddAuthorization();
 // ==========================
 // Servicios propios
 // ==========================
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ICommon, CommonServices>();
 builder.Services.AddScoped<IUserData, UserDataService>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
