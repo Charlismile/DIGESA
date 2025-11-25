@@ -13,5 +13,5 @@ public interface IUserData
 
     // Active Directory
     Task<ResultModel> LoginAD(string UserName, string Password);
-    Task<ResultGenericModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email);
+    Task<ResultModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email);
 }

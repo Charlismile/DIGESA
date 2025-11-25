@@ -6,8 +6,8 @@ namespace DIGESA.Repositorios.Interfaces;
 
 public interface ISolicitudService
 {
-    Task<int> CrearSolicitudCompletaAsync(RegistroCanabisUnionModel registro, Solicitud.DocumentosModel documentos);
-    Task<bool> ValidarSolicitudCompletaAsync(RegistroCanabisUnionModel registro);
+    Task<int> CrearSolicitudCompletaAsync(RegistroCannabisUnionModel registro, Solicitud.DocumentosModel documentos);
+    Task<bool> ValidarSolicitudCompletaAsync(RegistroCannabisUnionModel registro);
     Task<int?> CrearOGuardarInstalacionPersonalizadaAsync(string nombreInstalacion);
     Task<Dictionary<string, int>> ObtenerTiposDocumentoAsync();
     

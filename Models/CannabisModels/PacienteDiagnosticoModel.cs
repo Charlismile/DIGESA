@@ -2,28 +2,29 @@
 
 namespace DIGESA.Models.CannabisModels;
 
-public class PacienteDiagnosticoModel : IValidatableObject // AGREGADO: Implementar validación
+public class PacienteDiagnosticoModel : IValidatableObject
 {
-    public bool IsOtroDiagSelected { get; set; } = false;
+    public bool TieneComorbilidades { get; set; }
     
     [Required(ErrorMessage = "Seleccione al menos un diagnóstico.")]
     [MinLength(1, ErrorMessage = "Seleccione al menos un diagnóstico.")]
-    public List<int> SelectedDiagnosticosIds { get; set; } = new();
+    public List<int> DiagnosticosIds { get; set; } = new(); // Renombrado
     
-    public string? NombreOtroDiagnostico { get; set; }
+    public string? DiagnosticoPersonalizado { get; set; } // Renombrado
+    public string? DetalleTratamiento { get; set; }
+    public DateTime? FechaDiagnostico { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        if (SelectedDiagnosticosIds.Count == 0 && !IsOtroDiagSelected)
+        if (DiagnosticosIds.Count == 0 && string.IsNullOrWhiteSpace(DiagnosticoPersonalizado))
         {
-            yield return new ValidationResult("Seleccione al menos un diagnóstico o agregue uno nuevo.",
-                new[] { nameof(SelectedDiagnosticosIds) });
+            yield return new ValidationResult("Seleccione al menos un diagnóstico o especifique uno personalizado.",
+                new[] { nameof(DiagnosticosIds) });
         }
 
-        if (IsOtroDiagSelected && string.IsNullOrWhiteSpace(NombreOtroDiagnostico))
+        if (!string.IsNullOrWhiteSpace(DiagnosticoPersonalizado) && DiagnosticosIds.Count == 0)
         {
-            yield return new ValidationResult("Especifique el nombre del diagnóstico.",
-                new[] { nameof(NombreOtroDiagnostico) });
+            // Validación adicional para diagnóstico personalizado
         }
     }
 }

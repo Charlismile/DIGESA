@@ -175,9 +175,9 @@ public class UserDataService : IUserData
     }
 
     // Buscar usuario en AD por email
-    public async Task<ResultGenericModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email)
+    public async Task<ResultModel<ActiveDirectoryUserModel>> FindUserByEmail(string Email)
     {
-        var resultUserModel = new ResultGenericModel<ActiveDirectoryUserModel>();
+        var resultUserModel = new ResultModel<ActiveDirectoryUserModel>();
         try
         {
             var EncodedEmail = WebUtility.UrlEncode(Email);
