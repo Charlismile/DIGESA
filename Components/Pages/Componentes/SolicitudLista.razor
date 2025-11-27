@@ -56,12 +56,12 @@
                 @foreach (var item in SolicitudesLista)
                 {
                     <tr>
-                        <td>@item.NumSolCompleta</td>
+                        <td>@item.NumeroSolicitud</td>
                         <td>@item.PacienteNombre</td>
-                        <td>@item.PacienteCedula</td>
-                        <td>@item.FechaSolicitud?.ToString("dd/MM/yyyy")</td>
+                        <td>@item.PacienteDocumento</td>
+                        <td>@item.FechaSolicitud.ToString("dd/MM/yyyy")</td>
                         <td>
-                            <span class="badge @(item.EstadoSolicitud switch
+                            <span class="badge @(item.Estado switch
                             {
                                 "Pendiente" => "bg-warning text-dark",
                                 "En Revisión" => "bg-info text-dark",
@@ -69,11 +69,11 @@
                                 "Rechazada" => "bg-danger",
                                 _ => "bg-secondary"
                             })">
-                                @item.EstadoSolicitud
+                                @item.Estado
                             </span>
                         </td>
                         <td>
-                            @if (item.EstadoSolicitud == "Pendiente" || item.EstadoSolicitud == "En Revisión")
+                            @if (item.Estado == "Pendiente" || item.Estado == "En Revisión")
                             {
                                 <button class="btn btn-success btn-sm me-2" @onclick="@(() => CambiarEstado(item.Id, "Aprobada"))">
                                     <i class="fa-solid fa-check"></i> Aprobar
@@ -115,10 +115,10 @@
         var todas = await SolicitudService.ObtenerSolicitudesAsync();
 
         if (!string.IsNullOrEmpty(EstadoSeleccionado))
-            SolicitudesLista = todas.Where(s => s.EstadoSolicitud == EstadoSeleccionado).ToList();
+            SolicitudesLista = todas.Where(s => s.Estado == EstadoSeleccionado).ToList();
         else
             SolicitudesLista = todas;
-        
+
         StateHasChanged();
     }
 
@@ -147,7 +147,7 @@
         {
             Mensaje = $"No se pudo actualizar la solicitud {id}.";
         }
-        
+
         StateHasChanged();
     }
 }

@@ -27,10 +27,6 @@ public partial class TbPaciente
 
     public string? Sexo { get; set; }
 
-    public string? InstalacionSalud { get; set; }
-
-    public string? RegionSalud { get; set; }
-
     public bool? RequiereAcompanante { get; set; }
 
     public string? MotivoRequerimientoAcompanante { get; set; }
@@ -55,7 +51,7 @@ public partial class TbPaciente
 
     public int? InstalacionId { get; set; }
 
-    public string? NombreInstalacion { get; set; }
+    public string? InstalacionPersonalizada { get; set; }
 
     public virtual TbCorregimiento? Corregimiento { get; set; }
 

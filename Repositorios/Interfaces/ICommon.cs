@@ -16,4 +16,6 @@ public interface ICommon
     Task<List<ItemListModel>> GetUnidadId();
     Task<string> GetFakePassword();
     Task<List<ItemListModel>> GetAllUnidadesAsync();
+    Task<List<ItemListModel>> GetAllFormasFarmaceuticasAsync();
+    Task<List<ItemListModel>> GetAllViasAdministracionAsync();
 }

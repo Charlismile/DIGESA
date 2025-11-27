@@ -35,7 +35,15 @@ public partial class TbNombreProductoPaciente
 
     public int? ProductoUnidadId { get; set; }
 
+    public int? FormaFarmaceuticaId { get; set; }
+
+    public int? ViaAdministracionId { get; set; }
+
+    public virtual TbFormaFarmaceutica? FormaFarmaceuticaNavigation { get; set; }
+
     public virtual TbPaciente? Paciente { get; set; }
 
     public virtual TbUnidades? ProductoUnidadNavigation { get; set; }
+
+    public virtual TbViaAdministracion? ViaAdministracion { get; set; }
 }

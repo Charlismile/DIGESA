@@ -35,5 +35,5 @@ public class AcompananteModel
     public Parentesco Parentesco { get; set; }
 
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public string? TelefonoMovil { get; set; } // Nombre consistente con BD
+    public string? TelefonoMovil { get; set; }  
 }

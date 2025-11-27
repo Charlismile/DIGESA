@@ -95,7 +95,7 @@ public partial class Create : ComponentBase
             return;
         }
 
-        ResultGenericModel<ActiveDirectoryUserModel> ActiveDirectoryUserModelData =
+        ResultModel<ActiveDirectoryUserModel> ActiveDirectoryUserModelData =
             await _UserService.FindUserByEmail(FormData.Email);
 
         if (ActiveDirectoryUserModelData.Data != null)

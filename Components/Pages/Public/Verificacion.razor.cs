@@ -52,4 +52,50 @@ public partial class Verificacion : ComponentBase
             busquedaRealizada = true;
         }
     }
+
+    // Métodos auxiliares para mostrar texto amigable
+    private string GetNombreCompleto()
+    {
+        if (pacienteDetalle == null) return string.Empty;
+        
+        var nombres = new List<string> 
+        { 
+            pacienteDetalle.PrimerNombre ?? "",
+            pacienteDetalle.SegundoNombre ?? "",
+            pacienteDetalle.PrimerApellido ?? "",
+            pacienteDetalle.SegundoApellido ?? ""
+        };
+        
+        return string.Join(" ", nombres.Where(n => !string.IsNullOrEmpty(n)));
+    }
+
+    private string GetTipoDocumentoTexto()
+    {
+        return pacienteDetalle?.TipoDocumento switch
+        {
+            TipoDocumento.Cedula => "Cédula",
+            TipoDocumento.Pasaporte => "Pasaporte",
+            _ => "No especificado"
+        };
+    }
+
+    private string GetSexoTexto()
+    {
+        return pacienteDetalle?.Sexo switch
+        {
+            Sexo.Masculino => "Masculino",
+            Sexo.Femenino => "Femenino",
+            _ => "No especificado"
+        };
+    }
+
+    private string GetMotivoAcompananteTexto()
+    {
+        return pacienteDetalle?.MotivoRequerimientoAcompanante switch
+        {
+            MotivoRequerimientoAcompanante.PacienteMenorEdad => "Paciente menor de edad",
+            MotivoRequerimientoAcompanante.PacienteDiscapacidad => "Paciente con discapacidad",
+            _ => "No especificado"
+        };
+    }
 }

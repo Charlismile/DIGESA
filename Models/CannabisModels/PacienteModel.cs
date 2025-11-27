@@ -61,6 +61,9 @@ public class PacienteModel : IValidatableObject
     public int? RegionSaludId { get; set; }
     public int? InstalacionSaludId { get; set; }
 
+    // Nuevas propiedades para campos adicionales
+    public string? InstalacionSaludPersonalizada { get; set; }
+
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         if (RequiereAcompanante == RequiereAcompanante.Si)

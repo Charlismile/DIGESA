@@ -57,3 +57,17 @@ public enum UsaDosisRescate
     Si,
     No
 }
+
+public enum NombreProductoE
+{
+    CBD,
+    THC,
+    OTRO
+}
+
+public enum ConcentracionE
+{
+    CBD,
+    THC,
+    OTRO
+}

@@ -23,6 +23,14 @@ public partial class TbDocumentoAdjunto
 
     public bool? IsValido { get; set; }
 
+    public bool EsDocumentoMedico { get; set; }
+
+    public int? MedicoId { get; set; }
+
+    public string? Categoria { get; set; }
+
+    public int? Version { get; set; }
+
     public virtual TbSolRegCannabis SolRegCannabis { get; set; } = null!;
 
     public virtual TbTipoDocumentoAdjunto TipoDocumento { get; set; } = null!;

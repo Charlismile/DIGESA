@@ -31,24 +31,25 @@ public class SolicitudService : ISolicitudService
 
         try
         {
-            // 1. Procesar instalaciones personalizadas
-            await ProcesarInstalacionesPersonalizadasAsync(registro);
-
-            // 2. Guardar paciente
+            // 1. Guardar paciente
             var pacienteId = await GuardarPacienteAsync(registro.Paciente);
 
-            // 3. Guardar acompañante si aplica
-            if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si)
+            // 2. Guardar acompañante si aplica
+            if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si && registro.Acompanante != null)
                 await GuardarAcompananteAsync(registro.Acompanante, pacienteId);
 
-            // 4. Guardar médico
+            // 3. Guardar médico
             var medicoId = await GuardarMedicoAsync(registro.Medico, pacienteId);
 
-            // 5. Guardar diagnósticos
+            // 4. Guardar diagnósticos (usando el nuevo DiagnosticoModel)
             await GuardarDiagnosticosAsync(registro.Diagnostico, pacienteId);
 
-            // 6. Guardar producto del paciente
+            // 5. Guardar producto del paciente (usando el nuevo ProductoModel)
             await GuardarProductoPacienteAsync(registro.Producto, pacienteId);
+
+            // 6. Guardar comorbilidades si existen
+            if (registro.Comorbilidad != null && registro.Comorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si)
+                await GuardarComorbilidadesAsync(registro.Comorbilidad, pacienteId);
 
             // 7. Crear solicitud principal
             var solicitudId = await CrearSolicitudPrincipalAsync(pacienteId);
@@ -85,9 +86,9 @@ public class SolicitudService : ISolicitudService
         if (registro.Paciente.FechaNacimiento == null)
             return false;
 
-        // Validar que tenga al menos un diagnóstico
-        if (registro.Diagnostico?.DiagnosticosIds?.Any() != true &&
-            string.IsNullOrWhiteSpace(registro.Diagnostico?.DiagnosticoPersonalizado))
+        // Validar que tenga al menos un diagnóstico (usando el nuevo modelo)
+        if (registro.Diagnostico?.SelectedDiagnosticosIds?.Any() != true &&
+            string.IsNullOrWhiteSpace(registro.Diagnostico?.NombreOtroDiagnostico))
             return false;
 
         return await Task.FromResult(true);
@@ -263,23 +264,6 @@ public class SolicitudService : ISolicitudService
 
     // MÉTODOS PRIVADOS AUXILIARES
 
-    private async Task ProcesarInstalacionesPersonalizadasAsync(RegistroCannabisUnionModel registro)
-    {
-        // Procesar instalación del paciente
-        if (!string.IsNullOrWhiteSpace(registro.Paciente.InstalacionSalud))
-        {
-            var instalacionId = await CrearOGuardarInstalacionPersonalizadaAsync(registro.Paciente.InstalacionSalud);
-            registro.Paciente.InstalacionSaludId = instalacionId;
-        }
-
-        // Procesar instalación del médico
-        if (!string.IsNullOrWhiteSpace(registro.Medico.MedicoInstalacion))
-        {
-            var instalacionId = await CrearOGuardarInstalacionPersonalizadaAsync(registro.Medico.MedicoInstalacion);
-            registro.Medico.InstalacionSaludId = instalacionId;
-        }
-    }
-
     private async Task<int> GuardarPacienteAsync(PacienteModel pacienteModel)
     {
         var paciente = new TbPaciente
@@ -308,6 +292,7 @@ public class SolicitudService : ISolicitudService
             CorregimientoId = pacienteModel.CorregimientoId,
             RegionId = pacienteModel.RegionSaludId,
             InstalacionId = pacienteModel.InstalacionSaludId,
+            // InstalacionPersonalizada = pacienteModel.InstalacionSaludPersonalizada, 
             DireccionExacta = pacienteModel.DireccionExacta ?? "",
             RequiereAcompanante = pacienteModel.RequiereAcompanante == RequiereAcompanante.Si,
             MotivoRequerimientoAcompanante = pacienteModel.MotivoRequerimientoAcompanante?.ToString(),
@@ -319,10 +304,9 @@ public class SolicitudService : ISolicitudService
         return paciente.Id;
     }
 
-    private async Task GuardarAcompananteAsync(AcompananteModel? acompananteModel, int pacienteId)
-    {
-        if (acompananteModel == null) return;
 
+    private async Task GuardarAcompananteAsync(AcompananteModel acompananteModel, int pacienteId)
+    {
         var acompanante = new TbAcompanantePaciente
         {
             PacienteId = pacienteId,
@@ -351,6 +335,7 @@ public class SolicitudService : ISolicitudService
             MedicoIdoneidad = medicoModel.MedicoIdoneidad ?? "",
             MedicoTelefono = medicoModel.TelefonoMovil ?? "",
             InstalacionId = medicoModel.InstalacionSaludId,
+            // InstalacionPersonalizada = medicoModel.InstalacionSaludPersonalizada, 
             RegionId = medicoModel.RegionSaludId,
             DetalleMedico = medicoModel.DetalleEspecialidad ?? "Sin detalle",
             PacienteId = pacienteId
@@ -360,12 +345,12 @@ public class SolicitudService : ISolicitudService
         await _context.SaveChangesAsync();
         return medico.Id;
     }
-
-    private async Task GuardarDiagnosticosAsync(PacienteDiagnosticoModel diagnosticoModel, int pacienteId)
+    private async Task GuardarDiagnosticosAsync(DiagnosticoModel diagnosticoModel, int pacienteId)
     {
         var diagnosticosList = await _commonService.GetAllDiagnosticsAsync();
 
-        foreach (var diagnosticoId in diagnosticoModel.DiagnosticosIds)
+        // Guardar diagnósticos seleccionados
+        foreach (var diagnosticoId in diagnosticoModel.SelectedDiagnosticosIds)
         {
             var diagnosticoNombre = diagnosticosList.FirstOrDefault(d => d.Id == diagnosticoId)?.Nombre;
             if (!string.IsNullOrEmpty(diagnosticoNombre))
@@ -374,22 +359,20 @@ public class SolicitudService : ISolicitudService
                 {
                     PacienteId = pacienteId,
                     NombreDiagnostico = diagnosticoNombre,
-                    DiagnosticoId = diagnosticoId,
-                    Tipo = "Principal",
-                    FechaDiagnostico = DateOnly.FromDateTime(DateTime.Now)
+                    Id = diagnosticoId 
                 };
                 _context.TbPacienteDiagnostico.Add(diagnostico);
             }
         }
 
-        if (!string.IsNullOrWhiteSpace(diagnosticoModel.DiagnosticoPersonalizado))
+        // Guardar diagnóstico "Otro" si está seleccionado
+        if (diagnosticoModel.IsOtroDiagSelected && !string.IsNullOrWhiteSpace(diagnosticoModel.NombreOtroDiagnostico))
         {
             var otroDiagnostico = new TbPacienteDiagnostico
             {
                 PacienteId = pacienteId,
-                NombreDiagnostico = diagnosticoModel.DiagnosticoPersonalizado,
-                Tipo = "Personalizado",
-                FechaDiagnostico = DateOnly.FromDateTime(DateTime.Now)
+                NombreDiagnostico = diagnosticoModel.NombreOtroDiagnostico,
+                // DiagnosticoId = null // Indicar que es personalizado
             };
             _context.TbPacienteDiagnostico.Add(otroDiagnostico);
         }
@@ -397,31 +380,80 @@ public class SolicitudService : ISolicitudService
         await _context.SaveChangesAsync();
     }
 
-    private async Task GuardarProductoPacienteAsync(ProductoPacienteModel productoModel, int pacienteId)
+    private async Task GuardarProductoPacienteAsync(ProductoModel productoModel, int pacienteId)
     {
+        // Para las formas farmacéuticas múltiples
+        var formasFarmaceuticas = new List<string>();
+        var formasList = await _commonService.GetAllFormasFarmaceuticasAsync(); // Necesitarás crear este método
+
+        foreach (var formaId in productoModel.SelectedFormaIds)
+        {
+            var formaNombre = formasList.FirstOrDefault(f => f.Id == formaId)?.Name;
+            if (!string.IsNullOrEmpty(formaNombre))
+                formasFarmaceuticas.Add(formaNombre);
+        }
+
+        // Agregar forma personalizada si existe
+        if (productoModel.IsOtraFormaSelected && !string.IsNullOrWhiteSpace(productoModel.NombreOtraForma))
+            formasFarmaceuticas.Add(productoModel.NombreOtraForma);
+
+        // Para las vías de administración múltiples
+        var viasAdministracion = new List<string>();
+        var viasList = await _commonService.GetAllViasAdministracionAsync(); // Necesitarás crear este método
+
+        foreach (var viaId in productoModel.SelectedViaAdmIds)
+        {
+            var viaNombre = viasList.FirstOrDefault(v => v.Id == viaId)?.Name;
+            if (!string.IsNullOrEmpty(viaNombre))
+                viasAdministracion.Add(viaNombre);
+        }
+
+        // Agregar vía personalizada si existe
+        if (productoModel.IsOtraViaAdmSelected && !string.IsNullOrWhiteSpace(productoModel.NombreOtraViaAdm))
+            viasAdministracion.Add(productoModel.NombreOtraViaAdm);
+
         var productoPaciente = new TbNombreProductoPaciente
         {
             PacienteId = pacienteId,
-            NombreProducto = productoModel.NombreComercial ?? "",
-            NombreComercialProd = productoModel.NombreComercial,
-            FormaFarmaceuticaId = productoModel.FormaFarmaceuticaId,
+            NombreProducto = productoModel.NombreProducto ?? productoModel.NombreProductoEnum.ToString(),
+            NombreComercialProd = productoModel.NombreComercialProd,
+            FormaFarmaceutica = string.Join(", ", formasFarmaceuticas), // Concatenar todas las formas
             CantidadConcentracion = productoModel.CantidadConcentracion,
-            NombreConcentracion = productoModel.TipoConcentracion == TipoConcentracion.OTRO
-                ? productoModel.ConcentracionPersonalizada
-                : productoModel.TipoConcentracion.ToString(),
-            ViaAdministracionId = productoModel.ViaAdministracionId,
-            ProductoUnidadId = productoModel.UnidadId,
-            DetDosisPaciente = productoModel.DetalleDosis,
-            DosisFrecuencia = productoModel.FrecuenciaTratamiento,
-            DosisDuracion = productoModel.DuracionTratamiento,
-            UsaDosisRescate = productoModel.UsaDosisRescate == UsaDosisRescate.Si,
-            DetDosisRescate = productoModel.UsaDosisRescate == UsaDosisRescate.Si
-                ? productoModel.DetalleDosisRescate
+            NombreConcentracion = productoModel.ConcentracionEnum == ConcentracionE.OTRO
+                ? productoModel.NombreConcentracion
+                : productoModel.ConcentracionEnum.ToString(),
+            ViaConsumoProducto = string.Join(", ", viasAdministracion), // Concatenar todas las vías
+            ProductoUnidad = productoModel.ProductoUnidad,
+            ProductoUnidadId = productoModel.ProductoUnidadId,
+            DetDosisPaciente = productoModel.DetDosisPaciente,
+            DosisFrecuencia = productoModel.DosisFrecuencia,
+            DosisDuracion = productoModel.DosisDuracion,
+            UsaDosisRescate = productoModel.UsaDosisRescateEnum == UsaDosisRescate.Si,
+            DetDosisRescate = productoModel.UsaDosisRescateEnum == UsaDosisRescate.Si
+                ? productoModel.DetDosisRescate
                 : null
         };
 
         _context.TbNombreProductoPaciente.Add(productoPaciente);
         await _context.SaveChangesAsync();
+    }
+
+    private async Task GuardarComorbilidadesAsync(PacienteComorbilidadModel comorbilidadModel, int pacienteId)
+    {
+        if (!string.IsNullOrWhiteSpace(comorbilidadModel.NombreDiagnostico))
+        {
+            var comorbilidad = new TbPacienteComorbilidad
+            {
+                PacienteId = pacienteId,
+                NombreDiagnostico = comorbilidadModel.NombreDiagnostico,
+                DetalleTratamiento = comorbilidadModel.DetalleTratamiento,
+                // FechaDiagnostico = DateOnly.FromDateTime(DateTime.Now), // Usar DateOnly
+                // TieneComorbilidad = true
+            };
+
+            _context.TbPacienteComorbilidad.Add(comorbilidad);
+            await _context.SaveChangesAsync();
+        }
     }
 
     private async Task<int> CrearSolicitudPrincipalAsync(int pacienteId)
@@ -496,6 +528,3 @@ public class SolicitudService : ISolicitudService
         await _context.SaveChangesAsync();
     }
 }
-
-
-   

@@ -1,4 +1,5 @@
 ﻿@page "/buscar-paciente"
+@using DIGESA.Models.CannabisModels
 
 <div class="container-fluid py-4">
     <div class="card shadow-sm">
@@ -93,15 +94,23 @@
                                                     <table class="table table-sm table-hover">
                                                         <tr>
                                                             <th>Nombre completo:</th>
-                                                            <td>@pacienteDetalle.PrimerNombre @pacienteDetalle.SegundoNombre @pacienteDetalle.PrimerApellido @pacienteDetalle.SegundoApellido</td>
+                                                            <td>@GetNombreCompleto()</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Tipo documento:</th>
-                                                            <td>@pacienteDetalle.TipoDocumentoPacienteEnum</td>
+                                                            <td>@GetTipoDocumentoTexto()</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Nacionalidad:</th>
                                                             <td>@pacienteDetalle.Nacionalidad</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Fecha nacimiento:</th>
+                                                            <td>@pacienteDetalle.FechaNacimiento?.ToString("dd/MM/yyyy")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Sexo:</th>
+                                                            <td>@GetSexoTexto()</td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -116,7 +125,7 @@
                                                     <table class="table table-sm table-hover">
                                                         <tr>
                                                             <th>Teléfono personal:</th>
-                                                            <td>@pacienteDetalle.TelefonoResidencialPersonal</td>
+                                                            <td>@pacienteDetalle.TelefonoPersonal</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Teléfono laboral:</th>
@@ -126,11 +135,45 @@
                                                             <th>Email:</th>
                                                             <td>@pacienteDetalle.CorreoElectronico</td>
                                                         </tr>
+                                                        <tr>
+                                                            <th>Dirección:</th>
+                                                            <td>@pacienteDetalle.DireccionExacta</td>
+                                                        </tr>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if (pacienteDetalle.RequiereAcompanante == RequiereAcompanante.Si)
+                                    {
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <div class="card shadow-sm">
+                                                    <div class="card-header bg-light">
+                                                        <h6 class="mb-0">Información de Acompañante</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="mb-2">
+                                                            <strong>Requiere acompañante:</strong> Sí
+                                                        </p>
+                                                        @if (pacienteDetalle.MotivoRequerimientoAcompanante.HasValue)
+                                                        {
+                                                            <p class="mb-2">
+                                                                <strong>Motivo:</strong> @GetMotivoAcompananteTexto()
+                                                            </p>
+                                                        }
+                                                        @if (!string.IsNullOrEmpty(pacienteDetalle.TipoDiscapacidad))
+                                                        {
+                                                            <p class="mb-0">
+                                                                <strong>Tipo de discapacidad:</strong> @pacienteDetalle.TipoDiscapacidad
+                                                            </p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 }
                             </div>
                         </div>

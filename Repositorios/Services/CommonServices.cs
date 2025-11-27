@@ -36,6 +36,22 @@ public class CommonServices : ICommon
     public Task<string> GetFakePassword()
         => Task.FromResult(_configuration["FakePass"] ?? "");
 
+    public async Task<List<ItemListModel>> GetAllFormasFarmaceuticasAsync()
+    {
+        return await _context.TbFormaFarmaceutica
+            .Where(f => f.IsActivo == true)
+            .Select(f => new ItemListModel { Id = f.Id, Name = f.Nombre })
+            .ToListAsync();
+    }
+
+    public async Task<List<ItemListModel>> GetAllViasAdministracionAsync()
+    {
+        return await _context.TbViaAdministracion
+            .Where(v => v.IsActivo == true)
+            .Select(v => new ItemListModel { Id = v.Id, Name = v.Nombre })
+            .ToListAsync();
+    }
+    
     public async Task<List<ItemListModel>> GetInstalaciones(string filtro)
     {
         var query = _context.TbInstalacionSalud.AsQueryable();

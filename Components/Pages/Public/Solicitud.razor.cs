@@ -19,34 +19,48 @@ public partial class Solicitud : ComponentBase
 
     #region variables
 
-    private string tipoTramite;
+    private string tipoTramite = string.Empty;
     private DocumentosModel documentos = new();
     private bool mostrarOtraInstalacionPaciente { get; set; }
     private bool mostrarOtraInstalacionMedico { get; set; }
     private Dictionary<string, int> tipoDocumentoMap = new Dictionary<string, int>();
 
-    private string instalacionFilterPaciente = "";
-    private string instalacionFilterMedico = "";
+    private string instalacionFilterPaciente = string.Empty;
+    private string instalacionFilterMedico = string.Empty;
 
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
     private ValidationMessageStore? messageStore;
 
-    private RegistroCanabisUnionModel registro { get; set; } = new();
-    private List<ListModel> pacienteRegioneslist { get; set; } = new();
-    private List<ListModel> pacienteProvincicaslist { get; set; } = new();
-    private List<ListModel> pacienteDistritolist { get; set; } = new();
-    private List<ListModel> pacienteCorregimientolist { get; set; } = new();
+    private RegistroCannabisUnionModel registro { get; set; } = new();
+    private List<ItemListModel> pacienteRegioneslist { get; set; } = new();
+    private List<ItemListModel> pacienteProvincicaslist { get; set; } = new();
+    private List<ItemListModel> pacienteDistritolist { get; set; } = new();
+    private List<ItemListModel> pacienteCorregimientolist { get; set; } = new();
     private List<ListaDiagnostico> pacienteDiagnosticolist { get; set; } = new();
     private List<TbFormaFarmaceutica> productoFormaList { get; set; } = new();
-    private List<ListModel> productoUnidadList { get; set; } = new();
+    private List<ItemListModel> productoUnidadList { get; set; } = new();
     private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
 
-    private EditContext editContext;
+    private EditContext editContext = default!;
+
+    // Propiedades temporales para instalaciones personalizadas
+    private string? instalacionPersonalizadaPaciente;
+    private string? instalacionPersonalizadaMedico;
 
     #endregion
 
     protected override async Task OnInitializedAsync()
     {
+        registro = new RegistroCannabisUnionModel
+        {
+            Paciente = new PacienteModel(),
+            Acompanante = new AcompananteModel(),
+            Medico = new MedicoModel(),
+            Producto = new ProductoModel(),
+            Diagnostico = new DiagnosticoModel(),
+            Comorbilidad = new PacienteComorbilidadModel()
+        };
+
         editContext = new EditContext(registro);
         messageStore = new ValidationMessageStore(editContext);
 
@@ -83,83 +97,83 @@ public partial class Solicitud : ComponentBase
         }
     }
 
-    private async Task<AutoCompleteDataProviderResult<ListModel>> AutoCompleteDataProvider(
-        AutoCompleteDataProviderRequest<ListModel> request)
+    private async Task<AutoCompleteDataProviderResult<ItemListModel>> AutoCompleteDataProvider(
+        AutoCompleteDataProviderRequest<ItemListModel> request)
     {
         var filtro = (request.Filter?.Value?.ToString() ?? "").ToUpper();
         var lista = await _Commonservice.GetInstalaciones(filtro);
 
-        var filtradas = lista.Select(x => new ListModel
+        var filtradas = lista.Select(x => new ItemListModel
         {
             Id = x.Id,
             Name = x.Name.Trim()
         });
 
-        return new AutoCompleteDataProviderResult<ListModel>
+        return new AutoCompleteDataProviderResult<ItemListModel>
         {
             Data = filtradas,
             TotalCount = filtradas.Count()
         };
     }
 
-    private void OnAutoCompletePacienteChanged(ListModel? sel)
+    private void OnAutoCompletePacienteChanged(ItemListModel? sel)
     {
         if (sel != null)
         {
-            registro.paciente.pacienteInstalacionId = sel.Id;
+            registro.Paciente.InstalacionSaludId = sel.Id;
             mostrarOtraInstalacionPaciente = false;
+            instalacionPersonalizadaPaciente = null;
         }
     }
 
-    private void OnAutoCompleteMedicoChanged(ListModel? sel)
+    private void OnAutoCompleteMedicoChanged(ItemListModel? sel)
     {
         if (sel != null)
         {
-            registro.medico.medicoInstalacionId = sel.Id;
+            registro.Medico.InstalacionSaludId = sel.Id;
             mostrarOtraInstalacionMedico = false;
-            registro.medico.MedicoInstalacion = null;
+            instalacionPersonalizadaMedico = null;
         }
     }
 
     private async Task pacienteProvinciaChanged(int id)
     {
-        registro.paciente.pacienteProvinciaId = id;
+        registro.Paciente.ProvinciaId = id;
         pacienteDistritolist = await _Commonservice.GetDistritos(id);
         pacienteCorregimientolist.Clear();
-        registro.paciente.pacienteCorregimientoId = null;
+        registro.Paciente.CorregimientoId = null;
     }
 
     private async Task pacienteDistritoChanged(int id)
     {
-        registro.paciente.pacienteDistritoId = id;
+        registro.Paciente.DistritoId = id;
         pacienteCorregimientolist = await _Commonservice.GetCorregimientos(id);
-        registro.paciente.pacienteCorregimientoId = null;
+        registro.Paciente.CorregimientoId = null;
     }
 
     private void OnUnidadSeleccionadaChanged(ChangeEventArgs e)
     {
         if (int.TryParse(e.Value?.ToString(), out int selectedId))
         {
-            registro.productoPaciente.ProductoUnidadId = selectedId;
-
-            if (selectedId == 6)
-            {
-                registro.productoPaciente.ProductoUnidad = string.Empty;
-            }
+            registro.Producto.ProductoUnidadId = selectedId;
         }
         else
         {
-            registro.productoPaciente.ProductoUnidadId = null;
+            registro.Producto.ProductoUnidadId = null;
         }
     }
 
     private void OnMostrarOtraInstalacionPacienteChanged(ChangeEventArgs e)
     {
-        mostrarOtraInstalacionPaciente = (bool)e.Value;
+        mostrarOtraInstalacionPaciente = (bool)(e.Value ?? false);
         if (mostrarOtraInstalacionPaciente)
         {
-            registro.paciente.pacienteInstalacionId = null;
-            instalacionFilterPaciente = "";
+            registro.Paciente.InstalacionSaludId = null;
+            instalacionFilterPaciente = string.Empty;
+        }
+        else
+        {
+            instalacionPersonalizadaPaciente = null;
         }
     }
 
@@ -173,17 +187,15 @@ public partial class Solicitud : ComponentBase
 
         if (mostrarOtraInstalacionMedico)
         {
-            registro.medico.medicoInstalacionId = null;
+            registro.Medico.InstalacionSaludId = null;
             instalacionFilterMedico = string.Empty;
         }
         else
         {
-            registro.medico.MedicoInstalacion = null;
+            instalacionPersonalizadaMedico = null;
         }
 
-        messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)));
-        messageStore?.Clear(new FieldIdentifier(registro.medico, nameof(registro.medico.MedicoInstalacion)));
-
+        messageStore?.Clear(new FieldIdentifier(registro.Medico, nameof(registro.Medico.InstalacionSaludId)));
         editContext?.NotifyValidationStateChanged();
     }
 
@@ -204,7 +216,7 @@ public partial class Solicitud : ComponentBase
 
     private void OnRequiereAcompananteChanged()
     {
-        if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No && currentStepNumber == 2)
+        if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.No && currentStepNumber == 2)
         {
             currentStepNumber = 3;
         }
@@ -216,7 +228,7 @@ public partial class Solicitud : ComponentBase
         {
             currentStepNumber--;
 
-            if (currentStepNumber == 2 && registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == RequiereAcompanante.No)
             {
                 currentStepNumber = 1;
             }
@@ -260,59 +272,60 @@ public partial class Solicitud : ComponentBase
         {
             currentStepNumber++;
 
-            if (currentStepNumber == 2 && registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == RequiereAcompanante.No)
             {
                 currentStepNumber = 3;
             }
         }
     }
 
-    public void DiagnosticoCheckboxChanged(ChangeEventArgs e, PacienteDiagnosticoModel block, int categoryId)
+    // Métodos corregidos para usar los modelos correctos
+    public void DiagnosticoCheckboxChanged(ChangeEventArgs e, int categoryId)
     {
         bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
         if (isChecked)
         {
-            if (!block.SelectedDiagnosticosIds.Contains(categoryId))
-                block.SelectedDiagnosticosIds.Add(categoryId);
+            if (!registro.Diagnostico.SelectedDiagnosticosIds.Contains(categoryId))
+                registro.Diagnostico.SelectedDiagnosticosIds.Add(categoryId);
         }
         else
         {
-            block.SelectedDiagnosticosIds.Remove(categoryId);
+            registro.Diagnostico.SelectedDiagnosticosIds.Remove(categoryId);
         }
     }
 
-    public void FormaCheckboxChanged(ChangeEventArgs e, ProductoPacienteModel block, int categoryId)
+    public void FormaCheckboxChanged(ChangeEventArgs e, int categoryId)
     {
         bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
         if (isChecked)
         {
-            if (!block.SelectedFormaIds.Contains(categoryId))
-                block.SelectedFormaIds.Add(categoryId);
+            if (!registro.Producto.SelectedFormaIds.Contains(categoryId))
+                registro.Producto.SelectedFormaIds.Add(categoryId);
         }
         else
         {
-            block.SelectedFormaIds.Remove(categoryId);
+            registro.Producto.SelectedFormaIds.Remove(categoryId);
         }
     }
 
-    public void ViaAdmCheckboxChanged(ChangeEventArgs e, ProductoPacienteModel block, int categoryId)
+    public void ViaAdmCheckboxChanged(ChangeEventArgs e, int categoryId)
     {
         bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
         if (isChecked)
         {
-            if (!block.SelectedViaAdmIds.Contains(categoryId))
-                block.SelectedViaAdmIds.Add(categoryId);
+            if (!registro.Producto.SelectedViaAdmIds.Contains(categoryId))
+                registro.Producto.SelectedViaAdmIds.Add(categoryId);
         }
         else
         {
-            block.SelectedViaAdmIds.Remove(categoryId);
+            registro.Producto.SelectedViaAdmIds.Remove(categoryId);
         }
     }
 
     private bool ValidateStep1()
     {
         messageStore?.Clear();
-        var subModel = registro.paciente;
+        var subModel = registro.Paciente;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
@@ -333,37 +346,37 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
+        if (registro.Paciente.InstalacionSaludId == null && !mostrarOtraInstalacionPaciente)
         {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteInstalacionId)),
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludId)),
                 "Seleccione o especifique una instalación de salud donde es atendido.");
             isValid = false;
         }
 
-        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
+        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.Paciente.InstalacionSaludPersonalizada))
         {
-            messageStore?.Add(new FieldIdentifier(this, nameof(registro.paciente.pacienteInstalacion)),
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludPersonalizada)),
                 "Especifique el nombre de la instalación de salud donde es atendido.");
             isValid = false;
         }
 
-        if (registro.paciente.pacienteProvinciaId == null)
+        if (registro.Paciente.ProvinciaId == null)
         {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteProvinciaId)),
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProvinciaId)),
                 "La provincia es requerida.");
             isValid = false;
         }
 
-        if (registro.paciente.pacienteDistritoId == null)
+        if (registro.Paciente.DistritoId == null)
         {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteDistritoId)),
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.DistritoId)),
                 "El distrito es requerido.");
             isValid = false;
         }
 
-        if (registro.paciente.pacienteRegionId == null)
+        if (registro.Paciente.RegionSaludId == null)
         {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.pacienteRegionId)),
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.RegionSaludId)),
                 "La región de salud es requerida.");
             isValid = false;
         }
@@ -374,8 +387,11 @@ public partial class Solicitud : ComponentBase
 
     private bool ValidateStep2()
     {
+        if (registro.Paciente.RequiereAcompanante != RequiereAcompanante.Si || registro.Acompanante == null)
+            return true;
+
         messageStore?.Clear();
-        var subModel = registro.acompanante;
+        var subModel = registro.Acompanante;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
@@ -404,7 +420,7 @@ public partial class Solicitud : ComponentBase
     {
         messageStore?.Clear();
 
-        var subModel = registro.medico;
+        var subModel = registro.Medico;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
@@ -425,23 +441,22 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)));
-        messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)));
+        messageStore?.Clear(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludId)));
 
         if (mostrarOtraInstalacionMedico)
         {
-            if (string.IsNullOrWhiteSpace(subModel.MedicoInstalacion))
+            if (string.IsNullOrWhiteSpace(registro.Medico.InstalacionSaludPersonalizada))
             {
-                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.MedicoInstalacion)),
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludPersonalizada)),
                     "Especifique el nombre de la instalación de salud.");
                 isValid = false;
             }
         }
         else
         {
-            if (subModel.medicoInstalacionId == null)
+            if (subModel.InstalacionSaludId == null)
             {
-                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.medicoInstalacionId)),
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludId)),
                     "Seleccione una instalación de salud de la lista.");
                 isValid = false;
             }
@@ -454,7 +469,7 @@ public partial class Solicitud : ComponentBase
     private bool ValidateStep4()
     {
         messageStore?.Clear();
-        var subModel = registro.productoPaciente;
+        var subModel = registro.Producto;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
@@ -471,34 +486,24 @@ public partial class Solicitud : ComponentBase
             }
         }
 
-        if (registro.productoPaciente.ProductoUnidadId == null)
+        if (registro.Producto.ProductoUnidadId == null)
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProductoUnidadId)),
                 "Seleccione una unidad.");
             isValid = false;
         }
 
-        if (registro.productoPaciente.ProductoUnidadId == 6 &&
-            string.IsNullOrEmpty(registro.productoPaciente.ProductoUnidad))
-        {
-            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProductoUnidad)),
-                "Debe especificar la unidad.");
-            isValid = false;
-        }
-
-        if (registro.productoPaciente.SelectedFormaIds.Count == 0 &&
-            !registro.productoPaciente.IsOtraFormaSelected)
+        if (registro.Producto.SelectedFormaIds.Count == 0 && string.IsNullOrEmpty(registro.Producto.NombreOtraForma))
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.SelectedFormaIds)),
-                "Seleccione al menos una forma farmacéutica.");
+                "Seleccione o especifique una forma farmacéutica.");
             isValid = false;
         }
 
-        if (registro.productoPaciente.SelectedViaAdmIds.Count == 0 &&
-            !registro.productoPaciente.IsOtraViaAdmSelected)
+        if (registro.Producto.SelectedViaAdmIds.Count == 0 && string.IsNullOrEmpty(registro.Producto.NombreOtraViaAdm))
         {
             messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.SelectedViaAdmIds)),
-                "Seleccione al menos una vía de administración.");
+                "Seleccione o especifique una vía de administración.");
             isValid = false;
         }
 
@@ -509,7 +514,7 @@ public partial class Solicitud : ComponentBase
     private bool ValidateStep5()
     {
         messageStore?.Clear();
-        var subModel = registro.pacienteComorbilidad;
+        var subModel = registro.Diagnostico;
         var results = new List<ValidationResult>();
         var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
 
@@ -649,69 +654,66 @@ public partial class Solicitud : ComponentBase
 
             try
             {
-                if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
+                // Procesar instalaciones personalizadas
+                if (mostrarOtraInstalacionPaciente && !string.IsNullOrEmpty(registro.Paciente.InstalacionSaludPersonalizada))
                 {
-                    var instalacionId =
-                        await CrearOGuardarInstalacionPersonalizada(registro.paciente.pacienteInstalacion);
-                    registro.paciente.pacienteInstalacionId = instalacionId;
+                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.Paciente.InstalacionSaludPersonalizada);
+                    registro.Paciente.InstalacionSaludId = instalacionId;
                 }
 
-                if (mostrarOtraInstalacionMedico && !string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
+                if (mostrarOtraInstalacionMedico && !string.IsNullOrEmpty(registro.Medico.InstalacionSaludPersonalizada))
                 {
-                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.medico.MedicoInstalacion);
-                    registro.medico.medicoInstalacionId = instalacionId;
+                    var instalacionId = await CrearOGuardarInstalacionPersonalizada(registro.Medico.InstalacionSaludPersonalizada);
+                    registro.Medico.InstalacionSaludId = instalacionId;
                 }
 
                 // 1. Guardar Paciente
                 var paciente = new TbPaciente
                 {
-                    PrimerNombre = registro.paciente.PrimerNombre,
-                    SegundoNombre = registro.paciente.SegundoNombre,
-                    PrimerApellido = registro.paciente.PrimerApellido,
-                    SegundoApellido = registro.paciente.SegundoApellido,
-                    TipoDocumento = registro.paciente.TipoDocumentoPacienteEnum.ToString(),
-                    DocumentoCedula = registro.paciente.NumDocCedula,
-                    DocumentoPasaporte = registro.paciente.NumDocPasaporte,
-                    Nacionalidad = registro.paciente.Nacionalidad,
-                    FechaNacimiento = registro.paciente.FechaNacimiento.HasValue
-                        ? DateOnly.FromDateTime(registro.paciente.FechaNacimiento.Value)
+                    PrimerNombre = registro.Paciente.PrimerNombre ?? string.Empty,
+                    SegundoNombre = registro.Paciente.SegundoNombre,
+                    PrimerApellido = registro.Paciente.PrimerApellido ?? string.Empty,
+                    SegundoApellido = registro.Paciente.SegundoApellido,
+                    TipoDocumento = registro.Paciente.TipoDocumento.ToString(),
+                    DocumentoCedula = registro.Paciente.TipoDocumento == TipoDocumento.Cedula ? registro.Paciente.NumeroDocumento : null,
+                    DocumentoPasaporte = registro.Paciente.TipoDocumento == TipoDocumento.Pasaporte ? registro.Paciente.NumeroDocumento : null,
+                    Nacionalidad = registro.Paciente.Nacionalidad ?? string.Empty,
+                    FechaNacimiento = registro.Paciente.FechaNacimiento.HasValue
+                        ? DateOnly.FromDateTime(registro.Paciente.FechaNacimiento.Value)
                         : null,
-                    Sexo = registro.paciente.SexoEnum.ToString(),
-                    TelefonoPersonal = registro.paciente.TelefonoResidencialPersonal,
-                    TelefonoLaboral = registro.paciente.TelefonoLaboral,
-                    CorreoElectronico = registro.paciente.CorreoElectronico,
-                    ProvinciaId = registro.paciente.pacienteProvinciaId,
-                    DistritoId = registro.paciente.pacienteDistritoId,
-                    CorregimientoId = registro.paciente.pacienteCorregimientoId,
-                    RegionId = registro.paciente.pacienteRegionId,
-                    InstalacionId = registro.paciente.pacienteInstalacionId,
-                    DireccionExacta = registro.paciente.DireccionExacta,
-                    RequiereAcompanante = registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si,
-                    MotivoRequerimientoAcompanante = registro.paciente.MotivoRequerimientoAcompananteEnum?.ToString(),
-                    TipoDiscapacidad = registro.paciente.TipoDiscapacidad
+                    Sexo = registro.Paciente.Sexo.ToString(),
+                    TelefonoPersonal = registro.Paciente.TelefonoPersonal,
+                    TelefonoLaboral = registro.Paciente.TelefonoLaboral,
+                    CorreoElectronico = registro.Paciente.CorreoElectronico ?? string.Empty,
+                    ProvinciaId = registro.Paciente.ProvinciaId,
+                    DistritoId = registro.Paciente.DistritoId,
+                    CorregimientoId = registro.Paciente.CorregimientoId,
+                    RegionId = registro.Paciente.RegionSaludId,
+                    InstalacionId = registro.Paciente.InstalacionSaludId,
+                    DireccionExacta = registro.Paciente.DireccionExacta ?? string.Empty,
+                    RequiereAcompanante = registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si,
+                    MotivoRequerimientoAcompanante = registro.Paciente.MotivoRequerimientoAcompanante?.ToString(),
+                    TipoDiscapacidad = registro.Paciente.TipoDiscapacidad
                 };
 
                 _context.TbPaciente.Add(paciente);
                 await _context.SaveChangesAsync();
 
                 // 2. Guardar Acompañante si es necesario
-                if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si)
+                if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si && registro.Acompanante != null)
                 {
                     var acompanante = new TbAcompanantePaciente
                     {
                         PacienteId = paciente.Id,
-                        PrimerNombre = registro.acompanante.PrimerNombre,
-                        SegundoNombre = registro.acompanante.SegundoNombre,
-                        PrimerApellido = registro.acompanante.PrimerApellido,
-                        SegundoApellido = registro.acompanante.SegundoApellido,
-                        TipoDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum.ToString(),
-                        NumeroDocumento = registro.acompanante.TipoDocumentoAcompañanteEnum ==
-                                          TipoDocumentoAcompañante.Cedula
-                            ? registro.acompanante.NumDocCedula
-                            : registro.acompanante.NumDocPasaporte,
-                        Nacionalidad = registro.acompanante.Nacionalidad,
-                        Parentesco = registro.acompanante.ParentescoEnum?.ToString() ?? registro.acompanante.Parentesco,
-                        TelefonoMovil = registro.acompanante.TelefonoPersonal
+                        PrimerNombre = registro.Acompanante.PrimerNombre ?? string.Empty,
+                        SegundoNombre = registro.Acompanante.SegundoNombre,
+                        PrimerApellido = registro.Acompanante.PrimerApellido ?? string.Empty,
+                        SegundoApellido = registro.Acompanante.SegundoApellido,
+                        TipoDocumento = registro.Acompanante.TipoDocumento.ToString(),
+                        NumeroDocumento = registro.Acompanante.NumeroDocumento ?? string.Empty,
+                        Nacionalidad = registro.Acompanante.Nacionalidad ?? string.Empty,
+                        Parentesco = registro.Acompanante.Parentesco.ToString(),
+                        TelefonoMovil = registro.Acompanante.TelefonoMovil
                     };
 
                     _context.TbAcompanantePaciente.Add(acompanante);
@@ -721,22 +723,22 @@ public partial class Solicitud : ComponentBase
                 // 3. Guardar Médico
                 var medico = new TbMedicoPaciente
                 {
-                    PrimerNombre = registro.medico.PrimerNombre,
-                    PrimerApellido = registro.medico.PrimerApellido,
-                    MedicoDisciplina = registro.medico.MedicoDisciplinaEnum.ToString(),
-                    MedicoIdoneidad = registro.medico.MedicoIdoneidad,
-                    MedicoTelefono = registro.medico.MedicoTelefono,
-                    InstalacionId = registro.medico.medicoInstalacionId,
-                    RegionId = registro.medico.medicoRegionId,
-                    DetalleMedico = registro.medico.DetalleMedico,
-                    PacienteId = paciente.Id // Agregar relación con paciente
+                    PrimerNombre = registro.Medico.PrimerNombre ?? string.Empty,
+                    PrimerApellido = registro.Medico.PrimerApellido ?? string.Empty,
+                    MedicoDisciplina = registro.Medico.MedicoDisciplina.ToString(),
+                    MedicoIdoneidad = registro.Medico.MedicoIdoneidad ?? string.Empty,
+                    MedicoTelefono = registro.Medico.TelefonoMovil ?? string.Empty,
+                    InstalacionId = registro.Medico.InstalacionSaludId,
+                    RegionId = registro.Medico.RegionSaludId,
+                    DetalleMedico = registro.Medico.DetalleEspecialidad ?? "Sin detalle",
+                    PacienteId = paciente.Id
                 };
 
                 _context.TbMedicoPaciente.Add(medico);
                 await _context.SaveChangesAsync();
 
                 // 4. Guardar Diagnósticos del Paciente
-                foreach (var diagnosticoId in registro.pacienteDiagnostico.SelectedDiagnosticosIds)
+                foreach (var diagnosticoId in registro.Diagnostico.SelectedDiagnosticosIds)
                 {
                     var diagnosticoNombre = pacienteDiagnosticolist.FirstOrDefault(d => d.Id == diagnosticoId)?.Nombre;
                     if (!string.IsNullOrEmpty(diagnosticoNombre))
@@ -750,103 +752,70 @@ public partial class Solicitud : ComponentBase
                     }
                 }
 
-                if (registro.pacienteDiagnostico.IsOtroDiagSelected &&
-                    !string.IsNullOrEmpty(registro.pacienteDiagnostico.NombreOtroDiagnostico))
+                if (!string.IsNullOrWhiteSpace(registro.Diagnostico.NombreOtroDiagnostico))
                 {
                     var otroDiagnostico = new TbPacienteDiagnostico
                     {
                         PacienteId = paciente.Id,
-                        NombreDiagnostico = registro.pacienteDiagnostico.NombreOtroDiagnostico
+                        NombreDiagnostico = registro.Diagnostico.NombreOtroDiagnostico
                     };
                     _context.TbPacienteDiagnostico.Add(otroDiagnostico);
                 }
 
                 await _context.SaveChangesAsync();
 
-                // 5. Guardar Formas Farmacéuticas
-                var formasSeleccionadas = new List<string>();
-                foreach (var formaId in registro.productoPaciente.SelectedFormaIds)
+                // 5. Guardar Comorbilidades si existen
+                if (registro.Comorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si && 
+                    !string.IsNullOrWhiteSpace(registro.Comorbilidad.NombreDiagnostico))
                 {
-                    var formaNombre = productoFormaList.FirstOrDefault(f => f.Id == formaId)?.Nombre;
-                    if (!string.IsNullOrEmpty(formaNombre))
+                    var comorbilidad = new TbPacienteComorbilidad
                     {
-                        formasSeleccionadas.Add(formaNombre);
-                    }
+                        PacienteId = paciente.Id,
+                        NombreDiagnostico = registro.Comorbilidad.NombreDiagnostico,
+                        DetalleTratamiento = registro.Comorbilidad.DetalleTratamiento
+                    };
+                    _context.TbPacienteComorbilidad.Add(comorbilidad);
+                    await _context.SaveChangesAsync();
                 }
 
-                if (registro.productoPaciente.IsOtraFormaSelected &&
-                    !string.IsNullOrEmpty(registro.productoPaciente.NombreOtraForma))
-                {
-                    formasSeleccionadas.Add(registro.productoPaciente.NombreOtraForma);
-                }
+                // 6. Guardar Producto del Paciente
+                // Obtener la primera forma seleccionada o usar la personalizada
+                var formaFarmaceutica = registro.Producto.SelectedFormaIds.Count > 0 ?
+                    productoFormaList.FirstOrDefault(f => f.Id == registro.Producto.SelectedFormaIds.First())?.Nombre :
+                    registro.Producto.NombreOtraForma;
 
-                // 6. Guardar Vías de Administración
-                var viasSeleccionadas = new List<string>();
-                foreach (var viaId in registro.productoPaciente.SelectedViaAdmIds)
-                {
-                    var viaNombre = productoViaConsumoList.FirstOrDefault(v => v.Id == viaId)?.Nombre;
-                    if (!string.IsNullOrEmpty(viaNombre))
-                    {
-                        viasSeleccionadas.Add(viaNombre);
-                    }
-                }
+                // Obtener la primera vía de administración seleccionada o usar la personalizada
+                var viaAdministracion = registro.Producto.SelectedViaAdmIds.Count > 0 ?
+                    productoViaConsumoList.FirstOrDefault(v => v.Id == registro.Producto.SelectedViaAdmIds.First())?.Nombre :
+                    registro.Producto.NombreOtraViaAdm;
 
-                if (registro.productoPaciente.IsOtraViaAdmSelected &&
-                    !string.IsNullOrEmpty(registro.productoPaciente.NombreOtraViaAdm))
-                {
-                    viasSeleccionadas.Add(registro.productoPaciente.NombreOtraViaAdm);
-                }
-
-                // 7. Guardar Producto del Paciente
-                var productoUnidadFinal = registro.productoPaciente.ProductoUnidadId == 6
-                    ? registro.productoPaciente.ProductoUnidad
-                    : productoUnidadList.FirstOrDefault(u => u.Id == registro.productoPaciente.ProductoUnidadId)?.Name;
+                var unidad = productoUnidadList.FirstOrDefault(u => u.Id == registro.Producto.ProductoUnidadId)?.Name;
 
                 var productoPaciente = new TbNombreProductoPaciente
                 {
                     PacienteId = paciente.Id,
-                    NombreProducto = registro.productoPaciente.NombreProductoEnum == NombreProductoE.OTRO
-                        ? registro.productoPaciente.NombreProducto
-                        : registro.productoPaciente.NombreProductoEnum.ToString(),
-                    NombreComercialProd = registro.productoPaciente.NombreComercialProd,
-                    FormaFarmaceutica = string.Join(", ", formasSeleccionadas),
-                    CantidadConcentracion = registro.productoPaciente.CantidadConcentracion,
-                    NombreConcentracion = registro.productoPaciente.ConcentracionEnum == ConcentracionE.OTRO
-                        ? registro.productoPaciente.NombreConcentracion
-                        : registro.productoPaciente.ConcentracionEnum.ToString(),
-                    ViaConsumoProducto = string.Join(", ", viasSeleccionadas),
-                    ProductoUnidad = productoUnidadFinal,
-                    ProductoUnidadId = registro.productoPaciente.ProductoUnidadId == 6
-                        ? null
-                        : registro.productoPaciente.ProductoUnidadId,
-                    DetDosisPaciente = registro.productoPaciente.DetDosisPaciente,
-                    DosisFrecuencia = registro.productoPaciente.DosisFrecuencia,
-                    DosisDuracion = registro.productoPaciente.DosisDuracion,
-                    UsaDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si,
-                    DetDosisRescate = registro.productoPaciente.UsaDosisRescateEnum == UsaDosisRescate.Si
-                        ? registro.productoPaciente.DetDosisRescate
-                        : null
+                    NombreProducto = registro.Producto.NombreProducto ?? string.Empty,
+                    NombreComercialProd = registro.Producto.NombreComercialProd,
+                    FormaFarmaceutica = formaFarmaceutica,
+                    CantidadConcentracion = registro.Producto.CantidadConcentracion,
+                    NombreConcentracion = registro.Producto.ConcentracionEnum == ConcentracionE.OTRO ?
+                        registro.Producto.NombreConcentracion :
+                        registro.Producto.ConcentracionEnum.ToString(),
+                    ViaConsumoProducto = viaAdministracion,
+                    ProductoUnidad = unidad,
+                    ProductoUnidadId = registro.Producto.ProductoUnidadId,
+                    DetDosisPaciente = registro.Producto.DetDosisPaciente,
+                    DosisFrecuencia = registro.Producto.DosisFrecuencia,
+                    DosisDuracion = registro.Producto.DosisDuracion,
+                    UsaDosisRescate = registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si,
+                    DetDosisRescate = registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si ?
+                        registro.Producto.DetDosisRescate : null
                 };
 
                 _context.TbNombreProductoPaciente.Add(productoPaciente);
                 await _context.SaveChangesAsync();
 
-                // 8. Guardar Comorbilidades
-                if (registro.pacienteComorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si &&
-                    !string.IsNullOrEmpty(registro.pacienteComorbilidad.NombreDiagnostico))
-                {
-                    var comorbilidad = new TbPacienteComorbilidad
-                    {
-                        NombreDiagnostico = registro.pacienteComorbilidad.NombreDiagnostico,
-                        DetalleTratamiento = registro.pacienteComorbilidad.DetalleTratamiento,
-                        PacienteId = paciente.Id // Agregar relación con paciente
-                    };
-
-                    _context.TbPacienteComorbilidad.Add(comorbilidad);
-                    await _context.SaveChangesAsync();
-                }
-
-                // 9. Crear Solicitud de Registro
+                // 7. Crear Solicitud de Registro
                 var secuencia = await _context.TbSolSecuencia
                     .FirstOrDefaultAsync(s => s.Anio == DateTime.Now.Year && s.IsActivo == true);
 
@@ -881,7 +850,7 @@ public partial class Solicitud : ComponentBase
                 {
                     PacienteId = paciente.Id,
                     FechaSolicitud = DateTime.Now,
-                    EstadoSolicitudId = estadoPendiente.IdEstado, // CORREGIDO: Usar ID del estado
+                    EstadoSolicitudId = estadoPendiente.IdEstado,
                     CreadaPor = "Sistema",
                     NumSolAnio = DateTime.Now.Year,
                     NumSolMes = DateTime.Now.Month,
@@ -892,14 +861,14 @@ public partial class Solicitud : ComponentBase
                 _context.TbSolRegCannabis.Add(solicitud);
                 await _context.SaveChangesAsync();
 
-                // 10. GUARDAR ARCHIVOS ADJUNTOS
+                // 8. GUARDAR ARCHIVOS ADJUNTOS
                 await SaveAttachedFiles(solicitud.Id);
 
-                // 11. Crear historial
+                // 9. Crear historial
                 var historial = new TbSolRegCannabisHistorial
                 {
                     SolRegCannabisId = solicitud.Id,
-                    EstadoSolicitudIdHistorial = estadoPendiente.IdEstado, // CORREGIDO: Usar ID del estado
+                    EstadoSolicitudIdHistorial = estadoPendiente.IdEstado,
                     Comentario = "Solicitud creada",
                     UsuarioRevisor = "Sistema",
                     FechaCambio = DateOnly.FromDateTime(DateTime.Now)
@@ -933,7 +902,7 @@ public partial class Solicitud : ComponentBase
 
         if (!ValidateStep1()) isValid = false;
 
-        if (registro.paciente.RequiereAcompananteEnum == RequiereAcompanante.Si && !ValidateStep2())
+        if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si && !ValidateStep2())
         {
             isValid = false;
         }
@@ -942,58 +911,40 @@ public partial class Solicitud : ComponentBase
         if (!ValidateStep4()) isValid = false;
         if (!ValidateStep5()) isValid = false;
 
-        if (registro.productoPaciente.ProductoUnidadId == null)
+        if (registro.Paciente.InstalacionSaludId == null && !mostrarOtraInstalacionPaciente)
         {
-            messageStore?.Add(
-                new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidadId)),
-                "Seleccione una unidad.");
-            isValid = false;
-        }
-
-        if (registro.productoPaciente.ProductoUnidadId == 6 &&
-            string.IsNullOrEmpty(registro.productoPaciente.ProductoUnidad))
-        {
-            messageStore?.Add(
-                new FieldIdentifier(registro.productoPaciente, nameof(registro.productoPaciente.ProductoUnidad)),
-                "Debe especificar la unidad.");
-            isValid = false;
-        }
-
-        if (registro.paciente.pacienteInstalacionId == null && !mostrarOtraInstalacionPaciente)
-        {
-            messageStore?.Add(new FieldIdentifier(registro.paciente, nameof(registro.paciente.pacienteInstalacionId)),
+            messageStore?.Add(new FieldIdentifier(registro.Paciente, nameof(registro.Paciente.InstalacionSaludId)),
                 "Seleccione o especifique una instalación de salud.");
             isValid = false;
         }
 
-        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.paciente.pacienteInstalacion))
+        if (mostrarOtraInstalacionPaciente && string.IsNullOrEmpty(registro.Paciente.InstalacionSaludPersonalizada))
         {
-            messageStore?.Add(new FieldIdentifier(this, nameof(registro.paciente.pacienteInstalacion)),
+            messageStore?.Add(new FieldIdentifier(registro.Paciente, nameof(registro.Paciente.InstalacionSaludPersonalizada)),
                 "Especifique el nombre de la instalación de salud.");
             isValid = false;
         }
 
-        if (registro.medico.medicoInstalacionId == null && !mostrarOtraInstalacionMedico)
+        if (registro.Medico.InstalacionSaludId == null && !mostrarOtraInstalacionMedico)
         {
-            messageStore?.Add(new FieldIdentifier(registro.medico, nameof(registro.medico.medicoInstalacionId)),
+            messageStore?.Add(new FieldIdentifier(registro.Medico, nameof(registro.Medico.InstalacionSaludId)),
                 "Seleccione o especifique una instalación de salud.");
             isValid = false;
         }
 
-        if (mostrarOtraInstalacionMedico && string.IsNullOrEmpty(registro.medico.MedicoInstalacion))
+        if (mostrarOtraInstalacionMedico && string.IsNullOrEmpty(registro.Medico.InstalacionSaludPersonalizada))
         {
-            messageStore?.Add(new FieldIdentifier(this, nameof(registro.medico.MedicoInstalacion)),
+            messageStore?.Add(new FieldIdentifier(registro.Medico, nameof(registro.Medico.InstalacionSaludPersonalizada)),
                 "Especifique el nombre de la instalación de salud.");
             isValid = false;
         }
 
-        if (registro.pacienteDiagnostico.SelectedDiagnosticosIds.Count == 0 &&
-            !registro.pacienteDiagnostico.IsOtroDiagSelected)
+        if (registro.Diagnostico.SelectedDiagnosticosIds.Count == 0 &&
+            string.IsNullOrWhiteSpace(registro.Diagnostico.NombreOtroDiagnostico))
         {
             messageStore?.Add(
-                new FieldIdentifier(registro.pacienteDiagnostico,
-                    nameof(registro.pacienteDiagnostico.SelectedDiagnosticosIds)),
-                "Seleccione al menos un diagnóstico.");
+                new FieldIdentifier(registro.Diagnostico, nameof(registro.Diagnostico.SelectedDiagnosticosIds)),
+                "Seleccione al menos un diagnóstico o especifique uno personalizado.");
             isValid = false;
         }
 
@@ -1004,7 +955,7 @@ public partial class Solicitud : ComponentBase
     private void OnFileChange(InputFileChangeEventArgs e, string campo)
     {
         var files = e.GetMultipleFiles();
-        const long maxFileSize = 5 * 1024 * 1024; // 512KB
+        const long maxFileSize = 5 * 1024 * 1024; // 5MB
 
         foreach (var file in files)
         {
@@ -1015,7 +966,7 @@ public partial class Solicitud : ComponentBase
             {
                 // Mostrar advertencia al usuario
                 MostrarAdvertencia($"El archivo '{file.Name}' excede el tamaño máximo permitido de 5MB. " +
-                                   $"Tamaño actual: {(file.Size / 2048f):F2}KB");
+                                   $"Tamaño actual: {(file.Size / 1024f / 1024f):F2}MB");
                 continue; // Saltar este archivo
             }
 
@@ -1062,15 +1013,12 @@ public partial class Solicitud : ComponentBase
 
     private async void MostrarAdvertencia(string mensaje)
     {
-        // Puedes usar JavaScript para mostrar un alert o implementar un sistema de notificaciones
         try
         {
-            // Si estás usando JavaScript interop
             await JSRuntime.InvokeVoidAsync("alert", mensaje);
         }
         catch
         {
-            // Fallback: mostrar en consola
             Console.WriteLine($"ADVERTENCIA: {mensaje}");
         }
     }

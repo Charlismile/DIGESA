@@ -20,12 +20,15 @@ public class MedicoModel : IValidatableObject
 
     [Required(ErrorMessage = "El teléfono es obligatorio.")]
     [RegularExpression(@"^\d{7,15}$", ErrorMessage = "Número de teléfono inválido.")]
-    public string? TelefonoMovil { get; set; } // Nombre consistente
+    public string? TelefonoMovil { get; set; }
     
-    public string? DetalleEspecialidad { get; set; } // Renombrado para mayor claridad
+    public string? DetalleEspecialidad { get; set; }
     
-    public int? RegionSaludId { get; set; } // Renombrado
-    public int? InstalacionSaludId { get; set; } // Renombrado
+    public int? RegionSaludId { get; set; }
+    public int? InstalacionSaludId { get; set; }
+
+    // Nueva propiedad para instalación personalizada
+    public string? InstalacionSaludPersonalizada { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

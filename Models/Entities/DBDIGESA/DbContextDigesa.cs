@@ -27,8 +27,6 @@ public partial class DbContextDigesa : DbContext
 
     public virtual DbSet<TbDocumentoAdjunto> TbDocumentoAdjunto { get; set; }
 
-    public virtual DbSet<TbDocumentoMedico> TbDocumentoMedico { get; set; }
-
     public virtual DbSet<TbEstadoSolicitud> TbEstadoSolicitud { get; set; }
 
     public virtual DbSet<TbFormaFarmaceutica> TbFormaFarmaceutica { get; set; }
@@ -155,6 +153,9 @@ public partial class DbContextDigesa : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__TbDocume__3214EC07044A41B7");
 
+            entity.Property(e => e.Categoria)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.FechaSubidaUtc)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasColumnType("datetime");
@@ -179,25 +180,6 @@ public partial class DbContextDigesa : DbContext
                 .HasForeignKey(d => d.TipoDocumentoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TbDocumen__TipoD__09A971A2");
-        });
-
-        modelBuilder.Entity<TbDocumentoMedico>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__TbDocume__3214EC0713E55AFE");
-
-            entity.Property(e => e.Categoria)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.FechaSubidaUtc).HasColumnType("datetime");
-            entity.Property(e => e.FileNameStored).HasMaxLength(200);
-            entity.Property(e => e.NombreOriginal)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.Url).HasMaxLength(300);
-
-            entity.HasOne(d => d.Medico).WithMany(p => p.TbDocumentoMedico)
-                .HasForeignKey(d => d.MedicoId)
-                .HasConstraintName("FK__TbDocumen__Medic__0A9D95DB");
         });
 
         modelBuilder.Entity<TbEstadoSolicitud>(entity =>
@@ -236,19 +218,16 @@ public partial class DbContextDigesa : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasDefaultValue("Sin detalle");
+            entity.Property(e => e.InstalacionPersonalizada)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.MedicoDisciplina)
                 .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.MedicoIdoneidad)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.MedicoInstalacion)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.MedicoTelefono).HasMaxLength(15);
-            entity.Property(e => e.NombreInstalacion)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.PrimerApellido)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -299,6 +278,10 @@ public partial class DbContextDigesa : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
+            entity.HasOne(d => d.FormaFarmaceuticaNavigation).WithMany(p => p.TbNombreProductoPaciente)
+                .HasForeignKey(d => d.FormaFarmaceuticaId)
+                .HasConstraintName("FK_TbNombreProductoPaciente_FormaFarmaceutica");
+
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.PacienteId)
                 .HasConstraintName("FK__TbNombreP__Pacie__0D7A0286");
@@ -306,6 +289,10 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.ProductoUnidadNavigation).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.ProductoUnidadId)
                 .HasConstraintName("FK_TbNombreProductoPaciente_TbUnidades");
+
+            entity.HasOne(d => d.ViaAdministracion).WithMany(p => p.TbNombreProductoPaciente)
+                .HasForeignKey(d => d.ViaAdministracionId)
+                .HasConstraintName("FK_TbNombreProductoPaciente_ViaAdministracion");
         });
 
         modelBuilder.Entity<TbPaciente>(entity =>
@@ -318,7 +305,7 @@ public partial class DbContextDigesa : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.DocumentoCedula).HasMaxLength(100);
             entity.Property(e => e.DocumentoPasaporte).HasMaxLength(100);
-            entity.Property(e => e.InstalacionSalud)
+            entity.Property(e => e.InstalacionPersonalizada)
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.MotivoRequerimientoAcompanante)
@@ -327,17 +314,11 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.Nacionalidad)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.NombreInstalacion)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.PrimerApellido)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.PrimerNombre)
                 .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.RegionSalud)
-                .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.SegundoApellido)
                 .HasMaxLength(100)
@@ -380,10 +361,10 @@ public partial class DbContextDigesa : DbContext
 
         modelBuilder.Entity<TbPacienteComorbilidad>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC07F9CBC101");
+            entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC07257D4CA3");
 
             entity.Property(e => e.DetalleTratamiento)
-                .HasMaxLength(300)
+                .HasMaxLength(500)
                 .IsUnicode(false);
             entity.Property(e => e.NombreDiagnostico)
                 .HasMaxLength(200)
@@ -391,6 +372,7 @@ public partial class DbContextDigesa : DbContext
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbPacienteComorbilidad)
                 .HasForeignKey(d => d.PacienteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TbPacienteComorbilidad_TbPaciente");
         });
 
@@ -398,8 +380,14 @@ public partial class DbContextDigesa : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__TbPacien__3214EC076F1C117B");
 
+            entity.Property(e => e.DetalleTratamiento)
+                .HasMaxLength(300)
+                .IsUnicode(false);
             entity.Property(e => e.NombreDiagnostico)
                 .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Paciente).WithMany(p => p.TbPacienteDiagnostico)
