@@ -247,7 +247,7 @@
                                                                    class="text-danger"/>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label class="form-label">Dirección</label>
+                                                <label class="form-label">Barriada, edificio, calle, número de casa o apartamento</label>
                                                 <InputTextArea @bind-Value="registro.Paciente.DireccionExacta"
                                                                class="form-control"/>
                                                 <ValidationMessage For="@(() => registro.Paciente.DireccionExacta)"/>
@@ -515,7 +515,7 @@
                                                                         Value="@MedicoDisciplina.General"
                                                                         id="General"/>
                                                             <label class="form-check-label"
-                                                                   for="General">General</label>
+                                                                   for="General">Médico General</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
@@ -528,7 +528,7 @@
                                                             <InputRadio class="form-check-input"
                                                                         Value="@MedicoDisciplina.Especialista"
                                                                         id="Especialista"/>
-                                                            <label class="form-check-label" for="Especialista">Especialista</label>
+                                                            <label class="form-check-label" for="Especialista">Médico especialista, especifique</label>
                                                         </div>
                                                     </InputRadioGroup>
                                                     <ValidationMessage
@@ -643,7 +643,7 @@
                                             <hr>
                                             <!-- Producto del paciente -->
                                             <div class="col-6">
-                                                <label class="mb-2">Nombre Generico</label>
+                                                <label class="mb-2">Principio activo</label>
                                                 <div class="d-flex gap-4">
                                                     <InputRadioGroup
                                                         @bind-Value="registro.Producto.NombreProductoEnum"
@@ -863,7 +863,7 @@
                                                     tiempo al mes?</label>
                                             </div>
                                             <div class="col-2">
-                                                <label class="form-label">Frecuencia de la dosis</label>
+                                                <label class="form-label">Frecuencia de la dosis (Veces al día)</label>
                                                 <InputNumber type="number" class="form-control"
                                                              @bind-Value="registro.Producto.DosisFrecuencia"
                                                              placeholder="Ingrese la frecuencia"/>
@@ -872,7 +872,7 @@
                                                     For="@(() => registro.Producto.DosisFrecuencia)"/>
                                             </div>
                                             <div class="col-2">
-                                                <label class="form-label">Duración de la dosis</label>
+                                                <label class="form-label">Duración de las dosis (Días al mes)</label>
                                                 <InputNumber class="form-control"
                                                              @bind-Value="registro.Producto.DosisDuracion"
                                                              placeholder="Ingrese la dosis"/>
@@ -921,7 +921,7 @@
                             {
                                 <!-- Cormobilidades del paciente -->
                                 <div class="col-4">
-                                    <label class="mb-2">¿Tiene alguna comorbilidad?</label>
+                                    <label class="mb-2">¿Padece de otra enfermedad? </label>
                                     <div class="d-flex gap-4">
                                         <InputRadioGroup
                                             @bind-Value="registro.Comorbilidad.TieneComorbilidadEnum"
