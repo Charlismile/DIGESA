@@ -56,15 +56,21 @@ builder.Services.AddAuthorization();
 // ==========================
 // Servicios propios
 // ==========================
-builder.Services.AddScoped<IEmailService, EmailService>();
+// Registrar servicios en Program.cs
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICommon, CommonServices>();
-builder.Services.AddScoped<IUserData, UserDataService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
-builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
-builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ITransferenciaService, TransferenciaService>();
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
+builder.Services.AddScoped<IReporteService, ReporteService>();
+
+// Servicios programados (background services)
+// builder.Services.AddHostedService<NotificacionBackgroundService>();
+// builder.Services.AddHostedService<InactivacionBackgroundService>();
 
 // HttpClient para Active Directory
 builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();

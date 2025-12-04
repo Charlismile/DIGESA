@@ -6,7 +6,8 @@ namespace DIGESA.Repositorios.Interfaces;
 
 public interface IAdminService
 {
-    Task<AdminDashboardStats> ObtenerEstadisticasAsync();
-    Task<List<TbSolRegCannabis>> ObtenerSolicitudesRecientesAsync(int count = 10);
+    Task<EstadisticasDashboardModel> ObtenerEstadisticasAsync();
+    Task<List<SolicitudListModel>> ObtenerSolicitudesRecientesAsync(int count = 10);
     Task<List<EstadisticasPorRegion>> ObtenerEstadisticasPorRegionAsync();
+    Task<DashboardVencimientosModel> ObtenerDashboardVencimientosAsync();
 }

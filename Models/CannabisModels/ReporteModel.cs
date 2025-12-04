@@ -70,3 +70,49 @@ public class ExportacionRequestModel
     public ReporteFiltrosModel? Filtros { get; set; }
     public List<string> CamposIncluir { get; set; } = new();
 }
+public class SolicitudReporteModel
+{
+    public int Id { get; set; }
+    public string NumeroSolicitud { get; set; } = string.Empty;
+    public DateTime FechaSolicitud { get; set; }
+    public string Estado { get; set; } = string.Empty;
+    public string PacienteNombre { get; set; } = string.Empty;
+    public string PacienteDocumento { get; set; } = string.Empty;
+    public string PacienteCorreo { get; set; } = string.Empty;
+    public string PacienteTelefono { get; set; } = string.Empty;
+    public string Region { get; set; } = string.Empty;
+    public string Instalacion { get; set; } = string.Empty;
+    public bool EsRenovacion { get; set; }
+    public DateTime? FechaAprobacion { get; set; }
+    public string? NumeroCarnet { get; set; }
+    public bool CarnetActivo { get; set; }
+    public DateTime? FechaVencimiento { get; set; }
+}
+
+public class PacienteReporteModel
+{
+    public int Id { get; set; }
+    public string Documento { get; set; } = string.Empty;
+    public string NombreCompleto { get; set; } = string.Empty;
+    public string Correo { get; set; } = string.Empty;
+    public string Telefono { get; set; } = string.Empty;
+    public DateTime? FechaNacimiento { get; set; }
+    public string Sexo { get; set; } = string.Empty;
+    public string Region { get; set; } = string.Empty;
+    public string Instalacion { get; set; } = string.Empty;
+    public string Estado { get; set; } = string.Empty;
+}
+
+public class CarnetReporteModel
+{
+    public string NumeroCarnet { get; set; } = string.Empty;
+    public string PacienteNombre { get; set; } = string.Empty;
+    public string PacienteDocumento { get; set; } = string.Empty;
+    public string PacienteCorreo { get; set; } = string.Empty;
+    public string PacienteTelefono { get; set; } = string.Empty;
+    public DateTime FechaEmision { get; set; }
+    public DateTime? FechaVencimiento { get; set; }
+    public bool Activo { get; set; }
+    public string Region { get; set; } = string.Empty;
+    public string Instalacion { get; set; } = string.Empty;
+}

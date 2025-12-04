@@ -5,17 +5,24 @@ namespace DIGESA.Repositorios.Interfaces;
 
 public interface ICommon
 {
-    Task<List<ItemListModel>> GetInstalaciones(string filtro);
+    // Datos geográficos
     Task<List<ItemListModel>> GetRegiones();
     Task<List<ItemListModel>> GetProvincias();
-    Task<List<ItemListModel>> GetDistritos(int ProvinciaId);
-    Task<List<ItemListModel>> GetCorregimientos(int DistritoId);
-    Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync();
-    Task<List<TbFormaFarmaceutica>> GetAllFormasAsync();
-    Task<List<TbViaAdministracion>> GetAllViaAdmAsync();
-    Task<List<ItemListModel>> GetUnidadId();
-    Task<string> GetFakePassword();
-    Task<List<ItemListModel>> GetAllUnidadesAsync();
+    Task<List<ItemListModel>> GetDistritos(int provinciaId);
+    Task<List<ItemListModel>> GetCorregimientos(int distritoId);
+    
+    // Datos de salud
+    Task<List<ItemListModel>> GetInstalaciones(string? filtro = null);
+    Task<List<ItemListModel>> GetAllDiagnosticosAsync();
     Task<List<ItemListModel>> GetAllFormasFarmaceuticasAsync();
     Task<List<ItemListModel>> GetAllViasAdministracionAsync();
+    Task<List<ItemListModel>> GetAllUnidadesAsync();
+    
+    // Catálogos misceláneos
+    Task<List<ItemListModel>> GetTiposDocumentoAdjuntoAsync();
+    Task<List<ItemListModel>> GetEstadosSolicitudAsync();
+    
+    // Utilidades
+    Task<string> GetFakePassword();
+    Task<int?> CrearInstalacionPersonalizadaAsync(string nombre);
 }

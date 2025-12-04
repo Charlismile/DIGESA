@@ -1,8 +1,10 @@
-﻿using DIGESA.Components.Pages.Public;
+﻿using DIGESA.Data;
+using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace DIGESA.Repositorios.Services;
 
@@ -10,11 +12,13 @@ public class FileService : IFileService
 {
     private readonly DbContextDigesa _context;
     private readonly IWebHostEnvironment _environment;
+    private readonly ILogger<FileService> _logger;
 
-    public FileService(DbContextDigesa context, IWebHostEnvironment environment)
+    public FileService(DbContextDigesa context, IWebHostEnvironment environment, ILogger<FileService> logger)
     {
         _context = context;
         _environment = environment;
+        _logger = logger;
     }
 
     public async Task<string> GuardarArchivoAsync(IBrowserFile file, int solicitudId)
@@ -22,106 +26,128 @@ public class FileService : IFileService
         const long maxFileSize = 10 * 1024 * 1024; // 10MB
 
         if (file.Size > maxFileSize)
-            throw new Exception($"El archivo {file.Name} excede el tamaño máximo permitido (10MB)");
+            throw new InvalidOperationException($"El archivo {file.Name} excede el tamaño máximo permitido (10MB)");
+
+        // Validar extensiones permitidas
+        var allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx" };
+        var fileExtension = Path.GetExtension(file.Name).ToLower();
+        
+        if (!allowedExtensions.Contains(fileExtension))
+            throw new InvalidOperationException($"Tipo de archivo no permitido: {fileExtension}");
 
         var uploadDirectory = Path.Combine(_environment.WebRootPath, "uploads", solicitudId.ToString());
 
         if (!Directory.Exists(uploadDirectory))
             Directory.CreateDirectory(uploadDirectory);
 
-        var fileExtension = Path.GetExtension(file.Name);
-        var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
+        var uniqueFileName = $"{Guid.NewGuid():N}{fileExtension}";
         var filePath = Path.Combine(uploadDirectory, uniqueFileName);
 
-        using var stream = new FileStream(filePath, FileMode.Create);
-        await file.OpenReadStream(maxFileSize).CopyToAsync(stream);
-
-        return $"/uploads/{solicitudId}/{uniqueFileName}";
-    }
-
-    public async Task<List<TbDocumentoAdjunto>> ProcesarDocumentosAsync(Solicitud.DocumentosModel documentos, int solicitudId,
-        Dictionary<string, int> tipoDocumentoMap)
-    {
-        var archivosAGuardar = new List<TbDocumentoAdjunto>();
-
-        await ProcesarListaArchivos(documentos.CedulaPaciente, "CedulaPaciente", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.CertificacionMedica, "CertificacionMedica", solicitudId,
-            tipoDocumentoMap, archivosAGuardar);
-        await ProcesarListaArchivos(documentos.FotoPaciente, "FotoPaciente", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.CedulaAcompanante, "CedulaAcompanante", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.SentenciaTutor, "SentenciaTutor", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.Antecedentes, "Antecedentes", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.IdentidadMenor, "IdentidadMenor", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-        await ProcesarListaArchivos(documentos.ConsentimientoPadres, "ConsentimientoPadres", solicitudId,
-            tipoDocumentoMap, archivosAGuardar);
-        await ProcesarListaArchivos(documentos.CertificadoNacimientoMenor, "CertificadoNacimientoMenor", solicitudId,
-            tipoDocumentoMap, archivosAGuardar);
-        await ProcesarListaArchivos(documentos.FotoAcompanante, "FotoAcompanante", solicitudId, tipoDocumentoMap,
-            archivosAGuardar);
-
-        return archivosAGuardar;
-    }
-
-    public async Task<List<TbDocumentoAdjunto>> GuardarArchivosAdjuntosAsync(Solicitud.DocumentosModel documentos,
-        int solicitudId, Dictionary<string, int> tipoDocumentoMap)
-    {
-        var archivosAGuardar = await ProcesarDocumentosAsync(documentos, solicitudId, tipoDocumentoMap);
-
-        if (archivosAGuardar.Any())
+        try
         {
-            await _context.TbDocumentoAdjunto.AddRangeAsync(archivosAGuardar);
-            await _context.SaveChangesAsync();
-        }
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.OpenReadStream(maxFileSize).CopyToAsync(stream);
 
-        return archivosAGuardar;
+            _logger.LogInformation($"Archivo guardado: {uniqueFileName} para solicitud {solicitudId}");
+            return $"/uploads/{solicitudId}/{uniqueFileName}";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error guardando archivo: {file.Name}");
+            throw;
+        }
     }
 
-    private async Task ProcesarListaArchivos(List<IBrowserFile> files, string tipoDocumentoNombre,
-        int solicitudId, Dictionary<string, int> tipoDocumentoMap, List<TbDocumentoAdjunto> archivosAGuardar)
+    public async Task<List<TbDocumentoAdjunto>> GuardarArchivosAdjuntosAsync(
+        List<IBrowserFile> archivos, int solicitudId, int tipoDocumentoId)
     {
-        if (files == null || !files.Any()) return;
+        var documentos = new List<TbDocumentoAdjunto>();
 
-        var tipoDocumentoEntry = tipoDocumentoMap.FirstOrDefault(x =>
-            x.Key.Equals(tipoDocumentoNombre, StringComparison.OrdinalIgnoreCase));
-
-        if (tipoDocumentoEntry.Value == 0)
-        {
-            Console.WriteLine($"Tipo de documento no encontrado: {tipoDocumentoNombre}");
-            return;
-        }
-
-        foreach (var file in files)
+        foreach (var archivo in archivos)
         {
             try
             {
-                var rutaAlmacenada = await GuardarArchivoAsync(file, solicitudId);
+                var rutaAlmacenada = await GuardarArchivoAsync(archivo, solicitudId);
                 var nombreGuardado = Path.GetFileName(rutaAlmacenada);
 
                 var documento = new TbDocumentoAdjunto
                 {
                     SolRegCannabisId = solicitudId,
-                    TipoDocumentoId = tipoDocumentoEntry.Value,
-                    NombreOriginal = file.Name,
+                    TipoDocumentoId = tipoDocumentoId,
+                    NombreOriginal = archivo.Name,
                     NombreGuardado = nombreGuardado,
                     Url = rutaAlmacenada,
                     FechaSubidaUtc = DateTime.UtcNow,
                     SubidoPor = "Sistema",
-                    IsValido = true
+                    IsValido = true,
+                    EsDocumentoMedico = tipoDocumentoId == 2, // Suponiendo que 2 es Certificación Médica
+                    Version = 1
                 };
 
-                archivosAGuardar.Add(documento);
+                documentos.Add(documento);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al procesar archivo {file.Name}: {ex.Message}");
-                throw new Exception($"Error al procesar archivo {file.Name}: {ex.Message}", ex);
+                _logger.LogError(ex, $"Error procesando archivo: {archivo.Name}");
+                throw;
             }
         }
+
+        if (documentos.Any())
+        {
+            await _context.TbDocumentoAdjunto.AddRangeAsync(documentos);
+            await _context.SaveChangesAsync();
+        }
+
+        return documentos;
+    }
+
+    public async Task<bool> EliminarArchivoAsync(int documentoId)
+    {
+        try
+        {
+            var documento = await _context.TbDocumentoAdjunto
+                .FirstOrDefaultAsync(d => d.Id == documentoId);
+
+            if (documento == null)
+                return false;
+
+            // Eliminar archivo físico
+            var filePath = Path.Combine(_environment.WebRootPath, documento.Url.TrimStart('/'));
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            // Eliminar registro de la base de datos
+            _context.TbDocumentoAdjunto.Remove(documento);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation($"Archivo eliminado: {documentoId}");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error eliminando archivo: {documentoId}");
+            return false;
+        }
+    }
+
+    public async Task<string> ObtenerRutaArchivoAsync(int documentoId)
+    {
+        var documento = await _context.TbDocumentoAdjunto
+            .FirstOrDefaultAsync(d => d.Id == documentoId);
+
+        return documento?.Url ?? string.Empty;
+    }
+
+    // Método auxiliar para obtener todos los archivos de una solicitud
+    public async Task<List<TbDocumentoAdjunto>> ObtenerArchivosPorSolicitudAsync(int solicitudId)
+    {
+        return await _context.TbDocumentoAdjunto
+            .Include(d => d.TipoDocumento)
+            .Where(d => d.SolRegCannabisId == solicitudId)
+            .OrderByDescending(d => d.FechaSubidaUtc)
+            .ToListAsync();
     }
 }

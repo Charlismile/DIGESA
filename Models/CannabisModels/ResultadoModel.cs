@@ -4,21 +4,47 @@ public class ResultModel
 {
     public bool Success { get; set; }
     public string Message { get; set; } = string.Empty;
-    public List<string> Errors { get; set; } = new();
+    public List<string> Errors { get; set; } = new List<string>();
     
-    public static ResultModel SuccessResult(string message = "Operación exitosa") 
-        => new() { Success = true, Message = message };
+    public static ResultModel SuccessResult(string message = "Operación exitosa")
+    {
+        return new ResultModel { Success = true, Message = message };
+    }
     
-    public static ResultModel ErrorResult(string message, List<string>? errors = null) 
-        => new() { Success = false, Message = message, Errors = errors ?? new List<string>() };
+    public static ResultModel ErrorResult(string message, List<string>? errors = null)
+    {
+        return new ResultModel 
+        { 
+            Success = false, 
+            Message = message, 
+            Errors = errors ?? new List<string>() 
+        };
+    }
 }
 
 public class ResultModel<T> : ResultModel
 {
     public T? Data { get; set; }
     
-    public static ResultModel<T> SuccessResult(T data, string message = "Operación exitosa") 
-        => new() { Success = true, Message = message, Data = data };
+    public static ResultModel<T> SuccessResult(T data, string message = "Operación exitosa")
+    {
+        return new ResultModel<T> 
+        { 
+            Success = true, 
+            Message = message, 
+            Data = data 
+        };
+    }
+    
+    public new static ResultModel<T> ErrorResult(string message, List<string>? errors = null)
+    {
+        return new ResultModel<T> 
+        { 
+            Success = false, 
+            Message = message, 
+            Errors = errors ?? new List<string>() 
+        };
+    }
 }
 
 public class PaginationModel
