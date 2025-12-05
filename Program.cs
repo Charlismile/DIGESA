@@ -20,6 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+    })
+    .AddEntityFrameworkStores<DbContextDigesa>()
+    .AddDefaultTokenProviders();
 
 // ==========================
 // Bases de datos
@@ -68,9 +76,7 @@ builder.Services.AddScoped<ITransferenciaService, TransferenciaService>();
 builder.Services.AddScoped<INotificacionService, NotificacionService>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 
-// Servicios programados (background services)
-// builder.Services.AddHostedService<NotificacionBackgroundService>();
-// builder.Services.AddHostedService<InactivacionBackgroundService>();
+
 
 // HttpClient para Active Directory
 builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();

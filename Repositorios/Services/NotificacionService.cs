@@ -55,7 +55,7 @@ public class NotificacionService : INotificacionService
             {
                 SolRegCannabisId = solicitudId,
                 DiasAntelacion = diasAntelacion,
-                FechaEnvio = null, // Se enviará cuando se ejecute el proceso
+                FechaEnvio = null,
                 EmailEnviado = false,
                 UsuarioNotificado = solicitud.Paciente.CorreoElectronico,
                 TipoNotificacion = "VencimientoCarnet"
@@ -82,38 +82,45 @@ public class NotificacionService : INotificacionService
         try
         {
             var hoy = DateTime.Now;
+            
+            // Obtener notificaciones pendientes con sus datos relacionados
             var notificacionesPendientes = await _context.TbNotificacionVencimiento
-                .Include(n => n.Solicitud)
-                    .ThenInclude(s => s.Paciente)
-                .Where(n => n.EmailEnviado == false && 
-                           n.Solicitud != null && 
-                           n.Solicitud.CarnetActivo == true &&
-                           n.Solicitud.FechaVencimientoCarnet.HasValue)
+                .Where(n => n.EmailEnviado == false)
+                .Join(_context.TbSolRegCannabis,
+                    n => n.SolRegCannabisId,
+                    s => s.Id,
+                    (n, s) => new { Notificacion = n, Solicitud = s })
+                .Join(_context.TbPaciente,
+                    ns => ns.Solicitud.PacienteId,
+                    p => p.Id,
+                    (ns, p) => new { ns.Notificacion, ns.Solicitud, Paciente = p })
+                .Where(nsp => nsp.Solicitud.CarnetActivo == true &&
+                             nsp.Solicitud.FechaVencimientoCarnet.HasValue)
                 .ToListAsync();
 
-            foreach (var notificacion in notificacionesPendientes)
+            foreach (var item in notificacionesPendientes)
             {
                 try
                 {
                     // Calcular días restantes
-                    var diasRestantes = (notificacion.Solicitud.FechaVencimientoCarnet.Value - hoy).Days;
+                    var diasRestantes = (item.Solicitud.FechaVencimientoCarnet.Value - hoy).Days;
 
                     // Verificar si es el momento de enviar la notificación
-                    if (diasRestantes <= notificacion.DiasAntelacion && diasRestantes > 0)
+                    if (diasRestantes <= item.Notificacion.DiasAntelacion && diasRestantes > 0)
                     {
                         var notificacionModel = new NotificacionVencimientoModel
                         {
-                            SolicitudId = notificacion.SolRegCannabisId,
-                            NumeroSolicitud = notificacion.Solicitud.NumSolCompleta ?? "N/A",
-                            NumeroCarnet = notificacion.Solicitud.NumeroCarnet ?? "N/A",
-                            PacienteNombre = $"{notificacion.Solicitud.Paciente?.PrimerNombre} {notificacion.Solicitud.Paciente?.PrimerApellido}",
-                            PacienteCorreo = notificacion.Solicitud.Paciente?.CorreoElectronico ?? string.Empty,
-                            FechaVencimiento = notificacion.Solicitud.FechaVencimientoCarnet.Value,
+                            SolicitudId = item.Notificacion.SolRegCannabisId,
+                            NumeroSolicitud = item.Solicitud.NumSolCompleta ?? "N/A",
+                            NumeroCarnet = item.Solicitud.NumeroCarnet ?? "N/A",
+                            PacienteNombre = $"{item.Paciente.PrimerNombre} {item.Paciente.PrimerApellido}",
+                            PacienteCorreo = item.Paciente.CorreoElectronico ?? string.Empty,
+                            FechaVencimiento = item.Solicitud.FechaVencimientoCarnet.Value,
                             DiasRestantes = diasRestantes,
-                            DiasAntelacion = notificacion.DiasAntelacion ?? 0,
+                            DiasAntelacion = item.Notificacion.DiasAntelacion ?? 0,
                             FechaEnvio = hoy,
                             EmailEnviado = false,
-                            TipoNotificacion = notificacion.TipoNotificacion ?? "VencimientoCarnet"
+                            TipoNotificacion = item.Notificacion.TipoNotificacion ?? "VencimientoCarnet"
                         };
 
                         // Enviar notificación
@@ -121,33 +128,33 @@ public class NotificacionService : INotificacionService
                         
                         if (enviado)
                         {
-                            notificacion.EmailEnviado = true;
-                            notificacion.FechaEnvio = hoy;
+                            item.Notificacion.EmailEnviado = true;
+                            item.Notificacion.FechaEnvio = hoy;
                             notificacionesEnviadas++;
-                            _logger.LogInformation($"Notificación enviada para solicitud {notificacion.SolRegCannabisId}");
+                            _logger.LogInformation($"Notificación enviada para solicitud {item.Notificacion.SolRegCannabisId}");
                         }
                         else
                         {
-                            errores.Add($"Error enviando notificación para solicitud {notificacion.SolRegCannabisId}");
+                            errores.Add($"Error enviando notificación para solicitud {item.Notificacion.SolRegCannabisId}");
                         }
                     }
                     else if (diasRestantes <= 0)
                     {
                         // Carnet ya venció, marcar como enviada para no reintentar
-                        notificacion.EmailEnviado = true;
-                        notificacion.FechaEnvio = hoy;
-                        _logger.LogInformation($"Carnet vencido, notificación descartada para solicitud {notificacion.SolRegCannabisId}");
+                        item.Notificacion.EmailEnviado = true;
+                        item.Notificacion.FechaEnvio = hoy;
+                        _logger.LogInformation($"Carnet vencido, notificación descartada para solicitud {item.Notificacion.SolRegCannabisId}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    errores.Add($"Error procesando notificación {notificacion.Id}: {ex.Message}");
-                    _logger.LogError(ex, $"Error procesando notificación {notificacion.Id}");
+                    errores.Add($"Error procesando notificación {item.Notificacion.Id}: {ex.Message}");
+                    _logger.LogError(ex, $"Error procesando notificación {item.Notificacion.Id}");
                 }
             }
 
             // Guardar cambios en la base de datos
-            if (notificacionesPendientes.Any(n => n.EmailEnviado == true))
+            if (notificacionesPendientes.Any(x => x.Notificacion.EmailEnviado == true))
             {
                 await _context.SaveChangesAsync();
             }
@@ -230,29 +237,36 @@ public class NotificacionService : INotificacionService
 
             // Obtener notificaciones recientes (últimos 7 días)
             var fechaInicio = hoy.AddDays(-7);
-            dashboard.NotificacionesRecientes = await _context.TbNotificacionVencimiento
-                .Include(n => n.Solicitud)
-                    .ThenInclude(s => s.Paciente)
+            var notificacionesRecientes = await _context.TbNotificacionVencimiento
                 .Where(n => n.FechaEnvio >= fechaInicio && n.EmailEnviado == true)
+                .Join(_context.TbSolRegCannabis,
+                    n => n.SolRegCannabisId,
+                    s => s.Id,
+                    (n, s) => new { Notificacion = n, Solicitud = s })
+                .Join(_context.TbPaciente,
+                    ns => ns.Solicitud.PacienteId,
+                    p => p.Id,
+                    (ns, p) => new NotificacionVencimientoModel
+                    {
+                        Id = ns.Notificacion.Id,
+                        SolicitudId = ns.Notificacion.SolRegCannabisId,
+                        NumeroSolicitud = ns.Solicitud.NumSolCompleta ?? "N/A",
+                        NumeroCarnet = ns.Solicitud.NumeroCarnet ?? "N/A",
+                        PacienteNombre = $"{p.PrimerNombre} {p.PrimerApellido}",
+                        PacienteCorreo = p.CorreoElectronico ?? string.Empty,
+                        FechaVencimiento = ns.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
+                        DiasRestantes = ns.Solicitud.FechaVencimientoCarnet.HasValue ? 
+                            (ns.Solicitud.FechaVencimientoCarnet.Value - hoy).Days : 0,
+                        DiasAntelacion = ns.Notificacion.DiasAntelacion ?? 0,
+                        FechaEnvio = ns.Notificacion.FechaEnvio ?? DateTime.MinValue,
+                        EmailEnviado = ns.Notificacion.EmailEnviado ?? false,
+                        TipoNotificacion = ns.Notificacion.TipoNotificacion ?? "VencimientoCarnet"
+                    })
                 .OrderByDescending(n => n.FechaEnvio)
                 .Take(10)
-                .Select(n => new NotificacionVencimientoModel
-                {
-                    Id = n.Id,
-                    SolicitudId = n.SolRegCannabisId,
-                    NumeroSolicitud = n.Solicitud.NumSolCompleta ?? "N/A",
-                    NumeroCarnet = n.Solicitud.NumeroCarnet ?? "N/A",
-                    PacienteNombre = $"{n.Solicitud.Paciente?.PrimerNombre} {n.Solicitud.Paciente?.PrimerApellido}",
-                    PacienteCorreo = n.Solicitud.Paciente?.CorreoElectronico ?? string.Empty,
-                    FechaVencimiento = n.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
-                    DiasRestantes = n.Solicitud.FechaVencimientoCarnet.HasValue ? 
-                        (n.Solicitud.FechaVencimientoCarnet.Value - hoy).Days : 0,
-                    DiasAntelacion = n.DiasAntelacion ?? 0,
-                    FechaEnvio = n.FechaEnvio ?? DateTime.MinValue,
-                    EmailEnviado = n.EmailEnviado ?? false,
-                    TipoNotificacion = n.TipoNotificacion ?? "VencimientoCarnet"
-                })
                 .ToListAsync();
+
+            dashboard.NotificacionesRecientes = notificacionesRecientes;
         }
         catch (Exception ex)
         {
@@ -267,26 +281,31 @@ public class NotificacionService : INotificacionService
         try
         {
             return await _context.TbNotificacionVencimiento
-                .Include(n => n.Solicitud)
-                    .ThenInclude(s => s.Paciente)
                 .Where(n => n.SolRegCannabisId == solicitudId)
+                .Join(_context.TbSolRegCannabis,
+                    n => n.SolRegCannabisId,
+                    s => s.Id,
+                    (n, s) => new { Notificacion = n, Solicitud = s })
+                .Join(_context.TbPaciente,
+                    ns => ns.Solicitud.PacienteId,
+                    p => p.Id,
+                    (ns, p) => new NotificacionVencimientoModel
+                    {
+                        Id = ns.Notificacion.Id,
+                        SolicitudId = ns.Notificacion.SolRegCannabisId,
+                        NumeroSolicitud = ns.Solicitud.NumSolCompleta ?? "N/A",
+                        NumeroCarnet = ns.Solicitud.NumeroCarnet ?? "N/A",
+                        PacienteNombre = $"{p.PrimerNombre} {p.PrimerApellido}",
+                        PacienteCorreo = p.CorreoElectronico ?? string.Empty,
+                        FechaVencimiento = ns.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
+                        DiasRestantes = ns.Solicitud.FechaVencimientoCarnet.HasValue ? 
+                            (ns.Solicitud.FechaVencimientoCarnet.Value - DateTime.Now).Days : 0,
+                        DiasAntelacion = ns.Notificacion.DiasAntelacion ?? 0,
+                        FechaEnvio = ns.Notificacion.FechaEnvio ?? DateTime.MinValue,
+                        EmailEnviado = ns.Notificacion.EmailEnviado ?? false,
+                        TipoNotificacion = ns.Notificacion.TipoNotificacion ?? "VencimientoCarnet"
+                    })
                 .OrderByDescending(n => n.FechaEnvio)
-                .Select(n => new NotificacionVencimientoModel
-                {
-                    Id = n.Id,
-                    SolicitudId = n.SolRegCannabisId,
-                    NumeroSolicitud = n.Solicitud.NumSolCompleta ?? "N/A",
-                    NumeroCarnet = n.Solicitud.NumeroCarnet ?? "N/A",
-                    PacienteNombre = $"{n.Solicitud.Paciente?.PrimerNombre} {n.Solicitud.Paciente?.PrimerApellido}",
-                    PacienteCorreo = n.Solicitud.Paciente?.CorreoElectronico ?? string.Empty,
-                    FechaVencimiento = n.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
-                    DiasRestantes = n.Solicitud.FechaVencimientoCarnet.HasValue ? 
-                        (n.Solicitud.FechaVencimientoCarnet.Value - DateTime.Now).Days : 0,
-                    DiasAntelacion = n.DiasAntelacion ?? 0,
-                    FechaEnvio = n.FechaEnvio ?? DateTime.MinValue,
-                    EmailEnviado = n.EmailEnviado ?? false,
-                    TipoNotificacion = n.TipoNotificacion ?? "VencimientoCarnet"
-                })
                 .ToListAsync();
         }
         catch (Exception ex)
@@ -301,26 +320,31 @@ public class NotificacionService : INotificacionService
         try
         {
             return await _context.TbNotificacionVencimiento
-                .Include(n => n.Solicitud)
-                    .ThenInclude(s => s.Paciente)
                 .Where(n => n.EmailEnviado == false)
-                .OrderBy(n => n.Solicitud.FechaVencimientoCarnet)
-                .Select(n => new NotificacionVencimientoModel
-                {
-                    Id = n.Id,
-                    SolicitudId = n.SolRegCannabisId,
-                    NumeroSolicitud = n.Solicitud.NumSolCompleta ?? "N/A",
-                    NumeroCarnet = n.Solicitud.NumeroCarnet ?? "N/A",
-                    PacienteNombre = $"{n.Solicitud.Paciente?.PrimerNombre} {n.Solicitud.Paciente?.PrimerApellido}",
-                    PacienteCorreo = n.Solicitud.Paciente?.CorreoElectronico ?? string.Empty,
-                    FechaVencimiento = n.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
-                    DiasRestantes = n.Solicitud.FechaVencimientoCarnet.HasValue ? 
-                        (n.Solicitud.FechaVencimientoCarnet.Value - DateTime.Now).Days : 0,
-                    DiasAntelacion = n.DiasAntelacion ?? 0,
-                    FechaEnvio = n.FechaEnvio,
-                    EmailEnviado = n.EmailEnviado ?? false,
-                    TipoNotificacion = n.TipoNotificacion ?? "VencimientoCarnet"
-                })
+                .Join(_context.TbSolRegCannabis,
+                    n => n.SolRegCannabisId,
+                    s => s.Id,
+                    (n, s) => new { Notificacion = n, Solicitud = s })
+                .Join(_context.TbPaciente,
+                    ns => ns.Solicitud.PacienteId,
+                    p => p.Id,
+                    (ns, p) => new NotificacionVencimientoModel
+                    {
+                        Id = ns.Notificacion.Id,
+                        SolicitudId = ns.Notificacion.SolRegCannabisId,
+                        NumeroSolicitud = ns.Solicitud.NumSolCompleta ?? "N/A",
+                        NumeroCarnet = ns.Solicitud.NumeroCarnet ?? "N/A",
+                        PacienteNombre = $"{p.PrimerNombre} {p.PrimerApellido}",
+                        PacienteCorreo = p.CorreoElectronico ?? string.Empty,
+                        FechaVencimiento = ns.Solicitud.FechaVencimientoCarnet ?? DateTime.MinValue,
+                        DiasRestantes = ns.Solicitud.FechaVencimientoCarnet.HasValue ? 
+                            (ns.Solicitud.FechaVencimientoCarnet.Value - DateTime.Now).Days : 0,
+                        DiasAntelacion = ns.Notificacion.DiasAntelacion ?? 0,
+                        FechaEnvio = ns.Notificacion.FechaEnvio,
+                        EmailEnviado = ns.Notificacion.EmailEnviado ?? false,
+                        TipoNotificacion = ns.Notificacion.TipoNotificacion ?? "VencimientoCarnet"
+                    })
+                .OrderBy(n => n.SolicitudId)
                 .ToListAsync();
         }
         catch (Exception ex)
@@ -466,7 +490,7 @@ public class NotificacionService : INotificacionService
             <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
                 <h2 style='color: #2c3e50;'>Recordatorio de Vencimiento - Carnet de Cannabis Medicinal</h2>
                 
-                <p>Estimado/a <strong>{{NombrePaciente}}</strong>,</p>
+                <p>Estimado/a {{NombrePaciente}},</p>
                 
                 <div style='background-color: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107; margin: 20px 0;'>
                     <p style='margin: 0;'><strong>⚠️ IMPORTANTE:</strong> Su carnet de cannabis medicinal está próximo a vencer.</p>
