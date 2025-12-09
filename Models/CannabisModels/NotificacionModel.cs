@@ -19,28 +19,6 @@ public class NotificacionVencimientoModel
     public string EstadoNotificacion => EmailEnviado ? "Enviada" : "Pendiente";
 }
 
-public class PlantillaEmailModel
-{
-    public int Id { get; set; }
-    
-    [Required(ErrorMessage = "El nombre es obligatorio")]
-    [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
-    public string Nombre { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "El asunto es obligatorio")]
-    [StringLength(200, ErrorMessage = "Máximo 200 caracteres")]
-    public string Asunto { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "El contenido es obligatorio")]
-    public string CuerpoHtml { get; set; } = string.Empty;
-    
-    public string TipoNotificacion { get; set; } = string.Empty;
-    public bool Activa { get; set; } = true;
-    public List<string> VariablesDisponibles { get; set; } = new();
-    public DateTime FechaCreacion { get; set; }
-    public DateTime? FechaActualizacion { get; set; }
-}
-
 public class EmailNotificacionModel
 {
     public string Destinatario { get; set; } = string.Empty;

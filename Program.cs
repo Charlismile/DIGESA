@@ -64,17 +64,33 @@ builder.Services.AddAuthorization();
 // ==========================
 // Servicios propios
 // ==========================
-// Registrar servicios en Program.cs
+// En Program.cs agregar:
+builder.Services.AddScoped<IDeclaracionJuradaService, DeclaracionJuradaService>();
+builder.Services.AddScoped<IConfiguracionSistemaService, ConfiguracionSistemaService>();
+builder.Services.AddScoped<IInscripcionesReporteService, InscripcionesReporteService>();
+builder.Services.AddScoped<IReportesExportacionService, ReportesExportacionService>();
+
+// Reemplazar servicios duplicados:
+// builder.Services.AddScoped<IExportacionService, ExportacionService>(); // Eliminar o comentar
+builder.Services.AddScoped<IRenovacionService, RenovacionService>();
+
+// Mantener servicios esenciales:
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ICarnetService, CarnetService>();
 builder.Services.AddScoped<ICommon, CommonServices>();
+builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
+builder.Services.AddScoped<IReporteService, ReporteService>();
 builder.Services.AddScoped<ISolicitudService, SolicitudService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<ITransferenciaService, TransferenciaService>();
-builder.Services.AddScoped<INotificacionService, NotificacionService>();
-builder.Services.AddScoped<IReporteService, ReporteService>();
+builder.Services.AddScoped<IUtilities, UtilitiesServices>();
+
+// Servicios de fondo (elegir uno):
+builder.Services.AddHostedService<TareasAutomaticasService>();
+// builder.Services.AddHostedService<RecordatorioVencimientoService>(); // Eliminar o comentar
 
 
 

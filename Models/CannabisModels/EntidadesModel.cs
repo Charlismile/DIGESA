@@ -285,21 +285,3 @@ public class ProductoPacienteModel : IValidatableObject
         }
     }
 }
-
-public class DeclaracionJuradaModel
-{
-    public int Id { get; set; }
-    
-    [Required(ErrorMessage = "El detalle es obligatorio")]
-    [StringLength(300, ErrorMessage = "Máximo 300 caracteres")]
-    public string Detalle { get; set; } = string.Empty;
-    
-    public DateTime Fecha { get; set; } = DateTime.Now;
-    
-    [Required(ErrorMessage = "El nombre del declarante es obligatorio")]
-    [StringLength(150, ErrorMessage = "Máximo 150 caracteres")]
-    public string NombreDeclarante { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "Debe aceptar la declaración jurada")]
-    public bool Aceptada { get; set; }
-}
