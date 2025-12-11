@@ -12,14 +12,14 @@
         <div class="card-body">
             <!-- Filtro de búsqueda con el mismo estilo -->
             <div class="input-group input-group-sm mb-4" style="max-width:480px;">
-                <input type="text" 
-                       class="form-control" 
-                       placeholder="Ingrese cédula o pasaporte (Ej: 8-800-0000 o PAS123456)" 
-                       @bind="documentoBusqueda" 
+                <input type="text"
+                       class="form-control"
+                       placeholder="Ingrese cédula o pasaporte (Ej: 8-800-0000 o PAS123456)"
+                       @bind="documentoBusqueda"
                        @onkeypress="HandleKeyPress" />
-                <button class="btn-custom btn-primary-custom" 
-                        @onclick="BuscarPaciente" 
-                        disabled="@string.IsNullOrEmpty(documentoBusqueda)" 
+                <button class="btn-custom btn-primary-custom"
+                        @onclick="BuscarPaciente"
+                        disabled="@string.IsNullOrEmpty(documentoBusqueda)"
                         type="button" style="width: 90px" >
                         <i class="bi bi-search"></i> Buscar
                 </button>

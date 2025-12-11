@@ -11,8 +11,8 @@ public partial class Verificacion : ComponentBase
     public IPaciente PacienteService { get; set; } = default!;
 
     private string documentoBusqueda = string.Empty;
-    private PacienteEstadoModel? pacienteEstado;
-    private PacienteModel? pacienteDetalle;
+    private EstadoSolicitudViewModel? pacienteEstado;
+    private PacienteViewModel? pacienteDetalle;
     private bool busquedaRealizada;
     private bool pacienteEncontrado;
     private bool loading;

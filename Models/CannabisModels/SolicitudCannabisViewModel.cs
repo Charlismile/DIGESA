@@ -9,9 +9,9 @@ public class SolicitudCannabisViewModel
     public DateTime FechaSolicitud { get; set; }
     
     [Required(ErrorMessage = "El paciente es requerido")]
-    public int PacienteId { get; set; }
-    
-    public DateTime? FechaRevision { get; set; }
+    public int? PacienteId { get; set; }
+
+    public DateTime? FechaRevision { get; set; } = DateTime.Now;
     
     [StringLength(100)]
     public string UsuarioRevisor { get; set; }

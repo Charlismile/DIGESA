@@ -2,10 +2,14 @@ using DIGESA.Components;
 using DIGESA.Components.Account;
 using DIGESA.Data;
 using DIGESA.Models.ActiveDirectory;
+using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
+using DIGESA.Repositorios.InterfacesCannabis;
 using DIGESA.Repositorios.Services;
+using DIGESA.Repositorios.ServiciosCannabis;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,17 +64,30 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // Autorización
 builder.Services.AddAuthorization();
-
-// ==========================
-// Servicios propios
-// ==========================
 builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
-
-
-
 
 // HttpClient para Active Directory
 builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();
+
+// Registrar servicios de cannabis
+builder.Services.AddScoped<IServicioConfiguracion, ServicioConfiguracion>();
+builder.Services.AddScoped<IServicioRenovaciones, ServicioRenovaciones>();
+builder.Services.AddScoped<IServicioHistorial, ServicioHistorial>();
+builder.Services.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+builder.Services.AddScoped<IServicioMedicos, ServicioMedicos>();
+builder.Services.AddScoped<IServicioFarmacias, ServicioFarmacias>();
+builder.Services.AddScoped<IServicioQR, ServicioQR>();
+
+// Servicios comunes
+builder.Services.AddScoped<IUserData, UserDataService>();
+builder.Services.AddScoped<ICommon, CommonServices>();
+
+// Configuración de email
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
+// Background service
+builder.Services.AddHostedService<TareasAutomaticasService>();
 
 // CORS
 builder.Services.AddCors(options =>
