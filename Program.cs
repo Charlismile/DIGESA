@@ -74,10 +74,9 @@ builder.Services.AddScoped<IServicioConfiguracion, ServicioConfiguracion>();
 builder.Services.AddScoped<IServicioRenovaciones, ServicioRenovaciones>();
 builder.Services.AddScoped<IServicioHistorial, ServicioHistorial>();
 builder.Services.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
-builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IServicioMedicos, ServicioMedicos>();
 builder.Services.AddScoped<IServicioFarmacias, ServicioFarmacias>();
-builder.Services.AddScoped<IServicioQR, ServicioQR>();
+builder.Services.AddScoped<IServicioQr, ServicioQr>();
 
 // Servicios comunes
 builder.Services.AddScoped<IUserData, UserDataService>();

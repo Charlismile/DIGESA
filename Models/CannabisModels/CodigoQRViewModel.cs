@@ -2,7 +2,7 @@
 
 namespace DIGESA.Models.CannabisModels;
 
-public class CodigoQRViewModel
+public class CodigoQrViewModel
 {
     public int Id { get; set; }
     
@@ -34,13 +34,26 @@ public class CodigoQRViewModel
     public SolicitudCannabisViewModel Solicitud { get; set; }
     
     // Propiedades calculadas
-    public string NumeroCarnet => Solicitud?.NumeroCarnet;
+    // En CodigoQRViewModel.cs
+    public string NumeroCarnet { get; set; } // Cambiar de get-only a con setter
     public bool EstaVencido => FechaVencimiento.HasValue && FechaVencimiento.Value < DateTime.Now;
     public bool PuedeEscanear => Activo && !EstaVencido;
     
     // Para generación de QR
     public string UrlValidacion => $"https://digesa.gob.pa/validar-carnet/{CodigoQR}";
     public string DatosCodificados => $"CANNABIS-MED|{SolicitudId}|{NumeroCarnet}|{FechaGeneracion:yyyyMMdd}";
+    
+    // NUEVAS PROPIEDADES PARA EL SERVICIO
+    public bool EsValido { get; set; }
+    public string Estado { get; set; }
+    public string Mensaje { get; set; }
+    public string UrlValidacionPublica { get; set; }
+    public int DiasRestantes { get; set; }
+    public bool EnPeriodoGracia { get; set; }
+    public int DiasVencido { get; set; }
+    public string PacienteNombre { get; set; }
+    public string PacienteCedula { get; set; }
+    public string EscaneadoPor { get; set; } // Propiedad temporal para escaneo
     
     // Método para registrar escaneo
     public void RegistrarEscaneo(string escaneadoPor)
@@ -49,5 +62,4 @@ public class CodigoQRViewModel
         UltimoEscaneo = DateTime.Now;
         UltimoEscaneadoPor = escaneadoPor;
     }
-
 }

@@ -2,12 +2,14 @@
 
 namespace DIGESA.Repositorios.InterfacesCannabis;
 
-public interface IServicioQR
+public interface IServicioQr
 {
-    Task<CodigoQRViewModel> GenerarCodigoQR(int solicitudId, string usuarioId);
+    Task<CodigoQrViewModel> GenerarCodigoQR(int solicitudId, string usuarioId);
     Task<bool> ValidarCodigoQR(string codigoQR, string ipOrigen = null);
-    Task<CodigoQRViewModel> EscanearCodigoQR(string codigoQR, string escaneadoPor, string ipOrigen = null);
+    Task<CodigoQrViewModel> EscanearCodigoQR(string codigoQR, string escaneadoPor, string ipOrigen = null);
     Task<bool> InactivarCodigoQR(int codigoQRId, string usuarioId, string motivo);
-    Task<List<CodigoQRViewModel>> ObtenerCodigosQRPorSolicitud(int solicitudId);
-    Task<CodigoQRViewModel> ObtenerCodigoQRActivo(int solicitudId);
+    Task<List<CodigoQrViewModel>> ObtenerCodigosQRPorSolicitud(int solicitudId);
+    Task<CodigoQrViewModel> ObtenerCodigoQRActivo(int solicitudId);
 }
+
+

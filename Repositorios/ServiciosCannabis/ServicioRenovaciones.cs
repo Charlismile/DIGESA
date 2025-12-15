@@ -49,12 +49,16 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // 2. Obtener configuración
                 var config = await _servicioConfiguracion.ObtenerConfiguracionCompleta();
 
+                // Obtener el ID del estado "Pendiente Renovación" ANTES de usarlo
+                var estadoPendienteRenovacionId = await ObtenerEstadoId("Pendiente Renovación");
+                var estadoEnRenovacionId = await ObtenerEstadoId("En Renovación");
+
                 // 3. Crear nueva solicitud de renovación
                 var nuevaSolicitud = new TbSolRegCannabis
                 {
                     PacienteId = solicitud.PacienteId,
                     FechaSolicitud = DateTime.Now,
-                    EstadoSolicitudId = await ObtenerEstadoId("Pendiente Renovación"),
+                    EstadoSolicitudId = estadoPendienteRenovacionId,
                     EsRenovacion = true,
                     SolicitudPadreId = solicitud.SolicitudPadreId ?? solicitud.Id,
                     VersionCarnet = solicitud.VersionCarnet + 1,
@@ -76,7 +80,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     "Renovación por vencimiento");
 
                 // 5. Cambiar estado de la solicitud anterior
-                solicitud.EstadoSolicitudId = await ObtenerEstadoId("En Renovación");
+                solicitud.EstadoSolicitudId = estadoEnRenovacionId;
                 await _context.SaveChangesAsync();
 
                 // 6. Enviar notificación si está configurado
@@ -130,8 +134,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 if (!documentosCompletos)
                     return ResultadoRenovacionViewModel.Error("Faltan documentos requeridos para la renovación");
 
+                // Obtener IDs de estado ANTES de usarlos
+                var estadoAprobadoId = await ObtenerEstadoId("Aprobado");
+                var estadoPendienteRenovacionId = await ObtenerEstadoId("Pendiente Renovación");
+
                 // 4. Aprobar renovación
-                solicitudNueva.EstadoSolicitudId = await ObtenerEstadoId("Aprobado");
+                solicitudNueva.EstadoSolicitudId = estadoAprobadoId;
                 solicitudNueva.FechaAprobacion = DateTime.Now;
                 solicitudNueva.UsuarioRevisor = usuarioId;
                 solicitudNueva.FechaEmisionCarnet = DateTime.Now;
@@ -206,16 +214,21 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                     if (solicitudAnterior != null)
                     {
-                        solicitudAnterior.EstadoSolicitudId = await ObtenerEstadoId("Aprobado");
+                        var estadoAprobadoId = await ObtenerEstadoId("Aprobado");
+                        solicitudAnterior.EstadoSolicitudId = estadoAprobadoId;
                         solicitudAnterior.CarnetActivo = true;
                     }
                 }
 
+                // Obtener ID de estado "Cancelado"
+                var estadoCanceladoId = await ObtenerEstadoId("Cancelado");
+                var estadoPendienteRenovacionId = await ObtenerEstadoId("Pendiente Renovación");
+
                 // Cancelar la renovación
-                solicitud.EstadoSolicitudId = await ObtenerEstadoId("Cancelado");
+                solicitud.EstadoSolicitudId = estadoCanceladoId;
                 solicitud.ComentarioRevision = $"Renovación cancelada: {motivo}";
                 solicitud.UsuarioRevisor = usuarioId;
-                solicitud.FechaRevision = DateTime.Now;
+                solicitud.FechaRevision = DateOnly.FromDateTime(DateTime.Now);
 
                 await _servicioHistorial.RegistrarCambioEstado(
                     solicitud.Id,
@@ -336,6 +349,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                 var renovacionesProcesadas = 0;
 
+                // Obtener el ID del estado "Cancelado" UNA VEZ, fuera del bucle
+                var estadoCanceladoId = await ObtenerEstadoId("Cancelado");
+
                 foreach (var solicitud in solicitudesParaRenovar)
                 {
                     try
@@ -344,7 +360,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                         var renovacionExistente = await _context.TbSolRegCannabis
                             .AnyAsync(s => s.SolicitudPadreId == solicitud.Id &&
                                            s.EsRenovacion == true &&
-                                           s.EstadoSolicitudId != await ObtenerEstadoId("Cancelado"));
+                                           s.EstadoSolicitudId != estadoCanceladoId); // Usar variable pre-obtenida
 
                         if (renovacionExistente)
                             continue;
@@ -537,12 +553,19 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     .ToListAsync();
 
                 reporte.TotalRenovaciones = renovaciones.Count;
+                
+                // Obtener IDs de estado ANTES de usarlos en las expresiones LINQ
+                var estadoAprobadoId = await ObtenerEstadoId("Aprobado");
+                var estadoRechazadoId = await ObtenerEstadoId("Rechazado");
+                var estadoPendienteRenovacionId = await ObtenerEstadoId("Pendiente Renovación");
+                
+                // Usar las variables obtenidas en lugar de llamadas async dentro de LINQ
                 reporte.RenovacionesExitosas = renovaciones.Count(r =>
-                    r.SolicitudNueva.EstadoSolicitudId == await ObtenerEstadoId("Aprobado"));
+                    r.SolicitudNueva.EstadoSolicitudId == estadoAprobadoId);
                 reporte.RenovacionesFallidas = renovaciones.Count(r =>
-                    r.SolicitudNueva.EstadoSolicitudId == await ObtenerEstadoId("Rechazado"));
+                    r.SolicitudNueva.EstadoSolicitudId == estadoRechazadoId);
                 reporte.RenovacionesPendientes = renovaciones.Count(r =>
-                    r.SolicitudNueva.EstadoSolicitudId == await ObtenerEstadoId("Pendiente Renovación"));
+                    r.SolicitudNueva.EstadoSolicitudId == estadoPendienteRenovacionId);
 
                 // Agrupar por mes
                 var renovacionesPorMes = renovaciones
@@ -679,7 +702,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 Id = solicitud.Id,
                 FechaSolicitud = solicitud.FechaSolicitud ?? DateTime.Now,
                 PacienteId = solicitud.PacienteId,
-                FechaRevision = solicitud.FechaRevision,
+                // Corrección: Convertir DateOnly? a DateTime?
+                FechaRevision = solicitud.FechaRevision.HasValue ? 
+                    new DateTime?(new DateTime(solicitud.FechaRevision.Value.Year, 
+                                             solicitud.FechaRevision.Value.Month, 
+                                             solicitud.FechaRevision.Value.Day)) : 
+                    null,
                 UsuarioRevisor = solicitud.UsuarioRevisor,
                 ComentarioRevision = solicitud.ComentarioRevision,
                 NumSolCompleta = solicitud.NumSolCompleta,
@@ -715,7 +743,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     DocumentoCedula = solicitud.Paciente.DocumentoCedula,
                     DocumentoPasaporte = solicitud.Paciente.DocumentoPasaporte,
                     Nacionalidad = solicitud.Paciente.Nacionalidad,
-                    FechaNacimiento = solicitud.Paciente.FechaNacimiento ?? DateTime.MinValue,
+                    // CORRECCIÓN: Manejo de DateOnly? a DateTime
+                    FechaNacimiento = solicitud.Paciente.FechaNacimiento.HasValue 
+                        ? new DateTime(solicitud.Paciente.FechaNacimiento.Value.Year,
+                                     solicitud.Paciente.FechaNacimiento.Value.Month,
+                                     solicitud.Paciente.FechaNacimiento.Value.Day)
+                        : DateTime.MinValue,
                     Sexo = solicitud.Paciente.Sexo,
                     CorreoElectronico = solicitud.Paciente.CorreoElectronico
                 };
@@ -741,7 +774,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 Id = entity.Id,
                 FechaSolicitud = entity.FechaSolicitud ?? DateTime.Now,
                 PacienteId = entity.PacienteId,
-                FechaRevision = entity.FechaRevision,
+                // Corrección: Convertir DateOnly? a DateTime?
+                FechaRevision = entity.FechaRevision.HasValue ?
+                    new DateTime?(new DateTime(entity.FechaRevision.Value.Year,
+                                             entity.FechaRevision.Value.Month,
+                                             entity.FechaRevision.Value.Day)) :
+                    null,
                 UsuarioRevisor = entity.UsuarioRevisor,
                 ComentarioRevision = entity.ComentarioRevision,
                 NumSolCompleta = entity.NumSolCompleta,
@@ -759,9 +797,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             };
         }
 
+        // Métodos de exportación sincrónicos
         private byte[] ExportarAExcel(ReporteRenovacionesViewModel reporte)
         {
-            // Implementación simplificada
             using var memoryStream = new MemoryStream();
             using var writer = new StreamWriter(memoryStream);
 
@@ -790,7 +828,6 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
         private byte[] ExportarAPDF(ReporteRenovacionesViewModel reporte)
         {
-            // Implementación simplificada
             using var memoryStream = new MemoryStream();
             using var writer = new StreamWriter(memoryStream);
 
