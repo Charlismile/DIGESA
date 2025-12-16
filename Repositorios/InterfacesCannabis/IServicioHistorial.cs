@@ -22,4 +22,8 @@ public interface IServicioHistorial
     
     // Reportes
     Task<ReporteHistorialViewModel> GenerarReporteHistorial(DateTime fechaInicio, DateTime fechaFin);
+    
+    //--------------------------------------------
+    Task RegistrarEvento(string tipo, string descripcion, string usuario, string entidadId);
+    Task RegistrarError(string origen, string mensaje, string usuario);
 }

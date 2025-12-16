@@ -90,7 +90,6 @@ public class MedicoViewModel : IValidatableObject
     public InstalacionSaludViewModel InstalacionSalud { get; set; }
     
     // Propiedades calculadas
-    public string NombreCompleto => $"{PrimerNombre} {PrimerApellido}";
     public string NombreCompletoConTitulo => $"Dr. {PrimerNombre} {PrimerApellido}";
     public string EspecialidadCompleta => string.IsNullOrEmpty(Subespecialidad) 
         ? Especialidad 
@@ -124,6 +123,21 @@ public class MedicoViewModel : IValidatableObject
             yield return new ValidationResult(
                 "Debe especificar la fecha de verificación para médicos verificados",
                 new[] { nameof(FechaVerificacion) });
+        }
+    }
+    public string ProvinciaNombre { get; set; }
+    public string DistritoNombre { get; set; }
+    public string RegionSaludNombre { get; set; }
+    public string InstalacionSaludNombre { get; set; }
+
+    // Actualiza la propiedad calculada:
+    public string NombreCompleto 
+    { 
+        get 
+        {
+            var nombres = $"{PrimerNombre} {SegundoNombre}".Trim();
+            var apellidos = $"{PrimerApellido} {SegundoApellido}".Trim();
+            return $"{nombres} {apellidos}".Trim();
         }
     }
 }

@@ -124,6 +124,21 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
         }
 
+        private LogNotificacionViewModel MapToLogNotificacionViewModel(TbLogNotificaciones entity)
+        {
+            return new LogNotificacionViewModel
+            {
+                Id = entity.Id,
+                SolicitudId = entity.SolicitudId ?? 0,
+                TipoNotificacion = entity.TipoNotificacion,
+                FechaEnvio = entity.FechaEnvio,
+                MetodoEnvio = entity.MetodoEnvio,
+                Destinatario = entity.Destinatario,
+                Estado = entity.Estado,
+                Error = entity.Error
+            };
+        }
+
         public async Task<HistorialCompletoViewModel> ObtenerHistorialCompleto(int pacienteId)
         {
             try
@@ -148,12 +163,14 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // Obtener cambios de estado
                 var cambiosEstado = await _context.TbSolRegCannabisHistorial
                     .Include(h => h.EstadoSolicitudIdHistorialNavigation)
-                    .Where(h => solicitudIds.Contains(h.SolRegCannabisId.Value))
+                    .Where(h => h.SolRegCannabisId.HasValue && 
+                               solicitudIds.Contains(h.SolRegCannabisId.Value))
                     .ToListAsync();
 
-                // Obtener notificaciones
+                // Obtener notificaciones - CORREGIDO
                 var notificaciones = await _context.TbLogNotificaciones
-                    .Where(n => solicitudIds.Contains(n.SolicitudId))
+                    .Where(n => n.SolicitudId.HasValue && 
+                                solicitudIds.Contains(n.SolicitudId.Value))
                     .ToListAsync();
 
                 // Construir línea de tiempo
@@ -207,7 +224,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 {
                     eventos.Add(new EventoHistorialViewModel
                     {
-                        Fecha = cambio.FechaCambio?.ToDateTime(TimeOnly.MinValue) ?? DateTime.Now,
+                        Fecha = cambio.FechaCambio.HasValue ? 
+                            cambio.FechaCambio.Value.ToDateTime(TimeOnly.MinValue) : 
+                            DateTime.Now,
                         Tipo = "Cambio Estado",
                         Titulo = $"Estado: {cambio.EstadoSolicitudIdHistorialNavigation?.NombreEstado}",
                         Descripcion = cambio.Comentario ?? "",
@@ -466,7 +485,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 SolRegCannabisId = entity.SolRegCannabisId,
                 Comentario = entity.Comentario,
                 UsuarioRevisor = entity.UsuarioRevisor,
-                FechaCambio = entity.FechaCambio?.ToDateTime(TimeOnly.MinValue),
+                FechaCambio = entity.FechaCambio.HasValue ? 
+                    entity.FechaCambio.Value.ToDateTime(TimeOnly.MinValue) : 
+                    (DateTime?)null,
                 EstadoSolicitudIdHistorial = entity.EstadoSolicitudIdHistorial,
                 EstadoSolicitud = entity.EstadoSolicitudIdHistorialNavigation != null ? 
                     new EstadoSolicitudViewModel
@@ -477,26 +498,55 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             };
         }
 
-        private LogNotificacionViewModel MapToLogNotificacionViewModel(TbLogNotificaciones entity)
-        {
-            return new LogNotificacionViewModel
-            {
-                Id = entity.Id,
-                SolicitudId = entity.SolicitudId,
-                TipoNotificacion = entity.TipoNotificacion,
-                FechaEnvio = entity.FechaEnvio,
-                MetodoEnvio = entity.MetodoEnvio,
-                Destinatario = entity.Destinatario,
-                Estado = entity.Estado,
-                Error = entity.Error
-            };
-        }
-
         private async Task<int> ObtenerEstadoId(string nombreEstado)
         {
             var estado = await _context.TbEstadoSolicitud
                 .FirstOrDefaultAsync(e => e.NombreEstado == nombreEstado);
             return estado?.IdEstado ?? 1;
+        }
+        
+        public async Task RegistrarEvento(string tipo, string descripcion, string usuario, string entidadId)
+        {
+            try
+            {
+                var evento = new TbHistorialUsuario
+                {
+                    TipoCambio = tipo,
+                    Comentario = $"{descripcion} (Entidad: {entidadId})",
+                    UsuarioId = usuario,
+                    CambioPor = usuario,
+                    FechaCambio = DateTime.Now
+                };
+
+                await _context.TbHistorialUsuario.AddAsync(evento);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error registrando evento {Tipo}", tipo);
+            }
+        }
+
+        public async Task RegistrarError(string origen, string mensaje, string usuario)
+        {
+            try
+            {
+                var error = new TbHistorialUsuario
+                {
+                    TipoCambio = "ERROR",
+                    Comentario = $"{origen}: {mensaje}",
+                    UsuarioId = usuario,
+                    CambioPor = "Sistema",
+                    FechaCambio = DateTime.Now
+                };
+
+                await _context.TbHistorialUsuario.AddAsync(error);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error registrando error desde {Origen}", origen);
+            }
         }
     }
 }

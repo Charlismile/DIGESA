@@ -15,4 +15,6 @@ public interface IServicioNotificaciones
     // Plantillas
     Task<string> ObtenerPlantillaEmail(string tipo);
     Task<bool> GuardarPlantillaEmail(string tipo, string asunto, string cuerpo);
+    //----------------------
+    Task EnviarNotificacion(string tipo, string usuarioDestino, object datos);
 }

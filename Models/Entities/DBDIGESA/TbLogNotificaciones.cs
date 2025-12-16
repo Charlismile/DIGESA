@@ -7,7 +7,7 @@ public partial class TbLogNotificaciones
 {
     public int Id { get; set; }
 
-    public int SolicitudId { get; set; }
+    public int? SolicitudId { get; set; }
 
     public string TipoNotificacion { get; set; } = null!;
 
@@ -21,5 +21,5 @@ public partial class TbLogNotificaciones
 
     public string? Error { get; set; }
 
-    public virtual TbSolRegCannabis Solicitud { get; set; } = null!;
+    public virtual TbSolRegCannabis? Solicitud { get; set; }
 }

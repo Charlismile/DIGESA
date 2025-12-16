@@ -45,7 +45,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // DIGESA DB
 builder.Services.AddDbContextFactory<DbContextDigesa>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DigesaConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

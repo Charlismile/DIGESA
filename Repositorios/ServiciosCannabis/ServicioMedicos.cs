@@ -13,10 +13,10 @@ namespace DIGESA.Repositorios.ServiciosCannabis
         private readonly IServicioNotificaciones _notificaciones;
         private readonly IServicioHistorial _historial;
 
-        public ServicioMedicos(DbContextDigesa context, 
-                             ILogger<ServicioMedicos> logger,
-                             IServicioNotificaciones notificaciones,
-                             IServicioHistorial historial)
+        public ServicioMedicos(DbContextDigesa context,
+            ILogger<ServicioMedicos> logger,
+            IServicioNotificaciones notificaciones,
+            IServicioHistorial historial)
         {
             _context = context;
             _logger = logger;
@@ -31,17 +31,19 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // Validar que no exista médico con mismo número de colegiatura
                 var existeColegiatura = await _context.TbMedico
                     .AnyAsync(m => m.NumeroColegiatura == medico.NumeroColegiatura);
-                
+
                 if (existeColegiatura)
-                    throw new InvalidOperationException($"Ya existe un médico registrado con número de colegiatura: {medico.NumeroColegiatura}");
+                    throw new InvalidOperationException(
+                        $"Ya existe un médico registrado con número de colegiatura: {medico.NumeroColegiatura}");
 
                 // Validar que no exista médico con mismo documento
                 var existeDocumento = await _context.TbMedico
-                    .AnyAsync(m => m.TipoDocumento == medico.TipoDocumento && 
-                                  m.NumeroDocumento == medico.NumeroDocumento);
-                
+                    .AnyAsync(m => m.TipoDocumento == medico.TipoDocumento &&
+                                   m.NumeroDocumento == medico.NumeroDocumento);
+
                 if (existeDocumento)
-                    throw new InvalidOperationException($"Ya existe un médico registrado con {medico.TipoDocumento}: {medico.NumeroDocumento}");
+                    throw new InvalidOperationException(
+                        $"Ya existe un médico registrado con {medico.TipoDocumento}: {medico.NumeroDocumento}");
 
                 // Generar código único de médico
                 var codigoMedico = await GenerarCodigoMedicoUnico();
@@ -96,8 +98,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial usando método disponible
-                await RegistrarEnHistorial("MEDICO_CREADO", 
-                    $"Médico creado: {entidad.PrimerNombre} {entidad.PrimerApellido}", 
+                await RegistrarEnHistorial("MEDICO_CREADO",
+                    $"Médico creado: {entidad.PrimerNombre} {entidad.PrimerApellido}",
                     usuarioId, entidad.Id);
 
                 // Notificar al administrador para verificación
@@ -178,8 +180,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.TbAuditoriaMedico.AddAsync(auditoriaMedico);
                 await _context.SaveChangesAsync();
 
-                await RegistrarEnHistorial("MEDICO_ACTUALIZADO", 
-                    $"Médico actualizado: {entidad.PrimerNombre} {entidad.PrimerApellido}", 
+                await RegistrarEnHistorial("MEDICO_ACTUALIZADO",
+                    $"Médico actualizado: {entidad.PrimerNombre} {entidad.PrimerApellido}",
                     usuarioId, entidad.Id);
 
                 return MapToViewModel(entidad);
@@ -203,13 +205,13 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // Verificar que no tenga pacientes activos
                 var tienePacientes = await _context.TbMedicoPaciente
                     .AnyAsync(mp => mp.MedicoId == medicoId);
-                
+
                 if (tienePacientes)
                     throw new InvalidOperationException("No se puede eliminar médico con pacientes asignados");
 
                 // Marcar como inactivo (soft delete)
                 var datosAnteriores = System.Text.Json.JsonSerializer.Serialize(entidad);
-                
+
                 entidad.Activo = false;
                 entidad.FechaActualizacion = DateTime.Now;
                 entidad.Observaciones = $"Eliminado por {usuarioId}. Motivo: {motivo}";
@@ -232,8 +234,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.TbAuditoriaMedico.AddAsync(auditoriaMedico);
                 await _context.SaveChangesAsync();
 
-                await RegistrarEnHistorial("MEDICO_ELIMINADO", 
-                    $"Médico eliminado: {entidad.PrimerNombre} {entidad.PrimerApellido}. Motivo: {motivo}", 
+                await RegistrarEnHistorial("MEDICO_ELIMINADO",
+                    $"Médico eliminado: {entidad.PrimerNombre} {entidad.PrimerApellido}. Motivo: {motivo}",
                     usuarioId, entidad.Id);
 
                 return true;
@@ -301,9 +303,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     .Include(m => m.Distrito)
                     .Include(m => m.RegionSalud)
                     .Include(m => m.InstalacionSalud)
-                    .FirstOrDefaultAsync(m => m.TipoDocumento == tipoDocumento && 
-                                            m.NumeroDocumento == numeroDocumento && 
-                                            m.Activo);
+                    .FirstOrDefaultAsync(m => m.TipoDocumento == tipoDocumento &&
+                                              m.NumeroDocumento == numeroDocumento &&
+                                              m.Activo);
 
                 if (entidad == null)
                     return null;
@@ -312,7 +314,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error obteniendo médico por documento {Tipo}/{Numero}", tipoDocumento, numeroDocumento);
+                _logger.LogError(ex, "Error obteniendo médico por documento {Tipo}/{Numero}", tipoDocumento,
+                    numeroDocumento);
                 throw;
             }
         }
@@ -404,8 +407,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial
-                await RegistrarEnHistorial("MEDICO_VERIFICADO", 
-                    $"Médico verificado: {entidad.PrimerNombre} {entidad.PrimerApellido}", 
+                await RegistrarEnHistorial("MEDICO_VERIFICADO",
+                    $"Médico verificado: {entidad.PrimerNombre} {entidad.PrimerApellido}",
                     usuarioVerificador, entidad.Id);
 
                 // Notificar al médico
@@ -461,8 +464,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial
-                await RegistrarEnHistorial("MEDICO_VERIFICACION_REVOCADA", 
-                    $"Verificación revocada a médico: {entidad.PrimerNombre} {entidad.PrimerApellido}. Motivo: {motivo}", 
+                await RegistrarEnHistorial("MEDICO_VERIFICACION_REVOCADA",
+                    $"Verificación revocada a médico: {entidad.PrimerNombre} {entidad.PrimerApellido}. Motivo: {motivo}",
                     usuario, entidad.Id);
 
                 // Notificar al médico
@@ -492,73 +495,69 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                 var medicos = await query.ToListAsync();
 
-                // Calcular distribuciones
-                var distribucionEspecialidad = medicos
-                    .Where(m => !string.IsNullOrEmpty(m.Especialidad))
-                    .GroupBy(m => m.Especialidad)
-                    .Select(g => new EspecialidadCountViewModel
-                    {
-                        Especialidad = g.Key,
-                        Cantidad = g.Count(),
-                        Porcentaje = Math.Round((g.Count() * 100.0) / medicos.Count, 2)
-                    })
-                    .OrderByDescending(d => d.Cantidad)
-                    .ToList();
-
-                var distribucionProvincia = medicos
-                    .Where(m => m.ProvinciaId.HasValue)
-                    .GroupBy(m => m.ProvinciaId)
-                    .Select(g => new ProvinciaCountViewModel
-                    {
-                        ProvinciaId = g.Key ?? 0,
-                        Cantidad = g.Count(),
-                        Porcentaje = Math.Round((g.Count() * 100.0) / medicos.Count, 2)
-                    })
-                    .OrderByDescending(d => d.Cantidad)
-                    .ToList();
-
-                var registrosMensuales = medicos
-                    .GroupBy(m => new { m.FechaRegistro.Year, m.FechaRegistro.Month })
-                    .Select(g => new RegistroMensualViewModel
-                    {
-                        Ano = g.Key.Year,
-                        Mes = g.Key.Month,
-                        Cantidad = g.Count()
-                    })
-                    .OrderBy(r => r.Ano)
-                    .ThenBy(r => r.Mes)
-                    .ToList();
-
-                // Contar médicos especialistas en cannabis
-                var medicosEspecialistasCannabis = medicos
-                    .Count(m => !string.IsNullOrEmpty(m.Especialidad) && 
-                               m.Especialidad.Contains("Cannabis", StringComparison.OrdinalIgnoreCase));
-
                 var reporte = new ReporteMedicosViewModel
                 {
                     FechaGeneracion = DateTime.Now,
                     FechaInicio = fechaInicio,
                     FechaFin = fechaFin,
                     TotalMedicos = medicos.Count,
-                    MedicosActivos = medicos.Count(m => m.Activo),
                     MedicosVerificados = medicos.Count(m => m.Verificado),
-                    MedicosEspecialistasCannabis = medicosEspecialistasCannabis,
-                    DistribucionEspecialidad = distribucionEspecialidad,
-                    DistribucionProvincia = distribucionProvincia,
-                    RegistrosMensuales = registrosMensuales,
-                    Medicos = medicos.Select(m => new MedicoReporteViewModel
-                    {
-                        Id = m.Id,
-                        CodigoMedico = m.CodigoMedico,
-                        Nombre = $"{m.PrimerNombre} {m.PrimerApellido}",
-                        Especialidad = m.Especialidad,
-                        Email = m.Email,
-                        Telefono = m.TelefonoMovil ?? m.TelefonoConsultorio,
-                        Activo = m.Activo,
-                        Verificado = m.Verificado,
-                        FechaRegistro = m.FechaRegistro,
-                        FechaVerificacion = m.FechaVerificacion
-                    }).ToList()
+                    MedicosActivos = medicos.Count(m => m.Activo),
+                    MedicosEspecialistasCannabis = medicos.Count(m =>
+                        m.Especialidad.Contains("Cannabis", StringComparison.OrdinalIgnoreCase)),
+
+                    DistribucionEspecialidad = medicos
+                        .Where(m => !string.IsNullOrEmpty(m.Especialidad))
+                        .GroupBy(m => m.Especialidad)
+                        .Select(g => new EspecialidadCountViewModel
+                        {
+                            Especialidad = g.Key,
+                            Cantidad = g.Count(),
+                            Porcentaje = Math.Round((g.Count() * 100.0m) / (medicos.Count > 0 ? medicos.Count : 1), 2)
+                        })
+                        .OrderByDescending(d => d.Cantidad)
+                        .ToList(),
+
+                    DistribucionProvincia = medicos
+                        .GroupBy(m => m.ProvinciaId)
+                        .Select(g => new ProvinciaCountViewModel
+                        {
+                            Provincia = g.Key?.ToString() ?? "No especificado",
+                            Cantidad = g.Count(),
+                            Porcentaje = Math.Round((g.Count() * 100.0m) / (medicos.Count > 0 ? medicos.Count : 1), 2)
+                        })
+                        .OrderByDescending(d => d.Cantidad)
+                        .ToList(),
+
+                    RegistrosMensuales = medicos
+                        .GroupBy(m => new { m.FechaRegistro.Year, m.FechaRegistro.Month })
+                        .Select(g => new RegistroMensualViewModel
+                        {
+                            Mes = $"{g.Key.Month:00}/{g.Key.Year}",
+                            Cantidad = g.Count()
+                        })
+                        .OrderBy(r => r.Mes)
+                        .ToList(),
+
+                    Medicos = medicos
+                        .Select(m => new MedicoReporteViewModel
+                        {
+                            CodigoMedico = m.CodigoMedico,
+                            NombreCompleto = $"{m.PrimerNombre} {m.PrimerApellido}".Trim(),
+                            Especialidad = m.Especialidad,
+                            NumeroColegiatura = m.NumeroColegiatura,
+                            Telefono = m.TelefonoMovil ?? m.TelefonoConsultorio,
+                            Email = m.Email,
+                            Provincia = m.ProvinciaId?.ToString() ?? "No especificada",
+                            InstalacionSalud = m.InstalacionSaludId?.ToString() ??
+                                               m.InstalacionPersonalizada ?? "No especificada",
+                            Verificado = m.Verificado,
+                            Activo = m.Activo,
+                            FechaRegistro = m.FechaRegistro,
+                            FechaVerificacion = m.FechaVerificacion,
+                            PacientesAtendidos = _context.TbMedicoPaciente.Count(mp => mp.MedicoId == m.Id)
+                        })
+                        .ToList()
                 };
 
                 return reporte;
@@ -578,30 +577,30 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 var medicosActivos = await _context.TbMedico.CountAsync(m => m.Activo);
                 var medicosVerificados = await _context.TbMedico.CountAsync(m => m.Verificado);
                 var medicosInactivos = totalMedicos - medicosActivos;
-                
+
                 // Contar médicos especialistas en cannabis
                 var medicosEspecialistasCannabis = await _context.TbMedico
-                    .CountAsync(m => !string.IsNullOrEmpty(m.Especialidad) && 
-                                    m.Especialidad.Contains("Cannabis", StringComparison.OrdinalIgnoreCase));
+                    .CountAsync(m => !string.IsNullOrEmpty(m.Especialidad) &&
+                                     m.Especialidad.Contains("Cannabis", StringComparison.OrdinalIgnoreCase));
 
                 // Obtener distribución por especialidad
-                var neurologos = await _context.TbMedico.CountAsync(m => 
+                var neurologos = await _context.TbMedico.CountAsync(m =>
                     m.Especialidad.Contains("Neurología", StringComparison.OrdinalIgnoreCase) ||
                     m.Especialidad.Contains("Neurologo", StringComparison.OrdinalIgnoreCase));
 
-                var oncologos = await _context.TbMedico.CountAsync(m => 
+                var oncologos = await _context.TbMedico.CountAsync(m =>
                     m.Especialidad.Contains("Oncología", StringComparison.OrdinalIgnoreCase) ||
                     m.Especialidad.Contains("Oncologo", StringComparison.OrdinalIgnoreCase));
 
-                var psiquiatras = await _context.TbMedico.CountAsync(m => 
+                var psiquiatras = await _context.TbMedico.CountAsync(m =>
                     m.Especialidad.Contains("Psiquiatría", StringComparison.OrdinalIgnoreCase) ||
                     m.Especialidad.Contains("Psiquiatra", StringComparison.OrdinalIgnoreCase));
 
-                var medDolor = await _context.TbMedico.CountAsync(m => 
+                var medDolor = await _context.TbMedico.CountAsync(m =>
                     m.Especialidad.Contains("Dolor", StringComparison.OrdinalIgnoreCase) ||
                     m.Especialidad.Contains("Algiología", StringComparison.OrdinalIgnoreCase));
 
-                var pediatras = await _context.TbMedico.CountAsync(m => 
+                var pediatras = await _context.TbMedico.CountAsync(m =>
                     m.Especialidad.Contains("Pediatría", StringComparison.OrdinalIgnoreCase) ||
                     m.Especialidad.Contains("Pediatra", StringComparison.OrdinalIgnoreCase));
 
@@ -625,21 +624,23 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 decimal variacionPorcentual = 0;
                 if (registrosMesAnterior > 0)
                 {
-                    variacionPorcentual = Math.Round(((registrosEsteMes - (decimal)registrosMesAnterior) / registrosMesAnterior) * 100, 2);
+                    variacionPorcentual =
+                        Math.Round(((registrosEsteMes - (decimal)registrosMesAnterior) / registrosMesAnterior) * 100,
+                            2);
                 }
 
                 // Obtener total de pacientes atendidos
                 var totalPacientesAtendidos = await _context.TbMedicoPaciente.CountAsync();
-                var promedioPacientesPorMedico = totalMedicos > 0 ? 
-                    Math.Round((decimal)totalPacientesAtendidos / totalMedicos, 2) : 0;
+                var promedioPacientesPorMedico =
+                    totalMedicos > 0 ? Math.Round((decimal)totalPacientesAtendidos / totalMedicos, 2) : 0;
 
                 // Obtener médico con más pacientes
                 var topMedico = await _context.TbMedicoPaciente
                     .GroupBy(mp => mp.MedicoId)
-                    .Select(g => new 
-                    { 
-                        MedicoId = g.Key, 
-                        Cantidad = g.Count() 
+                    .Select(g => new
+                    {
+                        MedicoId = g.Key,
+                        Cantidad = g.Count()
                     })
                     .OrderByDescending(x => x.Cantidad)
                     .FirstOrDefaultAsync();
@@ -662,7 +663,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     MedicosActivos = medicosActivos,
                     MedicosInactivos = medicosInactivos,
                     MedicosEspecialistasCannabis = medicosEspecialistasCannabis,
-                    
+
                     // Distribución por especialidad
                     Neurologos = neurologos,
                     Oncologos = oncologos,
@@ -670,7 +671,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     MedDolor = medDolor,
                     Pediatras = pediatras,
                     Otros = totalMedicos - (neurologos + oncologos + psiquiatras + medDolor + pediatras),
-                    
+
                     // Distribución por provincia (ejemplo, completar según IDs reales)
                     Panama = panama,
                     Colon = colon,
@@ -684,12 +685,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     GunaYala = 0,
                     NgabeBugle = 0,
                     EmberaWounaan = 0,
-                    
+
                     // Tendencias
                     RegistrosEsteMes = registrosEsteMes,
                     RegistrosMesAnterior = registrosMesAnterior,
                     VariacionPorcentual = variacionPorcentual,
-                    
+
                     // Performance
                     TotalPacientesAtendidos = totalPacientesAtendidos,
                     PromedioPacientesPorMedico = promedioPacientesPorMedico,
@@ -767,18 +768,17 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             string codigo;
             bool existe;
             int intentos = 0;
-            
+
             do
             {
                 // Formato: MED-YYYYMM-XXXXX donde X es numérico
                 var timestamp = DateTime.Now.ToString("yyyyMM");
                 var random = new Random().Next(10000, 99999);
                 codigo = $"MED-{timestamp}-{random}";
-                
+
                 existe = await _context.TbMedico.AnyAsync(m => m.CodigoMedico == codigo);
                 intentos++;
-            }
-            while (existe && intentos < 10);
+            } while (existe && intentos < 10);
 
             if (existe)
                 throw new InvalidOperationException("No se pudo generar un código único de médico");
@@ -881,7 +881,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Error registrando en historial: {TipoEvento} - {Descripcion}", tipoEvento, descripcion);
+                _logger.LogWarning(ex, "Error registrando en historial: {TipoEvento} - {Descripcion}", tipoEvento,
+                    descripcion);
             }
         }
 
@@ -935,7 +936,8 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
         }
 
-        private async Task EnviarNotificacionMedicoVerificado(TbMedico medico, string usuarioVerificador, string observaciones)
+        private async Task EnviarNotificacionMedicoVerificado(TbMedico medico, string usuarioVerificador,
+            string observaciones)
         {
             try
             {

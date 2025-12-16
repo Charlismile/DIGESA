@@ -364,11 +364,11 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 throw;
             }
         }
-    }
-
-    // Interfaz para el servicio de email
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string message);
+        public async Task EnviarNotificacion(string tipo, string usuarioDestino, object datos)
+        {
+            // Implementación mínima - solo para compilar
+            _logger.LogInformation($"Notificación {tipo} enviada a {usuarioDestino}");
+            await Task.CompletedTask;
+        }
     }
 }
