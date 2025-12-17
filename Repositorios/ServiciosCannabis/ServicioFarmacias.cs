@@ -33,10 +33,10 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             {
                 // Validar que no exista farmacia con mismo RUC
                 var existeRUC = await _context.TbFarmaciaAutorizada
-                    .AnyAsync(f => f.Ruc == farmacia.Ruc);
+                    .AnyAsync(f => f.Ruc == farmacia.RUC);
                 
                 if (existeRUC)
-                    throw new InvalidOperationException($"Ya existe una farmacia registrada con RUC: {farmacia.Ruc}");
+                    throw new InvalidOperationException($"Ya existe una farmacia registrada con RUC: {farmacia.RUC}");
 
                 // Generar código único de farmacia
                 var codigoFarmacia = await GenerarCodigoFarmaciaUnico();
@@ -45,15 +45,15 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 {
                     CodigoFarmacia = codigoFarmacia,
                     NombreFarmacia = farmacia.NombreFarmacia,
-                    Ruc = farmacia.Ruc,
+                    Ruc = farmacia.RUC,
                     Direccion = farmacia.Direccion,
                     ProvinciaId = farmacia.ProvinciaId,
                     DistritoId = farmacia.DistritoId,
                     Telefono = farmacia.Telefono,
                     Email = farmacia.Email?.ToLower(),
                     Responsable = farmacia.Responsable,
-                    FechaAutorizacion = farmacia.FechaAutorizacion ?? DateTime.Now,
-                    FechaVencimientoAutorizacion = farmacia.FechaVencimientoAutorizacion ?? DateTime.Now.AddYears(1),
+                    FechaAutorizacion = farmacia.FechaAutorizacion,
+                    FechaVencimientoAutorizacion = farmacia.FechaVencimientoAutorizacion,
                     Activo = true,
                     UsuarioRegistro = usuarioId,
                     FechaRegistro = DateTime.Now
@@ -63,7 +63,10 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial
-                await _historial.RegistrarEvento("FARMACIA_CREADA", $"Farmacia creada: {entidad.NombreFarmacia}", usuarioId, entidad.Id.ToString());
+                await _historial.RegistrarEvento("FARMACIA_CREADA", 
+                    string.Format("Farmacia creada: {0}", entidad.NombreFarmacia), 
+                    usuarioId, 
+                    entidad.Id.ToString());
 
                 // Notificar a los administradores
                 await _notificaciones.EnviarNotificacion("NUEVA_FARMACIA_REGISTRADA", usuarioId, new
@@ -97,7 +100,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             {
                 var entidad = await _context.TbFarmaciaAutorizada.FindAsync(farmaciaId);
                 if (entidad == null)
-                    throw new KeyNotFoundException($"Farmacia con ID {farmaciaId} no encontrada");
+                    throw new KeyNotFoundException(string.Format("Farmacia con ID {0} no encontrada", farmaciaId));
 
                 // Actualizar campos permitidos
                 entidad.NombreFarmacia = farmacia.NombreFarmacia;
@@ -107,20 +110,23 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 entidad.Telefono = farmacia.Telefono;
                 entidad.Email = farmacia.Email?.ToLower();
                 entidad.Responsable = farmacia.Responsable;
-                entidad.FechaAutorizacion = farmacia.FechaAutorizacion ?? entidad.FechaAutorizacion;
-                entidad.FechaVencimientoAutorizacion = farmacia.FechaVencimientoAutorizacion ?? entidad.FechaVencimientoAutorizacion;
+                entidad.FechaAutorizacion = farmacia.FechaAutorizacion;
+                entidad.FechaVencimientoAutorizacion = farmacia.FechaVencimientoAutorizacion;
                 entidad.Activo = farmacia.Activo;
 
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial
-                await _historial.RegistrarEvento("FARMACIA_ACTUALIZADA", $"Farmacia actualizada: {entidad.NombreFarmacia}", usuarioId, entidad.Id.ToString());
+                await _historial.RegistrarEvento("FARMACIA_ACTUALIZADA", 
+                    string.Format("Farmacia actualizada: {0}", entidad.NombreFarmacia), 
+                    usuarioId, 
+                    entidad.Id.ToString());
 
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error actualizando farmacia {FarmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error actualizando farmacia {0}", farmaciaId);
                 await _historial.RegistrarError("ServicioFarmacias.ActualizarFarmacia", ex.Message, usuarioId);
                 throw;
             }
@@ -132,14 +138,17 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             {
                 var entidad = await _context.TbFarmaciaAutorizada.FindAsync(farmaciaId);
                 if (entidad == null)
-                    throw new KeyNotFoundException($"Farmacia con ID {farmaciaId} no encontrada");
+                    throw new KeyNotFoundException(string.Format("Farmacia con ID {0} no encontrada", farmaciaId));
 
                 entidad.Activo = false;
 
                 await _context.SaveChangesAsync();
 
                 // Registrar en historial
-                await _historial.RegistrarEvento("FARMACIA_INACTIVADA", $"Farmacia inactivada. Motivo: {motivo}", usuarioId, entidad.Id.ToString());
+                await _historial.RegistrarEvento("FARMACIA_INACTIVADA", 
+                    string.Format("Farmacia inactivada. Motivo: {0}", motivo), 
+                    usuarioId, 
+                    entidad.Id.ToString());
 
                 // Notificar a la farmacia
                 if (!string.IsNullOrEmpty(entidad.Email))
@@ -157,7 +166,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error inactivando farmacia {FarmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error inactivando farmacia {0}", farmaciaId);
                 await _historial.RegistrarError("ServicioFarmacias.InactivarFarmacia", ex.Message, usuarioId);
                 throw;
             }
@@ -177,22 +186,24 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     throw new UnauthorizedAccessException("Farmacia no autorizada o autorización vencida");
 
                 // Validar el código QR
-                var resultadoValidacion = await _servicioQR.EscanearCodigoQR(codigoQR, $"FARMACIA_{farmacia.CodigoFarmacia}");
+                var resultadoValidacion = await _servicioQR.EscanearCodigoQR(codigoQR, string.Format("FARMACIA_{0}", farmacia.CodigoFarmacia));
 
                 if (!resultadoValidacion.EsValido)
                     return false;
 
                 // Registrar el escaneo en el historial
                 await _historial.RegistrarEvento("VALIDACION_FARMACIA", 
-                    $"Carnet validado en farmacia {farmacia.NombreFarmacia}. Resultado: {(resultadoValidacion.EsValido ? "VÁLIDO" : "INVÁLIDO")}", 
-                    $"FARMACIA_{farmacia.CodigoFarmacia}", 
+                    string.Format("Carnet validado en farmacia {0}. Resultado: {1}", 
+                        farmacia.NombreFarmacia, 
+                        resultadoValidacion.EsValido ? "VÁLIDO" : "INVÁLIDO"), 
+                    string.Format("FARMACIA_{0}", farmacia.CodigoFarmacia), 
                     resultadoValidacion.Id.ToString());
 
                 return resultadoValidacion.EsValido;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error validando carnet en farmacia {FarmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error validando carnet en farmacia {0}", farmaciaId);
                 return false;
             }
         }
@@ -209,16 +220,16 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     throw new UnauthorizedAccessException("Farmacia no autorizada para dispensar");
 
                 // Validar el código QR
-                var resultadoQR = await _servicioQR.EscanearCodigoQR(codigoQR, $"FARMACIA_{farmacia.CodigoFarmacia}");
+                var resultadoQR = await _servicioQR.EscanearCodigoQR(codigoQR, string.Format("FARMACIA_{0}", farmacia.CodigoFarmacia));
                 
                 if (!resultadoQR.EsValido)
-                    throw new InvalidOperationException($"Código QR no válido: {resultadoQR.Mensaje}");
+                    throw new InvalidOperationException(string.Format("Código QR no válido: {0}", resultadoQR.Mensaje));
 
                 // Obtener la solicitud desde el código QR
-                var codigoQREntidad = await _context.TbCodigoQR
+                var codigoQREntidad = await _context.TbCodigoQr
                     .Include(q => q.Solicitud)
                     .ThenInclude(s => s.Paciente)
-                    .FirstOrDefaultAsync(q => q.CodigoQR == codigoQR);
+                    .FirstOrDefaultAsync(q => q.CodigoQr == codigoQR);
 
                 if (codigoQREntidad == null)
                     throw new KeyNotFoundException("Código QR no encontrado");
@@ -252,7 +263,10 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                 // Registrar en historial
                 await _historial.RegistrarEvento("DISPENSACION_REGISTRADA", 
-                    $"Dispensación registrada para paciente {paciente.PrimerNombre} {paciente.PrimerApellido} en farmacia {farmacia.NombreFarmacia}", 
+                    string.Format("Dispensación registrada para paciente {0} {1} en farmacia {2}", 
+                        paciente.PrimerNombre, 
+                        paciente.PrimerApellido, 
+                        farmacia.NombreFarmacia), 
                     usuarioId, 
                     entidad.Id.ToString());
 
@@ -261,7 +275,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 {
                     await _notificaciones.EnviarNotificacion("DISPENSACION_REGISTRADA", usuarioId, new
                     {
-                        NombrePaciente = $"{paciente.PrimerNombre} {paciente.PrimerApellido}",
+                        NombrePaciente = string.Format("{0} {1}", paciente.PrimerNombre, paciente.PrimerApellido),
                         NombreFarmacia = farmacia.NombreFarmacia,
                         Producto = dispensacion.Producto,
                         Cantidad = dispensacion.Cantidad,
@@ -272,7 +286,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 }
 
                 // Mapear a ViewModel
-                return new RegistroDispensacionViewModel
+                var resultado = new RegistroDispensacionViewModel
                 {
                     Id = entidad.Id,
                     SolicitudId = entidad.SolicitudId,
@@ -287,18 +301,34 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     NumeroFactura = entidad.NumeroFactura,
                     Comentarios = entidad.Comentarios,
                     FechaRegistro = entidad.FechaRegistro,
-                    UsuarioRegistro = entidad.UsuarioRegistro,
-
-                    // Información adicional
-                    PacienteNombre = $"{paciente.PrimerNombre} {paciente.PrimerApellido}",
-                    PacienteCedula = paciente.DocumentoCedula,
-                    FarmaciaNombre = farmacia.NombreFarmacia,
-                    CodigoQR = codigoQR
+                    UsuarioRegistro = entidad.UsuarioRegistro
                 };
+
+                // Agregar propiedades de navegación
+                resultado.Solicitud = new SolicitudCannabisViewModel
+                {
+                    Paciente = new PacienteViewModel
+                    {
+                        PrimerNombre = paciente.PrimerNombre,
+                        SegundoNombre = paciente.SegundoNombre,
+                        PrimerApellido = paciente.PrimerApellido,
+                        SegundoApellido = paciente.SegundoApellido,
+                        DocumentoCedula = paciente.DocumentoCedula,
+                        CorreoElectronico = paciente.CorreoElectronico
+                    }
+                };
+
+                resultado.Farmacia = new FarmaciaAutorizadaViewModel
+                {
+                    NombreFarmacia = farmacia.NombreFarmacia,
+                    CodigoFarmacia = farmacia.CodigoFarmacia
+                };
+
+                return resultado;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error registrando dispensación en farmacia {FarmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error registrando dispensación en farmacia {0}", farmaciaId);
                 await _historial.RegistrarError("ServicioFarmacias.RegistrarDispensacion", ex.Message, usuarioId);
                 throw;
             }
@@ -319,7 +349,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error obteniendo farmacias por provincia {ProvinciaId}", provinciaId);
+                _logger.LogError(ex, "Error obteniendo farmacias por provincia {0}", provinciaId);
                 throw;
             }
         }
@@ -360,7 +390,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error obteniendo farmacia por código {CodigoFarmacia}", codigoFarmacia);
+                _logger.LogError(ex, "Error obteniendo farmacia por código {0}", codigoFarmacia);
                 throw;
             }
         }
@@ -375,7 +405,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                 var farmacia = await _context.TbFarmaciaAutorizada.FindAsync(farmaciaId);
                 if (farmacia == null)
-                    throw new KeyNotFoundException($"Farmacia con ID {farmaciaId} no encontrada");
+                    throw new KeyNotFoundException(string.Format("Farmacia con ID {0} no encontrada", farmaciaId));
 
                 // Obtener dispensaciones en el período
                 var dispensaciones = await _context.TbRegistroDispensacion
@@ -398,77 +428,45 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     .OrderByDescending(p => p.CantidadTotal)
                     .ToList();
 
-                // Dispensaciones por día
-                var dispensacionesPorDia = dispensaciones
-                    .GroupBy(d => d.FechaDispensacion.Date)
-                    .Select(g => new DispensacionDiariaViewModel
+                // Detalle de dispensaciones
+                var detalles = dispensaciones
+                    .Select(d => new RegistroDispensacionViewModel
                     {
-                        Fecha = g.Key,
-                        CantidadDispensaciones = g.Count(),
-                        CantidadTotal = (decimal)g.Sum(d => d.Cantidad),
-                        PacientesUnicos = g.Select(d => d.Solicitud?.PacienteId).Distinct().Count()
+                        Id = d.Id,
+                        FechaDispensacion = d.FechaDispensacion,
+                        Producto = d.Producto,
+                        Cantidad = d.Cantidad,
+                        UnidadMedida = d.UnidadMedida,
+                        LoteProducto = d.LoteProducto,
+                        FechaVencimientoProducto = d.FechaVencimientoProducto,
+                        FarmaceuticoResponsable = d.FarmaceuticoResponsable,
+                        NumeroFactura = d.NumeroFactura,
+                        Comentarios = d.Comentarios
                     })
-                    .OrderBy(d => d.Fecha)
-                    .ToList();
-
-                // Top pacientes
-                var topPacientes = dispensaciones
-                    .Where(d => d.Solicitud?.Paciente != null)
-                    .GroupBy(d => d.Solicitud.Paciente)
-                    .Select(g => new TopPacienteViewModel
-                    {
-                        PacienteId = g.Key.Id,
-                        PacienteNombre = $"{g.Key.PrimerNombre} {g.Key.PrimerApellido}",
-                        PacienteCedula = g.Key.DocumentoCedula,
-                        CantidadDispensaciones = g.Count(),
-                        CantidadTotal = (decimal)g.Sum(d => d.Cantidad)
-                    })
-                    .OrderByDescending(p => p.CantidadDispensaciones)
-                    .Take(10)
+                    .OrderByDescending(d => d.FechaDispensacion)
                     .ToList();
 
                 var reporte = new ReporteDispensacionViewModel
                 {
                     FarmaciaId = farmaciaId,
-                    FarmaciaNombre = farmacia.NombreFarmacia,
+                    NombreFarmacia = farmacia.NombreFarmacia,
                     FechaInicio = fechaInicio,
                     FechaFin = fechaFin,
                     FechaGeneracion = DateTime.Now,
 
                     TotalDispensaciones = dispensaciones.Count,
                     TotalPacientesAtendidos = dispensaciones.Select(d => d.Solicitud?.PacienteId).Distinct().Count(),
-                    TotalCantidadVendida = (decimal)dispensaciones.Sum(d => d.Cantidad),
+                    CantidadTotalProducto = (decimal)dispensaciones.Sum(d => d.Cantidad),
 
                     Productos = productos,
-                    DispensacionesPorDia = dispensacionesPorDia,
-                    TopPacientes = topPacientes,
-
-                    DetalleDispensaciones = dispensaciones
-                        .Select(d => new DetalleDispensacionViewModel
-                        {
-                            Id = d.Id,
-                            FechaDispensacion = d.FechaDispensacion,
-                            PacienteNombre = d.Solicitud?.Paciente != null ? 
-                                $"{d.Solicitud.Paciente.PrimerNombre} {d.Solicitud.Paciente.PrimerApellido}" : null,
-                            PacienteCedula = d.Solicitud?.Paciente?.DocumentoCedula,
-                            Producto = d.Producto,
-                            Cantidad = d.Cantidad,
-                            UnidadMedida = d.UnidadMedida,
-                            LoteProducto = d.LoteProducto,
-                            FechaVencimientoProducto = d.FechaVencimientoProducto,
-                            FarmaceuticoResponsable = d.FarmaceuticoResponsable,
-                            NumeroFactura = d.NumeroFactura,
-                            Comentarios = d.Comentarios
-                        })
-                        .OrderByDescending(d => d.FechaDispensacion)
-                        .ToList()
+                    Detalles = detalles
                 };
 
                 return reporte;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error generando reporte de dispensación para farmacia {FarmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error generando reporte de dispensación para farmacia {0}", farmaciaId);
                 throw;
             }
         }
@@ -483,10 +481,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             
             do
             {
-                // Formato: FARM-YYYY-XXXX donde X es numérico
                 var ano = DateTime.Now.Year;
                 var random = new Random().Next(1000, 9999);
-                codigo = $"FARM-{ano}-{random}";
+                codigo = string.Format("FARM-{0}-{1}", ano, random);
                 
                 existe = await _context.TbFarmaciaAutorizada.AnyAsync(f => f.CodigoFarmacia == codigo);
                 intentos++;
@@ -501,15 +498,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
         private FarmaciaAutorizadaViewModel MapToViewModel(TbFarmaciaAutorizada entidad)
         {
-            var diasVencimiento = entidad.FechaVencimientoAutorizacion.HasValue ? 
-                (entidad.FechaVencimientoAutorizacion.Value - DateTime.Now).Days : 0;
-
-            return new FarmaciaAutorizadaViewModel
+            var viewModel = new FarmaciaAutorizadaViewModel
             {
                 Id = entidad.Id,
                 CodigoFarmacia = entidad.CodigoFarmacia,
                 NombreFarmacia = entidad.NombreFarmacia,
-                Ruc = entidad.Ruc,
+                RUC = entidad.Ruc,
                 Direccion = entidad.Direccion,
                 ProvinciaId = entidad.ProvinciaId,
                 DistritoId = entidad.DistritoId,
@@ -520,17 +514,29 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 FechaVencimientoAutorizacion = entidad.FechaVencimientoAutorizacion,
                 Activo = entidad.Activo,
                 UsuarioRegistro = entidad.UsuarioRegistro,
-                FechaRegistro = entidad.FechaRegistro,
-
-                // Propiedades calculadas
-                DiasVencimientoAutorizacion = diasVencimiento,
-                AutorizacionVencida = diasVencimiento < 0,
-                AutorizacionPorVencer = diasVencimiento >= 0 && diasVencimiento <= 30,
-
-                // Propiedades de navegación
-                ProvinciaNombre = entidad.Provincia?.NombreProvincia,
-                DistritoNombre = entidad.Distrito?.NombreDistrito
+                FechaRegistro = entidad.FechaRegistro
             };
+
+            // Agregar propiedades de navegación
+            if (entidad.Provincia != null)
+            {
+                viewModel.Provincia = new ProvinciaViewModel 
+                { 
+                    Id = entidad.Provincia.Id, 
+                    NombreProvincia = entidad.Provincia.NombreProvincia 
+                };
+            }
+
+            if (entidad.Distrito != null)
+            {
+                viewModel.Distrito = new DistritoViewModel 
+                { 
+                    Id = entidad.Distrito.Id, 
+                    NombreDistrito = entidad.Distrito.NombreDistrito 
+                };
+            }
+
+            return viewModel;
         }
 
         #endregion

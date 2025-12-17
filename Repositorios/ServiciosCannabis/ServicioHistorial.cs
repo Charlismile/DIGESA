@@ -445,7 +445,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 Id = entity.Id,
                 FechaSolicitud = entity.FechaSolicitud ?? DateTime.Now,
                 PacienteId = entity.PacienteId,
-                FechaRevision = entity.FechaRevision,
+                FechaRevision = entity.FechaRevision.HasValue ? 
+                    entity.FechaRevision.Value.ToDateTime(TimeOnly.MinValue) : 
+                    (DateTime?)null,
                 UsuarioRevisor = entity.UsuarioRevisor,
                 ComentarioRevision = entity.ComentarioRevision,
                 NumSolCompleta = entity.NumSolCompleta,

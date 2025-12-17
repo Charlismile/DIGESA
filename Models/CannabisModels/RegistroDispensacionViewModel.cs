@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DIGESA.Models.CannabisModels;
 
@@ -30,7 +32,8 @@ public class RegistroDispensacionViewModel
     [StringLength(100)]
     public string LoteProducto { get; set; }
     
-    public DateTime? FechaVencimientoProducto { get; set; }
+    // CAMBIAR A DateOnly?
+    public DateOnly? FechaVencimientoProducto { get; set; }
     
     [StringLength(200)]
     public string FarmaceuticoResponsable { get; set; }
@@ -55,10 +58,10 @@ public class RegistroDispensacionViewModel
     public string NombreFarmacia => Farmacia?.NombreFarmacia;
     public string ProductoCantidad => $"{Cantidad} {UnidadMedida} de {Producto}";
     
-    // Validaciones
+    // Validaciones - ACTUALIZAR para usar DateOnly
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        if (FechaVencimientoProducto.HasValue && FechaVencimientoProducto.Value < DateTime.Now)
+        if (FechaVencimientoProducto.HasValue && FechaVencimientoProducto.Value < DateOnly.FromDateTime(DateTime.Now))
         {
             yield return new ValidationResult(
                 "El producto está vencido",
