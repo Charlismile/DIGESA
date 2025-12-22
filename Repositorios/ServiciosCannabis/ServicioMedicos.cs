@@ -1,4 +1,7 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Catalogos;
+using DIGESA.Models.CannabisModels.Medicos;
+using DIGESA.Models.CannabisModels.Reportes;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;
@@ -828,7 +831,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 viewModel.Provincia = new ProvinciaViewModel
                 {
                     Id = entidad.Provincia.Id,
-                    NombreProvincia = entidad.Provincia.NombreProvincia
+                    Nombre = entidad.Provincia.NombreProvincia
                 };
             }
 
@@ -837,7 +840,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 viewModel.Distrito = new DistritoViewModel
                 {
                     Id = entidad.Distrito.Id,
-                    NombreDistrito = entidad.Distrito.NombreDistrito
+                    Nombre = entidad.Distrito.NombreDistrito
                 };
             }
 

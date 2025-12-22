@@ -31,14 +31,14 @@ public partial class Solicitud : ComponentBase
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
     private ValidationMessageStore? messageStore;
 
-    private RegistroCannabisUnionModel registro { get; set; } = new();
-    private List<ItemListModel> pacienteRegioneslist { get; set; } = new();
-    private List<ItemListModel> pacienteProvincicaslist { get; set; } = new();
-    private List<ItemListModel> pacienteDistritolist { get; set; } = new();
-    private List<ItemListModel> pacienteCorregimientolist { get; set; } = new();
+    private SolicitudCannabisViewModel registro { get; set; } = new();
+    private List<ListSustModel> pacienteRegioneslist { get; set; } = new();
+    private List<ListSustModel> pacienteProvincicaslist { get; set; } = new();
+    private List<ListSustModel> pacienteDistritolist { get; set; } = new();
+    private List<ListSustModel> pacienteCorregimientolist { get; set; } = new();
     private List<ListaDiagnostico> pacienteDiagnosticolist { get; set; } = new();
     private List<TbFormaFarmaceutica> productoFormaList { get; set; } = new();
-    private List<ItemListModel> productoUnidadList { get; set; } = new();
+    private List<ListSustModel> productoUnidadList { get; set; } = new();
     private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
 
     private EditContext editContext = default!;
@@ -51,21 +51,21 @@ public partial class Solicitud : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        registro = new RegistroCannabisUnionModel
+        registro = new SolicitudCompletaViewModel()
         {
-            Paciente = new PacienteModel(),
-            Acompanante = new AcompananteModel(),
-            Medico = new MedicoModel(),
-            Producto = new ProductoModel(),
-            Diagnostico = new DiagnosticoModel(),
-            Comorbilidad = new PacienteComorbilidadModel()
+            Paciente = new PacienteViewModel(),
+            Acompanante = new AcompanantePacienteViewModel(),
+            Medico = new MedicoPacienteViewModel(),
+            Productos = new List<ProductoPacienteViewModel>(),
+            Diagnosticos = new List<PacienteDiagnosticoViewModel>(),
+            // Comorbilidad = new ()
         };
 
         editContext = new EditContext(registro);
         messageStore = new ValidationMessageStore(editContext);
 
         pacienteProvincicaslist = await _Commonservice.GetProvincias();
-        pacienteRegioneslist = await _Commonservice.GetRegiones();
+        pacienteRegioneslist = await _Commonservice.GetRegionesSalud();
 
         pacienteDiagnosticolist = await _Commonservice.GetAllDiagnosticsAsync();
         productoFormaList = await _Commonservice.GetAllFormasAsync();
@@ -97,36 +97,36 @@ public partial class Solicitud : ComponentBase
         }
     }
 
-    private async Task<AutoCompleteDataProviderResult<ItemListModel>> AutoCompleteDataProvider(
-        AutoCompleteDataProviderRequest<ItemListModel> request)
+    private async Task<AutoCompleteDataProviderResult<ListSustModel>> AutoCompleteDataProvider(
+        AutoCompleteDataProviderRequest<ListSustModel> request)
     {
         var filtro = (request.Filter?.Value?.ToString() ?? "").ToUpper();
-        var lista = await _Commonservice.GetInstalaciones(filtro);
+        var lista = await _Commonservice.GetInstalacionesSalud();
 
-        var filtradas = lista.Select(x => new ItemListModel
+        var filtradas = lista.Select(x => new ListSustModel
         {
             Id = x.Id,
             Name = x.Name.Trim()
         });
 
-        return new AutoCompleteDataProviderResult<ItemListModel>
+        return new AutoCompleteDataProviderResult<ListSustModel>
         {
             Data = filtradas,
             TotalCount = filtradas.Count()
         };
     }
 
-    private void OnAutoCompletePacienteChanged(ItemListModel? sel)
+    private void OnAutoCompletePacienteChanged(ListSustModel? sel)
     {
         if (sel != null)
         {
-            registro.Paciente.InstalacionSaludId = sel.Id;
+            registro.Paciente.InstalacionId = sel.Id;
             mostrarOtraInstalacionPaciente = false;
             instalacionPersonalizadaPaciente = null;
         }
     }
 
-    private void OnAutoCompleteMedicoChanged(ItemListModel? sel)
+    private void OnAutoCompleteMedicoChanged(ListSustModel? sel)
     {
         if (sel != null)
         {
@@ -168,7 +168,7 @@ public partial class Solicitud : ComponentBase
         mostrarOtraInstalacionPaciente = (bool)(e.Value ?? false);
         if (mostrarOtraInstalacionPaciente)
         {
-            registro.Paciente.InstalacionSaludId = null;
+            registro.Paciente.InstalacionId = null;
             instalacionFilterPaciente = string.Empty;
         }
         else

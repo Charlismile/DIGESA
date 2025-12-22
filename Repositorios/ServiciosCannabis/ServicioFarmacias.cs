@@ -1,4 +1,7 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Catalogos;
+using DIGESA.Models.CannabisModels.Farmacias;
+using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;
@@ -250,7 +253,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     Cantidad = dispensacion.Cantidad,
                     UnidadMedida = dispensacion.UnidadMedida,
                     LoteProducto = dispensacion.LoteProducto,
-                    FechaVencimientoProducto = dispensacion.FechaVencimientoProducto,
+                    FechaVencimientoProducto = dispensacion.FechaVencimientoProducto.HasValue
+                    ? DateOnly.FromDateTime(dispensacion.FechaVencimientoProducto.Value)
+                    : null,
                     FarmaceuticoResponsable = dispensacion.FarmaceuticoResponsable,
                     NumeroFactura = dispensacion.NumeroFactura,
                     Comentarios = dispensacion.Comentarios,
@@ -296,7 +301,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     Cantidad = entidad.Cantidad,
                     UnidadMedida = entidad.UnidadMedida,
                     LoteProducto = entidad.LoteProducto,
-                    FechaVencimientoProducto = entidad.FechaVencimientoProducto,
+                    FechaVencimientoProducto = entidad.FechaVencimientoProducto.HasValue
+                    ? entidad.FechaVencimientoProducto.Value.ToDateTime(TimeOnly.MinValue)
+                    : null,
                     FarmaceuticoResponsable = entidad.FarmaceuticoResponsable,
                     NumeroFactura = entidad.NumeroFactura,
                     Comentarios = entidad.Comentarios,
@@ -438,7 +445,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                         Cantidad = d.Cantidad,
                         UnidadMedida = d.UnidadMedida,
                         LoteProducto = d.LoteProducto,
-                        FechaVencimientoProducto = d.FechaVencimientoProducto,
+                        FechaVencimientoProducto = d.FechaVencimientoProducto.HasValue
+                        ? d.FechaVencimientoProducto.Value.ToDateTime(TimeOnly.MinValue)
+                        : null,
                         FarmaceuticoResponsable = d.FarmaceuticoResponsable,
                         NumeroFactura = d.NumeroFactura,
                         Comentarios = d.Comentarios
@@ -523,7 +532,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 viewModel.Provincia = new ProvinciaViewModel 
                 { 
                     Id = entidad.Provincia.Id, 
-                    NombreProvincia = entidad.Provincia.NombreProvincia 
+                    Nombre = entidad.Provincia.NombreProvincia 
                 };
             }
 
@@ -532,7 +541,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 viewModel.Distrito = new DistritoViewModel 
                 { 
                     Id = entidad.Distrito.Id, 
-                    NombreDistrito = entidad.Distrito.NombreDistrito 
+                    Nombre = entidad.Distrito.NombreDistrito 
                 };
             }
 

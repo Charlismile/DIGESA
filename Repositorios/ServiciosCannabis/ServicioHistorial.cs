@@ -1,4 +1,6 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Historial;
+using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;
@@ -255,8 +257,9 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     LineaTiempo = eventos,
                     TotalSolicitudes = solicitudes.Count,
                     TotalRenovaciones = renovaciones.Count,
-                    CarnetActual = solicitudes.FirstOrDefault(s => s.CarnetActivo == true)
+                    CarnetActual = solicitudesVm.FirstOrDefault(s => s.CarnetActivo)
                 };
+
             }
             catch (Exception ex)
             {
@@ -490,7 +493,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 FechaCambio = entity.FechaCambio.HasValue ? 
                     entity.FechaCambio.Value.ToDateTime(TimeOnly.MinValue) : 
                     (DateTime?)null,
-                EstadoSolicitudIdHistorial = entity.EstadoSolicitudIdHistorial,
+                EstadoSolicitudIdHistorial = entity.EstadoSolicitudIdHistorial ?? 0,
                 EstadoSolicitud = entity.EstadoSolicitudIdHistorialNavigation != null ? 
                     new EstadoSolicitudViewModel
                     {

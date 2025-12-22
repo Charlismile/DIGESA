@@ -1,4 +1,5 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.CodigoQr;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;

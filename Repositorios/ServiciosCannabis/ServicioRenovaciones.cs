@@ -1,4 +1,5 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;
@@ -628,8 +629,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 return Array.Empty<byte>();
             }
         }
-
-        // Métodos auxiliares privados
+        
         private async Task<ResultadoRenovacionViewModel> ValidarPuedeRenovar(TbSolRegCannabis solicitud)
         {
             if (!solicitud.CarnetActivo.HasValue || solicitud.CarnetActivo.Value == false)
@@ -642,25 +642,45 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             var fechaVencimiento = solicitud.FechaVencimientoCarnet.Value;
             var diasHastaVencimiento = (fechaVencimiento - DateTime.Now).Days;
 
-            // Puede renovar hasta X días antes del vencimiento
             if (diasHastaVencimiento > config.DiasAntesNotificar && diasHastaVencimiento > 0)
-                return ResultadoRenovacionViewModel.Error(
-                    $"Solo puede renovar {config.DiasAntesNotificar} días antes del vencimiento. Faltan {diasHastaVencimiento} días.");
+            {
+                string mensaje =
+                    "Solo puede renovar " +
+                    config.DiasAntesNotificar.ToString() +
+                    " días antes del vencimiento. Faltan " +
+                    diasHastaVencimiento.ToString() +
+                    " días.";
 
-            // Verificar período de gracia
+                return ResultadoRenovacionViewModel.Error(mensaje);
+            }
+
             var diasDesdeVencimiento = (DateTime.Now - fechaVencimiento).Days;
-            if (diasDesdeVencimiento > config.DiasGraciaRenovacion)
-                return ResultadoRenovacionViewModel.Error(
-                    $"Período de gracia excedido ({config.DiasGraciaRenovacion} días). El carnet venció hace {diasDesdeVencimiento} días.");
 
-            // Verificar máximo de renovaciones
+            if (diasDesdeVencimiento > config.DiasGraciaRenovacion)
+            {
+                string mensaje =
+                    "Período de gracia excedido (" +
+                    config.DiasGraciaRenovacion.ToString() +
+                    " días). El carnet venció hace " +
+                    diasDesdeVencimiento.ToString() +
+                    " días.";
+
+                return ResultadoRenovacionViewModel.Error(mensaje);
+            }
+
             if (solicitud.VersionCarnet >= config.MaximoRenovaciones)
-                return ResultadoRenovacionViewModel.Error(
-                    $"Límite de renovaciones alcanzado ({config.MaximoRenovaciones}). Contacte al administrador.");
+            {
+                string mensaje =
+                    "Límite de renovaciones alcanzado (" +
+                    config.MaximoRenovaciones.ToString() +
+                    "). Contacte al administrador.";
+
+                return ResultadoRenovacionViewModel.Error(mensaje);
+            }
 
             return ResultadoRenovacionViewModel.Exito(0, "Validación exitosa");
         }
-
+        
         private async Task<bool> VerificarDocumentosCompletos(int solicitudId)
         {
             var documentosRequeridos = await _context.TbTipoDocumentoAdjunto

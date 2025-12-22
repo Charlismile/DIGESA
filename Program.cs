@@ -85,9 +85,6 @@ builder.Services.AddScoped<ICommon, CommonServices>();
 // Configuración de email
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
-// Background service
-builder.Services.AddHostedService<TareasAutomaticasService>();
-
 // CORS
 builder.Services.AddCors(options =>
 {

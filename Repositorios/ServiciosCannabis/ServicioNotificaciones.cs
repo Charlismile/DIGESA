@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Mail;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Configuracion;
 using DIGESA.Repositorios.InterfacesCannabis;
 
 namespace DIGESA.Repositorios.ServiciosCannabis
