@@ -1,6 +1,7 @@
 ﻿using DIGESA.Data;
 using DIGESA.Models.ActiveDirectory;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Common;
 
 namespace DIGESA.Repositorios.Interfaces;
 

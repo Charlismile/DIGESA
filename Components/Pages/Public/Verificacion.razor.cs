@@ -1,5 +1,7 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Repositorios.Interfaces;
+using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -73,8 +75,8 @@ public partial class Verificacion : ComponentBase
     {
         return pacienteDetalle?.TipoDocumento switch
         {
-            TipoDocumento.Cedula => "Cédula",
-            TipoDocumento.Pasaporte => "Pasaporte",
+            EnumViewModel.TipoDocumento.Cedula => "Cédula",
+            EnumViewModel.TipoDocumento.Pasaporte => "Pasaporte",
             _ => "No especificado"
         };
     }
@@ -83,8 +85,8 @@ public partial class Verificacion : ComponentBase
     {
         return pacienteDetalle?.Sexo switch
         {
-            Sexo.Masculino => "Masculino",
-            Sexo.Femenino => "Femenino",
+            EnumViewModel.Sexo.Masculino => "Masculino",
+            EnumViewModel.Sexo.Femenino => "Femenino",
             _ => "No especificado"
         };
     }
@@ -93,8 +95,8 @@ public partial class Verificacion : ComponentBase
     {
         return pacienteDetalle?.MotivoRequerimientoAcompanante switch
         {
-            MotivoRequerimientoAcompanante.PacienteMenorEdad => "Paciente menor de edad",
-            MotivoRequerimientoAcompanante.PacienteDiscapacidad => "Paciente con discapacidad",
+            EnumViewModel.MotivoRequerimientoAcompanante.PacienteMenorEdad => "Paciente menor de edad",
+            EnumViewModel.MotivoRequerimientoAcompanante.PacienteDiscapacidad => "Paciente con discapacidad",
             _ => "No especificado"
         };
     }

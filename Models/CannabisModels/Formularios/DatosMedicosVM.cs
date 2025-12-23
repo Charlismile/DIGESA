@@ -1,17 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace DIGESA.Models.CannabisModels.Formularios;
 
-namespace DIGESA.Models.CannabisModels.Formularios;
-
-public class DatosMedicosVM
+public class DatosMedicosVM : PersonaBaseViewModel
 {
-    [Required]
-    public int MedicoId { get; set; }
+    public string Nacionalidad { get; set; } = string.Empty;
+    public DateTime? FechaNacimiento { get; set; }
+    public EnumViewModel.Sexo Sexo { get; set; }
 
-    [Required]
-    public int DiagnosticoId { get; set; }
+    public string? TelefonoPersonal { get; set; }
+    public string? TelefonoLaboral { get; set; }
+    public string? CorreoElectronico { get; set; }
+    public string? DireccionExacta { get; set; }
 
-    [StringLength(300)]
-    public string DetalleTratamiento { get; set; }
+    public int? ProvinciaId { get; set; }
+    public int? DistritoId { get; set; }
+    public int? CorregimientoId { get; set; }
+    public int? RegionSaludId { get; set; }
 
-    public DateTime FechaDiagnostico { get; set; } = DateTime.Now;
+    public int? InstalacionSaludId { get; set; }
+    public string? InstalacionSaludPersonalizada { get; set; }
+
+    public EnumViewModel.RequiereAcompanante RequiereAcompanante { get; set; }
+    public EnumViewModel.MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
+    public string? TipoDiscapacidad { get; set; }
 }

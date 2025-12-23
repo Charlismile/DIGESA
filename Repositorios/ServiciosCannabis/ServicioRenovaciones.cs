@@ -759,9 +759,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     SegundoNombre = solicitud.Paciente.SegundoNombre,
                     PrimerApellido = solicitud.Paciente.PrimerApellido,
                     SegundoApellido = solicitud.Paciente.SegundoApellido,
-                    TipoDocumento = solicitud.Paciente.TipoDocumento,
-                    DocumentoCedula = solicitud.Paciente.DocumentoCedula,
-                    DocumentoPasaporte = solicitud.Paciente.DocumentoPasaporte,
+                    TipoDocumento = solicitud.Paciente.TipoDocumento switch
+                    {
+                        "CEDULA" or "C" => EnumViewModel.TipoDocumento.Cedula,
+                        "PASAPORTE" or "P" => EnumViewModel.TipoDocumento.Pasaporte,
+                        _ => EnumViewModel.TipoDocumento.Cedula
+                    },
                     Nacionalidad = solicitud.Paciente.Nacionalidad,
                     // CORRECCIÓN: Manejo de DateOnly? a DateTime
                     FechaNacimiento = solicitud.Paciente.FechaNacimiento.HasValue 
@@ -769,7 +772,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                                      solicitud.Paciente.FechaNacimiento.Value.Month,
                                      solicitud.Paciente.FechaNacimiento.Value.Day)
                         : DateTime.MinValue,
-                    Sexo = solicitud.Paciente.Sexo,
+                    Sexo = solicitud.Paciente.Sexo switch
+                    {
+                        "M" or "Masculino" => EnumViewModel.Sexo.Masculino,
+                        "F" or "Femenino" => EnumViewModel.Sexo.Femenino,
+                        _ => EnumViewModel.Sexo.Masculino
+                    },
                     CorreoElectronico = solicitud.Paciente.CorreoElectronico
                 };
             }
@@ -780,7 +788,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 viewModel.EstadoSolicitud = new EstadoSolicitudViewModel
                 {
                     IdEstado = solicitud.EstadoSolicitud.IdEstado,
-                    NombreEstado = solicitud.EstadoSolicitud.NombreEstado
+                    Nombre = solicitud.EstadoSolicitud.NombreEstado
                 };
             }
 

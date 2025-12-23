@@ -4,7 +4,14 @@ public class SolicitudCannabisViewModel
 {
     public int Id { get; set; }
     public DateTime FechaSolicitud { get; set; }
+
+    // FK
     public int? PacienteId { get; set; }
+
+    // =========================
+    // PROPIEDADES DE NAVEGACIÓN
+    // =========================
+    public PacienteViewModel? Paciente { get; set; }
 
     public DateTime? FechaRevision { get; set; }
     public string? UsuarioRevisor { get; set; }

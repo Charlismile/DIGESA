@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Configuracion;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;

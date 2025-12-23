@@ -2,8 +2,6 @@
 
 public class DiagnosticoViewModel
 {
-    public int Id { get; set; }
-    public string Nombre { get; set; }
-    public string CodigoCIE10 { get; set; }
-    public bool Activo { get; set; }
+    public List<int> SelectedDiagnosticosIds { get; set; } = new();
+    public string? NombreOtroDiagnostico { get; set; }
 }

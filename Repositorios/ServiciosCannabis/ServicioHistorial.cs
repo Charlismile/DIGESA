@@ -498,7 +498,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     new EstadoSolicitudViewModel
                     {
                         IdEstado = entity.EstadoSolicitudIdHistorialNavigation.IdEstado,
-                        NombreEstado = entity.EstadoSolicitudIdHistorialNavigation.NombreEstado
+                        Nombre = entity.EstadoSolicitudIdHistorialNavigation.NombreEstado
                     } : null
             };
         }

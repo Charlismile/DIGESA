@@ -320,7 +320,12 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                         SegundoNombre = paciente.SegundoNombre,
                         PrimerApellido = paciente.PrimerApellido,
                         SegundoApellido = paciente.SegundoApellido,
-                        DocumentoCedula = paciente.DocumentoCedula,
+                        TipoDocumento = paciente.TipoDocumento switch
+                        {
+                            "CEDULA" => EnumViewModel.TipoDocumento.Cedula,
+                            "PASAPORTE" => EnumViewModel.TipoDocumento.Pasaporte,
+                            _ => EnumViewModel.TipoDocumento.Cedula
+                        },
                         CorreoElectronico = paciente.CorreoElectronico
                     }
                 };

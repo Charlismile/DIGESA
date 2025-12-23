@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using DIGESA.Data;
 using DIGESA.Models.ActiveDirectory;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Common;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

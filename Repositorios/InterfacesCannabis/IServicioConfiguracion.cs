@@ -1,4 +1,5 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Configuracion;
 
 namespace DIGESA.Repositorios.InterfacesCannabis;
 

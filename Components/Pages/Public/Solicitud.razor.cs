@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BlazorBootstrap;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Common;
+using DIGESA.Models.CannabisModels.Formularios;
+using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
@@ -31,7 +34,7 @@ public partial class Solicitud : ComponentBase
     [Required(ErrorMessage = "Debe especificar la unidad si seleccionó 'Otro'.")]
     private ValidationMessageStore? messageStore;
 
-    private SolicitudCannabisViewModel registro { get; set; } = new();
+    private SolicitudCannabisFormViewModel registro { get; set; } = new();
     private List<ListSustModel> pacienteRegioneslist { get; set; } = new();
     private List<ListSustModel> pacienteProvincicaslist { get; set; } = new();
     private List<ListSustModel> pacienteDistritolist { get; set; } = new();
@@ -51,15 +54,10 @@ public partial class Solicitud : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        registro = new SolicitudCompletaViewModel()
-        {
-            Paciente = new PacienteViewModel(),
-            Acompanante = new AcompanantePacienteViewModel(),
-            Medico = new MedicoPacienteViewModel(),
-            Productos = new List<ProductoPacienteViewModel>(),
-            Diagnosticos = new List<PacienteDiagnosticoViewModel>(),
-            // Comorbilidad = new ()
-        };
+        registro = new SolicitudCannabisFormViewModel();
+        editContext = new EditContext(registro);
+        messageStore = new ValidationMessageStore(editContext);
+
 
         editContext = new EditContext(registro);
         messageStore = new ValidationMessageStore(editContext);
@@ -120,7 +118,7 @@ public partial class Solicitud : ComponentBase
     {
         if (sel != null)
         {
-            registro.Paciente.InstalacionId = sel.Id;
+            registro.Paciente.InstalacionSaludId = sel.Id;
             mostrarOtraInstalacionPaciente = false;
             instalacionPersonalizadaPaciente = null;
         }
@@ -168,7 +166,7 @@ public partial class Solicitud : ComponentBase
         mostrarOtraInstalacionPaciente = (bool)(e.Value ?? false);
         if (mostrarOtraInstalacionPaciente)
         {
-            registro.Paciente.InstalacionId = null;
+            registro.Paciente.InstalacionSaludId = null;
             instalacionFilterPaciente = string.Empty;
         }
         else
@@ -216,7 +214,7 @@ public partial class Solicitud : ComponentBase
 
     private void OnRequiereAcompananteChanged()
     {
-        if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.No && currentStepNumber == 2)
+        if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.No && currentStepNumber == 2)
         {
             currentStepNumber = 3;
         }
@@ -228,7 +226,7 @@ public partial class Solicitud : ComponentBase
         {
             currentStepNumber--;
 
-            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.No)
             {
                 currentStepNumber = 1;
             }
@@ -272,7 +270,7 @@ public partial class Solicitud : ComponentBase
         {
             currentStepNumber++;
 
-            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == RequiereAcompanante.No)
+            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.No)
             {
                 currentStepNumber = 3;
             }
@@ -387,7 +385,7 @@ public partial class Solicitud : ComponentBase
 
     private bool ValidateStep2()
     {
-        if (registro.Paciente.RequiereAcompanante != RequiereAcompanante.Si || registro.Acompanante == null)
+        if (registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si || registro.Acompanante == null)
             return true;
 
         messageStore?.Clear();
@@ -675,8 +673,8 @@ public partial class Solicitud : ComponentBase
                     PrimerApellido = registro.Paciente.PrimerApellido ?? string.Empty,
                     SegundoApellido = registro.Paciente.SegundoApellido,
                     TipoDocumento = registro.Paciente.TipoDocumento.ToString(),
-                    DocumentoCedula = registro.Paciente.TipoDocumento == TipoDocumento.Cedula ? registro.Paciente.NumeroDocumento : null,
-                    DocumentoPasaporte = registro.Paciente.TipoDocumento == TipoDocumento.Pasaporte ? registro.Paciente.NumeroDocumento : null,
+                    DocumentoCedula = registro.Paciente.TipoDocumento == EnumViewModel.TipoDocumento.Cedula ? registro.Paciente.NumeroDocumento : null,
+                    DocumentoPasaporte = registro.Paciente.TipoDocumento == EnumViewModel.TipoDocumento.Pasaporte ? registro.Paciente.NumeroDocumento : null,
                     Nacionalidad = registro.Paciente.Nacionalidad ?? string.Empty,
                     FechaNacimiento = registro.Paciente.FechaNacimiento.HasValue
                         ? DateOnly.FromDateTime(registro.Paciente.FechaNacimiento.Value)
@@ -691,7 +689,7 @@ public partial class Solicitud : ComponentBase
                     RegionId = registro.Paciente.RegionSaludId,
                     InstalacionId = registro.Paciente.InstalacionSaludId,
                     DireccionExacta = registro.Paciente.DireccionExacta ?? string.Empty,
-                    RequiereAcompanante = registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si,
+                    RequiereAcompanante = registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si,
                     MotivoRequerimientoAcompanante = registro.Paciente.MotivoRequerimientoAcompanante?.ToString(),
                     TipoDiscapacidad = registro.Paciente.TipoDiscapacidad
                 };
@@ -700,7 +698,7 @@ public partial class Solicitud : ComponentBase
                 await _context.SaveChangesAsync();
 
                 // 2. Guardar Acompañante si es necesario
-                if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si && registro.Acompanante != null)
+                if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si && registro.Acompanante != null)
                 {
                     var acompanante = new TbAcompanantePaciente
                     {
@@ -727,7 +725,7 @@ public partial class Solicitud : ComponentBase
                     PrimerApellido = registro.Medico.PrimerApellido ?? string.Empty,
                     MedicoDisciplina = registro.Medico.MedicoDisciplina.ToString(),
                     MedicoIdoneidad = registro.Medico.MedicoIdoneidad ?? string.Empty,
-                    MedicoTelefono = registro.Medico.TelefonoMovil ?? string.Empty,
+                    MedicoTelefono = registro.Medico.TelefonoPersonal ?? string.Empty,
                     InstalacionId = registro.Medico.InstalacionSaludId,
                     RegionId = registro.Medico.RegionSaludId,
                     DetalleMedico = registro.Medico.DetalleEspecialidad ?? "Sin detalle",
@@ -765,7 +763,7 @@ public partial class Solicitud : ComponentBase
                 await _context.SaveChangesAsync();
 
                 // 5. Guardar Comorbilidades si existen
-                if (registro.Comorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si && 
+                if (registro.Comorbilidad.TieneComorbilidadEnum == EnumViewModel.TieneComorbilidad.Si && 
                     !string.IsNullOrWhiteSpace(registro.Comorbilidad.NombreDiagnostico))
                 {
                     var comorbilidad = new TbPacienteComorbilidad
@@ -798,7 +796,7 @@ public partial class Solicitud : ComponentBase
                     NombreComercialProd = registro.Producto.NombreComercialProd,
                     FormaFarmaceutica = formaFarmaceutica,
                     CantidadConcentracion = registro.Producto.CantidadConcentracion,
-                    NombreConcentracion = registro.Producto.ConcentracionEnum == ConcentracionE.OTRO ?
+                    NombreConcentracion = registro.Producto.ConcentracionEnum == EnumViewModel.ConcentracionE.OTRO ?
                         registro.Producto.NombreConcentracion :
                         registro.Producto.ConcentracionEnum.ToString(),
                     ViaConsumoProducto = viaAdministracion,
@@ -807,8 +805,8 @@ public partial class Solicitud : ComponentBase
                     DetDosisPaciente = registro.Producto.DetDosisPaciente,
                     DosisFrecuencia = registro.Producto.DosisFrecuencia,
                     DosisDuracion = registro.Producto.DosisDuracion,
-                    UsaDosisRescate = registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si,
-                    DetDosisRescate = registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si ?
+                    UsaDosisRescate = registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si,
+                    DetDosisRescate = registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si ?
                         registro.Producto.DetDosisRescate : null
                 };
 
@@ -902,7 +900,7 @@ public partial class Solicitud : ComponentBase
 
         if (!ValidateStep1()) isValid = false;
 
-        if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si && !ValidateStep2())
+        if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si && !ValidateStep2())
         {
             isValid = false;
         }

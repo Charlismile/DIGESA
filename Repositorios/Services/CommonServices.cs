@@ -1,12 +1,14 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Common;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DIGESA.Repositorios.Services
-{
+namespace DIGESA.Repositorios.Services;
+
     public class CommonServices : ICommon
     {
+        
         private readonly DbContextDigesa _context;
         private readonly IConfiguration _configuration;
 
@@ -112,7 +114,7 @@ namespace DIGESA.Repositorios.Services
             return lista;
         }
 
-        public async Task<List<ListSustModel>> GetInstalacionesSalud(int regionId)
+        public async Task<List<ListSustModel>> GetInstalacionesSalud(int regionId = 0)
         {
             var lista = new List<ListSustModel>();
             try
@@ -141,5 +143,47 @@ namespace DIGESA.Repositorios.Services
             }
             return lista;
         }
+        public async Task<List<ListaDiagnostico>> GetAllDiagnosticsAsync()
+        {
+            return await _context.ListaDiagnostico
+                .Where(x => x.IsActivo)
+                .Select(x => new ListaDiagnostico
+                {
+                    Id = x.Id,
+                    Nombre = x.Nombre
+                })
+                .OrderBy(x => x.Nombre)
+                .ToListAsync();
+        }
+
+        public async Task<List<TbFormaFarmaceutica>> GetAllFormasAsync()
+        {
+            return await _context.TbFormaFarmaceutica
+                .Where(x => x.IsActivo)
+                .OrderBy(x => x.Nombre)
+                .ToListAsync();
+        }
+
+        public async Task<List<TbViaAdministracion>> GetAllViaAdmAsync()
+        {
+            return await _context.TbViaAdministracion
+                .Where(x => x.IsActivo)
+                .OrderBy(x => x.Nombre)
+                .ToListAsync();
+        }
+
+        public async Task<List<ListSustModel>> GetUnidadId()
+        {
+            return await _context.TbUnidades
+                .Where(x => x.IsActivo)
+                .Select(x => new ListSustModel
+                {
+                    Id = x.Id,
+                    Name = x.NombreUnidad,
+                    Active = true
+                })
+                .OrderBy(x => x.Name)
+                .ToListAsync();
+        }
+
     }
-}

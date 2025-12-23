@@ -1,13 +1,16 @@
-﻿using DIGESA.Models.CannabisModels.Documentos;
+﻿using DIGESA.Models.CannabisModels.Catalogos;
+using DIGESA.Models.CannabisModels.Documentos;
 
 namespace DIGESA.Models.CannabisModels.Formularios;
 
 public class SolicitudCannabisFormViewModel
 {
     public DatosPacienteVM Paciente { get; set; } = new();
+    public DatosAcompananteVM? Acompanante { get; set; }
     public DatosMedicosVM Medico { get; set; } = new();
     public DatosProductoVM Producto { get; set; } = new();
-    public DatosAcompananteVM Acompanante { get; set; }
+    public DiagnosticoViewModel Diagnostico { get; set; } = new();
+    public ComorbilidadViewModel Comorbilidad { get; set; } = new();
     public DeclaracionJuradaViewModel Declaracion { get; set; } = new();
     public List<DocumentoAdjuntoViewModel> Documentos { get; set; } = new();
 

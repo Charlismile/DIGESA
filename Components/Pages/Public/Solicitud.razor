@@ -88,13 +88,13 @@
                                                         @bind-Value="@registro.Paciente.TipoDocumento">
                                                         <div class="form-check">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@TipoDocumento.Cedula"
+                                                                        Value="@EnumViewModel.TipoDocumento.Cedula"
                                                                         id="Cedula"/>
                                                             <label class="form-check-label" for="Cedula">Cédula</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@TipoDocumento.Pasaporte"
+                                                                        Value="@EnumViewModel.TipoDocumento.Pasaporte"
                                                                         id="Pasaporte"/>
                                                             <label class="form-check-label"
                                                                    for="Pasaporte">Pasaporte</label>
@@ -132,16 +132,16 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input"
                                                                id="sexoMasculino"
-                                                               checked="@(registro.Paciente.Sexo == Sexo.Masculino)"
-                                                               @onchange="() => registro.Paciente.Sexo = Sexo.Masculino"/>
+                                                               checked="@(registro.Paciente.Sexo == EnumViewModel.Sexo.Masculino)"
+                                                               @onchange="() => registro.Paciente.Sexo = EnumViewModel.Sexo.Masculino"/>
                                                         <label class="form-check-label"
                                                                for="sexoMasculino">Masculino</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input"
                                                                id="sexoFemenino"
-                                                               checked="@(registro.Paciente.Sexo == Sexo.Femenino)"
-                                                               @onchange="() => registro.Paciente.Sexo = Sexo.Femenino"/>
+                                                               checked="@(registro.Paciente.Sexo == EnumViewModel.Sexo.Femenino)"
+                                                               @onchange="() => registro.Paciente.Sexo = EnumViewModel.Sexo.Femenino"/>
                                                         <label class="form-check-label"
                                                                for="sexoFemenino">Femenino</label>
                                                     </div>
@@ -302,12 +302,12 @@
                                         <InputRadioGroup @bind-Value="registro.Paciente.RequiereAcompanante"
                                                          @bind-Value:after="OnRequiereAcompananteChanged">
                                             <div class="form-check form-check-inline">
-                                                <InputRadio class="form-check-input" Value="@RequiereAcompanante.Si"
+                                                <InputRadio class="form-check-input" Value="@EnumViewModel.RequiereAcompanante.Si"
                                                             id="reqSi"/>
                                                 <label class="form-check-label" for="reqSi">Sí</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <InputRadio class="form-check-input" Value="@RequiereAcompanante.No"
+                                                <InputRadio class="form-check-input" Value="@EnumViewModel.RequiereAcompanante.No"
                                                             id="reqNo"/>
                                                 <label class="form-check-label" for="reqNo">No</label>
                                             </div>
@@ -316,7 +316,7 @@
                                     </div>
                                 </div>
 
-                                @if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si)
+                                @if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
                                 {
                                     <div class="col-12">
                                         <label class="form-label">Especifique el motivo</label>
@@ -325,14 +325,14 @@
                                                 @bind-Value="registro.Paciente.MotivoRequerimientoAcompanante">
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
-                                                                Value="@MotivoRequerimientoAcompanante.PacienteDiscapacidad"
+                                                                Value="@EnumViewModel.MotivoRequerimientoAcompanante.PacienteDiscapacidad"
                                                                 id="motivoDiscapacidad"/>
                                                     <label class="form-check-label" for="motivoDiscapacidad">Mayor de
                                                         edad con discapacidad</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <InputRadio class="form-check-input"
-                                                                Value="@MotivoRequerimientoAcompanante.PacienteMenorEdad"
+                                                                Value="@EnumViewModel.MotivoRequerimientoAcompanante.PacienteMenorEdad"
                                                                 id="motivoMenorEdad"/>
                                                     <label class="form-check-label" for="motivoMenorEdad">Menor de
                                                         edad</label>
@@ -343,7 +343,7 @@
                                         </div>
                                     </div>
 
-                                    @if (registro.Paciente.MotivoRequerimientoAcompanante == MotivoRequerimientoAcompanante.PacienteDiscapacidad)
+                                    @if (registro.Paciente.MotivoRequerimientoAcompanante == EnumViewModel.MotivoRequerimientoAcompanante.PacienteDiscapacidad)
                                     {
                                         <div class="col-sm-6">
                                             <label for="TipoDiscapacidad" class="form-label">Especifique la
@@ -361,7 +361,7 @@
                         {
                             @if (currentStepNumber == 2)
                             {
-                                @if (registro.Paciente.RequiereAcompanante == RequiereAcompanante.Si)
+                                @if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
                                 {
                                     <!-- DATOS DEL ACOMPANANTE -->
                                     <div class="card px-0 mb-1">
@@ -405,14 +405,14 @@
                                                             @bind-Value="registro.Acompanante.TipoDocumento">
                                                             <div class="form-check">
                                                                 <InputRadio class="form-check-input"
-                                                                            Value="@TipoDocumento.Cedula"
+                                                                            Value="@EnumViewModel.TipoDocumento.Cedula"
                                                                             id="Cedula"/>
                                                                 <label class="form-check-label"
                                                                        for="Cedula">Cédula</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <InputRadio class="form-check-input"
-                                                                            Value="@TipoDocumento.Pasaporte"
+                                                                            Value="@EnumViewModel.TipoDocumento.Pasaporte"
                                                                             id="Pasaporte"/>
                                                                 <label class="form-check-label" for="Pasaporte">Pasaporte</label>
                                                             </div>
@@ -440,19 +440,19 @@
                                                             @bind-Value="registro.Acompanante.Parentesco">
                                                             <div class="form-check">
                                                                 <InputRadio class="form-check-input"
-                                                                            Value="@Parentesco.Madre" id="Madre"/>
+                                                                            Value="@EnumViewModel.Parentesco.Madre" id="Madre"/>
                                                                 <label class="form-check-label" for="Madre">Madre con
                                                                     patria potestad</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <InputRadio class="form-check-input"
-                                                                            Value="@Parentesco.Padre" id="Padre"/>
+                                                                            Value="@EnumViewModel.Parentesco.Padre" id="Padre"/>
                                                                 <label class="form-check-label" for="Padre">Padre con
                                                                     patria potestad</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <InputRadio class="form-check-input"
-                                                                            Value="@Parentesco.Tutor" id="Tutor"/>
+                                                                            Value="@EnumViewModel.Parentesco.Tutor" id="Tutor"/>
                                                                 <label class="form-check-label" for="Tutor">Tutor
                                                                     designado</label>
                                                             </div>
@@ -502,8 +502,8 @@
                                             <div class="col-sm-3">
                                                 <label class="form-label">Número de contacto del medico</label>
                                                 <InputText class="form-control"
-                                                           @bind-Value="registro.Medico.TelefonoMovil"/>
-                                                <ValidationMessage For="@(() => registro.Medico.TelefonoMovil)"/>
+                                                           @bind-Value="registro.Medico.TelefonoPersonal"/>
+                                                <ValidationMessage For="@(() => registro.Medico.TelefonoPersonal)"/>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Disciplina del medico</label>
@@ -512,21 +512,21 @@
                                                                      class="d-flex gap-3">
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@MedicoDisciplina.General"
+                                                                        Value="@EnumViewModel.MedicoDisciplina.General"
                                                                         id="General"/>
                                                             <label class="form-check-label"
                                                                    for="General">Médico General</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@MedicoDisciplina.Odontologo"
+                                                                        Value="@EnumViewModel.MedicoDisciplina.Odontologo"
                                                                         id="Odontologo"/>
                                                             <label class="form-check-label"
                                                                    for="Odontologo">Odontólogo</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@MedicoDisciplina.Especialista"
+                                                                        Value="@EnumViewModel.MedicoDisciplina.Especialista"
                                                                         id="Especialista"/>
                                                             <label class="form-check-label" for="Especialista">Médico especialista, especifique</label>
                                                         </div>
@@ -534,7 +534,7 @@
                                                     <ValidationMessage
                                                         For="@(() => registro.Medico.MedicoDisciplina)"/>
                                                 </div>
-                                                @if (registro.Medico.MedicoDisciplina == MedicoDisciplina.Especialista)
+                                                @if (registro.Medico.MedicoDisciplina == EnumViewModel.MedicoDisciplina.Especialista)
                                                 {
                                                     <div class="mt-3">
                                                         <label for="DetalleMedico"
@@ -643,33 +643,33 @@
                                             <hr>
                                             <!-- Producto del paciente -->
                                             <div class="col-6">
-                                                <label class="mb-2">Principio activo</label>
+                                                <label class="mb-2">Principio activo</label>hh
                                                 <div class="d-flex gap-4">
                                                     <InputRadioGroup
                                                         @bind-Value="registro.Producto.NombreProductoEnum"
                                                         class="d-flex gap-3">
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@NombreProductoE.CBD" id="CBD"/>
+                                                                        Value="@EnumViewModel.NombreProductoE.CBD" id="CBD"/>
                                                             <label class="form-check-label" for="CBD">CBD
                                                                 (Cannabidiol)</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@NombreProductoE.THC" id="THC"/>
+                                                                        Value="@EnumViewModel.NombreProductoE.THC" id="THC"/>
                                                             <label class="form-check-label" for="THC">THC
                                                                 (delta-9-tetrahidrocannabinol)</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@NombreProductoE.OTRO" id="Otro"/>
+                                                                        Value="@EnumViewModel.NombreProductoE.OTRO" id="Otro"/>
                                                             <label class="form-check-label" for="Otro">Otro</label>
                                                         </div>
                                                     </InputRadioGroup>
                                                     <ValidationMessage
                                                         For="@(() => registro.Producto.NombreProductoEnum)"/>
                                                 </div>
-                                                @if (registro.Producto.NombreProductoEnum == NombreProductoE.OTRO)
+                                                @if (registro.Producto.NombreProductoEnum == EnumViewModel.NombreProductoE.OTRO)
                                                 {
                                                     <div class="mt-2 col-12">
                                                         <InputText placeholder="Especifique" class="form-control"
@@ -739,17 +739,17 @@
                                                         class="d-flex gap-3">
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@ConcentracionE.CBD" id="concentracionCBD"/>
+                                                                        Value="@EnumViewModel.ConcentracionE.CBD" id="concentracionCBD"/>
                                                             <label class="form-check-label" for="concentracionCBD">CBD</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@ConcentracionE.THC" id="concentracionTHC"/>
+                                                                        Value="@EnumViewModel.ConcentracionE.THC" id="concentracionTHC"/>
                                                             <label class="form-check-label" for="concentracionTHC">THC</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <InputRadio class="form-check-input"
-                                                                        Value="@ConcentracionE.OTRO" id="concentracionOtro"/>
+                                                                        Value="@EnumViewModel.ConcentracionE.OTRO" id="concentracionOtro"/>
                                                             <label class="form-check-label" for="concentracionOtro">Otro(s)
                                                                 cannabinoide</label>
                                                         </div>
@@ -757,7 +757,7 @@
                                                     <ValidationMessage
                                                         For="@(() => registro.Producto.ConcentracionEnum)"/>
                                                 </div>
-                                                @if (registro.Producto.ConcentracionEnum == ConcentracionE.OTRO)
+                                                @if (registro.Producto.ConcentracionEnum == EnumViewModel.ConcentracionE.OTRO)
                                                 {
                                                     <div class="mt-2">
                                                         <InputText placeholder="Especifique" class="form-control"
@@ -890,11 +890,11 @@
                                                         <input type="checkbox"
                                                                class="form-check-input"
                                                                id="chkSi"
-                                                               checked="@(registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si)"
-                                                               @onchange="() => registro.Producto.UsaDosisRescateEnum = UsaDosisRescate.Si"/>
+                                                               checked="@(registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si)"
+                                                               @onchange="() => registro.Producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.Si"/>
                                                         <label class="form-check-label" for="chkSi">Si</label>
                                                     </div>
-                                                    @if (registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.Si)
+                                                    @if (registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si)
                                                     {
                                                         <div class="mt-2 col-9">
                                                             <InputText class="form-control" placeholder="Especifique"
@@ -907,8 +907,8 @@
                                                         <input type="checkbox"
                                                                class="form-check-input"
                                                                id="chkNo"
-                                                               checked="@(registro.Producto.UsaDosisRescateEnum == UsaDosisRescate.No)"
-                                                               @onchange="() => registro.Producto.UsaDosisRescateEnum = UsaDosisRescate.No"/>
+                                                               checked="@(registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.No)"
+                                                               @onchange="() => registro.Producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.No"/>
                                                         <label class="form-check-label" for="chkNo">No</label>
                                                     </div>
                                                 </div>
@@ -927,12 +927,12 @@
                                             @bind-Value="registro.Comorbilidad.TieneComorbilidadEnum"
                                             class="d-flex gap-3">
                                             <div class="form-check form-check-inline">
-                                                <InputRadio class="form-check-input" Value="@TieneComorbilidad.Si"
+                                                <InputRadio class="form-check-input" Value="@EnumViewModel.TieneComorbilidad.Si"
                                                             id="comorbilidadSi"/>
                                                 <label class="form-check-label" for="comorbilidadSi">Sí</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <InputRadio class="form-check-input" Value="@TieneComorbilidad.No"
+                                                <InputRadio class="form-check-input" Value="@EnumViewModel.TieneComorbilidad.No"
                                                             id="comorbilidadNo"/>
                                                 <label class="form-check-label" for="comorbilidadNo">No</label>
                                             </div>
@@ -940,7 +940,7 @@
                                         <ValidationMessage
                                             For="@(() => registro.Comorbilidad.TieneComorbilidadEnum)"/>
                                     </div>
-                                    @if (registro.Comorbilidad.TieneComorbilidadEnum == TieneComorbilidad.Si)
+                                    @if (registro.Comorbilidad.TieneComorbilidadEnum == EnumViewModel.TieneComorbilidad.Si)
                                     {
                                         <div class="col-6">
                                             <label class="form-label">Nombre de diagnostico</label>

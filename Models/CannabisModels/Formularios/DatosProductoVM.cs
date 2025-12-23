@@ -1,20 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DIGESA.Models.CannabisModels;
+﻿namespace DIGESA.Models.CannabisModels;
 
 public class DatosProductoVM
 {
-    [Required]
-    public int ProductoId { get; set; }
+    public string NombreProducto { get; set; } = string.Empty;
+    public string? NombreComercialProd { get; set; }
 
-    public int? FormaFarmaceuticaId { get; set; }
+    public List<int> SelectedFormaIds { get; set; } = new();
+    public string? NombreOtraForma { get; set; }
 
-    public decimal? Concentracion { get; set; }
+    public List<int> SelectedViaAdmIds { get; set; } = new();
+    public string? NombreOtraViaAdm { get; set; }
 
-    public string ViaAdministracion { get; set; }
+    public int? ProductoUnidadId { get; set; }
 
-    [StringLength(300)]
-    public string Dosis { get; set; }
+    public decimal? CantidadConcentracion { get; set; }
+    public EnumViewModel.ConcentracionE ConcentracionEnum { get; set; }
+    public string? NombreConcentracion { get; set; }
 
-    public bool UsaDosisRescate { get; set; }
+    public string? DetDosisPaciente { get; set; }
+    public string? DosisFrecuencia { get; set; }
+    public string? DosisDuracion { get; set; }
+
+    public EnumViewModel.UsaDosisRescate UsaDosisRescateEnum { get; set; }
+    public string? DetDosisRescate { get; set; }
 }

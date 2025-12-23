@@ -77,13 +77,11 @@ builder.Services.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
 builder.Services.AddScoped<IServicioMedicos, ServicioMedicos>();
 builder.Services.AddScoped<IServicioFarmacias, ServicioFarmacias>();
 builder.Services.AddScoped<IServicioQr, ServicioQr>();
+builder.Services.AddScoped<IPaciente, PacienteService>();
 
 // Servicios comunes
 builder.Services.AddScoped<IUserData, UserDataService>();
 builder.Services.AddScoped<ICommon, CommonServices>();
-
-// Configuración de email
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 // CORS
 builder.Services.AddCors(options =>
