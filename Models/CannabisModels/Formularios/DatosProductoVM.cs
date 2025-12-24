@@ -1,15 +1,23 @@
-﻿namespace DIGESA.Models.CannabisModels;
+﻿namespace DIGESA.Models.CannabisModels.Formularios;
 
 public class DatosProductoVM
 {
     public string NombreProducto { get; set; } = string.Empty;
+    public EnumViewModel.NombreProductoE NombreProductoEnum { get; set; }
+
     public string? NombreComercialProd { get; set; }
 
     public List<int> SelectedFormaIds { get; set; } = new();
     public string? NombreOtraForma { get; set; }
+    public bool IsOtraFormaSelected { get; set; }
+
+    public string? ProductoUnidad { get; set; }
+
 
     public List<int> SelectedViaAdmIds { get; set; } = new();
     public string? NombreOtraViaAdm { get; set; }
+    public bool IsOtraViaAdmSelected { get; set; }
+
 
     public int? ProductoUnidadId { get; set; }
 

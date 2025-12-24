@@ -3,6 +3,7 @@ using BlazorBootstrap;
 using DIGESA.Data;
 using DIGESA.Models.ActiveDirectory;
 using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -95,8 +96,9 @@ public partial class Create : ComponentBase
             return;
         }
 
-        ResultModel<ActiveDirectoryUserModel> ActiveDirectoryUserModelData =
+        ResultGenericModel<ActiveDirectoryUserModel> ActiveDirectoryUserModelData =
             await _UserService.FindUserByEmail(FormData.Email);
+
 
         if (ActiveDirectoryUserModelData.Data != null)
         {

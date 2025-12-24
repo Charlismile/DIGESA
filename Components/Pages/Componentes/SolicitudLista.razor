@@ -1,6 +1,7 @@
 ﻿@using DIGESA.Models.CannabisModels
-@using DIGESA.Repositorios.Interfaces
-@inject ISolicitudService SolicitudService
+@using DIGESA.Models.CannabisModels.Listados
+@using DIGESA.Repositorios.InterfacesCannabis
+@inject ISolicitudCannabisService SolicitudService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="card shadow-sm p-3">
@@ -53,43 +54,47 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in SolicitudesLista)
-                {
-                    <tr>
-                        <td>@item.NumeroSolicitud</td>
-                        <td>@item.PacienteNombre</td>
-                        <td>@item.PacienteDocumento</td>
-                        <td>@item.FechaSolicitud.ToString("dd/MM/yyyy")</td>
-                        <td>
-                            <span class="badge @(item.Estado switch
-                            {
-                                "Pendiente" => "bg-warning text-dark",
-                                "En Revisión" => "bg-info text-dark",
-                                "Aprobada" => "bg-success",
-                                "Rechazada" => "bg-danger",
-                                _ => "bg-secondary"
-                            })">
-                                @item.Estado
-                            </span>
-                        </td>
-                        <td>
-                            @if (item.Estado == "Pendiente" || item.Estado == "En Revisión")
-                            {
-                                <button class="btn btn-success btn-sm me-2" @onclick="@(() => CambiarEstado(item.Id, "Aprobada"))">
-                                    <i class="fa-solid fa-check"></i> Aprobar
-                                </button>
-                                <button class="btn btn-danger btn-sm" @onclick="@(() => CambiarEstado(item.Id, "Rechazada"))">
-                                    <i class="fa-solid fa-xmark"></i> Rechazar
-                                </button>
-                            }
-                            else
-                            {
-                                <span class="text-muted fst-italic">Sin acciones</span>
-                            }
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in SolicitudesLista)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.NombreCompleto</td>
+                    <td>@item.Documento</td>
+                    <td>@item.FechaVencimiento?.ToString("dd/MM/yyyy")</td> <!-- LÍNEA 78 CORREGIDA -->
+                    <td>
+                        <span class="badge @(item.EstadoSolicitud switch
+                                           {
+                                               "Pendiente" => "bg-warning text-dark",
+                                               "Aprobado" => "bg-success",
+                                               "Rechazado" => "bg-danger",
+                                               _ => "bg-secondary"
+                                           })"> <!-- LÍNEA 81 CORREGIDA -->
+                            @item.EstadoSolicitud
+                        </span>
+                    </td>
+                    <td>
+                        @if (item.EstadoSolicitud == "Pendiente")
+                        {
+                            <button class="btn btn-success btn-sm me-2"
+                                    @onclick="() => Aprobar(item.Id)">
+                                Aprobar
+                            </button>
+
+                            <button class="btn btn-danger btn-sm"
+                                    @onclick="() => Rechazar(item.Id)">
+                                Rechazar
+                            </button>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+
+                </tr>
+            }
             </tbody>
+
         </table>
     }
 
@@ -100,7 +105,7 @@
 </div>
 
 @code {
-    private List<SolicitudModel>? SolicitudesLista;
+    private List<PacienteListadoViewModel>? SolicitudesLista;
     private List<string> EstadosDisponibles = new() { "Pendiente", "En Revisión", "Aprobada", "Rechazada" };
     private string? EstadoSeleccionado;
     private string? Mensaje;
@@ -115,12 +120,13 @@
         var todas = await SolicitudService.ObtenerSolicitudesAsync();
 
         if (!string.IsNullOrEmpty(EstadoSeleccionado))
-            SolicitudesLista = todas.Where(s => s.Estado == EstadoSeleccionado).ToList();
+            SolicitudesLista = todas
+                .Where(s => s.EstadoSolicitud == EstadoSeleccionado)
+                .ToList();
         else
             SolicitudesLista = todas;
-
-        StateHasChanged();
     }
+
 
     private async Task FiltrarPorEstado(ChangeEventArgs e)
     {
@@ -128,26 +134,29 @@
         await CargarSolicitudesAsync();
     }
 
-    private async Task CambiarEstado(int id, string nuevoEstado)
+    private async Task Aprobar(int id)
     {
-        // Obtener el estado de autenticación actual
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var usuarioRevisor = authState.User.Identity?.Name ?? "Administrador";
-        var comentario = $"Cambio automático al estado '{nuevoEstado}'";
+        await CambiarEstadoInterno(id, true);
+    }
 
-        // Llamar al método con los 4 parámetros correctos
-        var ok = await SolicitudService.ActualizarEstadoSolicitudAsync(id, nuevoEstado, usuarioRevisor, comentario);
+    private async Task Rechazar(int id)
+    {
+        await CambiarEstadoInterno(id, false);
+    }
+
+    private async Task CambiarEstadoInterno(int id, bool aprobar)
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authState.User.Identity?.Name ?? "ADMIN";
+
+        bool ok;
+
+        if (aprobar)
+            ok = await SolicitudService.AprobarSolicitudAsync(id, usuario);
+        else
+            ok = await SolicitudService.RechazarSolicitudAsync(id, "Rechazo manual", usuario);
 
         if (ok)
-        {
-            Mensaje = $"Solicitud {id} actualizada a '{nuevoEstado}' por {usuarioRevisor}.";
             await CargarSolicitudesAsync();
-        }
-        else
-        {
-            Mensaje = $"No se pudo actualizar la solicitud {id}.";
-        }
-
-        StateHasChanged();
     }
 }

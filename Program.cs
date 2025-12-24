@@ -11,6 +11,7 @@ using DIGESA.Repositorios.ServiciosCannabis;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using IEmailSender = DIGESA.Repositorios.InterfacesCannabis.IEmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +31,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;
     })
-    .AddEntityFrameworkStores<DbContextDigesa>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // ==========================
 // Bases de datos
@@ -45,15 +47,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // DIGESA DB
 builder.Services.AddDbContextFactory<DbContextDigesa>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false;
-})
-.AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+    options.UseSqlServer(defaultConnection));
 
 // Configuración cookies
 builder.Services.ConfigureApplicationCookie(options =>
@@ -65,6 +59,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Autorización
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IDatabaseProvider, DatabaseProviderService>();
+builder.Services.AddScoped<IdentityRedirectManager>();
+
 
 // HttpClient para Active Directory
 builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();
@@ -78,6 +74,8 @@ builder.Services.AddScoped<IServicioMedicos, ServicioMedicos>();
 builder.Services.AddScoped<IServicioFarmacias, ServicioFarmacias>();
 builder.Services.AddScoped<IServicioQr, ServicioQr>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
+builder.Services.AddScoped<ISolicitudCannabisService, SolicitudCannabisService>();
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 
 // Servicios comunes
 builder.Services.AddScoped<IUserData, UserDataService>();

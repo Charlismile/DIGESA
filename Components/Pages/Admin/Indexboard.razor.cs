@@ -1,6 +1,8 @@
-﻿using DIGESA.Data;
+﻿using BlazorBootstrap;
+using DIGESA.Data;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
+using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +18,13 @@ public partial class Indexboard : ComponentBase
     private List<AccionPanel> PanelAcciones { get; set; } = new();
     private List<EstadoPanel> PanelEstados { get; set; } = new();
 
-    [Inject] private ISolicitudService SolicitudService { get; set; } = default!;
+    [Inject] ISolicitudCannabisService SolicitudService { get; set; } = default!;
     [Inject] private IUserData UserService { get; set; } = default!;
     [Inject] private IDbContextFactory<DbContextDigesa> ContextFactory { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private AuthenticationStateProvider AuthStateProvider { get; set; } = default!;
+    [Inject] protected ToastService _ToastService { get; set; } = default!;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,7 +59,13 @@ public partial class Indexboard : ComponentBase
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
         if (query.Get("passwordChanged") == "true")
         {
-            ModalForm.ShowSuccess("Tu contraseña ha sido cambiada con éxito.");
+            _ToastService.Notify(new ToastMessage
+            {
+                Type = ToastType.Success,
+                Title = "Operación exitosa",
+                Message = "Tu contraseña ha sido cambiada con éxito."
+            });
+
             NavigationManager.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
         }
 

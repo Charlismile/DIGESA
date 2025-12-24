@@ -76,13 +76,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\DIGESA.p387nqjzg2.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8191"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 09 Dec 2025 20:10:45 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8191"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE=\u0022"},{"Name":"Last-Modified","Value":"Wed, 24 Dec 2025 15:41:34 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DIGESA/DIGESA.p387nqjzg2.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\DIGESA.p387nqjzg2.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"p387nqjzg2"},{"Name":"integrity","Value":"sha256-xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE="},{"Name":"label","Value":"_content/DIGESA/DIGESA.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8191"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 09 Dec 2025 20:10:45 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8191"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022xTPATZIcm\u002Blx7B\u002BOH/zueIMtRi9sTSHANl/WF7BzeAE=\u0022"},{"Name":"Last-Modified","Value":"Wed, 24 Dec 2025 15:41:34 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DIGESA/favicon.ifv42okdf2.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))</AssetFile>

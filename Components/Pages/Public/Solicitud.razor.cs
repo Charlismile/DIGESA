@@ -789,6 +789,14 @@ public partial class Solicitud : ComponentBase
 
                 var unidad = productoUnidadList.FirstOrDefault(u => u.Id == registro.Producto.ProductoUnidadId)?.Name;
 
+                int? dosisFrecuencia = int.TryParse(registro.Producto.DosisFrecuencia, out var freq)
+                    ? freq
+                    : null;
+
+                int? dosisDuracion = int.TryParse(registro.Producto.DosisDuracion, out var dur)
+                    ? dur
+                    : null;
+
                 var productoPaciente = new TbNombreProductoPaciente
                 {
                     PacienteId = paciente.Id,
@@ -796,19 +804,21 @@ public partial class Solicitud : ComponentBase
                     NombreComercialProd = registro.Producto.NombreComercialProd,
                     FormaFarmaceutica = formaFarmaceutica,
                     CantidadConcentracion = registro.Producto.CantidadConcentracion,
-                    NombreConcentracion = registro.Producto.ConcentracionEnum == EnumViewModel.ConcentracionE.OTRO ?
-                        registro.Producto.NombreConcentracion :
-                        registro.Producto.ConcentracionEnum.ToString(),
+                    NombreConcentracion = registro.Producto.ConcentracionEnum == EnumViewModel.ConcentracionE.OTRO
+                        ? registro.Producto.NombreConcentracion
+                        : registro.Producto.ConcentracionEnum.ToString(),
                     ViaConsumoProducto = viaAdministracion,
                     ProductoUnidad = unidad,
                     ProductoUnidadId = registro.Producto.ProductoUnidadId,
                     DetDosisPaciente = registro.Producto.DetDosisPaciente,
-                    DosisFrecuencia = registro.Producto.DosisFrecuencia,
-                    DosisDuracion = registro.Producto.DosisDuracion,
+                    DosisFrecuencia = dosisFrecuencia,
+                    DosisDuracion = dosisDuracion,
                     UsaDosisRescate = registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si,
-                    DetDosisRescate = registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si ?
-                        registro.Producto.DetDosisRescate : null
+                    DetDosisRescate = registro.Producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si
+                        ? registro.Producto.DetDosisRescate
+                        : null
                 };
+
 
                 _context.TbNombreProductoPaciente.Add(productoPaciente);
                 await _context.SaveChangesAsync();

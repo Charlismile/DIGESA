@@ -11,4 +11,6 @@ public interface ISolicitudCannabisService
     Task<bool> AprobarSolicitudAsync(int id, string usuario);
     Task<bool> RechazarSolicitudAsync(int id, string comentario, string usuario);
     Task<bool> InactivarCarnetAsync(int id, string razon, string usuario);
+    
+    Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync();
 }

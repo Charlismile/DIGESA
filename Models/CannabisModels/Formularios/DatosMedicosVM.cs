@@ -15,10 +15,13 @@ public class DatosMedicosVM : PersonaBaseViewModel
     public int? DistritoId { get; set; }
     public int? CorregimientoId { get; set; }
     public int? RegionSaludId { get; set; }
+    public string? MedicoIdoneidad { get; set; }
+    public string? DetalleEspecialidad { get; set; }
 
     public int? InstalacionSaludId { get; set; }
     public string? InstalacionSaludPersonalizada { get; set; }
 
+    public EnumViewModel.MedicoDisciplina MedicoDisciplina { get; set; }
     public EnumViewModel.RequiereAcompanante RequiereAcompanante { get; set; }
     public EnumViewModel.MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
     public string? TipoDiscapacidad { get; set; }

@@ -1,4 +1,5 @@
-﻿using DIGESA.Models.CannabisModels.Formularios;
+﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Formularios;
 using DIGESA.Models.CannabisModels.Listados;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
@@ -23,19 +24,27 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             SegundoNombre = model.Paciente.SegundoNombre,
             PrimerApellido = model.Paciente.PrimerApellido,
             SegundoApellido = model.Paciente.SegundoApellido,
-            TipoDocumento = model.Paciente.TipoDocumento,
+
+            TipoDocumento = model.Paciente.TipoDocumento.ToString(),
             DocumentoCedula = model.Paciente.NumeroDocumento,
             Nacionalidad = model.Paciente.Nacionalidad,
+
             FechaNacimiento = model.Paciente.FechaNacimiento.HasValue
                 ? DateOnly.FromDateTime(model.Paciente.FechaNacimiento.Value)
                 : null,
+
             ProvinciaId = model.Paciente.ProvinciaId,
             DistritoId = model.Paciente.DistritoId,
             CorregimientoId = model.Paciente.CorregimientoId,
             DireccionExacta = model.Paciente.DireccionExacta,
-            RequiereAcompanante = model.Paciente.RequiereAcompanante,
-            MotivoRequerimientoAcompanante = model.Paciente.MotivoAcompanante
+
+            RequiereAcompanante =
+                model.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si,
+
+            MotivoRequerimientoAcompanante =
+                model.Paciente.MotivoRequerimientoAcompanante?.ToString()
         };
+
 
         _context.TbPaciente.Add(paciente);
         await _context.SaveChangesAsync();
@@ -125,7 +134,12 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             {
                 PrimerNombre = solicitud.Paciente.PrimerNombre,
                 PrimerApellido = solicitud.Paciente.PrimerApellido,
-                TipoDocumento = solicitud.Paciente.TipoDocumento,
+                TipoDocumento = Enum.TryParse<EnumViewModel.TipoDocumento>(
+                    solicitud.Paciente.TipoDocumento,
+                    out var tipoDoc
+                )
+                    ? tipoDoc
+                    : EnumViewModel.TipoDocumento.Cedula,
                 NumeroDocumento = solicitud.Paciente.DocumentoCedula
             },
             Declaracion = new()
@@ -194,4 +208,18 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync()
+    {
+        return await _context.TbSolRegCannabis
+            .AsNoTracking()
+            .Include(s => s.EstadoSolicitud)
+            .GroupBy(s => s.EstadoSolicitud.NombreEstado)
+            .Select(g => new
+            {
+                Estado = g.Key,
+                Cantidad = g.Count()
+            })
+            .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
+    }
+
 }

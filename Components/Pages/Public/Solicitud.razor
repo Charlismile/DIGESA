@@ -1,5 +1,6 @@
 ﻿@page "/registro-paciente"
 @using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
 
 <EditForm EditContext="@editContext" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator/>
@@ -257,7 +258,7 @@
                                                 <label class="form-label">Instalación de salud donde es atendido</label>
 
                                                 <AutoComplete @bind-Value="instalacionFilterPaciente"
-                                                              TItem="ItemListModel"
+                                                              TItem="ListSustModel"
                                                               DataProvider="AutoCompleteDataProvider"
                                                               OnChanged="OnAutoCompletePacienteChanged"
                                                               PropertyName="Name"
@@ -552,7 +553,7 @@
                                                     médico</label>
 
                                                 <AutoComplete @bind-Value="instalacionFilterMedico"
-                                                              TItem="ItemListModel"
+                                                              TItem="ListSustModel"
                                                               DataProvider="AutoCompleteDataProvider"
                                                               OnChanged="OnAutoCompleteMedicoChanged"
                                                               PropertyName="Name"
