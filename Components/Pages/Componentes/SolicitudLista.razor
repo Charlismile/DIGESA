@@ -12,16 +12,17 @@
 
         <div class="d-flex align-items-center gap-2">
             <label for="estadoSelect" class="form-label mb-0">Filtrar por estado:</label>
-            <select id="estadoSelect" class="form-select form-select-sm" style="width: 200px;"
-                    @onchange="FiltrarPorEstado">
+            <select class="form-select form-select-sm"
+                    style="width: 200px;"
+                    @bind="EstadoSeleccionado"
+                    @bind:after="CargarSolicitudesAsync">
                 <option value="">Todos</option>
                 @foreach (var estado in EstadosDisponibles)
                 {
-                    <option value="@estado" selected="@(estado == EstadoSeleccionado)">
-                        @estado
-                    </option>
+                    <option value="@estado">@estado</option>
                 }
             </select>
+
         </div>
     </div>
 
@@ -68,7 +69,7 @@
                                                "Aprobado" => "bg-success",
                                                "Rechazado" => "bg-danger",
                                                _ => "bg-secondary"
-                                           })"> <!-- LÍNEA 81 CORREGIDA -->
+                                           })">
                             @item.EstadoSolicitud
                         </span>
                     </td>
@@ -106,7 +107,13 @@
 
 @code {
     private List<PacienteListadoViewModel>? SolicitudesLista;
-    private List<string> EstadosDisponibles = new() { "Pendiente", "En Revisión", "Aprobada", "Rechazada" };
+    private readonly List<string> EstadosDisponibles = new()
+    {
+        "Pendiente",
+        "Aprobado",
+        "Rechazado"
+    };
+
     private string? EstadoSeleccionado;
     private string? Mensaje;
 
@@ -125,13 +132,6 @@
                 .ToList();
         else
             SolicitudesLista = todas;
-    }
-
-
-    private async Task FiltrarPorEstado(ChangeEventArgs e)
-    {
-        EstadoSeleccionado = e.Value?.ToString();
-        await CargarSolicitudesAsync();
     }
 
     private async Task Aprobar(int id)

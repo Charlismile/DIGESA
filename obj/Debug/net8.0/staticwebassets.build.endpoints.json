@@ -85,7 +85,7 @@
       ]
     },
     {
-      "Route": "DIGESA.9wg87u6tib.styles.css",
+      "Route": "DIGESA.m3sr3vzxyg.styles.css",
       "AssetFile": "DIGESA.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -99,7 +99,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8460"
+          "Value": "9311"
         },
         {
           "Name": "Content-Type",
@@ -107,11 +107,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs=\""
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
         },
         {
           "Name": "Link",
@@ -121,11 +121,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9wg87u6tib"
+          "Value": "m3sr3vzxyg"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs="
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
         },
         {
           "Name": "label",
@@ -148,7 +148,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8460"
+          "Value": "9311"
         },
         {
           "Name": "Content-Type",
@@ -156,11 +156,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs=\""
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
         },
         {
           "Name": "Link",
@@ -170,7 +170,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs="
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
         }
       ]
     },

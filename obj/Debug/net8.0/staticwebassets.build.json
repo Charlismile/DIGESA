@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bONZe3qVgcxsfB0qS/Pv1GgUp8fC1r2FdnBVUqHQJ2s=",
+  "Hash": "aBpvLY0JCKMPkRasNH1/NGFBKwKa/e23/N28FMKLXbk=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -283,8 +283,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "9wg87u6tib",
-      "Integrity": "d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs=",
+      "Fingerprint": "m3sr3vzxyg",
+      "Integrity": "/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css"
@@ -304,8 +304,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "p387nqjzg2",
-      "Integrity": "xTPATZIcm+lx7B+OH/zueIMtRi9sTSHANl/WF7BzeAE=",
+      "Fingerprint": "spzt9nub66",
+      "Integrity": "EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css"
@@ -2347,7 +2347,44 @@
       ]
     },
     {
-      "Route": "DIGESA.9wg87u6tib.styles.css",
+      "Route": "DIGESA.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9042"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng="
+        }
+      ]
+    },
+    {
+      "Route": "DIGESA.m3sr3vzxyg.styles.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2361,7 +2398,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8460"
+          "Value": "9311"
         },
         {
           "Name": "Content-Type",
@@ -2369,11 +2406,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs=\""
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
         },
         {
           "Name": "Link",
@@ -2383,11 +2420,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9wg87u6tib"
+          "Value": "m3sr3vzxyg"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs="
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
         },
         {
           "Name": "label",
@@ -2396,7 +2433,7 @@
       ]
     },
     {
-      "Route": "DIGESA.bundle.scp.css",
+      "Route": "DIGESA.spzt9nub66.bundle.scp.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2406,7 +2443,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8191"
+          "Value": "9042"
         },
         {
           "Name": "Content-Type",
@@ -2414,48 +2451,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"xTPATZIcm+lx7B+OH/zueIMtRi9sTSHANl/WF7BzeAE=\""
+          "Value": "\"EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-xTPATZIcm+lx7B+OH/zueIMtRi9sTSHANl/WF7BzeAE="
-        }
-      ]
-    },
-    {
-      "Route": "DIGESA.p387nqjzg2.bundle.scp.css",
-      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "8191"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"xTPATZIcm+lx7B+OH/zueIMtRi9sTSHANl/WF7BzeAE=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2465,7 +2465,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "p387nqjzg2"
+          "Value": "spzt9nub66"
         },
         {
           "Name": "label",
@@ -2473,7 +2473,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-xTPATZIcm+lx7B+OH/zueIMtRi9sTSHANl/WF7BzeAE="
+          "Value": "sha256-EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng="
         }
       ]
     },
@@ -2492,7 +2492,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8460"
+          "Value": "9311"
         },
         {
           "Name": "Content-Type",
@@ -2500,11 +2500,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs=\""
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 24 Dec 2025 15:41:34 GMT"
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
         },
         {
           "Name": "Link",
@@ -2514,7 +2514,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-d7nhaWKcjBas71ya91kxeRBIT5lq5FPbDAY3xnH1Hxs="
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
         }
       ]
     },
