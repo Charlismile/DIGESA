@@ -42,7 +42,7 @@ public partial class Indexboard : ComponentBase
         // Cargar estados desde base de datos
         await using var db = await ContextFactory.CreateDbContextAsync();
         var estadosDb = await db.TbEstadoSolicitud
-            .Where(e => e.NombreEstado != "Archivada") // CORREGIDO: Cambié Descripcion por NombreEstado
+            .Where(e => e.NombreEstado != "Archivada") 
             .ToListAsync();
 
         PanelEstados = estadosDb.Select(CrearEstadoPanel).ToList();
@@ -53,7 +53,6 @@ public partial class Indexboard : ComponentBase
         {
             panel.Cantidad = counts.TryGetValue(panel.Titulo, out var c) ? c : 0;
         }
-
         // Mostrar mensaje si la contraseña fue cambiada
         var uri = new Uri(NavigationManager.Uri);
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
@@ -65,10 +64,8 @@ public partial class Indexboard : ComponentBase
                 Title = "Operación exitosa",
                 Message = "Tu contraseña ha sido cambiada con éxito."
             });
-
             NavigationManager.NavigateTo(uri.GetLeftPart(UriPartial.Path), forceLoad: false);
         }
-
         isLoading = false;
     }
 
@@ -77,7 +74,7 @@ public partial class Indexboard : ComponentBase
         PanelAcciones = new List<AccionPanel>
         {
             new() { Titulo="Registrar Paciente", Icono="fa-user-plus", Color="primary", Borde="#0d6efd", Route="/registro-paciente" },
-            new() { Titulo="Ver Solicitudes", Icono="fa-file-invoice", Color="success", Borde="#198754", Route="/admin/solicitudes_registros" },
+            new() { Titulo="Ver Solicitudes", Icono="fa-file-invoice", Color="success", Borde="#198754", Route="/admin/solicitudes" },
         };
     }
 
@@ -111,16 +108,15 @@ public partial class Indexboard : ComponentBase
             { 4, ("En Revisión", "fa-search", "warning", "rgba(255,193,7,0.05)", "#ffc107") }
         };
 
-    private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud estado) // CORREGIDO: Cambié el parámetro de 'e' a 'estado'
+    private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud estado) 
     {
-        // Usar el IdEstado como clave en lugar de una propiedad 'Estado' que no existe
         var clave = (byte)estado.IdEstado;
         
         return EstadoConfig.TryGetValue(clave, out var cfg)
             ? new EstadoPanel
             {
                 Clave = clave,
-                Titulo = estado.NombreEstado, // CORREGIDO: Cambié Descripcion por NombreEstado
+                Titulo = estado.NombreEstado, 
                 Subtitulo = cfg.Subtitulo,
                 Icono = cfg.Icono,
                 Color = cfg.Color,
@@ -130,7 +126,7 @@ public partial class Indexboard : ComponentBase
             : new EstadoPanel
             {
                 Clave = clave,
-                Titulo = estado.NombreEstado, // CORREGIDO: Cambié Descripcion por NombreEstado
+                Titulo = estado.NombreEstado, 
                 Subtitulo = "Solicitudes",
                 Icono = "fa-question-circle",
                 Color = "secondary",
