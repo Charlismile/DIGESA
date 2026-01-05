@@ -14,7 +14,7 @@
                 <Icon Name="IconName.PersonFill" Class="me-1" Size="IconSize.x5" />
                 <h2 class="mb-0">Usuarios del Sistema</h2>
             </div>
-            <NavLink class="btn btn-light" href="/Create" Match="NavLinkMatch.All">
+            <NavLink class="btn btn-light" href="/Admin/Create" Match="NavLinkMatch.All">
                 <i class="fa-solid fa-user-plus me-1"></i>Registrar
             </NavLink>
         </div>
@@ -61,7 +61,7 @@
                     <ChildContent>
                         <div class="btn-group" role="group" aria-label="acciones">
                             <a class="btn btn-sm btn-light"
-                               href="@($"/Create/{context.UserName}")">
+                               href="@($"/Admin/Create/{context.UserName}")">
                                 <Tooltip Title="Editar Usuario">
                                     <i class="bi bi-pencil-square"></i>
                                 </Tooltip>

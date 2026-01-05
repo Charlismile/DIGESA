@@ -1,4 +1,4 @@
-﻿@page "/buscar-paciente"
+﻿@page "/Public/buscar-paciente"
 @using DIGESA.Models.CannabisModels
 
 <div class="container-fluid py-4">
@@ -17,22 +17,24 @@
                        class="form-control"
                        placeholder="Ingrese cédula o pasaporte (Ej: 8-800-0000 o PAS123456)"
                        @bind="documentoBusqueda"
-                       @onkeypress="HandleKeyPress"/>
+                       @onkeypress="HandleKeyPress" />
+
                 <button class="btn-custom btn-primary-custom"
                         @onclick="BuscarPaciente"
-                        disabled="@string.IsNullOrEmpty(documentoBusqueda)"
-                        type="button" style="width: 90px">
+                        disabled="@string.IsNullOrEmpty(documentoBusqueda)">
                     <i class="bi bi-search"></i> Buscar
                 </button>
             </div>
 
+
             @if (loading)
             {
                 <div class="text-center mt-3">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Buscando...</span>
+                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75"
+                         aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                             style="width: 75%"></div>
                     </div>
-                    <p class="mt-2">Buscando paciente...</p>
                 </div>
             }
             else if (busquedaRealizada)
@@ -155,7 +157,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     @if (pacienteDetalle.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
                                     {
                                         <div class="row mt-3">
@@ -224,25 +225,30 @@
                             </div>
                         </div>
                     }
+                    <<<<<<< HEAD
+                    =======
                     else
                     {
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <div class="alert alert-warning">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
-                                        <div>
-                                            <h5 class="alert-heading">⚠ NO ENCONTRADO</h5>
-                                            <p class="mb-0">No se encontró una solicitud para el documento:
-                                                <strong>@documentoBusqueda</strong></p>
-                                        </div>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                                    <div>
+                                        <h5 class="alert-heading">⚠ NO ENCONTRADO</h5>
+                                        <p class="mb-0">No se encontró una solicitud para el documento:
+                                            <strong>@documentoBusqueda</strong></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     }
+                    >>>>>>> origin/master
                 </div>
             }
         </div>
     </div>
 </div>
+
+<DynamicModal @ref="ModalForm"/>

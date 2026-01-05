@@ -45,6 +45,10 @@ public partial class Solicitud : ComponentBase
     private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
 
     private EditContext editContext = default!;
+    
+    private DynamicModal ModalForm = default!;
+    
+    private bool isProcessing = false;
 
     // Propiedades temporales para instalaciones personalizadas
     private string? instalacionPersonalizadaPaciente;
@@ -55,6 +59,7 @@ public partial class Solicitud : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         registro = new SolicitudCannabisFormViewModel();
+        registro.Acompanante ??= new DatosAcompananteVM();
         editContext = new EditContext(registro);
         messageStore = new ValidationMessageStore(editContext);
 
@@ -87,11 +92,11 @@ public partial class Solicitud : ComponentBase
                 t => t.Id
             );
 
-            Console.WriteLine($"Tipos de documento cargados: {tipoDocumentoMap.Count}");
+            ModalForm.ShowSuccess($"Tipos de documento cargados: {tipoDocumentoMap.Count}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al cargar tipos de documento: {ex.Message}");
+            ModalForm.ShowError($"Error al cargar tipos de documento: {ex.Message}");
         }
     }
 
@@ -235,45 +240,75 @@ public partial class Solicitud : ComponentBase
 
     private async Task NextStep()
     {
-        if (currentStepNumber == 1)
+        if (isProcessing)
         {
-            if (!ValidateStep1()) return;
-        }
-
-        if (currentStepNumber == 2)
-        {
-            if (!ValidateStep2()) return;
-        }
-
-        if (currentStepNumber == 3)
-        {
-            if (!ValidateStep3()) return;
-        }
-
-        if (currentStepNumber == 4)
-        {
-            if (!ValidateStep4()) return;
-        }
-
-        if (currentStepNumber == 5)
-        {
-            if (!ValidateStep5()) return;
-        }
-
-        if (currentStepNumber == steps.Count)
-        {
-            await SaveFormData();
+            Console.WriteLine("NextStep: ya se está procesando, ignorando reentrada.");
             return;
         }
 
-        if (currentStepNumber < steps.Count)
-        {
-            currentStepNumber++;
+        isProcessing = true;
+        StateHasChanged();
 
-            if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.No)
+        try
+        {
+            if (currentStepNumber == 1)
             {
-                currentStepNumber = 3;
+                if (!ValidateStep1()) return;
             }
+
+            if (currentStepNumber == 2)
+            {
+                if (!ValidateStep2()) return;
+            }
+
+            if (currentStepNumber == 3)
+            {
+                if (!ValidateStep3()) return;
+            }
+
+            if (currentStepNumber == 4)
+            {
+                if (!ValidateStep4()) return;
+            }
+
+            if (currentStepNumber == 5)
+            {
+                if (!ValidateStep5()) return;
+            }
+
+            if (currentStepNumber == steps.Count)
+            {
+                try
+                {
+                    Console.WriteLine("NextStep: iniciando SaveFormData...");
+                    await SaveFormData();
+                    Console.WriteLine("NextStep: SaveFormData finalizado.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"NextStep: excepción en SaveFormData: {ex.Message}");
+                }
+                return;
+            }
+
+            if (currentStepNumber < steps.Count)
+            {
+                currentStepNumber++;
+
+                if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.No)
+                {
+                    currentStepNumber = 3;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"NextStep: excepción general: {ex.Message}");
+        }
+        finally
+        {
+            isProcessing = false;
+            StateHasChanged();
         }
     }
 
@@ -789,13 +824,8 @@ public partial class Solicitud : ComponentBase
 
                 var unidad = productoUnidadList.FirstOrDefault(u => u.Id == registro.Producto.ProductoUnidadId)?.Name;
 
-                int? dosisFrecuencia = int.TryParse(registro.Producto.DosisFrecuencia, out var freq)
-                    ? freq
-                    : null;
-
-                int? dosisDuracion = int.TryParse(registro.Producto.DosisDuracion, out var dur)
-                    ? dur
-                    : null;
+                int? dosisFrecuencia = registro.Producto.DosisFrecuencia;
+                int? dosisDuracion   = registro.Producto.DosisDuracion;
 
                 var productoPaciente = new TbNombreProductoPaciente
                 {
@@ -1033,7 +1063,7 @@ public partial class Solicitud : ComponentBase
 
     private void OnSubmit()
     {
-        Console.WriteLine("Formulario enviado con éxito.");
+        ModalForm.ShowSuccess("Formulario enviado exitosamente.");
     }
 
     private async Task<int?> CrearOGuardarInstalacionPersonalizada(string nombreInstalacion)

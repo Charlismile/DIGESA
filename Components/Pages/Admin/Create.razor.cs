@@ -48,6 +48,8 @@ public partial class Create : ComponentBase
     private List<string> ErrorsFormMessages { get; set; } = new();
     private bool UserFound { get; set; } = false;
     private bool UpdatingUser { get; set; } = false;
+    
+    private DynamicModal ModalForm = default!;
 
     #endregion
 
@@ -75,10 +77,10 @@ public partial class Create : ComponentBase
                 if (IdentityUserData != null)
                 {
                     var roles = await _UserManager.GetRolesAsync(IdentityUserData);
-                    FormData.IsMedico = roles.Contains("Medico");
-                    FormData.IsPaciente = roles.Contains("Paciente");
+                    // FormData.IsMedico = roles.Contains("Medico");
+                    // FormData.IsPaciente = roles.Contains("Paciente");
                     FormData.IsAdministrador = roles.Contains("Administrador");
-                    FormData.IsExterno = roles.Contains("Externo");
+                    // FormData.IsExterno = roles.Contains("Externo");
                 }
                 UpdatingUser = true;
             }
@@ -92,7 +94,7 @@ public partial class Create : ComponentBase
         var SearchUser = await _UserManager.FindByEmailAsync(FormData.Email);
         if (SearchUser != null)
         {
-            ErrorsFormMessages.Add("El usuario ya está registrado en el sistema.");
+            ModalForm.ShowError("El usuario ya está registrado en el sistema.");
             return;
         }
 
@@ -113,13 +115,7 @@ public partial class Create : ComponentBase
             UserFound = true;
             FormData.IsFromActiveDirectory = false;
 
-            _ToastService.Notify(new ToastMessage
-            {
-                Type = ToastType.Info,
-                Title = "Usuario externo",
-                HelpText = DateTime.Now.ToString("g"),
-                Message = "Usuario no encontrado en el AD. Será registrado como usuario local."
-            });
+            ModalForm.ShowInfo("El usuario no se encontró en el directorio activo. Se procederá a registrarlo como usuario externo.");
         }
     }
 
@@ -138,25 +134,25 @@ public partial class Create : ComponentBase
         };
 
         List<string> Roles = new();
-        if (FormData.IsMedico)
-        {
-            Roles.Add("Medico");
-        }
-        
-        if (FormData.IsPaciente)
-        {
-            Roles.Add("Paciente");
-        }
+        // if (FormData.IsMedico)
+        // {
+        //     Roles.Add("Medico");
+        // }
+        //
+        // if (FormData.IsPaciente)
+        // {
+        //     Roles.Add("Paciente");
+        // }
         
         if (FormData.IsAdministrador)
         {
             Roles.Add("Administrador");
         }
         
-        if (FormData.IsExterno)
-        {
-            Roles.Add("Externo");
-        }
+        // if (FormData.IsExterno)
+        // {
+        //     Roles.Add("Externo");
+        // }g
 
         ResultModel Resultado;
         if (UpdatingUser)
@@ -168,17 +164,11 @@ public partial class Create : ComponentBase
             Resultado = await _UserService.CreateUser(UserData, Roles);
         }
 
-        _ToastService.Notify(new ToastMessage
-        {
-            Type = Resultado.Success ? ToastType.Success : ToastType.Danger,
-            Title = "Registro de usuario",
-            HelpText = DateTime.Now.ToString("g"),
-            Message = Resultado.Message
-        });
+        ModalForm.ShowSuccess("Registro con el usuario exitoso.");
 
         if (Resultado.Success)
         {
-            _NavigationProvider.NavigateTo("/UserRegistrados");
+            _NavigationProvider.NavigateTo("/Admin/UserRegistrados");
         }
     }
 

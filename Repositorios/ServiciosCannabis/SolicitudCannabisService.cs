@@ -1,6 +1,7 @@
 ﻿using DIGESA.Models.CannabisModels;
 using DIGESA.Models.CannabisModels.Formularios;
 using DIGESA.Models.CannabisModels.Listados;
+using DIGESA.Models.CannabisModels.Validadores;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,11 @@ public class SolicitudCannabisService : ISolicitudCannabisService
     
     public async Task<int> CrearSolicitudAsync(SolicitudCannabisFormViewModel model)
     {
+        var validator = new SolicitudCannabisDomainValidator();
+        var errores = validator.Validate(model);
+
+        if (errores.Any())
+            throw new InvalidOperationException(string.Join(" | ", errores));
         var paciente = new TbPaciente
         {
             PrimerNombre = model.Paciente.PrimerNombre,

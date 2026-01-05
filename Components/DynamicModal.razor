@@ -1,99 +1,111 @@
-﻿@* @using DIGESA.Models.CannabisModels *@
-@* @if (IsVisible) *@
-@* { *@
-@*     <div class="cm-backdrop" @onclick="Hide"></div> *@
-@*     <div class="cm-container"> *@
-@*         <div class="cm-card"> *@
-@*             <div class="cm-header cm-@Type"> *@
-@*                 <i class="fa-solid @IconCls fa-lg"></i> *@
-@*                 <span>@Title</span> *@
-@*             </div> *@
-@*             <div class="cm-body"> *@
-@*                 @if (Payload.Success) *@
-@*                 { *@
-@*                     @if (!string.IsNullOrEmpty(Payload.Message)) *@
-@*                     { *@
-@*                         <p>@Payload.Message</p> *@
-@*                     } *@
-@*                 } *@
-@*                 else *@
-@*                 { *@
-@*                     @foreach (var msg in Payload.Errores) *@
-@*                     { *@
-@*                         <p>@msg</p> *@
-@*                     } *@
-@*                 } *@
-@*             </div> *@
-@*             <div class="cm-footer"> *@
-@*                 <button class="cm-btn cm-btn-@Type" @onclick="Hide">Cerrar</button> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@* } *@
-@* *@
-@* @code { *@
-@*     private bool IsVisible; *@
-@* *@
-@*     [Parameter] public EventCallback OnHide { get; set; } *@
-@*     [Parameter] public string Title { get; set; } = "¡Mensaje!"; *@
-@*     [Parameter] public string Type { get; set; } = "error"; *@
-@*     [Parameter] public ResultModel Payload { get; set; } = new(); *@
-@* *@
-@*     private string IconCls => Type switch *@
-@*     { *@
-@*         "success" => "fa-circle-check", *@
-@*         "warning" => "fa-triangle-exclamation", *@
-@*         "info"    => "fa-circle-info", *@
-@*         _         => "fa-circle-xmark" *@
-@*     }; *@
-@* *@
-@*     public void Show(string title, ResultModel result, string type = "error") *@
-@*     { *@
-@*         Title = title; *@
-@*         Payload = result; *@
-@*         Type = type; *@
-@*         IsVisible = true; *@
-@*         StateHasChanged(); *@
-@*     } *@
-@* *@
-@*     public async Task Hide() *@
-@*     { *@
-@*         IsVisible = false; *@
-@*         StateHasChanged(); *@
-@*         if (OnHide.HasDelegate) *@
-@*             await OnHide.InvokeAsync(null); *@
-@*     } *@
-@*      *@
-@*     public void ShowError(string mensaje) *@
-@*     { *@
-@*         var result = new ResultModel *@
-@*         { *@
-@*             Success = false, *@
-@*             Errores = new List<string> { mensaje } *@
-@*         }; *@
-@* *@
-@*         Show("¡Atención!", result, "error"); *@
-@*     } *@
-@* *@
-@*     public void ShowSuccess(string mensaje, string? titulo = "¡Éxito!") *@
-@*     { *@
-@*         var result = new ResultModel *@
-@*         { *@
-@*             Success = true, *@
-@*             Message = mensaje *@
-@*         }; *@
-@* *@
-@*         Show(titulo, result, "success"); *@
-@*     } *@
-@* *@
-@*     public void ShowWarning(string mensaje, string? titulo = "Advertencia") *@
-@*     { *@
-@*         var result = new ResultModel *@
-@*         { *@
-@*             Success = false, *@
-@*             Errores = new List<string> { mensaje } *@
-@*         }; *@
-@* *@
-@*         Show(titulo, result, "warning"); *@
-@*     } *@
-@* } *@
+﻿@using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
+@if (IsVisible)
+{
+    <div class="cm-backdrop" @onclick="Hide"></div>
+    <div class="cm-container">
+        <div class="cm-card">
+            <div class="cm-header cm-@Type">
+                <i class="fa-solid @IconCls fa-lg"></i>
+                <span>@Title</span>
+            </div>
+            <div class="cm-body">
+                @if (Payload.Success)
+                {
+                    @if (!string.IsNullOrEmpty(Payload.Message))
+                    {
+                        <p>@Payload.Message</p>
+                    }
+                }
+                else
+                {
+                    @foreach (var msg in Payload.Errors)
+                    {
+                        <p>@msg</p>
+                    }
+                }
+            </div>
+            <div class="cm-footer">
+                <button class="cm-btn cm-btn-@Type" @onclick="Hide">Cerrar</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool IsVisible;
+
+    [Parameter] public EventCallback OnHide { get; set; }
+    [Parameter] public string Title { get; set; } = "¡Mensaje!";
+    [Parameter] public string Type { get; set; } = "error";
+    [Parameter] public ResultModel Payload { get; set; } = new();
+
+    private string IconCls => Type switch
+    {
+        "success" => "fa-circle-check",
+        "warning" => "fa-triangle-exclamation",
+        "info"    => "fa-circle-info",
+        _         => "fa-circle-xmark"
+    };
+
+    public void Show(string title, ResultModel result, string type = "error")
+    {
+        Title = title;
+        Payload = result;
+        Type = type;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public async Task Hide()
+    {
+        IsVisible = false;
+        StateHasChanged();
+        if (OnHide.HasDelegate)
+            await OnHide.InvokeAsync(null);
+    }
+
+    public void ShowError(string mensaje)
+    {
+        var result = new ResultModel
+        {
+            Success = false,
+            Errors = new List<string> { mensaje }
+        };
+
+        Show("¡Atención!", result, "error");
+    }
+
+    public void ShowSuccess(string mensaje, string? titulo = "¡Éxito!")
+    {
+        var result = new ResultModel
+        {
+            Success = true,
+            Message = mensaje
+        };
+
+        Show(titulo, result, "success");
+    }
+
+    public void ShowInfo(string mensaje, string? titulo = "Información")
+    {
+        var result = new ResultModel
+        {
+            Success = true,
+            Message = mensaje
+        };
+
+        Show(titulo, result, "info");
+    }
+    
+    public void ShowWarning(string mensaje, string? titulo = "Advertencia")
+    {
+        var result = new ResultModel
+        {
+            Success = false,
+            Errors = new List<string> { mensaje }
+        };
+
+        Show(titulo, result, "warning");
+    }
+}
