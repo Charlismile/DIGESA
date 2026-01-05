@@ -26,8 +26,8 @@ public class DatosProductoVM
     public string? NombreConcentracion { get; set; }
 
     public string? DetDosisPaciente { get; set; }
-    public string? DosisFrecuencia { get; set; }
-    public string? DosisDuracion { get; set; }
+    public int? DosisFrecuencia { get; set; }
+    public int? DosisDuracion { get; set; }
 
     public EnumViewModel.UsaDosisRescate UsaDosisRescateEnum { get; set; }
     public string? DetDosisRescate { get; set; }

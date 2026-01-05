@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XiqG9M3Q6Ir0KJuYIHkVi4NCI144omquuzoe8/a4UQk=",
+  "Hash": "Kd+wmMX3/fnODTwHehbb7tsRVn9UZJY8QMh4ra0rfcY=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -430,8 +430,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tbhd8jrh25",
-      "Integrity": "+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=",
+      "Fingerprint": "14knpbf53s",
+      "Integrity": "kbpC9rS6fXFx/E6bhIN6N4oLDQun7CYudmgb8R5eqCY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\custom.css"
@@ -1002,6 +1002,69 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\27d55df0-d6aa-4947-a7e1-74367e587214.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/9/27d55df0-d6aa-4947-a7e1-74367e587214#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "om77y22mqq",
+      "Integrity": "oJM0d1P2OjPb4lH29qBfJ7az1WAWNF4gu8aQnga3YjY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\9\\27d55df0-d6aa-4947-a7e1-74367e587214.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\7768ad12-7e9d-4df2-828f-8cae913fceac.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/9/7768ad12-7e9d-4df2-828f-8cae913fceac#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\9\\7768ad12-7e9d-4df2-828f-8cae913fceac.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\cc09d35d-9992-40ea-9178-6b462b3adba6.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/9/cc09d35d-9992-40ea-9178-6b462b3adba6#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8aqhuamaeh",
+      "Integrity": "UMXjpGgxRMZABGeTjRE+2fbxwvIklKRuxwbNuPDG32E=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\9\\cc09d35d-9992-40ea-9178-6b462b3adba6.pdf"
     }
   ],
   "Endpoints": [
@@ -2265,6 +2328,51 @@
       ]
     },
     {
+      "Route": "css/custom.14knpbf53s.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10335"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kbpC9rS6fXFx/E6bhIN6N4oLDQun7CYudmgb8R5eqCY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 20:04:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "14knpbf53s"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custom.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-kbpC9rS6fXFx/E6bhIN6N4oLDQun7CYudmgb8R5eqCY="
+        }
+      ]
+    },
+    {
       "Route": "css/custom.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
       "Selectors": [],
@@ -2275,7 +2383,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6830"
+          "Value": "10335"
         },
         {
           "Name": "Content-Type",
@@ -2283,11 +2391,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\""
+          "Value": "\"kbpC9rS6fXFx/E6bhIN6N4oLDQun7CYudmgb8R5eqCY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 29 Dec 2025 18:49:43 GMT"
+          "Value": "Mon, 05 Jan 2026 20:04:14 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2297,52 +2405,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="
-        }
-      ]
-    },
-    {
-      "Route": "css/custom.tbhd8jrh25.css",
-      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "6830"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 29 Dec 2025 18:49:43 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "tbhd8jrh25"
-        },
-        {
-          "Name": "label",
-          "Value": "css/custom.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="
+          "Value": "sha256-kbpC9rS6fXFx/E6bhIN6N4oLDQun7CYudmgb8R5eqCY="
         }
       ]
     },
@@ -4729,6 +4792,252 @@
         {
           "Name": "integrity",
           "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/27d55df0-d6aa-4947-a7e1-74367e587214.om77y22mqq.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\27d55df0-d6aa-4947-a7e1-74367e587214.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "59337"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oJM0d1P2OjPb4lH29qBfJ7az1WAWNF4gu8aQnga3YjY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "om77y22mqq"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/9/27d55df0-d6aa-4947-a7e1-74367e587214.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oJM0d1P2OjPb4lH29qBfJ7az1WAWNF4gu8aQnga3YjY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/27d55df0-d6aa-4947-a7e1-74367e587214.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\27d55df0-d6aa-4947-a7e1-74367e587214.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "59337"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oJM0d1P2OjPb4lH29qBfJ7az1WAWNF4gu8aQnga3YjY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oJM0d1P2OjPb4lH29qBfJ7az1WAWNF4gu8aQnga3YjY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/7768ad12-7e9d-4df2-828f-8cae913fceac.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\7768ad12-7e9d-4df2-828f-8cae913fceac.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/9/7768ad12-7e9d-4df2-828f-8cae913fceac.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/7768ad12-7e9d-4df2-828f-8cae913fceac.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\7768ad12-7e9d-4df2-828f-8cae913fceac.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/cc09d35d-9992-40ea-9178-6b462b3adba6.8aqhuamaeh.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\cc09d35d-9992-40ea-9178-6b462b3adba6.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "60687"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UMXjpGgxRMZABGeTjRE+2fbxwvIklKRuxwbNuPDG32E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8aqhuamaeh"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/9/cc09d35d-9992-40ea-9178-6b462b3adba6.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-UMXjpGgxRMZABGeTjRE+2fbxwvIklKRuxwbNuPDG32E="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9/cc09d35d-9992-40ea-9178-6b462b3adba6.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\9\\cc09d35d-9992-40ea-9178-6b462b3adba6.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "60687"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UMXjpGgxRMZABGeTjRE+2fbxwvIklKRuxwbNuPDG32E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 05 Jan 2026 19:11:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-UMXjpGgxRMZABGeTjRE+2fbxwvIklKRuxwbNuPDG32E="
         }
       ]
     }

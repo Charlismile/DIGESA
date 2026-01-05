@@ -1,4 +1,4 @@
-﻿@page "/registro-paciente"
+﻿@page "/Public/registro-paciente"
 @using DIGESA.Models.CannabisModels
 @using DIGESA.Models.CannabisModels.Common
 
@@ -360,118 +360,115 @@
                         }
                         else
                         {
-                            @if (currentStepNumber == 2)
+                            @if (currentStepNumber == 2 && registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
                             {
-                                @if (registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
-                                {
-                                    <!-- DATOS DEL ACOMPANANTE -->
-                                    <div class="card px-0 mb-1">
-                                        <div class="card-header custom-card-header2 fw-bold">Datos del Acompañante
-                                            Autorizado
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row g-3">
-                                                <div class="col-sm-3">
-                                                    <label>Primer Nombre</label>
-                                                    <InputText @bind-Value="registro.Acompanante.PrimerNombre"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.PrimerNombre)"/>
+                                <!-- DATOS DEL ACOMPANANTE -->
+                                <div class="card px-0 mb-1">
+                                    <div class="card-header custom-card-header2 fw-bold">Datos del Acompañante
+                                        Autorizado
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-sm-3">
+                                                <label>Primer Nombre</label>
+                                                <InputText @bind-Value="registro.Acompanante!.PrimerNombre"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.PrimerNombre)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label>Segundo Nombre</label>
+                                                <InputText @bind-Value="registro.Acompanante.SegundoNombre"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.SegundoNombre)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label>Primer Apellido</label>
+                                                <InputText @bind-Value="registro.Acompanante.PrimerApellido"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.PrimerApellido)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label>Segundo Apellido</label>
+                                                <InputText @bind-Value="registro.Acompanante.SegundoApellido"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.SegundoApellido)"/>
+                                            </div>
+                                            <div class="col-3">
+                                                <label>Tipo de Documento</label>
+                                                <div class="d-flex gap-4">
+                                                    <InputRadioGroup
+                                                        @bind-Value="registro.Acompanante.TipoDocumento">
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input"
+                                                                        Value="@EnumViewModel.TipoDocumento.Cedula"
+                                                                        id="Cedula"/>
+                                                            <label class="form-check-label"
+                                                                   for="Cedula">Cédula</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input"
+                                                                        Value="@EnumViewModel.TipoDocumento.Pasaporte"
+                                                                        id="Pasaporte"/>
+                                                            <label class="form-check-label" for="Pasaporte">Pasaporte</label>
+                                                        </div>
+                                                    </InputRadioGroup>
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    <label>Segundo Nombre</label>
-                                                    <InputText @bind-Value="registro.Acompanante.SegundoNombre"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.SegundoNombre)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label for="numeroDocumento">Número de Documento</label>
+                                                <InputText id="numeroDocumento" class="form-control"
+                                                           @bind-Value="registro.Acompanante.NumeroDocumento"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.NumeroDocumento)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label>Nacionalidad</label>
+                                                <InputText @bind-Value="registro.Acompanante.Nacionalidad"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.Nacionalidad)"/>
+                                            </div>
+                                            <div class="col-3">
+                                                <label>Parentesco</label>
+                                                <div class="d-flex gap-4">
+                                                    <InputRadioGroup
+                                                        @bind-Value="registro.Acompanante.Parentesco">
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input"
+                                                                        Value="@EnumViewModel.Parentesco.Madre" id="Madre"/>
+                                                            <label class="form-check-label" for="Madre">Madre con
+                                                                patria potestad</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input"
+                                                                        Value="@EnumViewModel.Parentesco.Padre" id="Padre"/>
+                                                            <label class="form-check-label" for="Padre">Padre con
+                                                                patria potestad</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <InputRadio class="form-check-input"
+                                                                        Value="@EnumViewModel.Parentesco.Tutor" id="Tutor"/>
+                                                            <label class="form-check-label" for="Tutor">Tutor
+                                                                designado</label>
+                                                        </div>
+                                                    </InputRadioGroup>
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    <label>Primer Apellido</label>
-                                                    <InputText @bind-Value="registro.Acompanante.PrimerApellido"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.PrimerApellido)"/>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>Segundo Apellido</label>
-                                                    <InputText @bind-Value="registro.Acompanante.SegundoApellido"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.SegundoApellido)"/>
-                                                </div>
-                                                <div class="col-3">
-                                                    <label>Tipo de Documento</label>
-                                                    <div class="d-flex gap-4">
-                                                        <InputRadioGroup
-                                                            @bind-Value="registro.Acompanante.TipoDocumento">
-                                                            <div class="form-check">
-                                                                <InputRadio class="form-check-input"
-                                                                            Value="@EnumViewModel.TipoDocumento.Cedula"
-                                                                            id="Cedula"/>
-                                                                <label class="form-check-label"
-                                                                       for="Cedula">Cédula</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <InputRadio class="form-check-input"
-                                                                            Value="@EnumViewModel.TipoDocumento.Pasaporte"
-                                                                            id="Pasaporte"/>
-                                                                <label class="form-check-label" for="Pasaporte">Pasaporte</label>
-                                                            </div>
-                                                        </InputRadioGroup>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label for="numeroDocumento">Número de Documento</label>
-                                                    <InputText id="numeroDocumento" class="form-control"
-                                                               @bind-Value="registro.Acompanante.NumeroDocumento"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.NumeroDocumento)"/>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>Nacionalidad</label>
-                                                    <InputText @bind-Value="registro.Acompanante.Nacionalidad"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.Nacionalidad)"/>
-                                                </div>
-                                                <div class="col-3">
-                                                    <label>Parentesco</label>
-                                                    <div class="d-flex gap-4">
-                                                        <InputRadioGroup
-                                                            @bind-Value="registro.Acompanante.Parentesco">
-                                                            <div class="form-check">
-                                                                <InputRadio class="form-check-input"
-                                                                            Value="@EnumViewModel.Parentesco.Madre" id="Madre"/>
-                                                                <label class="form-check-label" for="Madre">Madre con
-                                                                    patria potestad</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <InputRadio class="form-check-input"
-                                                                            Value="@EnumViewModel.Parentesco.Padre" id="Padre"/>
-                                                                <label class="form-check-label" for="Padre">Padre con
-                                                                    patria potestad</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <InputRadio class="form-check-input"
-                                                                            Value="@EnumViewModel.Parentesco.Tutor" id="Tutor"/>
-                                                                <label class="form-check-label" for="Tutor">Tutor
-                                                                    designado</label>
-                                                            </div>
-                                                        </InputRadioGroup>
-                                                    </div>
-                                                    <ValidationMessage For="@(() => registro.Acompanante.Parentesco)"/>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>Teléfono Móvil</label>
-                                                    <InputText @bind-Value="registro.Acompanante.TelefonoMovil"
-                                                               class="form-control"/>
-                                                    <ValidationMessage
-                                                        For="@(() => registro.Acompanante.TelefonoMovil)"/>
-                                                </div>
+                                                <ValidationMessage For="@(() => registro.Acompanante.Parentesco)"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label>Teléfono Móvil</label>
+                                                <InputText @bind-Value="registro.Acompanante.TelefonoMovil"
+                                                           class="form-control"/>
+                                                <ValidationMessage
+                                                    For="@(() => registro.Acompanante.TelefonoMovil)"/>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
                             }
                             else if (currentStepNumber == 3)
                             {
@@ -644,7 +641,7 @@
                                             <hr>
                                             <!-- Producto del paciente -->
                                             <div class="col-6">
-                                                <label class="mb-2">Principio activo</label>hh
+                                                <label class="mb-2">Principio activo</label>
                                                 <div class="d-flex gap-4">
                                                     <InputRadioGroup
                                                         @bind-Value="registro.Producto.NombreProductoEnum"
@@ -1459,3 +1456,5 @@
         </div>
     </div>
 </EditForm>
+
+<DynamicModal @ref="ModalForm"/>

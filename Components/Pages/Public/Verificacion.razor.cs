@@ -18,6 +18,8 @@ public partial class Verificacion : ComponentBase
     private bool busquedaRealizada;
     private bool pacienteEncontrado;
     private bool loading;
+    
+    private DynamicModal ModalForm = default!;
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
@@ -40,13 +42,14 @@ public partial class Verificacion : ComponentBase
 
         try
         {
+            ModalForm.ShowInfo("Buscando paciente...");
             pacienteEstado = await PacienteService.GetEstadoPacienteAsync(documentoBusqueda);
             pacienteDetalle = await PacienteService.BuscarPorDocumentoAsync(documentoBusqueda);
             pacienteEncontrado = pacienteEstado is not null && !string.IsNullOrEmpty(pacienteEstado.Documento);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al buscar paciente: {ex.Message}");
+            ModalForm.ShowError($"Error al buscar paciente. No encontrado.");
         }
         finally
         {

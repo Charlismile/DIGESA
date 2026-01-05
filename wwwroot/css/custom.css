@@ -327,3 +327,194 @@ body {
 .custom-card-header2 {
     background-color: var(--bs-gray-200);
 }
+
+/*Dynamic modal*/
+/* Estilo para el MODAL */
+.cm-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.cm-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 8vh;
+    z-index: 1001;
+    animation: slideDown 0.35s ease-out;
+}
+
+.cm-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 420px;
+    max-width: 90vw;
+    overflow: hidden;
+    animation: scaleIn 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cm-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    padding: 16px;
+    font-size: 18px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cm-body {
+    padding: 20px;
+    font-size: 15.5px;
+    color: #333;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.cm-footer {
+    padding: 16px;
+    text-align: right;
+    border-top: 1px solid #e0e0e0;
+}
+
+.cm-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.cm-btn-error {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.cm-btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.cm-btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.cm-btn-info {
+    background-color: #3498db;
+    color: white;
+}
+
+.cm-error {
+    color: #e74c3c;
+}
+
+.cm-success {
+    color: #2ecc71;
+}
+
+.cm-warning {
+    color: #f39c12;
+}
+
+.cm-info {
+    color: #3498db;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.wrap-header {
+    white-space: normal !important;
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+/* un poco más de espacio vertical */
+table.table-sm th,
+table.table-sm td {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+/* posición para el botón eliminar */
+.fila-sustancia {
+    position: relative;
+}
+
+.btn-remove {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.custom-light-header th {
+    background-color: #f0f1f4 !important;
+    color: #212529 !important;
+}
+
+
+/* AUMENTAR Z-INDEX DE MODAL CON ESPECIFICIDAD */
+.cm-backdrop {
+    z-index: 99999 !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(8px) !important; /* Aplicar blur al backdrop */
+}
+
+.cm-container {
+    z-index: 100000 !important;
+    position: fixed !important;
+}
+
+/* Cuando hay múltiples modales, aplicar blur a los modales inferiores */
+.modal.show ~ .modal .modal-content {
+    filter: blur(4px) !important;
+    opacity: 0.8 !important;
+}
+
+/* Asegurar que el modal activo no tenga blur */
+.modal.show:last-of-type .modal-content {
+    filter: none !important;
+    opacity: 1 !important;
+}

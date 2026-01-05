@@ -6,7 +6,8 @@ namespace DIGESA.Models.CannabisModels.Formularios;
 public class SolicitudCannabisFormViewModel
 {
     public DatosPacienteVM Paciente { get; set; } = new();
-    public DatosAcompananteVM? Acompanante { get; set; }
+    public DatosAcompananteVM Acompanante { get; set; } = new();
+
     public DatosMedicosVM Medico { get; set; } = new();
     public DatosProductoVM Producto { get; set; } = new();
     public DiagnosticoViewModel Diagnostico { get; set; } = new();

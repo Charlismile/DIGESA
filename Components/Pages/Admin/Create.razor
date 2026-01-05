@@ -16,7 +16,7 @@
                 <div class="card shadow-sm">
                     <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2b5205; color: white;">
                         <h2 class="mb-0">Registro de Usuario</h2>
-                        <NavLink class="btn btn-light" href="/UserRegistrados" Match="NavLinkMatch.All">
+                        <NavLink class="btn btn-light" href="/Admin/UserRegistrados" Match="NavLinkMatch.All">
                             <i class="fa-solid fa-arrow-left me-1"></i> Volver
                         </NavLink>
                     </div>
@@ -60,22 +60,22 @@
                                     <div class="card-header bg-light fw-bold">Roles Asignados</div>
                                     <div class="card-body">
                                         <div class="row row-cols-1 gx-2 gy-2">
-                                            <div class="col d-flex align-items-center">
-                                                <InputCheckbox id="IsMedico" class="form-check-input me-2" @bind-Value="FormData.IsMedico" />
-                                                <label class="form-check-label" for="IsMedico">Médico</label>
-                                            </div>
-                                            <div class="col d-flex align-items-center">
-                                                <InputCheckbox id="IsPaciente" class="form-check-input me-2" @bind-Value="FormData.IsPaciente" />
-                                                <label class="form-check-label" for="IsPaciente">Paciente</label>
-                                            </div>
+                                            @* <div class="col d-flex align-items-center"> *@
+                                            @*     <InputCheckbox id="IsMedico" class="form-check-input me-2" @bind-Value="FormData.IsMedico" /> *@
+                                            @*     <label class="form-check-label" for="IsMedico">Médico</label> *@
+                                            @* </div> *@
+                                            @* <div class="col d-flex align-items-center"> *@
+                                            @*     <InputCheckbox id="IsPaciente" class="form-check-input me-2" @bind-Value="FormData.IsPaciente" /> *@
+                                            @*     <label class="form-check-label" for="IsPaciente">Paciente</label> *@
+                                            @* </div> *@
                                             <div class="col d-flex align-items-center">
                                                 <InputCheckbox id="IsAdministrador" class="form-check-input me-2" @bind-Value="FormData.IsAdministrador" />
                                                 <label class="form-check-label" for="IsAdministrador">Administrador</label>
                                             </div>
-                                            <div class="col d-flex align-items-center">
-                                                <InputCheckbox id="IsExterno" class="form-check-input me-2" @bind-Value="FormData.IsExterno" />
-                                                <label class="form-check-label" for="IsExterno">Externo</label>
-                                            </div>
+                                            @* <div class="col d-flex align-items-center"> *@
+                                            @*     <InputCheckbox id="IsExterno" class="form-check-input me-2" @bind-Value="FormData.IsExterno" /> *@
+                                            @*     <label class="form-check-label" for="IsExterno">Externo</label> *@
+                                            @* </div> *@
                                         </div>
                                     </div>
                                 </div>
@@ -92,3 +92,5 @@
         </div>
     </EditForm>
 </div>
+
+<DynamicModal @ref="ModalForm"/>

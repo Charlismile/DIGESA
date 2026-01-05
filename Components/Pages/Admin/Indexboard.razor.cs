@@ -73,7 +73,7 @@ public partial class Indexboard : ComponentBase
     {
         PanelAcciones = new List<AccionPanel>
         {
-            new() { Titulo="Registrar Paciente", Icono="fa-user-plus", Color="primary", Borde="#0d6efd", Route="/registro-paciente" },
+            new() { Titulo="Registrar Paciente", Icono="fa-user-plus", Color="primary", Borde="#0d6efd", Route="/Public/registro-paciente" },
             new() { Titulo="Ver Solicitudes", Icono="fa-file-invoice", Color="success", Borde="#198754", Route="/admin/solicitudes" },
         };
     }
@@ -105,7 +105,6 @@ public partial class Indexboard : ComponentBase
             { 1, ("Pendientes", "fa-paper-plane", "info", "rgba(13,202,240,0.05)", "#0dcaf0") },
             { 2, ("Aprobadas", "fa-check-circle", "success", "rgba(25,135,84,0.05)", "#198754") },
             { 3, ("Rechazadas", "fa-times-circle", "danger", "rgba(220,53,69,0.05)", "#dc3545") },
-            { 4, ("En Revisión", "fa-search", "warning", "rgba(255,193,7,0.05)", "#ffc107") }
         };
 
     private EstadoPanel CrearEstadoPanel(TbEstadoSolicitud estado) 
@@ -143,6 +142,6 @@ public partial class Indexboard : ComponentBase
 
     private void IrAPanelEstado(byte estado)
     {
-        NavigationManager.NavigateTo($"/Admin/Solicitudes", forceLoad: true);
+        NavigationManager.NavigateTo($"/Admin/Solicitudes?estado={estado}");
     }
 }
