@@ -22,4 +22,11 @@ public class PacienteViewModel
     public EnumViewModel.RequiereAcompanante RequiereAcompanante { get; set; }
     public EnumViewModel.MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
     public string? TipoDiscapacidad { get; set; }
+    
+    // acompanante
+    public string? NombreAcompanante { get; set; }
+    public string? DocumentoAcompanante { get; set; }
+    public string? TelefonoAcompanante { get; set; }
+    public string? ParentescoAcompanante { get; set; }
+
 }

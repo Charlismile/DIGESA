@@ -12,6 +12,7 @@
 
         <div class="d-flex align-items-center gap-2">
             <label for="estadoSelect" class="form-label mb-0">Filtrar por estado:</label>
+<<<<<<< HEAD
             <select class="form-select form-select-sm" style="width: 200px;"
                     @bind="EstadoSeleccionado"
                     @bind:event="onchange">
@@ -19,6 +20,17 @@
                 <option value="Pendiente">Pendiente</option>
                 <option value="Aprobada">Aprobada</option>
                 <option value="Rechazada">Rechazada</option>
+=======
+            <select class="form-select form-select-sm"
+                    style="width: 200px;"
+                    @bind="EstadoSeleccionado"
+                    @bind:after="CargarSolicitudesAsync">
+                <option value="">Todos</option>
+                @foreach (var estado in EstadosDisponibles)
+                {
+                    <option value="@estado">@estado</option>
+                }
+>>>>>>> origin/master
             </select>
 
         </div>
@@ -106,6 +118,16 @@
 
 @code {
     private List<PacienteListadoViewModel>? SolicitudesLista;
+<<<<<<< HEAD
+=======
+    private readonly List<string> EstadosDisponibles = new()
+    {
+        "Pendiente",
+        "Aprobado",
+        "Rechazado"
+    };
+
+>>>>>>> origin/master
     private string? EstadoSeleccionado;
     private string? Mensaje;
 
@@ -130,6 +152,7 @@
         }
     }
 
+<<<<<<< HEAD
 
 
     private async Task FiltrarPorEstado(ChangeEventArgs e)
@@ -138,6 +161,8 @@
         await CargarSolicitudesAsync();
     }
 
+=======
+>>>>>>> origin/master
     private async Task Aprobar(int id)
     {
         await CambiarEstadoInterno(id, true);

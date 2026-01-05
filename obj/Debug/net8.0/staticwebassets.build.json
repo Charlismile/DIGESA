@@ -1,0 +1,4736 @@
+{
+  "Version": 1,
+  "Hash": "aBpvLY0JCKMPkRasNH1/NGFBKwKa/e23/N28FMKLXbk=",
+  "Source": "DIGESA",
+  "BasePath": "_content/DIGESA",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "DIGESA\\wwwroot",
+      "Source": "DIGESA",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "7t9tbfaemk",
+      "Integrity": "FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "blazor.bootstrap.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "63oqyoiiv4",
+      "Integrity": "jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "blazor.bootstrap.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5vmds449nb",
+      "Integrity": "/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "blazor.bootstrap.pdf.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ct0ej5e0q0",
+      "Integrity": "oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "blazor.bootstrap.sortable-list.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ezlxc6gzv3",
+      "Integrity": "du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "blazor.bootstrap.theme-switcher.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "pisakkcwob",
+      "Integrity": "Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "icon/128X128.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "tngynhsog2",
+      "Integrity": "J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "pdfjs-4.0.379.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "j8zp7bt7w3",
+      "Integrity": "XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
+      "SourceId": "Blazor.Bootstrap",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\",
+      "BasePath": "_content/Blazor.Bootstrap",
+      "RelativePath": "pdfjs-4.0.379.worker.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "79hai7knhw",
+      "Integrity": "JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css",
+      "SourceId": "Blazored.Toast",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\",
+      "BasePath": "_content/Blazored.Toast",
+      "RelativePath": "Blazored.Toast.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "2eijknf10w",
+      "Integrity": "Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+      "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\",
+      "BasePath": "_content/Microsoft.AspNetCore.Components.QuickGrid",
+      "RelativePath": "Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "25o87uqmvr",
+      "Integrity": "Nuu0BHvGBlwN6c5FSVjV9yxX0YPfwg3ufdOucRJCOz0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\QuickGrid.razor.js",
+      "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\",
+      "BasePath": "_content/Microsoft.AspNetCore.Components.QuickGrid",
+      "RelativePath": "QuickGrid.razor.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "eu7w3d5g1a",
+      "Integrity": "tnamWuQ2F5I2J8hbtBt4/9i8Mb2y2o+9Tepj5tUrSdU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\QuickGrid.razor.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "DIGESA#[.{fingerprint}]?.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "Fingerprint": "m3sr3vzxyg",
+      "Integrity": "/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "DIGESA#[.{fingerprint}]!.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "spzt9nub66",
+      "Integrity": "EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\.gitignore",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "#[.{fingerprint}]?.gitignore",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "z2jl3osqow",
+      "Integrity": "29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\.gitignore"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\app.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "app#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "anyowl07mg",
+      "Integrity": "ZhlP3IactCFQuIGxRjWKhSPhjJUsFS1sTm1mWzs5Wzc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\app.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6gzpyzhau4",
+      "Integrity": "SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8inm30yfxf",
+      "Integrity": "gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\bootstrap.min.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "css/bootstrap.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "36dpav9fus",
+      "Integrity": "FXsYTiOgM07K1veudS21VOtMmVQ8R02A/i4jciCyJDc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "css/custom#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "tbhd8jrh25",
+      "Integrity": "+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\custom.css"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\favicon.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "favicon#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ifv42okdf2",
+      "Integrity": "4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\1.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/1#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "utqatr7pkj",
+      "Integrity": "riA0vL3+0Aq+DQIaOcvB9AfgENIXBG2yGRux/shL5UQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\1.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\2.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/2#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vm2hri2nf4",
+      "Integrity": "l4pE0Ju98vlNmEE+0+o4TgExVCfd3OKwnfrgkUcD9M0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\2.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\3.jpeg",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/3#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "p2hgf1hkwe",
+      "Integrity": "cd2LKWVZI5ZguJBTlnQ9qOYEQk9/+i2T3kbF7KqUZbU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-gob.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/logo-gob#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "yo04fes8co",
+      "Integrity": "ggOMUaElUgNLWwSHBO5h1duBv/iyhiY3n4ZU38iMo+0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo-gob.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-minsa.png",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "images/logo-minsa#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "tivpvu0jwc",
+      "Integrity": "1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo-minsa.png"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0rpke69bci",
+      "Integrity": "pEoyVi8XuFvCKoSFsmTVdijMXLbcvhFTi5Ujq3Ew1hc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js.map",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.js#[.{fingerprint}]?.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6pdc2jztkx",
+      "Integrity": "Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hd3gran6i8",
+      "Integrity": "6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js.map",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/bootstrap.bundle.min.js#[.{fingerprint}]?.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6pdc2jztkx",
+      "Integrity": "Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\sidebar.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/sidebar#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "96zco84gtk",
+      "Integrity": "70rNJhRm0kPewZozIKNpyo8XDrDh6DP40iWid6UV1uQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sidebar.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\theme.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/theme#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "19eajzmv78",
+      "Integrity": "peXuyeJQynMD4z94F9X3wtoBMGiRopyuf6fOi7oKkdc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\theme.js"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\README.md",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "README#[.{fingerprint}]?.md",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vd4pba7n6l",
+      "Integrity": "c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\README.md"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cazrs8q1yl",
+      "Integrity": "ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/0cc19aec-e5a3-4f9b-8240-5001961a91c7#[.{fingerprint}]?.bacpac",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "94u6v4vrun",
+      "Integrity": "B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/110268a5-f0e5-4085-8b65-31718c1f981e#[.{fingerprint}]?.bacpac",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "94u6v4vrun",
+      "Integrity": "B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/67faa3b1-de93-4a4c-8fd9-d881bbd4f40e#[.{fingerprint}]?.bacpac",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "94u6v4vrun",
+      "Integrity": "B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/75f4469d-63d9-418c-b200-0a104da9d5de#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "azyzg24nv0",
+      "Integrity": "KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/8b24d8ac-6317-4984-b95d-ef0fa39ce175#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "azyzg24nv0",
+      "Integrity": "KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/c575c5f5-24db-4c3f-8cdd-d16d6020ad04#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "azyzg24nv0",
+      "Integrity": "KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/7/ca2e1b2c-22a4-4086-80d9-be01c6b6829c#[.{fingerprint}]?.bacpac",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "94u6v4vrun",
+      "Integrity": "B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/8/15771e50-84cb-4e95-943e-2eb5aae95d7b#[.{fingerprint}]?.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/8/6792db97-487d-43ce-8133-b0ba86d3c213#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/8/a17d08ff-b0aa-4ff0-a30f-85f006965d28#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "uploads/8/adfc6b37-58a0-467a-ab6d-7dffc99c111e#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.5vmds449nb.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "77889"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 18:04:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5vmds449nb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.63oqyoiiv4.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22639"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 09 Nov 2024 14:43:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "63oqyoiiv4"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.css"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "14166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 02 Nov 2024 09:45:23 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7t9tbfaemk"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/Blazor.Bootstrap.bundle.scp.css"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/Blazor.Bootstrap.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "14166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 02 Nov 2024 09:45:23 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FYJNevdgdMX4R7rEhQxDvKVdV5SyZSlRT4eVSU+Lgyk="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22639"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 09 Nov 2024 14:43:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jqE3jyGxWnCTc0Y7oGfHKZOpZM9udgb38MQGLaxmkNc="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "77889"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 18:04:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/56eGJ+O8AbP07k4uCOAQdLbbj1ZsrX1aBINOPS9IAM="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.ct0ej5e0q0.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7290"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ct0ej5e0q0"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.pdf.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.pdf.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7290"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oAIj2P0Z/6hTwjGA3OGvWLdxMP4KwE35+AQzWQTpxAg="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.ezlxc6gzv3.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1930"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Apr 2024 19:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ezlxc6gzv3"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.sortable-list.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.sortable-list.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1930"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Apr 2024 19:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-du71NM6e2+m9l81ldV+Gbr74ER7Xx1GnJFg+rIY6OQU="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2896"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 20 Nov 2024 15:30:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.pisakkcwob.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\blazor.bootstrap.theme-switcher.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2896"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 20 Nov 2024 15:30:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pisakkcwob"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Hy2y6B5ohWPnmWg4c52+QUuZGTw8r09KtWKcaGiaa/k="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/blazor.bootstrap.theme-switcher.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/icon/128X128.png",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Apr 2022 11:45:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/icon/128X128.tngynhsog2.png",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\icon\\128X128.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Apr 2022 11:45:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tngynhsog2"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-J1yB7ftYf6PWiU1781eE0JHBGfd1MV/XlLaxpVy09RU="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/icon/128X128.png"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.j8zp7bt7w3.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "305685"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "j8zp7bt7w3"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.min.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "305685"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XX7we2CiSWzj3rsNtKFCod90LBYAJ3bo8rmu4EuN7SQ="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.79hai7knhw.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1029159"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "79hai7knhw"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor.Bootstrap/pdfjs-4.0.379.worker.min.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\staticwebassets\\pdfjs-4.0.379.worker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1029159"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Jul 2024 07:36:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JbwqIn9Fic7JuWyTXuNnAA1T0dYQ2tkTi9HhrSltUtQ="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazored.Toast/Blazored.Toast.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\blazored.toast\\4.2.1\\staticwebassets\\Blazored.Toast.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Mar 2024 16:42:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Jpy8GsZRrXfBBSxMmBBAzhap27c5/Nt85Nt7V3JT3B4="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Microsoft.AspNetCore.Components.QuickGrid/Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8251"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nuu0BHvGBlwN6c5FSVjV9yxX0YPfwg3ufdOucRJCOz0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:41:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nuu0BHvGBlwN6c5FSVjV9yxX0YPfwg3ufdOucRJCOz0="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Microsoft.AspNetCore.Components.QuickGrid/QuickGrid.razor.js",
+      "AssetFile": "C:\\Users\\cabernalo\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.18\\staticwebassets\\QuickGrid.razor.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2563"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tnamWuQ2F5I2J8hbtBt4/9i8Mb2y2o+9Tepj5tUrSdU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:17:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tnamWuQ2F5I2J8hbtBt4/9i8Mb2y2o+9Tepj5tUrSdU="
+        }
+      ]
+    },
+    {
+      "Route": ".gitignore",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\.gitignore",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "622"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo="
+        }
+      ]
+    },
+    {
+      "Route": ".z2jl3osqow.gitignore",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\.gitignore",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "622"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z2jl3osqow"
+        },
+        {
+          "Name": "label",
+          "Value": ".gitignore"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-29YLqB9qEr5u2C3rm9N9GeefCze/JdzcIMjrXlCOLoo="
+        }
+      ]
+    },
+    {
+      "Route": "app.anyowl07mg.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\app.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3033"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZhlP3IactCFQuIGxRjWKhSPhjJUsFS1sTm1mWzs5Wzc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "anyowl07mg"
+        },
+        {
+          "Name": "label",
+          "Value": "app.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZhlP3IactCFQuIGxRjWKhSPhjJUsFS1sTm1mWzs5Wzc="
+        }
+      ]
+    },
+    {
+      "Route": "app.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\app.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3033"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZhlP3IactCFQuIGxRjWKhSPhjJUsFS1sTm1mWzs5Wzc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZhlP3IactCFQuIGxRjWKhSPhjJUsFS1sTm1mWzs5Wzc="
+        }
+      ]
+    },
+    {
+      "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "162726"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6gzpyzhau4"
+        },
+        {
+          "Name": "label",
+          "Value": "bootstrap/bootstrap.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0="
+        }
+      ]
+    },
+    {
+      "Route": "bootstrap/bootstrap.min.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "162726"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0="
+        }
+      ]
+    },
+    {
+      "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "449111"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8inm30yfxf"
+        },
+        {
+          "Name": "label",
+          "Value": "bootstrap/bootstrap.min.css.map"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ="
+        }
+      ]
+    },
+    {
+      "Route": "bootstrap/bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "449111"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap.min.36dpav9fus.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\bootstrap.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "236514"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FXsYTiOgM07K1veudS21VOtMmVQ8R02A/i4jciCyJDc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "36dpav9fus"
+        },
+        {
+          "Name": "label",
+          "Value": "css/bootstrap.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FXsYTiOgM07K1veudS21VOtMmVQ8R02A/i4jciCyJDc="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap.min.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\bootstrap.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "236514"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FXsYTiOgM07K1veudS21VOtMmVQ8R02A/i4jciCyJDc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FXsYTiOgM07K1veudS21VOtMmVQ8R02A/i4jciCyJDc="
+        }
+      ]
+    },
+    {
+      "Route": "css/custom.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6830"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="
+        }
+      ]
+    },
+    {
+      "Route": "css/custom.tbhd8jrh25.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6830"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tbhd8jrh25"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custom.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+byfmUqFV4Qzk/6IlFXoozYy5dc0/KHpBr4ilDKWnZk="
+        }
+      ]
+    },
+    {
+      "Route": "DIGESA.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9042"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng="
+        }
+      ]
+    },
+    {
+      "Route": "DIGESA.m3sr3vzxyg.styles.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9311"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
+        },
+        {
+          "Name": "Link",
+          "Value": "<_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Blazored.Toast/Blazored.Toast.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Microsoft.AspNetCore.Components.QuickGrid/Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "m3sr3vzxyg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
+        },
+        {
+          "Name": "label",
+          "Value": "DIGESA.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "DIGESA.spzt9nub66.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DIGESA.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9042"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "spzt9nub66"
+        },
+        {
+          "Name": "label",
+          "Value": "DIGESA.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EF9PzAEfRLxC5iP8uaYfoRAKqMh35dHIj4aIqAXxxng="
+        }
+      ]
+    },
+    {
+      "Route": "DIGESA.styles.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\obj\\Debug\\net8.0\\scopedcss\\bundle\\DIGESA.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9311"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 26 Dec 2025 15:39:09 GMT"
+        },
+        {
+          "Name": "Link",
+          "Value": "<_content/Blazor.Bootstrap/Blazor.Bootstrap.7t9tbfaemk.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Blazored.Toast/Blazored.Toast.bundle.scp.css>; rel=\"preload\"; as=\"style\", <_content/Microsoft.AspNetCore.Components.QuickGrid/Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/gkug2p8cU6TtKEwelgCPHm5spN2B21pjQWm4g207Wg="
+        }
+      ]
+    },
+    {
+      "Route": "favicon.ifv42okdf2.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\favicon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1148"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ifv42okdf2"
+        },
+        {
+          "Name": "label",
+          "Value": "favicon.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg="
+        }
+      ]
+    },
+    {
+      "Route": "favicon.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\favicon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1148"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg="
+        }
+      ]
+    },
+    {
+      "Route": "images/1.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\1.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61772"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"riA0vL3+0Aq+DQIaOcvB9AfgENIXBG2yGRux/shL5UQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-riA0vL3+0Aq+DQIaOcvB9AfgENIXBG2yGRux/shL5UQ="
+        }
+      ]
+    },
+    {
+      "Route": "images/1.utqatr7pkj.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\1.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61772"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"riA0vL3+0Aq+DQIaOcvB9AfgENIXBG2yGRux/shL5UQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "utqatr7pkj"
+        },
+        {
+          "Name": "label",
+          "Value": "images/1.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-riA0vL3+0Aq+DQIaOcvB9AfgENIXBG2yGRux/shL5UQ="
+        }
+      ]
+    },
+    {
+      "Route": "images/2.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\2.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "105369"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"l4pE0Ju98vlNmEE+0+o4TgExVCfd3OKwnfrgkUcD9M0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-l4pE0Ju98vlNmEE+0+o4TgExVCfd3OKwnfrgkUcD9M0="
+        }
+      ]
+    },
+    {
+      "Route": "images/2.vm2hri2nf4.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\2.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "105369"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"l4pE0Ju98vlNmEE+0+o4TgExVCfd3OKwnfrgkUcD9M0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vm2hri2nf4"
+        },
+        {
+          "Name": "label",
+          "Value": "images/2.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-l4pE0Ju98vlNmEE+0+o4TgExVCfd3OKwnfrgkUcD9M0="
+        }
+      ]
+    },
+    {
+      "Route": "images/3.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\3.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "110261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cd2LKWVZI5ZguJBTlnQ9qOYEQk9/+i2T3kbF7KqUZbU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-cd2LKWVZI5ZguJBTlnQ9qOYEQk9/+i2T3kbF7KqUZbU="
+        }
+      ]
+    },
+    {
+      "Route": "images/3.p2hgf1hkwe.jpeg",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\3.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "110261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cd2LKWVZI5ZguJBTlnQ9qOYEQk9/+i2T3kbF7KqUZbU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "p2hgf1hkwe"
+        },
+        {
+          "Name": "label",
+          "Value": "images/3.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-cd2LKWVZI5ZguJBTlnQ9qOYEQk9/+i2T3kbF7KqUZbU="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo-gob.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-gob.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12310"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ggOMUaElUgNLWwSHBO5h1duBv/iyhiY3n4ZU38iMo+0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ggOMUaElUgNLWwSHBO5h1duBv/iyhiY3n4ZU38iMo+0="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo-gob.yo04fes8co.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-gob.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12310"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ggOMUaElUgNLWwSHBO5h1duBv/iyhiY3n4ZU38iMo+0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "yo04fes8co"
+        },
+        {
+          "Name": "label",
+          "Value": "images/logo-gob.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ggOMUaElUgNLWwSHBO5h1duBv/iyhiY3n4ZU38iMo+0="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo-minsa.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-minsa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "17669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo-minsa.tivpvu0jwc.png",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\images\\logo-minsa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "17669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tivpvu0jwc"
+        },
+        {
+          "Name": "label",
+          "Value": "images/logo-minsa.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1eJqOv4+64d1xTXLMMeErux9cBGUSiM6N4xZb4qZ1Sc="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.0rpke69bci.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "214253"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pEoyVi8XuFvCKoSFsmTVdijMXLbcvhFTi5Ujq3Ew1hc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0rpke69bci"
+        },
+        {
+          "Name": "label",
+          "Value": "js/bootstrap.bundle.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-pEoyVi8XuFvCKoSFsmTVdijMXLbcvhFTi5Ujq3Ew1hc="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "214253"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pEoyVi8XuFvCKoSFsmTVdijMXLbcvhFTi5Ujq3Ew1hc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-pEoyVi8XuFvCKoSFsmTVdijMXLbcvhFTi5Ujq3Ew1hc="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.js.6pdc2jztkx.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "444579"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6pdc2jztkx"
+        },
+        {
+          "Name": "label",
+          "Value": "js/bootstrap.bundle.js.map"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.js.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.js.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "444579"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.min.hd3gran6i8.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hd3gran6i8"
+        },
+        {
+          "Name": "label",
+          "Value": "js/bootstrap.bundle.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.min.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.min.js.6pdc2jztkx.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "444579"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6pdc2jztkx"
+        },
+        {
+          "Name": "label",
+          "Value": "js/bootstrap.bundle.min.js.map"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c="
+        }
+      ]
+    },
+    {
+      "Route": "js/bootstrap.bundle.min.js.map",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\bootstrap.bundle.min.js.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "444579"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c="
+        }
+      ]
+    },
+    {
+      "Route": "js/sidebar.96zco84gtk.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\sidebar.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "846"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"70rNJhRm0kPewZozIKNpyo8XDrDh6DP40iWid6UV1uQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "96zco84gtk"
+        },
+        {
+          "Name": "label",
+          "Value": "js/sidebar.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-70rNJhRm0kPewZozIKNpyo8XDrDh6DP40iWid6UV1uQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/sidebar.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\sidebar.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "846"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"70rNJhRm0kPewZozIKNpyo8XDrDh6DP40iWid6UV1uQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-70rNJhRm0kPewZozIKNpyo8XDrDh6DP40iWid6UV1uQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/theme.19eajzmv78.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\theme.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "387"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"peXuyeJQynMD4z94F9X3wtoBMGiRopyuf6fOi7oKkdc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "19eajzmv78"
+        },
+        {
+          "Name": "label",
+          "Value": "js/theme.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-peXuyeJQynMD4z94F9X3wtoBMGiRopyuf6fOi7oKkdc="
+        }
+      ]
+    },
+    {
+      "Route": "js/theme.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\theme.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "387"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"peXuyeJQynMD4z94F9X3wtoBMGiRopyuf6fOi7oKkdc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-peXuyeJQynMD4z94F9X3wtoBMGiRopyuf6fOi7oKkdc="
+        }
+      ]
+    },
+    {
+      "Route": "README.md",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\README.md",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4508"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/markdown"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M="
+        }
+      ]
+    },
+    {
+      "Route": "README.vd4pba7n6l.md",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\README.md",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4508"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/markdown"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vd4pba7n6l"
+        },
+        {
+          "Name": "label",
+          "Value": "README.md"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c2XBNu9OV+1AcDIJ+MMhnkjJhydN5cnVhd4IFHFLI7M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\41b878d2-c6aa-4fa8-8f2f-b9aaf9365f40.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.cazrs8q1yl.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "474339"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cazrs8q1yl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\55680f1d-66a3-427d-9c4d-663d6eb61d7b.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "474339"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZIdCgzkLDZFuGhC2b8aPXwtks7VAzewtqi3+b2YPsH4="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/6/77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\6\\77f9083a-6c51-41f7-af61-1fd398dcd8f4.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/0cc19aec-e5a3-4f9b-8240-5001961a91c7.94u6v4vrun.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "94u6v4vrun"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\0cc19aec-e5a3-4f9b-8240-5001961a91c7.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/110268a5-f0e5-4085-8b65-31718c1f981e.94u6v4vrun.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "94u6v4vrun"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/110268a5-f0e5-4085-8b65-31718c1f981e.bacpac"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/110268a5-f0e5-4085-8b65-31718c1f981e.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\110268a5-f0e5-4085-8b65-31718c1f981e.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.94u6v4vrun.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "94u6v4vrun"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\67faa3b1-de93-4a4c-8fd9-d881bbd4f40e.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/75f4469d-63d9-418c-b200-0a104da9d5de.azyzg24nv0.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "azyzg24nv0"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/75f4469d-63d9-418c-b200-0a104da9d5de.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/75f4469d-63d9-418c-b200-0a104da9d5de.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\75f4469d-63d9-418c-b200-0a104da9d5de.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/8b24d8ac-6317-4984-b95d-ef0fa39ce175.azyzg24nv0.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "azyzg24nv0"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\8b24d8ac-6317-4984-b95d-ef0fa39ce175.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/c575c5f5-24db-4c3f-8cdd-d16d6020ad04.azyzg24nv0.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "azyzg24nv0"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\c575c5f5-24db-4c3f-8cdd-d16d6020ad04.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "350600"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KgyUHDLzD+Ccoa0D+oVt/Z4kuQnkQc/8o2KpXOIuK7w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/ca2e1b2c-22a4-4086-80d9-be01c6b6829c.94u6v4vrun.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "94u6v4vrun"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/7/ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/7/ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\7\\ca2e1b2c-22a4-4086-80d9-be01c6b6829c.bacpac",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "42890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-B2P43AKjMGLxCLUwnErpK8v2pUurJifGvAkm1pmZ34U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/15771e50-84cb-4e95-943e-2eb5aae95d7b.5ipweew5fc.docx",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8/15771e50-84cb-4e95-943e-2eb5aae95d7b.docx"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/15771e50-84cb-4e95-943e-2eb5aae95d7b.docx",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\15771e50-84cb-4e95-943e-2eb5aae95d7b.docx",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/6792db97-487d-43ce-8133-b0ba86d3c213.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8/6792db97-487d-43ce-8133-b0ba86d3c213.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/6792db97-487d-43ce-8133-b0ba86d3c213.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\6792db97-487d-43ce-8133-b0ba86d3c213.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/a17d08ff-b0aa-4ff0-a30f-85f006965d28.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8/a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\a17d08ff-b0aa-4ff0-a30f-85f006965d28.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/adfc6b37-58a0-467a-ab6d-7dffc99c111e.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8/adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8/adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\uploads\\8\\adfc6b37-58a0-467a-ab6d-7dffc99c111e.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 09 Dec 2025 20:10:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    }
+  ]
+}
