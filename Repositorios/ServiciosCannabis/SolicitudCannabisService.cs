@@ -227,5 +227,20 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             })
             .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
     }
+    
+    //APROBAR SOLICITUD CON COMENTARIO OPCIONAL
+    public async Task<bool> AprobarSolicitudAsync(int id, string usuario, string? comentario = null)
+    {
+        var solicitud = await _context.TbSolRegCannabis.FindAsync(id);
+        if (solicitud == null) return false;
+
+        solicitud.EstadoSolicitudId = 2; // Aprobado
+        solicitud.FechaAprobacion = DateTime.Now;
+        solicitud.UsuarioRevisor = usuario;
+        solicitud.ComentarioRevision = comentario; // Guardar comentario si existe
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
 
 }

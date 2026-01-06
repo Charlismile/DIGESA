@@ -1,8 +1,13 @@
 ﻿@using DIGESA.Models.CannabisModels
 @using DIGESA.Models.CannabisModels.Listados
 @using DIGESA.Repositorios.InterfacesCannabis
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
 @inject ISolicitudCannabisService SolicitudService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 <div class="card shadow-sm p-3">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -12,24 +17,16 @@
 
         <div class="d-flex align-items-center gap-2">
             <label for="estadoSelect" class="form-label mb-0">Filtrar por estado:</label>
-            <select class="form-select form-select-sm" style="width: 200px;"
+            <select class="form-select form-select-sm"
+                    style="width: 200px;"
                     @bind="EstadoSeleccionado"
-                    @bind:event="onchange">
+                    @bind:after="CargarSolicitudesAsync">
                 <option value="">Todos</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Aprobada">Aprobada</option>
-            <option value="Rechazada">Rechazada</option>
+                @foreach (var estado in EstadosDisponibles)
+                {
+                    <option value="@estado">@estado</option>
+                }
             </select>
-                <select class="form-select form-select-sm"
-                        style="width: 200px;"
-                        @bind="EstadoSeleccionado"
-                        @bind:after="CargarSolicitudesAsync">
-                    <option value="">Todos</option>
-                    @foreach (var estado in EstadosDisponibles)
-                    {
-                        <option value="@estado">@estado</option>
-                    }
-                </select>
         </div>
     </div>
 
@@ -79,49 +76,248 @@
                                            })">
                             @item.EstadoSolicitud
                         </span>
-
                     </td>
                     <td>
-                        @if (item.EstadoSolicitud == "Pendiente")
-                        {
-                            <button class="btn btn-success btn-sm me-2"
-                                    @onclick="() => Aprobar(item.Id)">
-                                Aprobar
+                        <div class="btn-group" role="group" aria-label="Acciones">
+                            <!-- Botón Ver Detalles -->
+                            <button class="btn btn-info btn-sm me-1"
+                                    @onclick="() => AbrirModalDetalle(item.Id)"
+                                    title="Ver detalles">
+                                <i class="bi bi-clipboard2-check"></i>
                             </button>
-
-                            <button class="btn btn-danger btn-sm"
-                                    @onclick="() => Rechazar(item.Id)">
-                                Rechazar
-                            </button>
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-
+                            
+                            <!-- Botón Evaluar (solo para Pendiente) -->
+                            @if (item.EstadoSolicitud == "Pendiente")
+                            {
+                                <button class="btn btn-primary btn-sm"
+                                        @onclick="() => AbrirModalEvaluacion(item.Id)"
+                                        title="Evaluar solicitud">
+                                    <i class="bi bi-card-checklist"></i>
+                                </button>
+                            }
+                        </div>
                     </td>
-
                 </tr>
             }
             </tbody>
-
         </table>
-    }
-
-    @if (!string.IsNullOrEmpty(Mensaje))
-    {
-        <div class="alert alert-success mt-3">@Mensaje</div>
     }
 </div>
 
+<!-- Modal de Detalles -->
+@if (MostrarModalDetalle)
+{
+    <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-envelope-paper"></i>
+                        Detalles de la Solicitud #@SolicitudSeleccionadaId
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalDetalle"></button>
+                </div>
+                <div class="modal-body">
+                    @if (DetalleSolicitud != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Paciente:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.NombreCompleto</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Documento:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.Documento</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Fecha de Nacimiento:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.FechaNacimiento.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Edad:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.Edad años</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Provincia:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.Provincia</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Teléfono:</label>
+                                <p class="form-control-plaintext">@DetalleSolicitud.Telefono</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Número de Carnet:</label>
+                                <p class="form-control-plaintext">
+                                    @if (!string.IsNullOrEmpty(DetalleSolicitud.NumeroCarnet))
+                                    {
+                                        @DetalleSolicitud.NumeroCarnet
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No asignado</span>
+                                    }
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Estado:</label>
+                                <span class="badge @(DetalleSolicitud.EstadoSolicitud switch
+                                                   {
+                                                       "Pendiente" => "bg-warning text-dark",
+                                                       "Aprobada" => "bg-success",
+                                                       "Rechazada" => "bg-danger",
+                                                       _ => "bg-secondary"
+                                                   })">
+                                    @DetalleSolicitud.EstadoSolicitud
+                                </span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Fecha de Vencimiento:</label>
+                                <p class="form-control-plaintext">
+                                    @if (DetalleSolicitud.FechaVencimiento.HasValue)
+                                    {
+                                        @DetalleSolicitud.FechaVencimiento.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No aplica</span>
+                                    }
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Estado del Carnet:</label>
+                                <span class="badge @(DetalleSolicitud.CarnetActivo ? "bg-success" : "bg-danger")">
+                                    @(DetalleSolicitud.CarnetActivo ? "Activo" : "Inactivo")
+                                </span>
+                            </div>
+                            @if (DetalleSolicitud.EstaPorVencer)
+                            {
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-warning">
+                                        <i class="bi bi-exclamation-octagon-fill"></i>
+                                        Esta solicitud está por vencer
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center my-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CerrarModalDetalle">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal de Evaluación -->
+@if (MostrarModalEvaluacion)
+{
+    <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-eye"></i>
+                        Evaluar Solicitud #@SolicitudSeleccionadaId
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalEvaluacion"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="ModeloEvaluacion" OnValidSubmit="AbrirModalConfirmacion">
+                        <DataAnnotationsValidator />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Comentario:</label>
+                            <InputTextArea @bind-Value="ModeloEvaluacion.Comentario" 
+                                         class="form-control" 
+                                         rows="4"
+                                         placeholder="Ingrese un comentario sobre la evaluación..." />
+                            <ValidationMessage For="@(() => ModeloEvaluacion.Comentario)" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Decisión:</label>
+                            <InputSelect @bind-Value="ModeloEvaluacion.Decision" class="form-select">
+                                <option value="">-- Seleccione una decisión --</option>
+                                <option value="Aprobada">Aprobar</option>
+                                <option value="Rechazada">Rechazar</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => ModeloEvaluacion.Decision)" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" 
+                                    class="btn btn-primary"
+                                    disabled="@(!ModeloEvaluacion.EsValido)">
+                                <i class="bi bi-send"></i>
+                                Enviar Evaluación
+                            </button>
+                            <button type="button" class="btn btn-secondary" @onclick="CerrarModalEvaluacion">
+                                Cancelar
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal de Confirmación -->
+@if (MostrarModalConfirmacion)
+{
+    <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        <i class="bi bi-check"></i>
+                        Confirmar Evaluación
+                    </h5>
+                    <button type="button" class="btn-close" @onclick="CancelarConfirmacion"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">¿Está seguro de esta evaluación?</p>
+                    <p class="text-muted small">Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary me-2" @onclick="CancelarConfirmacion">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="ConfirmarEvaluacion">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     private List<PacienteListadoViewModel>? SolicitudesLista;
+    private PacienteListadoViewModel? DetalleSolicitud;
+    private int SolicitudSeleccionadaId;
+
+    // Estados para controlar modales
+    private bool MostrarModalDetalle = false;
+    private bool MostrarModalEvaluacion = false;
+    private bool MostrarModalConfirmacion = false;
+
+    // Modelo para evaluación
+    private ModeloEvaluacion ModeloEvaluacion = new();
 
     private readonly List<string> EstadosDisponibles = new()
     {
         "Pendiente",
-        "Aprobado",
-        "Rechazado"
+        "Aprobada",
+        "Rechazada"
     };
 
     private string? EstadoSeleccionado;
@@ -148,36 +344,97 @@
         }
     }
 
+    private async Task AbrirModalDetalle(int id)
+    {
+        SolicitudSeleccionadaId = id;
+        // Buscar la solicitud en la lista existente
+        DetalleSolicitud = SolicitudesLista?.FirstOrDefault(s => s.Id == id);
+        MostrarModalDetalle = true;
+        StateHasChanged();
+    }
+
+    private void CerrarModalDetalle()
+    {
+        MostrarModalDetalle = false;
+        DetalleSolicitud = null;
+        StateHasChanged();
+    }
+
+    private async Task AbrirModalEvaluacion(int id)
+    {
+        SolicitudSeleccionadaId = id;
+        ModeloEvaluacion = new ModeloEvaluacion();
+        MostrarModalEvaluacion = true;
+        StateHasChanged();
+    }
+
+    private void CerrarModalEvaluacion()
+    {
+        MostrarModalEvaluacion = false;
+        ModeloEvaluacion = new ModeloEvaluacion();
+        StateHasChanged();
+    }
+
+    private async Task AbrirModalConfirmacion()
+    {
+        MostrarModalEvaluacion = false;
+        MostrarModalConfirmacion = true;
+        StateHasChanged();
+    }
+
+    private async Task CancelarConfirmacion()
+    {
+        MostrarModalConfirmacion = false;
+        await AbrirModalEvaluacion(SolicitudSeleccionadaId);
+    }
+
+    private async Task ConfirmarEvaluacion()
+    {
+        MostrarModalConfirmacion = false;
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authState.User.Identity?.Name ?? "ADMIN";
+
+        bool resultado;
+
+        if (ModeloEvaluacion.Decision == "Aprobada")
+        {
+            // Como el método AprobarSolicitudAsync no acepta comentario, solo enviamos usuario
+            resultado = await SolicitudService.AprobarSolicitudAsync(SolicitudSeleccionadaId, usuario);
+            if (resultado && !string.IsNullOrWhiteSpace(ModeloEvaluacion.Comentario))
+            {
+                // Opcional: Guardar el comentario en otro campo si es necesario
+                // Podrías necesitar modificar el servicio para aceptar comentario en aprobación
+            }
+        }
+        else
+        {
+            resultado = await SolicitudService.RechazarSolicitudAsync(
+                SolicitudSeleccionadaId, 
+                ModeloEvaluacion.Comentario, 
+                usuario);
+        }
+
+        if (resultado)
+        {
+            Mensaje = $"Solicitud {ModeloEvaluacion.Decision.ToLower()} correctamente.";
+            await CargarSolicitudesAsync();
+            
+            // Mostrar notificación de éxito
+            await JS.InvokeVoidAsync("alert", Mensaje);
+        }
+        else
+        {
+            Mensaje = "Error al procesar la evaluación.";
+            await JS.InvokeVoidAsync("alert", "Error: " + Mensaje);
+        }
+
+        StateHasChanged();
+    }
+
     private async Task FiltrarPorEstado(ChangeEventArgs e)
     {
         EstadoSeleccionado = e.Value?.ToString();
         await CargarSolicitudesAsync();
     }
-
-    private async Task Aprobar(int id)
-    {
-        await CambiarEstadoInterno(id, true);
-    }
-
-    private async Task Rechazar(int id)
-    {
-        await CambiarEstadoInterno(id, false);
-    }
-
-    private async Task CambiarEstadoInterno(int id, bool aprobar)
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var usuario = authState.User.Identity?.Name ?? "ADMIN";
-
-        bool ok;
-
-        if (aprobar)
-            ok = await SolicitudService.AprobarSolicitudAsync(id, usuario);
-        else
-            ok = await SolicitudService.RechazarSolicitudAsync(id, "Rechazo manual", usuario);
-
-        if (ok)
-            await CargarSolicitudesAsync();
-    }
-
 }
