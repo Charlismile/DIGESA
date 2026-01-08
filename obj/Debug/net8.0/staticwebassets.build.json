@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rIdVtjmC5afi/ZN1XweFocmtMoB3y7GXr54NHDjaylA=",
+  "Hash": "jK7o0dLr2ryHACsNp/xB77Ugir/6DqreMwAOzOSOMMM=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -430,8 +430,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ygmr0wj3u0",
-      "Integrity": "fuXgN1BFmQ2PkodWuSOFyBvvaUjiNdWmYjOOksiwFrA=",
+      "Fingerprint": "0xyl1hxyo1",
+      "Integrity": "/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\custom.css"
@@ -2328,6 +2328,51 @@
       ]
     },
     {
+      "Route": "css/custom.0xyl1hxyo1.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10414"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 Jan 2026 16:11:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0xyl1hxyo1"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custom.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4="
+        }
+      ]
+    },
+    {
       "Route": "css/custom.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
       "Selectors": [],
@@ -2338,7 +2383,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10341"
+          "Value": "10414"
         },
         {
           "Name": "Content-Type",
@@ -2346,11 +2391,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fuXgN1BFmQ2PkodWuSOFyBvvaUjiNdWmYjOOksiwFrA=\""
+          "Value": "\"/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 06 Jan 2026 14:44:02 GMT"
+          "Value": "Thu, 08 Jan 2026 16:11:39 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2360,52 +2405,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-fuXgN1BFmQ2PkodWuSOFyBvvaUjiNdWmYjOOksiwFrA="
-        }
-      ]
-    },
-    {
-      "Route": "css/custom.ygmr0wj3u0.css",
-      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "10341"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"fuXgN1BFmQ2PkodWuSOFyBvvaUjiNdWmYjOOksiwFrA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 06 Jan 2026 14:44:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "ygmr0wj3u0"
-        },
-        {
-          "Name": "label",
-          "Value": "css/custom.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-fuXgN1BFmQ2PkodWuSOFyBvvaUjiNdWmYjOOksiwFrA="
+          "Value": "sha256-/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4="
         }
       ]
     },

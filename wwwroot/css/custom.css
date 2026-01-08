@@ -519,3 +519,10 @@ table.table-sm td {
     filter: none !important;
     opacity: 1 !important;
 }
+
+
+.mi-thead {
+    background-color: #2c5530;
+    color: white;
+}
+

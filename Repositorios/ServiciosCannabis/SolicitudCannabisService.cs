@@ -1,4 +1,5 @@
-﻿using DIGESA.Models.CannabisModels;
+﻿using DIGESA.Helpers;
+using DIGESA.Models.CannabisModels;
 using DIGESA.Models.CannabisModels.Formularios;
 using DIGESA.Models.CannabisModels.Listados;
 using DIGESA.Models.CannabisModels.Validadores;
@@ -114,11 +115,13 @@ public class SolicitudCannabisService : ISolicitudCannabisService
                 Id = s.Id,
                 NombreCompleto = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
                 Documento = s.Paciente.DocumentoCedula,
+                FechaSolicitud = s.FechaSolicitud,
+                FechaVencimiento = s.FechaVencimientoCarnet,
                 EstadoSolicitud = s.EstadoSolicitud.NombreEstado,
                 NumeroCarnet = s.NumeroCarnet,
-                FechaVencimiento = s.FechaVencimientoCarnet,
                 CarnetActivo = s.CarnetActivo ?? false
             })
+
             .ToListAsync();
     }
 
@@ -175,19 +178,6 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         return true;
     }
 
-    public async Task<bool> AprobarSolicitudAsync(int id, string usuario)
-    {
-        var solicitud = await _context.TbSolRegCannabis.FindAsync(id);
-        if (solicitud == null) return false;
-
-        solicitud.EstadoSolicitudId = 2; // Aprobado
-        solicitud.FechaAprobacion = DateTime.Now;
-        solicitud.UsuarioRevisor = usuario;
-
-        await _context.SaveChangesAsync();
-        return true;
-    }
-
     public async Task<bool> RechazarSolicitudAsync(int id, string comentario, string usuario)
     {
         var solicitud = await _context.TbSolRegCannabis.FindAsync(id);
@@ -234,13 +224,43 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         var solicitud = await _context.TbSolRegCannabis.FindAsync(id);
         if (solicitud == null) return false;
 
-        solicitud.EstadoSolicitudId = 2; // Aprobado
-        solicitud.FechaAprobacion = DateTime.Now;
+        var ahora = DateTime.Now;
+        var hoy = DateTime.Today;
+
+        solicitud.EstadoSolicitudId = 2; 
+        solicitud.FechaAprobacion = ahora;
+        solicitud.FechaEmisionCarnet = DateTime.Now;
+        solicitud.FechaVencimientoCarnet = DateTime.Now.AddYears(2);
+        solicitud.CarnetActivo = true;
+
         solicitud.UsuarioRevisor = usuario;
-        solicitud.ComentarioRevision = comentario; // Guardar comentario si existe
+        solicitud.ComentarioRevision = comentario;
 
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    
+    // obtener listado detalle
+    public async Task<PacienteListadoViewModel?> ObtenerDetalleListadoAsync(int id)
+    {
+        return await _context.TbSolRegCannabis
+            .AsNoTracking()
+            .Include(s => s.Paciente)
+            .Include(s => s.EstadoSolicitud)
+            .Where(s => s.Id == id)
+            .Select(s => new PacienteListadoViewModel
+            {
+                Id = s.Id,
+                NombreCompleto = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
+                Documento = s.Paciente.DocumentoCedula,
+                EstadoSolicitud = s.EstadoSolicitud.NombreEstado,
+                FechaSolicitud = s.FechaSolicitud,
+                FechaVencimiento = s.FechaVencimientoCarnet,
+                CarnetActivo = s.CarnetActivo ?? false,
+                NumeroCarnet = s.NumeroCarnet
+            })
+            .FirstOrDefaultAsync();
     }
 
 }

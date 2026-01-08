@@ -4,6 +4,7 @@ using DIGESA.Data;
 using DIGESA.Models.ActiveDirectory;
 using DIGESA.Models.CannabisModels;
 using DIGESA.Models.Entities.DBDIGESA;
+using DIGESA.Repositorios;
 using DIGESA.Repositorios.Interfaces;
 using DIGESA.Repositorios.InterfacesCannabis;
 using DIGESA.Repositorios.Services;
@@ -67,7 +68,6 @@ builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();
 
 // Registrar servicios de cannabis
 builder.Services.AddScoped<IServicioConfiguracion, ServicioConfiguracion>();
-builder.Services.AddScoped<IServicioRenovaciones, ServicioRenovaciones>();
 builder.Services.AddScoped<IServicioHistorial, ServicioHistorial>();
 builder.Services.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
 builder.Services.AddScoped<IServicioMedicos, ServicioMedicos>();
@@ -76,10 +76,15 @@ builder.Services.AddScoped<IServicioQr, ServicioQr>();
 builder.Services.AddScoped<IPaciente, PacienteService>();
 builder.Services.AddScoped<ISolicitudCannabisService, SolicitudCannabisService>();
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+builder.Services.AddScoped<ICalendarioLaboralService, CalendarioLaboralService>();
+builder.Services.AddScoped<IServicioRenovaciones, ServicioRenovaciones>();
+
 
 // Servicios comunes
 builder.Services.AddScoped<IUserData, UserDataService>();
 builder.Services.AddScoped<ICommon, CommonServices>();
+
+builder.Services.AddHostedService<JobCarnetsNocturno>();
 
 // CORS
 builder.Services.AddCors(options =>

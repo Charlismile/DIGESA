@@ -1,4 +1,6 @@
-﻿namespace DIGESA.Models.CannabisModels.Listados;
+﻿using DIGESA.Helpers;
+
+namespace DIGESA.Models.CannabisModels.Listados;
 
 public class PacienteListadoViewModel
 {
@@ -6,6 +8,8 @@ public class PacienteListadoViewModel
     public string NombreCompleto { get; set; }
     public string Documento { get; set; }
     public DateTime FechaNacimiento { get; set; }
+    public DateTime? FechaSolicitud { get; set; }
+
     public int Edad { get; set; }
 
     public string Provincia { get; set; }
@@ -19,4 +23,12 @@ public class PacienteListadoViewModel
     public bool EstaPorVencer =>
         FechaVencimiento.HasValue &&
         (FechaVencimiento.Value - DateTime.Now).Days <= 30;
+    
+    public bool EstaVencido =>
+        FechaVencimiento.HasValue &&
+        FechasCarnetHelper.EstaVencido(FechaVencimiento.Value);
+
+    public bool EstaProximoAVencer =>
+        FechaVencimiento.HasValue &&
+        FechasCarnetHelper.EstaProximoAVencer(FechaVencimiento.Value);
 }

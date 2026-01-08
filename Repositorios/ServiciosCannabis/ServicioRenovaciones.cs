@@ -14,19 +14,22 @@ namespace DIGESA.Repositorios.ServiciosCannabis
         private readonly IServicioHistorial _servicioHistorial;
         private readonly IServicioNotificaciones _servicioNotificaciones;
         private readonly ILogger<ServicioRenovaciones> _logger;
+        private readonly ICalendarioLaboralService _calendario;
 
         public ServicioRenovaciones(
             DbContextDigesa context,
             IServicioConfiguracion servicioConfiguracion,
             IServicioHistorial servicioHistorial,
             IServicioNotificaciones servicioNotificaciones,
-            ILogger<ServicioRenovaciones> logger)
+            ILogger<ServicioRenovaciones> logger,
+            ICalendarioLaboralService calendario)
         {
             _context = context;
             _servicioConfiguracion = servicioConfiguracion;
             _servicioHistorial = servicioHistorial;
             _servicioNotificaciones = servicioNotificaciones;
             _logger = logger;
+            _calendario = calendario;
         }
 
         public async Task<ResultadoRenovacionViewModel> IniciarRenovacion(int solicitudId, string usuarioId)
@@ -147,7 +150,7 @@ namespace DIGESA.Repositorios.ServiciosCannabis
 
                 // Calcular nueva fecha de vencimiento
                 var diasVigencia = await _servicioConfiguracion.ObtenerValorEntero("DiasVigenciaCarnet", 730);
-                solicitudNueva.FechaVencimientoCarnet = DateTime.Now.AddDays(diasVigencia);
+                solicitudNueva.FechaVencimientoCarnet = DateTime.Now.AddYears(2);
 
                 // Generar nuevo número de carnet
                 solicitudNueva.NumeroCarnet = await GenerarNumeroCarnet(solicitudNueva.PacienteId.Value,
@@ -255,18 +258,28 @@ namespace DIGESA.Repositorios.ServiciosCannabis
         {
             try
             {
-                var fechaLimite = DateTime.Now.AddDays(dias);
+                var hoy = DateTime.Today;
 
-                var solicitudes = await _context.TbSolRegCannabis
+                // 1️⃣ FILTRO SQL (solo lo que EF entiende)
+                var solicitudesBase = await _context.TbSolRegCannabis
+                    .AsNoTracking()
                     .Include(s => s.Paciente)
-                    .Include(s => s.EstadoSolicitud)
-                    .Where(s => s.CarnetActivo == true &&
-                                s.FechaVencimientoCarnet.HasValue &&
-                                s.FechaVencimientoCarnet.Value <= fechaLimite &&
-                                s.FechaVencimientoCarnet.Value > DateTime.Now &&
-                                s.EstadoSolicitud.NombreEstado == "Aprobado")
-                    .OrderBy(s => s.FechaVencimientoCarnet)
-                    .ToListAsync();
+                    .Where(s =>
+                        s.CarnetActivo == true &&
+                        s.FechaVencimientoCarnet.HasValue &&
+                        s.FechaVencimientoCarnet.Value > hoy)
+                    .ToListAsync();   // 🔹 AQUÍ YA ESTAMOS EN MEMORIA
+
+                // 2️⃣ FILTRO C# (días hábiles reales)
+                var solicitudes = solicitudesBase
+                    .Where(s =>
+                        _calendario.CalcularDiasHabiles(
+                            hoy,
+                            s.FechaVencimientoCarnet!.Value
+                        ) <= 30)
+                    .ToList();
+
+
 
                 return solicitudes.Select(s => MapToViewModel(s)).ToList();
             }

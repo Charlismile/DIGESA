@@ -14,6 +14,16 @@
         <h5 class="mb-2 mb-md-0">
             <i class="fa-solid fa-file-medical"></i> Lista de Solicitudes
         </h5>
+        
+        <div class="d-flex align-items-center gap-2">
+            <input type="text"
+                   class="form-control form-control-sm"
+                   style="width: 220px;"
+                   placeholder="Buscar por cédula"
+                   @bind="DocumentoBusqueda"
+                   @bind:after="CargarSolicitudesAsync" />
+        </div>
+
 
         <div class="d-flex align-items-center gap-2">
             <label for="estadoSelect" class="form-label mb-0">Filtrar por estado:</label>
@@ -48,12 +58,13 @@
     else
     {
         <table class="table table-hover align-middle">
-            <thead class="table-dark">
+            <thead class="mi-thead">
             <tr>
                 <th>N° Solicitud</th>
                 <th>Paciente</th>
                 <th>Cédula</th>
                 <th>Fecha Solicitud</th>
+                <th>Fecha vencimiento</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -65,7 +76,21 @@
                     <td>@item.Id</td>
                     <td>@item.NombreCompleto</td>
                     <td>@item.Documento</td>
-                    <td>@item.FechaVencimiento?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.FechaSolicitud?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.FechaVencimiento?.ToString("dd/MM/yyyy")
+                        @if (item.EstaVencido)
+                        {
+                            <span class="badge bg-danger">Vencido</span>
+                        }
+                        else if (item.EstaProximoAVencer)
+                        {
+                            <span class="badge bg-warning text-dark">Próximo a vencer</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Vigente</span>
+                        }
+                    </td>
                     <td>
                         <span class="badge @(item.EstadoSolicitud switch
                                            {
@@ -87,7 +112,7 @@
                             </button>
                             
                             <!-- Botón Evaluar (solo para Pendiente) -->
-                            @if (item.EstadoSolicitud == "Pendiente")
+                            @if (item.EstadoSolicitud?.Equals("Pendiente", StringComparison.OrdinalIgnoreCase) == true)
                             {
                                 <button class="btn btn-primary btn-sm"
                                         @onclick="() => AbrirModalEvaluacion(item.Id)"
@@ -112,7 +137,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">
-                        <i class="bi bi-envelope-paper"></i>
+                        <i class="bi bi-eye"></i>
                         Detalles de la Solicitud #@SolicitudSeleccionadaId
                     </h5>
                     <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalDetalle"></button>
@@ -193,7 +218,7 @@
                             {
                                 <div class="col-12 mb-3">
                                     <div class="alert alert-warning">
-                                        <i class="bi bi-exclamation-octagon-fill"></i>
+                                        <i class="bi bi-exclamation-triangle"></i>
                                         Esta solicitud está por vencer
                                     </div>
                                 </div>
@@ -309,6 +334,8 @@
     private bool MostrarModalDetalle = false;
     private bool MostrarModalEvaluacion = false;
     private bool MostrarModalConfirmacion = false;
+    
+    private string? DocumentoBusqueda;
 
     // Modelo para evaluación
     private ModeloEvaluacion ModeloEvaluacion = new();
@@ -334,37 +361,44 @@
 
         if (!string.IsNullOrWhiteSpace(EstadoSeleccionado))
         {
-            SolicitudesLista = todas
-                .Where(s => s.EstadoSolicitud.Equals(EstadoSeleccionado, StringComparison.OrdinalIgnoreCase))
+            todas = todas
+                .Where(s => s.EstadoSolicitud.Equals(
+                    EstadoSeleccionado,
+                    StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
-        else
+
+        if (!string.IsNullOrWhiteSpace(DocumentoBusqueda))
         {
-            SolicitudesLista = todas;
+            todas = todas
+                .Where(s => s.Documento != null &&
+                            s.Documento.Contains(DocumentoBusqueda.Trim(),
+                                StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
+
+        SolicitudesLista = todas;
+    }
+
+
+    private void AbrirModalEvaluacion(int id)
+    {
+        SolicitudSeleccionadaId = id;
+        ModeloEvaluacion = new ModeloEvaluacion();
+        MostrarModalEvaluacion = true;
     }
 
     private async Task AbrirModalDetalle(int id)
     {
         SolicitudSeleccionadaId = id;
-        // Buscar la solicitud en la lista existente
-        DetalleSolicitud = SolicitudesLista?.FirstOrDefault(s => s.Id == id);
+        DetalleSolicitud = await SolicitudService.ObtenerDetalleListadoAsync(id);
         MostrarModalDetalle = true;
-        StateHasChanged();
     }
 
     private void CerrarModalDetalle()
     {
         MostrarModalDetalle = false;
         DetalleSolicitud = null;
-        StateHasChanged();
-    }
-
-    private async Task AbrirModalEvaluacion(int id)
-    {
-        SolicitudSeleccionadaId = id;
-        ModeloEvaluacion = new ModeloEvaluacion();
-        MostrarModalEvaluacion = true;
         StateHasChanged();
     }
 
@@ -382,11 +416,14 @@
         StateHasChanged();
     }
 
-    private async Task CancelarConfirmacion()
+    private Task CancelarConfirmacion()
     {
         MostrarModalConfirmacion = false;
-        await AbrirModalEvaluacion(SolicitudSeleccionadaId);
+        AbrirModalEvaluacion(SolicitudSeleccionadaId);
+        return Task.CompletedTask;
     }
+
+
 
     private async Task ConfirmarEvaluacion()
     {
