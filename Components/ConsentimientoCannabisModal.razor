@@ -1,0 +1,84 @@
+﻿@if (IsVisible)
+{
+    <div class="cm-backdrop"></div>
+
+    <div class="cm-container">
+        <div class="cm-card">
+            <div class="cm-header cm-success">
+                <strong>Consentimiento informado</strong>
+            </div>
+
+            <div class="cm-body" style="max-height:65vh; overflow-y:auto; text-align:justify; font-size:0.9rem">
+                <p>
+                    El uso medicinal y terapéutico del Cannabis y sus derivados están regulados por la Ley 242 de 13 de octubre de 2021
+                    y el Decreto Ejecutivo No. 6 de 4 de abril de 2025.
+                </p>
+
+                <p>
+                    El Cannabis y el Tetrahidrocannabinol (THC) forman parte del Listado Oficial de las sustancias controladas que estarán
+                    permitidas en el territorio nacional para uso médico y científico (Resolución 200 de 26 de septiembre de 2025).
+                </p>
+
+                <p>
+                    Los medicamentos controlados, como el Cannabis, se dispensarán únicamente en las farmacias autorizadas mediante
+                    prescripción médica (receta).
+                </p>
+
+                <p><strong>El Decreto Ejecutivo No. 6 de 4 de abril de 2025 prohíbe:</strong></p>
+
+                <ul>
+                    <li>Consumir cannabis medicinal en lugares públicos o de trabajo sin autorización.</li>
+                    <li>Utilizar vapeadores.</li>
+                    <li>Su uso en profesiones de alto riesgo si interfiere con funciones esenciales.</li>
+                    <li>Conducir u operar vehículos bajo sus efectos.</li>
+                    <li>Mezclar cannabis medicinal con alcohol u otras sustancias.</li>
+                    <li>El uso recreacional en cualquiera de sus formas.</li>
+                    <li>Consumirlo fuera de la privacidad del hogar o lugares autorizados.</li>
+                    <li>Donar, transferir o permutar cannabis medicinal.</li>
+                    <li>Poseer cannabis sin cumplir los requisitos legales.</li>
+                    <li>Cualquier uso distinto al autorizado por la normativa vigente.</li>
+                </ul>
+
+                <p>
+                    Declaro que he leído y comprendido las advertencias y prohibiciones aquí enumeradas y libero expresamente
+                    de responsabilidad al Ministerio de Salud por cualquier consecuencia derivada del incumplimiento
+                    de las normativas vigentes.
+                </p>
+            </div>
+
+            <div class="cm-footer d-flex justify-content-between">
+                <button class="btn btn-danger" @onclick="Rechazar">
+                    NO ACEPTO
+                </button>
+
+                <button class="btn btn-success" @onclick="Aceptar">
+                    ACEPTO
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool IsVisible;
+
+    [Parameter] public EventCallback<bool> OnDecision { get; set; }
+
+    public void Show()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private async Task Aceptar()
+    {
+        IsVisible = false;
+        await OnDecision.InvokeAsync(true);
+    }
+
+    private async Task Rechazar()
+    {
+        IsVisible = false;
+        await OnDecision.InvokeAsync(false);
+    }
+}

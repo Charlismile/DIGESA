@@ -1,4 +1,5 @@
 ﻿using DIGESA.Models.CannabisModels;
+using DIGESA.Models.CannabisModels.Formularios;
 using DIGESA.Models.CannabisModels.Renovaciones;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.InterfacesCannabis;
@@ -116,4 +117,46 @@ public class PacienteService : IPaciente
             TipoDiscapacidad = paciente.TipoDiscapacidad
         };
     }
+    public async Task<DatosAcompananteVM?> ObtenerAcompananteAsync(int pacienteId)
+    {
+        var acompanante = await _context.TbAcompanantePaciente
+            .AsNoTracking()
+            .Where(a => a.PacienteId == pacienteId)
+            .Select(a => new
+            {
+                a.PrimerNombre,
+                a.SegundoNombre,
+                a.PrimerApellido,
+                a.SegundoApellido,
+                a.TipoDocumento,
+                a.NumeroDocumento,
+                a.Nacionalidad,
+                a.Parentesco,
+                a.TelefonoMovil
+            })
+            .FirstOrDefaultAsync();
+        if (acompanante == null)
+            return null;
+
+        return new DatosAcompananteVM
+        {
+            PrimerNombre = acompanante.PrimerNombre,
+            SegundoNombre = acompanante.SegundoNombre,
+            PrimerApellido = acompanante.PrimerApellido,
+            SegundoApellido = acompanante.SegundoApellido,
+
+            TipoDocumento = acompanante.TipoDocumento?.ToUpper() switch
+            {
+                "CEDULA" => EnumViewModel.TipoDocumento.Cedula,
+                "PASAPORTE" => EnumViewModel.TipoDocumento.Pasaporte,
+                _ => EnumViewModel.TipoDocumento.Cedula
+            },
+
+            NumeroDocumento = acompanante.NumeroDocumento,
+            Nacionalidad = acompanante.Nacionalidad,
+            Parentesco = acompanante.Parentesco,
+            TelefonoMovil = acompanante.TelefonoMovil
+        };
+    }
+
 }

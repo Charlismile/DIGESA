@@ -106,57 +106,56 @@ public class SolicitudCannabisService : ISolicitudCannabisService
 
     public async Task<List<PacienteListadoViewModel>> ObtenerSolicitudesAsync()
     {
-        return await _context.TbSolRegCannabis
+        var data = await _context.TbSolRegCannabis
             .AsNoTracking()
             .Include(s => s.Paciente)
+            .ThenInclude(p => p.Provincia)
             .Include(s => s.EstadoSolicitud)
-            .Select(s => new PacienteListadoViewModel
+            .Select(s => new
             {
-                Id = s.Id,
-                NombreCompleto = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
-                Documento = s.Paciente.DocumentoCedula,
-                FechaSolicitud = s.FechaSolicitud,
-                FechaVencimiento = s.FechaVencimientoCarnet,
+                s.Id,
+                PrimerNombre = s.Paciente.PrimerNombre,
+                PrimerApellido = s.Paciente.PrimerApellido,
+                s.Paciente.DocumentoCedula,
+                Provincia = s.Paciente.Provincia != null
+                    ? s.Paciente.Provincia.NombreProvincia
+                    : null,
+                Edad = s.Paciente.FechaNacimiento.HasValue
+                    ? FechasCarnetHelper.CalcularEdad(
+                        s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
+                    : 0,
+                FechaNacimiento = s.Paciente.FechaNacimiento,
+                s.FechaSolicitud,
+                s.FechaVencimientoCarnet,
                 EstadoSolicitud = s.EstadoSolicitud.NombreEstado,
-                NumeroCarnet = s.NumeroCarnet,
+                s.NumeroCarnet,
                 CarnetActivo = s.CarnetActivo ?? false
             })
-
             .ToListAsync();
-    }
-
-
-
-    public async Task<SolicitudCannabisFormViewModel?> ObtenerSolicitudPorIdAsync(int solicitudId)
-    {
-        var solicitud = await _context.TbSolRegCannabis
-            .Include(s => s.Paciente)
-            .Include(s => s.TbDeclaracionJurada)
-            .FirstOrDefaultAsync(s => s.Id == solicitudId);
-
-        if (solicitud == null)
-            return null;
-
-        return new SolicitudCannabisFormViewModel
+        
+        return data.Select(s => new PacienteListadoViewModel
         {
-            Paciente = new()
-            {
-                PrimerNombre = solicitud.Paciente.PrimerNombre,
-                PrimerApellido = solicitud.Paciente.PrimerApellido,
-                TipoDocumento = Enum.TryParse<EnumViewModel.TipoDocumento>(
-                    solicitud.Paciente.TipoDocumento,
-                    out var tipoDoc
-                )
-                    ? tipoDoc
-                    : EnumViewModel.TipoDocumento.Cedula,
-                NumeroDocumento = solicitud.Paciente.DocumentoCedula
-            },
-            Declaracion = new()
-            {
-                Detalle = solicitud.TbDeclaracionJurada.FirstOrDefault()?.Detalle
-            }
-        };
+            Id = s.Id,
+            NombreCompleto =
+                (s.PrimerNombre ?? "") + " " +
+                (s.PrimerApellido ?? ""),
+            Documento = s.DocumentoCedula,
+            Provincia = s.Provincia ?? "—",
+            Edad = s.FechaNacimiento.HasValue
+                ? FechasCarnetHelper.CalcularEdad(
+                    s.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
+                : 0,
+            FechaNacimiento = s.FechaNacimiento.HasValue
+                ? s.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
+                : DateTime.MinValue,
+            FechaSolicitud = s.FechaSolicitud,
+            FechaVencimiento = s.FechaVencimientoCarnet,
+            EstadoSolicitud = NormalizarEstado(s.EstadoSolicitud),
+            NumeroCarnet = s.NumeroCarnet,
+            CarnetActivo = s.CarnetActivo,
+        }).ToList();
     }
+
 
     public async Task<bool> ActualizarSolicitudAsync(
         int solicitudId,
@@ -232,7 +231,10 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         solicitud.FechaEmisionCarnet = DateTime.Now;
         solicitud.FechaVencimientoCarnet = DateTime.Now.AddYears(2);
         solicitud.CarnetActivo = true;
+        solicitud.NumeroCarnet ??=
+            $"CAN-{DateTime.Now:yyyy}-{solicitud.Id:D6}";
 
+        solicitud.VersionCarnet++;
         solicitud.UsuarioRevisor = usuario;
         solicitud.ComentarioRevision = comentario;
 
@@ -247,6 +249,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         return await _context.TbSolRegCannabis
             .AsNoTracking()
             .Include(s => s.Paciente)
+            .ThenInclude(p => p.Provincia)
             .Include(s => s.EstadoSolicitud)
             .Where(s => s.Id == id)
             .Select(s => new PacienteListadoViewModel
@@ -254,13 +257,36 @@ public class SolicitudCannabisService : ISolicitudCannabisService
                 Id = s.Id,
                 NombreCompleto = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
                 Documento = s.Paciente.DocumentoCedula,
-                EstadoSolicitud = s.EstadoSolicitud.NombreEstado,
+                FechaNacimiento = s.Paciente.FechaNacimiento.HasValue
+                    ? s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
+                    : DateTime.MinValue,
+
+                Edad = s.Paciente.FechaNacimiento.HasValue
+                    ? FechasCarnetHelper.CalcularEdad(
+                        s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
+                    : 0,
+                Provincia = s.Paciente.Provincia != null
+                    ? s.Paciente.Provincia.NombreProvincia
+                    : "—",
+                Celular = s.Paciente.TelefonoPersonal ?? "No registrado",
+                Telefono = s.Paciente.TelefonoLaboral ?? "No registrado",
                 FechaSolicitud = s.FechaSolicitud,
                 FechaVencimiento = s.FechaVencimientoCarnet,
-                CarnetActivo = s.CarnetActivo ?? false,
-                NumeroCarnet = s.NumeroCarnet
+                EstadoSolicitud = NormalizarEstado(s.EstadoSolicitud.NombreEstado),
+                NumeroCarnet = s.NumeroCarnet,
+                CarnetActivo = s.CarnetActivo ?? false
             })
             .FirstOrDefaultAsync();
     }
 
+    private static string NormalizarEstado(string estado)
+    {
+        return estado switch
+        {
+            "pendiente" => "Pendiente",
+            "aprobada" => "Aprobada",
+            "rechazada" => "Rechazada",
+            _ => estado
+        };
+    }
 }

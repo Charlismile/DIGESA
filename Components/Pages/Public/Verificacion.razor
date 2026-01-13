@@ -3,8 +3,7 @@
 
 <div class="container-fluid py-4">
     <div class="card shadow-sm">
-        <div class="card-header bg-gob-blue text-white d-flex justify-content-between align-items-center"
-             style="background-color: #2c5530; color: white;">
+        <div class="card-header card-header-primary d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <Icon Name="IconName.Search" Class="me-1" Size="IconSize.x5"/>
                 <h2 class="mb-0">Buscar Paciente</h2>
@@ -19,7 +18,7 @@
                        @bind="documentoBusqueda"
                        @onkeypress="HandleKeyPress" />
 
-                <button class="btn-custom btn-primary-custom"
+                <button class="btn btn-custom btn-primary-custom"
                         @onclick="BuscarPaciente"
                         disabled="@string.IsNullOrEmpty(documentoBusqueda)">
                     <i class="bi bi-search"></i> Buscar
@@ -110,21 +109,28 @@
                                                             <td>@GetNombreCompleto()</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Tipo documento:</th>
-                                                            <td>@GetTipoDocumentoTexto()</td>
-                                                        </tr>
+                                                            <th>Documento:</th>
+                                                            <td>@pacienteDetalle.Documento</td>
+                                                        </tr>mnh
                                                         <tr>
                                                             <th>Nacionalidad:</th>
-                                                            <td>@pacienteDetalle.Nacionalidad</td>
+                                                            <td>@(pacienteDetalle.Nacionalidad ?? "No especificada")</td>
                                                         </tr>
+
                                                         <tr>
                                                             <th>Fecha nacimiento:</th>
-                                                            <td>@pacienteDetalle.FechaNacimiento?.ToString("dd/MM/yyyy")</td>
+                                                            <td>
+                                                                @(pacienteDetalle.FechaNacimiento.HasValue
+                                                                    ? pacienteDetalle.FechaNacimiento.Value.ToString("dd/MM/yyyy")
+                                                                    : "No registrada")
+                                                            </td>
                                                         </tr>
+
                                                         <tr>
                                                             <th>Sexo:</th>
                                                             <td>@GetSexoTexto()</td>
                                                         </tr>
+
                                                     </table>
                                                 </div>
                                             </div>
@@ -196,25 +202,26 @@
                                                                 <th colspan="2">Datos del acompañante</th>
                                                             </tr>
 
-                                                            <tr>
-                                                                <th>Nombre completo:</th>
-                                                                <td>@pacienteDetalle.NombreAcompanante</td>
-                                                            </tr>
+                                                            @if (pacienteDetalle?.Acompanante != null)
+                                                            {
+                                                                <tr>
+                                                                    <th>Nombre completo:</th>
+                                                                    <td>@pacienteDetalle.Acompanante.NombreCompleto</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Documento:</th>
+                                                                    <td>@pacienteDetalle.Acompanante.NumeroDocumento</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Parentesco:</th>
+                                                                    <td>@pacienteDetalle.Acompanante.Parentesco</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Teléfono:</th>
+                                                                    <td>@pacienteDetalle.Acompanante.TelefonoMovil</td>
+                                                                </tr>
+                                                            }
 
-                                                            <tr>
-                                                                <th>Documento:</th>
-                                                                <td>@pacienteDetalle.DocumentoAcompanante</td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Teléfono:</th>
-                                                                <td>@pacienteDetalle.TelefonoAcompanante</td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Parentesco:</th>
-                                                                <td>@pacienteDetalle.ParentescoAcompanante</td>
-                                                            </tr>
                                                         </table>
                                                     </div>
                                                 </div>

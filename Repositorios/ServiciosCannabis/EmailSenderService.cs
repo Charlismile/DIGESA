@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using DIGESA.Models.CannabisModels.Configuracion;
 using Microsoft.Extensions.Options;
+using DIGESA.Models.CannabisModels.Configuracion;
 using DIGESA.Repositorios.InterfacesCannabis;
 
 namespace DIGESA.Repositorios.ServiciosCannabis
@@ -19,30 +19,20 @@ namespace DIGESA.Repositorios.ServiciosCannabis
         {
             var mail = new MailMessage
             {
-                From = new MailAddress(
-                    _settings.FromEmail,
-                    _settings.FromName,
-                    System.Text.Encoding.UTF8),
-
+                From = new MailAddress(_settings.FromEmail, _settings.FromName),
                 Subject = subject,
                 Body = bodyHtml,
-                IsBodyHtml = true,
-                BodyEncoding = System.Text.Encoding.UTF8,
-                SubjectEncoding = System.Text.Encoding.UTF8
+                IsBodyHtml = true
             };
 
             mail.To.Add(to);
 
-            using var smtp = new SmtpClient
+            using var smtp = new SmtpClient(_settings.SmtpServer, _settings.SmtpPort)
             {
-                Host = _settings.SmtpServer,
-                Port = _settings.SmtpPort,
                 EnableSsl = _settings.EnableSsl,
-                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(
                     _settings.SmtpUsername,
-                    _settings.SmtpPassword),
-                Timeout = 20000
+                    _settings.SmtpPassword)
             };
 
             await smtp.SendMailAsync(mail);

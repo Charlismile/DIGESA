@@ -1,4 +1,4 @@
-﻿using DIGESA.Models.CannabisModels;
+﻿namespace DIGESA.Models.CannabisModels.Formularios;
 
 public class DatosAcompananteVM : PersonaBaseViewModel
 {

@@ -9,6 +9,7 @@ using DIGESA.Repositorios.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
 
 namespace DIGESA.Components.Pages.Public;
@@ -43,16 +44,18 @@ public partial class Solicitud : ComponentBase
     private List<TbFormaFarmaceutica> productoFormaList { get; set; } = new();
     private List<ListSustModel> productoUnidadList { get; set; } = new();
     private List<TbViaAdministracion> productoViaConsumoList { get; set; } = new();
-
     private EditContext editContext = default!;
-    
-    private DynamicModal ModalForm = default!;
-    
     private bool isProcessing = false;
 
     // Propiedades temporales para instalaciones personalizadas
     private string? instalacionPersonalizadaPaciente;
     private string? instalacionPersonalizadaMedico;
+    
+    // MODALS
+    private ConsentimientoCannabisModal ConsentimientoModal = default!;
+    private bool consentimientoAceptado = false;
+    private DynamicModal ModalForm = default!;
+
 
     #endregion
 
@@ -77,6 +80,11 @@ public partial class Solicitud : ComponentBase
 
         // Cargar tipos de documento
         await CargarTiposDocumento();
+        await InvokeAsync(() =>
+        {
+            ConsentimientoModal.Show();
+        });
+
     }
 
     private async Task CargarTiposDocumento()
@@ -91,8 +99,6 @@ public partial class Solicitud : ComponentBase
                 t => t.Nombre.Trim(),
                 t => t.Id
             );
-
-            ModalForm.ShowSuccess($"Tipos de documento cargados: {tipoDocumentoMap.Count}");
         }
         catch (Exception ex)
         {
@@ -240,6 +246,18 @@ public partial class Solicitud : ComponentBase
 
     private async Task NextStep()
     {
+        if (!consentimientoAceptado)
+        {
+            ModalForm.ShowWarning(
+                "Debe aceptar el consentimiento informado antes de continuar.",
+                "Acción no permitida"
+            );
+
+            await Task.Delay(1000);
+            NavigationManager.NavigateTo("/", true);
+            return;
+        }
+
         if (isProcessing)
         {
             Console.WriteLine("NextStep: ya se está procesando, ignorando reentrada.");
@@ -1060,6 +1078,25 @@ public partial class Solicitud : ComponentBase
             Console.WriteLine($"ADVERTENCIA: {mensaje}");
         }
     }
+
+    private async void OnConsentimientoDecision(bool aceptado)
+    {
+        consentimientoAceptado = aceptado;
+
+        if (!aceptado)
+        {
+            ModalForm.ShowWarning(
+                "Debe aceptar el consentimiento informado para poder continuar con la solicitud.",
+                "Consentimiento requerido"
+            );
+
+            // Espera breve para que el usuario vea el modal
+            await Task.Delay(1200);
+
+            NavigationManager.NavigateTo("/", true);
+        }
+    }
+
 
     private void OnSubmit()
     {

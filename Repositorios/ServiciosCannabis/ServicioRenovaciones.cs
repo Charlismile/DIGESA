@@ -90,9 +90,13 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // 6. Enviar notificación si está configurado
                 if (config.NotificarPorEmail && !string.IsNullOrEmpty(solicitud.Paciente.CorreoElectronico))
                 {
-                    await _servicioNotificaciones.EnviarNotificacionRenovacionIniciada(
-                        nuevaSolicitud.Id,
-                        solicitud.Paciente.CorreoElectronico);
+                    await _servicioNotificaciones.EnviarAsync(
+                        EnumViewModel.NotificationType.RenovacionIniciada,
+                        solicitud.Paciente.CorreoElectronico,
+                        new { SolicitudId = nuevaSolicitud.Id }
+                    );
+
+
                 }
 
                 await transaction.CommitAsync();
@@ -177,9 +181,13 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 var config = await _servicioConfiguracion.ObtenerConfiguracionCompleta();
                 if (config.NotificarPorEmail && !string.IsNullOrEmpty(solicitudNueva.Paciente.CorreoElectronico))
                 {
-                    await _servicioNotificaciones.EnviarNotificacionRenovacionCompletada(
-                        solicitudNueva.Id,
-                        solicitudNueva.Paciente.CorreoElectronico);
+                    await _servicioNotificaciones.EnviarAsync(
+                        EnumViewModel.NotificationType.RenovacionAprobada,
+                        solicitudNueva.Paciente.CorreoElectronico,
+                        new { SolicitudId = solicitudNueva.Id }
+                    );
+
+
                 }
 
                 var solicitudViewModel = await MapToViewModelConHistorial(solicitudNueva.Id);
@@ -430,21 +438,22 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                         // Enviar por email
                         if (config.NotificarPorEmail && !string.IsNullOrEmpty(paciente.CorreoElectronico))
                         {
-                            var enviado = await _servicioNotificaciones.EnviarNotificacionVencimiento(
-                                solicitud.Id,
+                            await _servicioNotificaciones.EnviarAsync(
+                                EnumViewModel.NotificationType.VencimientoCarnet,
                                 paciente.CorreoElectronico,
-                                diasRestantes);
+                                new
+                                {
+                                    SolicitudId = solicitud.Id,
+                                    DiasRestantes = diasRestantes
+                                }
+                            );
 
-                            if (enviado)
-                            {
-                                await _servicioHistorial.RegistrarNotificacion(
-                                    solicitud.Id,
-                                    $"Vencimiento_{diasRestantes}dias",
-                                    "Email",
-                                    paciente.CorreoElectronico,
-                                    true);
-                                notificacionesEnviadas++;
-                            }
+                            await _servicioHistorial.RegistrarNotificacion(
+                                solicitud.Id,
+                                $"Vencimiento_{diasRestantes}dias",
+                                "Email",
+                                paciente.CorreoElectronico,
+                                true);
                         }
                     }
                     catch (Exception ex)
@@ -509,10 +518,13 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                         var config = await _servicioConfiguracion.ObtenerConfiguracionCompleta();
                         if (config.NotificarPorEmail && !string.IsNullOrEmpty(carnet.Paciente.CorreoElectronico))
                         {
-                            await _servicioNotificaciones.EnviarNotificacionCarnetInactivado(
-                                carnet.Id,
+                            await _servicioNotificaciones.EnviarAsync(
+                                EnumViewModel.NotificationType.CarnetInactivado,
                                 carnet.Paciente.CorreoElectronico,
-                                "Inactivación automática por vencimiento");
+                                new { SolicitudId = carnet.Id }
+                            );
+
+
                         }
 
                         await _context.SaveChangesAsync();
@@ -902,5 +914,24 @@ namespace DIGESA.Repositorios.ServiciosCannabis
             writer.Flush();
             return memoryStream.ToArray();
         }
+        // ===== IMPLEMENTACIÓN DE LA INTERFAZ =====
+
+        public async Task<bool> IniciarRenovacionAsync(int solicitudId, string usuarioId)
+        {
+            var resultado = await IniciarRenovacion(solicitudId, usuarioId);
+            return resultado.Exitoso;
+        }
+
+        public async Task<bool> AprobarRenovacionAsync(int solicitudId, string usuarioId)
+        {
+            var resultado = await CompletarRenovacion(solicitudId, usuarioId);
+            return resultado.Exitoso;
+        }
+
+        public async Task ProcesarRenovacionesAutomaticasAsync()
+        {
+            await ProcesarRenovacionesAutomaticas();
+        }
+
     }
 }

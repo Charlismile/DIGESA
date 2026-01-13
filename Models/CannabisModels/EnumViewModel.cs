@@ -8,7 +8,14 @@ public class EnumViewModel
         Pasaporte = 2
     }
 
-    
+    public enum NotificationType
+    {
+        RenovacionIniciada,
+        RenovacionAprobada,
+        RenovacionRechazada,
+        VencimientoCarnet,
+        CarnetInactivado
+    }
     public enum Sexo
     {
         Masculino = 1,

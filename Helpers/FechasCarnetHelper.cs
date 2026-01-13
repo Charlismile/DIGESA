@@ -40,4 +40,15 @@ public static class FechasCarnetHelper
 
         return diasHabiles <= DiasHabilesAlerta;
     }
+    public static int CalcularEdad(DateTime fechaNacimiento)
+    {
+        var hoy = DateTime.Today;
+        var edad = hoy.Year - fechaNacimiento.Year;
+
+        if (fechaNacimiento.Date > hoy.AddYears(-edad))
+            edad--;
+
+        return edad;
+    }
+
 }

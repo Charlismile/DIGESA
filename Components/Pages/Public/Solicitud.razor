@@ -254,7 +254,7 @@
                                                 <ValidationMessage For="@(() => registro.Paciente.DireccionExacta)"/>
                                             </div>
                                             <!-- Instalacion de salud -->
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class="form-label">Instalación de salud donde es atendido</label>
 
                                                 <AutoComplete @bind-Value="instalacionFilterPaciente"
@@ -270,8 +270,8 @@
                                                     For="@(() => registro.Paciente.InstalacionSaludId)"
                                                     class="text-danger"/>
                                             </div>
-
-                                            <div class="form-check mb-2">
+                                           
+                                            <div class="form-check mb-2 col-sm-2">
                                                 <input class="form-check-input"
                                                        type="checkbox"
                                                        id="otraInstalacionPacienteCheckbox"
@@ -281,7 +281,6 @@
                                                     Mi instalación no aparece en la lista
                                                 </label>
                                             </div>
-
                                             @if (mostrarOtraInstalacionPaciente)
                                             {
                                                 <div class="mb-2">
@@ -1409,13 +1408,6 @@
                                                     </div>
                                                 </div>
                                             }
-
-                                            <div class="alert alert-warning mt-3">
-                                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                                <strong>Importante:</strong> Todos los documentos deben estar
-                                                autenticados
-                                                por notario público o debidamente legalizados según corresponda.
-                                            </div>
                                         </div>
                                     </div>
                                 }
@@ -1456,5 +1448,7 @@
         </div>
     </div>
 </EditForm>
+<ConsentimientoCannabisModal @ref="ConsentimientoModal"
+                             OnDecision="OnConsentimientoDecision" />
 
 <DynamicModal @ref="ModalForm"/>

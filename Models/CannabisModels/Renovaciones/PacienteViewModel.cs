@@ -1,4 +1,6 @@
-﻿namespace DIGESA.Models.CannabisModels.Renovaciones;
+﻿using DIGESA.Models.CannabisModels.Formularios;
+
+namespace DIGESA.Models.CannabisModels.Renovaciones;
 
 public class PacienteViewModel
 {
@@ -24,9 +26,6 @@ public class PacienteViewModel
     public string? TipoDiscapacidad { get; set; }
     
     // acompanante
-    public string? NombreAcompanante { get; set; }
-    public string? DocumentoAcompanante { get; set; }
-    public string? TelefonoAcompanante { get; set; }
-    public string? ParentescoAcompanante { get; set; }
+    public DatosAcompananteVM? Acompanante { get; set; }
 
 }

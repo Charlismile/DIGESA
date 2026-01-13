@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jK7o0dLr2ryHACsNp/xB77Ugir/6DqreMwAOzOSOMMM=",
+  "Hash": "Aq/esezABqIfJ6gmxMsiTdRvE+9FU4jxJ0EDEbRZOxI=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -430,8 +430,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "0xyl1hxyo1",
-      "Integrity": "/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=",
+      "Fingerprint": "o7tn6y36tj",
+      "Integrity": "pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\custom.css"
@@ -2328,51 +2328,6 @@
       ]
     },
     {
-      "Route": "css/custom.0xyl1hxyo1.css",
-      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "10414"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 08 Jan 2026 16:11:39 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "0xyl1hxyo1"
-        },
-        {
-          "Name": "label",
-          "Value": "css/custom.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4="
-        }
-      ]
-    },
-    {
       "Route": "css/custom.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
       "Selectors": [],
@@ -2383,7 +2338,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10414"
+          "Value": "10889"
         },
         {
           "Name": "Content-Type",
@@ -2391,11 +2346,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4=\""
+          "Value": "\"pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 08 Jan 2026 16:11:39 GMT"
+          "Value": "Tue, 13 Jan 2026 15:39:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2405,7 +2360,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-/EaQQMdzVxixqNHXe5Y7bNZ1VcnoE64jear4X0jgtr4="
+          "Value": "sha256-pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE="
+        }
+      ]
+    },
+    {
+      "Route": "css/custom.o7tn6y36tj.css",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10889"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 13 Jan 2026 15:39:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "o7tn6y36tj"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custom.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE="
         }
       ]
     },

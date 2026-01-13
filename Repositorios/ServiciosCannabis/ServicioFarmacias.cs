@@ -72,14 +72,20 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                     entidad.Id.ToString());
 
                 // Notificar a los administradores
-                await _notificaciones.EnviarNotificacion("NUEVA_FARMACIA_REGISTRADA", usuarioId, new
-                {
-                    NombreFarmacia = entidad.NombreFarmacia,
-                    CodigoFarmacia = codigoFarmacia,
-                    RUC = entidad.Ruc,
-                    Direccion = entidad.Direccion,
-                    Responsable = entidad.Responsable
-                });
+                await _notificaciones.EnviarAsync(
+                    EnumViewModel.NotificationType.RenovacionIniciada,
+                    farmacia.Email ?? string.Empty,
+                    new
+                    {
+                        Tipo = "NUEVA_FARMACIA_REGISTRADA",
+                        NombreFarmacia = entidad.NombreFarmacia,
+                        CodigoFarmacia = codigoFarmacia,
+                        RUC = entidad.Ruc,
+                        Responsable = entidad.Responsable
+                    }
+                );
+
+
 
                 // Mapear de vuelta al ViewModel
                 farmacia.Id = entidad.Id;
@@ -156,13 +162,17 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // Notificar a la farmacia
                 if (!string.IsNullOrEmpty(entidad.Email))
                 {
-                    await _notificaciones.EnviarNotificacion("FARMACIA_INACTIVADA", usuarioId, new
-                    {
-                        NombreFarmacia = entidad.NombreFarmacia,
-                        CodigoFarmacia = entidad.CodigoFarmacia,
-                        Motivo = motivo,
-                        FechaInactivacion = DateTime.Now.ToString("dd/MM/yyyy")
-                    });
+                    await _notificaciones.EnviarAsync(
+                        EnumViewModel.NotificationType.CarnetInactivado,
+                        entidad.Email!,
+                        new
+                        {
+                            Tipo = "FARMACIA_INACTIVADA",
+                            NombreFarmacia = entidad.NombreFarmacia,
+                            Motivo = motivo,
+                            Fecha = DateTime.Now
+                        }
+                    );
                 }
 
                 return true;
@@ -278,16 +288,18 @@ namespace DIGESA.Repositorios.ServiciosCannabis
                 // Notificar al paciente (opcional)
                 if (!string.IsNullOrEmpty(paciente.CorreoElectronico))
                 {
-                    await _notificaciones.EnviarNotificacion("DISPENSACION_REGISTRADA", usuarioId, new
-                    {
-                        NombrePaciente = string.Format("{0} {1}", paciente.PrimerNombre, paciente.PrimerApellido),
-                        NombreFarmacia = farmacia.NombreFarmacia,
-                        Producto = dispensacion.Producto,
-                        Cantidad = dispensacion.Cantidad,
-                        UnidadMedida = dispensacion.UnidadMedida,
-                        FechaDispensacion = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
-                        Farmaceutico = dispensacion.FarmaceuticoResponsable
-                    });
+                    await _notificaciones.EnviarAsync(
+                        EnumViewModel.NotificationType.RenovacionAprobada,
+                        paciente.CorreoElectronico!,
+                        new
+                        {
+                            Tipo = "DISPENSACION_REGISTRADA",
+                            Farmacia = farmacia.NombreFarmacia,
+                            Producto = dispensacion.Producto,
+                            Cantidad = dispensacion.Cantidad,
+                            Fecha = DateTime.Now
+                        }
+                    );
                 }
 
                 // Mapear a ViewModel

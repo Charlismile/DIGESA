@@ -45,6 +45,14 @@ public partial class Verificacion : ComponentBase
             ModalForm.ShowInfo("Buscando paciente...");
             pacienteEstado = await PacienteService.GetEstadoPacienteAsync(documentoBusqueda);
             pacienteDetalle = await PacienteService.BuscarPorDocumentoAsync(documentoBusqueda);
+
+            if (pacienteDetalle != null &&
+                pacienteDetalle.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
+            {
+                pacienteDetalle.Acompanante =
+                    await PacienteService.ObtenerAcompananteAsync(pacienteDetalle.Id);
+            }
+
             pacienteEncontrado = pacienteEstado is not null && !string.IsNullOrEmpty(pacienteEstado.Documento);
         }
         catch (Exception ex)
@@ -74,15 +82,15 @@ public partial class Verificacion : ComponentBase
         return string.Join(" ", nombres.Where(n => !string.IsNullOrEmpty(n)));
     }
 
-    private string GetTipoDocumentoTexto()
-    {
-        return pacienteDetalle?.TipoDocumento switch
-        {
-            EnumViewModel.TipoDocumento.Cedula => "Cédula",
-            EnumViewModel.TipoDocumento.Pasaporte => "Pasaporte",
-            _ => "No especificado"
-        };
-    }
+    // private string GetTipoDocumentoTexto()
+    // {
+    //     return pacienteDetalle?.TipoDocumento switch
+    //     {
+    //         EnumViewModel.TipoDocumento.Cedula => "Cédula",
+    //         EnumViewModel.TipoDocumento.Pasaporte => "Pasaporte",
+    //         _ => "No especificado"
+    //     };
+    // }
 
     private string GetSexoTexto()
     {

@@ -30,4 +30,5 @@ public class DatosPacienteVM : PersonaBaseViewModel
     public EnumViewModel.RequiereAcompanante RequiereAcompanante { get; set; }
     public EnumViewModel.MotivoRequerimientoAcompanante? MotivoRequerimientoAcompanante { get; set; }
     public string? TipoDiscapacidad { get; set; }
+    
 }
