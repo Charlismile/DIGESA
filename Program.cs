@@ -10,6 +10,7 @@ using DIGESA.Repositorios.Interfaces;
 using DIGESA.Repositorios.InterfacesCannabis;
 using DIGESA.Repositorios.Services;
 using DIGESA.Repositorios.ServiciosCannabis;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +70,11 @@ builder.Services.AddHttpClient<IActiveDirectory, ActiveDirectoryService>();
 
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("MailSettings"));
+// En Program.cs, agregar esto:
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 50 * 1024 * 1024; // 50MB máximo
+});
 
 builder.Services.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
 

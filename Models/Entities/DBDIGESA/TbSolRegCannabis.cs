@@ -81,6 +81,8 @@ public partial class TbSolRegCannabis
 
     public virtual ICollection<TbLogNotificaciones> TbLogNotificaciones { get; set; } = new List<TbLogNotificaciones>();
 
+    public virtual ICollection<TbNombreProductoPaciente> TbNombreProductoPaciente { get; set; } = new List<TbNombreProductoPaciente>();
+
     public virtual ICollection<TbNotificacionVencimiento> TbNotificacionVencimiento { get; set; } = new List<TbNotificacionVencimiento>();
 
     public virtual ICollection<TbRegistroDispensacion> TbRegistroDispensacion { get; set; } = new List<TbRegistroDispensacion>();

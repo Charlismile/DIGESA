@@ -534,6 +534,8 @@ public partial class DbContextDigesa : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__TbNombre__3214EC07E727A746");
 
+            entity.HasIndex(e => e.SolicitudId, "IX_TbNombreProductoPaciente_SolicitudId");
+
             entity.Property(e => e.CantidadConcentracion).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.DetDosisPaciente)
                 .HasMaxLength(300)
@@ -541,6 +543,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.DetDosisRescate)
                 .HasMaxLength(300)
                 .IsUnicode(false);
+            entity.Property(e => e.EsProductoPrincipal).HasDefaultValue(true);
             entity.Property(e => e.FormaFarmaceutica)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -553,6 +556,7 @@ public partial class DbContextDigesa : DbContext
             entity.Property(e => e.NombreProducto)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.Orden).HasDefaultValue(1);
             entity.Property(e => e.ProductoUnidad)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -571,6 +575,10 @@ public partial class DbContextDigesa : DbContext
             entity.HasOne(d => d.ProductoUnidadNavigation).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.ProductoUnidadId)
                 .HasConstraintName("FK_TbNombreProductoPaciente_TbUnidades");
+
+            entity.HasOne(d => d.Solicitud).WithMany(p => p.TbNombreProductoPaciente)
+                .HasForeignKey(d => d.SolicitudId)
+                .HasConstraintName("FK_TbNombreProductoPaciente_Solicitud");
 
             entity.HasOne(d => d.ViaAdministracion).WithMany(p => p.TbNombreProductoPaciente)
                 .HasForeignKey(d => d.ViaAdministracionId)

@@ -1,0 +1,495 @@
+﻿@using DIGESA.Models.CannabisModels
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+@using DIGESA.Models.CannabisModels.Documentos
+
+<div class="mb-4">
+    <label class="form-label fw-bold">Tipo de trámite:</label>
+    <select class="form-select" @bind="TipoTramite">
+        <option value="">Seleccione el tipo de trámite...</option>
+        <option value="MayorPaciente">Paciente mayor con discapacidad y Acompañante de mayor con discapacidad</option>
+        <option value="MenorPaciente">Paciente menor de edad y Acompañante de menor de edad</option>
+        <option value="Renovacion">Emisión/Renovación</option>
+    </select>
+</div>
+
+@if (!string.IsNullOrEmpty(TipoTramite))
+{
+    <div class="card border-primary mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                @(TipoTramite == "MayorPaciente" ? "Requisitos para Paciente Mayor con Discapacidad y Acompañante" :
+                TipoTramite == "MenorPaciente" ? "Requisitos para Paciente Menor de Edad y Acompañante" :
+                "Documentos para Emisión/Renovación")
+            </h5>
+        </div>
+        <div class="card-body">
+            @if (TipoTramite == "MayorPaciente")
+            {
+                <!-- PACIENTE MAYOR CON DISCAPACIDAD -->
+                <div class="mb-4">
+                    <h6 class="text-primary"><i class="fas fa-user-injured me-2"></i>Para el Paciente Mayor con Discapacidad:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Copia de cédula -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-id-card me-2"></i>
+                                    1. Copia de cédula o pasaporte (autenticado)
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CedulaPaciente")))"/>
+                                </label>
+                                @if (Documentos.CedulaPaciente.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CedulaPaciente)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Certificación médica -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-file-medical me-2"></i>
+                                    2. Certificación médica idónea
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CertificacionMedica")))"/>
+                                </label>
+                                @if (Documentos.CertificacionMedica.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CertificacionMedica)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Foto -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-camera me-2"></i>
+                                    3. Foto tamaño carnet
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "FotoPaciente")))"/>
+                                </label>
+                                @if (Documentos.FotoPaciente.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.FotoPaciente)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACOMPAÑANTE -->
+                <div class="mb-4">
+                    <h6 class="text-primary"><i class="fas fa-hands-helping me-2"></i>Para el Acompañante:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Cédula acompañante -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-id-card me-2"></i>
+                                    1. Cédula del acompañante (autenticada)
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CedulaAcompanante")))"/>
+                                </label>
+                                @if (Documentos.CedulaAcompanante.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CedulaAcompanante)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Sentencia judicial -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-gavel me-2"></i>
+                                    2. Sentencia judicial de tutoría
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "SentenciaTutor")))"/>
+                                </label>
+                                @if (Documentos.SentenciaTutor.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.SentenciaTutor)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Antecedentes -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-file-alt me-2"></i>
+                                    3. Certificado de antecedentes penales
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "Antecedentes")))"/>
+                                </label>
+                                @if (Documentos.Antecedentes.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.Antecedentes)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Foto acompañante -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-camera me-2"></i>
+                                    4. Foto tamaño carnet del acompañante
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "FotoAcompanante")))"/>
+                                </label>
+                                @if (Documentos.FotoAcompanante.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.FotoAcompanante)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (TipoTramite == "MenorPaciente")
+            {
+                <!-- PACIENTE MENOR DE EDAD -->
+                <div class="mb-4">
+                    <h6 class="text-primary"><i class="fas fa-child me-2"></i>Para el Paciente Menor de Edad:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Documento identidad -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-id-card me-2"></i>
+                                    1. Documento de identidad del menor
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "IdentidadMenor")))"/>
+                                </label>
+                                @if (Documentos.IdentidadMenor.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.IdentidadMenor)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Consentimiento -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-file-signature me-2"></i>
+                                    2. Consentimiento de padres/tutor
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "ConsentimientoPadres")))"/>
+                                </label>
+                                @if (Documentos.ConsentimientoPadres.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.ConsentimientoPadres)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Certificación médica -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-file-medical me-2"></i>
+                                    3. Certificación médica idónea
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CertificacionMedica")))"/>
+                                </label>
+                                @if (Documentos.CertificacionMedica.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CertificacionMedica)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Foto paciente -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-camera me-2"></i>
+                                    4. Foto tamaño carnet del paciente
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "FotoPaciente")))"/>
+                                </label>
+                                @if (Documentos.FotoPaciente.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.FotoPaciente)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACOMPAÑANTE MENOR -->
+                <div class="mb-4">
+                    <h6 class="text-primary"><i class="fas fa-hands-helping me-2"></i>Para el Acompañante:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Cédula acompañante -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-id-card me-2"></i>
+                                    1. Cédula del acompañante (autenticada)
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CedulaAcompanante")))"/>
+                                </label>
+                                @if (Documentos.CedulaAcompanante.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CedulaAcompanante)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Certificado nacimiento -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-birthday-cake me-2"></i>
+                                    2. Certificado de nacimiento del menor
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "CertificadoNacimientoMenor")))"/>
+                                </label>
+                                @if (Documentos.CertificadoNacimientoMenor.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.CertificadoNacimientoMenor)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Sentencia judicial -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-gavel me-2"></i>
+                                    3. Sentencia judicial de tutoría
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "SentenciaTutor")))"/>
+                                </label>
+                                @if (Documentos.SentenciaTutor.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.SentenciaTutor)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Antecedentes -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-file-alt me-2"></i>
+                                    4. Certificado de antecedentes penales
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "Antecedentes")))"/>
+                                </label>
+                                @if (Documentos.Antecedentes.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.Antecedentes)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Foto acompañante -->
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100 text-start">
+                                    <i class="fas fa-camera me-2"></i>
+                                    5. Foto tamaño carnet del acompañante
+                                    <InputFile class="d-none" multiple
+                                               OnChange="@(e => OnFileChange.InvokeAsync((e, "FotoAcompanante")))"/>
+                                </label>
+                                @if (Documentos.FotoAcompanante.Any())
+                                {
+                                    <div class="mt-2">
+                                        @foreach (var file in Documentos.FotoAcompanante)
+                                        {
+                                            <span class="badge bg-success me-2">@file.Name</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (TipoTramite == "Renovacion")
+            {
+                <!-- RENOVACIÓN -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Cédula -->
+                        <div class="mb-3">
+                            <label class="btn btn-outline-primary w-100 text-start">
+                                <i class="fas fa-id-card me-2"></i>
+                                1. Copia de cédula o pasaporte (autenticado)
+                                <InputFile class="d-none" multiple
+                                           OnChange="@(e => OnFileChange.InvokeAsync((e, "CedulaPaciente")))"/>
+                            </label>
+                            @if (Documentos.CedulaPaciente.Any())
+                            {
+                                <div class="mt-2">
+                                    @foreach (var file in Documentos.CedulaPaciente)
+                                    {
+                                        <span class="badge bg-success me-2">@file.Name</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Certificación médica -->
+                        <div class="mb-3">
+                            <label class="btn btn-outline-primary w-100 text-start">
+                                <i class="fas fa-file-medical me-2"></i>
+                                2. Certificación médica idónea
+                                <InputFile class="d-none" multiple
+                                           OnChange="@(e => OnFileChange.InvokeAsync((e, "CertificacionMedica")))"/>
+                            </label>
+                            @if (Documentos.CertificacionMedica.Any())
+                            {
+                                <div class="mt-2">
+                                    @foreach (var file in Documentos.CertificacionMedica)
+                                    {
+                                        <span class="badge bg-success me-2">@file.Name</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Foto -->
+                        <div class="mb-3">
+                            <label class="btn btn-outline-primary w-100 text-start">
+                                <i class="fas fa-camera me-2"></i>
+                                3. Foto tamaño carnet
+                                <InputFile class="d-none" multiple
+                                           OnChange="@(e => OnFileChange.InvokeAsync((e, "FotoPaciente")))"/>
+                            </label>
+                            @if (Documentos.FotoPaciente.Any())
+                            {
+                                <div class="mt-2">
+                                    @foreach (var file in Documentos.FotoPaciente)
+                                    {
+                                        <span class="badge bg-success me-2">@file.Name</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle me-2"></i>Requisitos para renovación:</h6>
+                            <ol class="small">
+                                <li>Copia de la cédula de identidad autenticada por notario público o pasaporte debidamente legalizado</li>
+                                <li>Certificación emitida por médico idóneo reconocido por el Consejo Técnico de Salud</li>
+                                <li>Foto tamaño carnet actualizada</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string TipoTramite { get; set; } = string.Empty;
+    [Parameter] public DocumentoAdjuntoViewModel Documentos { get; set; } = new();
+    [Parameter] public EventCallback<(InputFileChangeEventArgs e, string campo)> OnFileChange { get; set; }
+    
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+
+    public async Task<bool> ValidateAsync()
+    {
+        if (string.IsNullOrEmpty(TipoTramite))
+        {
+            return false;
+        }
+
+        // Validación básica según el tipo de trámite
+        bool isValid = true;
+        
+        switch (TipoTramite)
+        {
+            case "MayorPaciente":
+                isValid = Documentos.CedulaPaciente.Any() && 
+                         Documentos.CertificacionMedica.Any() && 
+                         Documentos.FotoPaciente.Any() && 
+                         Documentos.CedulaAcompanante.Any() &&
+                         Documentos.SentenciaTutor.Any() && 
+                         Documentos.Antecedentes.Any() && 
+                         Documentos.FotoAcompanante.Any();
+                break;
+                
+            case "MenorPaciente":
+                isValid = Documentos.IdentidadMenor.Any() && 
+                         Documentos.ConsentimientoPadres.Any() && 
+                         Documentos.CertificacionMedica.Any() && 
+                         Documentos.FotoPaciente.Any() &&
+                         Documentos.CedulaAcompanante.Any() && 
+                         Documentos.CertificadoNacimientoMenor.Any() &&
+                         Documentos.SentenciaTutor.Any() && 
+                         Documentos.Antecedentes.Any() && 
+                         Documentos.FotoAcompanante.Any();
+                break;
+                
+            case "Renovacion":
+                isValid = Documentos.CedulaPaciente.Any() && 
+                         Documentos.CertificacionMedica.Any() && 
+                         Documentos.FotoPaciente.Any();
+                break;
+        }
+
+        return await Task.FromResult(isValid);
+    }
+}

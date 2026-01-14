@@ -1,0 +1,377 @@
+﻿@using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
+@using BlazorBootstrap
+@using System.ComponentModel.DataAnnotations
+@using DIGESA.Models.CannabisModels.Formularios
+
+<div class="row g-3">
+    <!-- Nombres y apellidos -->
+    <div class="card px-0 mb-1">
+        <div class="card-header custom-card-header2 fw-bold">Datos del solicitante</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label class="form-label">Primer Nombre</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.PrimerNombre"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.PrimerNombre)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Segundo Nombre</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.SegundoNombre"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.SegundoNombre)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Primer Apellido</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.PrimerApellido"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.PrimerApellido)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Segundo Apellido</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.SegundoApellido"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.SegundoApellido)"/>
+                </div>
+
+                <!-- Tipo de documento -->
+                <div class="col-3">
+                    <label class="form-label">Tipo de Documento</label>
+                    <div class="d-flex gap-4">
+                        <InputRadioGroup @bind-Value="@Registro.Paciente.TipoDocumento">
+                            <div class="form-check">
+                                <InputRadio class="form-check-input"
+                                            Value="@EnumViewModel.TipoDocumento.Cedula"
+                                            id="Cedula"/>
+                                <label class="form-check-label" for="Cedula">Cédula</label>
+                            </div>
+                            <div class="form-check">
+                                <InputRadio class="form-check-input"
+                                            Value="@EnumViewModel.TipoDocumento.Pasaporte"
+                                            id="Pasaporte"/>
+                                <label class="form-check-label" for="Pasaporte">Pasaporte</label>
+                            </div>
+                        </InputRadioGroup>
+                    </div>
+                    <ValidationMessage For="@(() => Registro.Paciente.TipoDocumento)"/>
+                </div>
+
+                <!-- Número de documento -->
+                <div class="col-md-3">
+                    <label class="form-label" for="numeroDocumento">Número de Documento</label>
+                    <InputText id="numeroDocumento" class="form-control"
+                               @bind-Value="Registro.Paciente.NumeroDocumento"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.NumeroDocumento)"/>
+                </div>
+
+                <!-- Nacionalidad y fecha -->
+                <div class="col-sm-3">
+                    <label class="form-label">Nacionalidad</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.Nacionalidad"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.Nacionalidad)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Fecha de Nacimiento</label>
+                    <InputDate class="form-control"
+                               @bind-Value="Registro.Paciente.FechaNacimiento"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.FechaNacimiento)"/>
+                </div>
+
+                <!-- Sexo -->
+                <div class="col-3">
+                    <label class="form-label d-block">Sexo</label>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input"
+                                   id="sexoMasculino"
+                                   checked="@(Registro.Paciente.Sexo == EnumViewModel.Sexo.Masculino)"
+                                   @onchange="() => { Registro.Paciente.Sexo = EnumViewModel.Sexo.Masculino; StateHasChanged(); }"/>
+                            <label class="form-check-label" for="sexoMasculino">Masculino</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input"
+                                   id="sexoFemenino"
+                                   checked="@(Registro.Paciente.Sexo == EnumViewModel.Sexo.Femenino)"
+                                   @onchange="() => { Registro.Paciente.Sexo = EnumViewModel.Sexo.Femenino; StateHasChanged(); }"/>
+                            <label class="form-check-label" for="sexoFemenino">Femenino</label>
+                        </div>
+                    </div>
+                    <ValidationMessage For="@(() => Registro.Paciente.Sexo)"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card px-0 mb-1">
+        <div class="card-header custom-card-header2 fw-bold">Datos de contacto del solicitante</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- Contacto -->
+                <div class="col-sm-3">
+                    <label class="form-label">Teléfono Personal/Residencial</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.TelefonoPersonal"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.TelefonoPersonal)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Teléfono Laboral</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.TelefonoLaboral"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.TelefonoLaboral)"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Correo Electrónico</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Paciente.CorreoElectronico"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.CorreoElectronico)"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card px-0 mb-1">
+        <div class="card-header custom-card-header2 fw-bold">Datos de residencia y lugar de atención del solicitante</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- DIRECCION DE USUARIO -->
+                <div class="col-sm-3">
+                    <label class="form-label">Provincia</label>
+                    <InputSelect TValue="int?" class="form-select"
+                                 Value="@Registro.Paciente.ProvinciaId"
+                                 ValueChanged="@(async (int? provinciaId) => await OnPacienteProvinciaChanged.InvokeAsync(provinciaId ?? 0))"
+                                 ValueExpression="@(() => Registro.Paciente.ProvinciaId)">
+                        <option value="">--Seleccione--</option>
+                        @foreach (var x in PacienteProvinciasList)
+                        {
+                            <option value="@x.Id">@x.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Registro.Paciente.ProvinciaId)" class="text-danger"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Distrito</label>
+                    <InputSelect TValue="int?" class="form-select"
+                                 Value="@Registro.Paciente.DistritoId"
+                                 ValueChanged="@(async (int? distritoId) => await OnPacienteDistritoChanged.InvokeAsync(distritoId ?? 0))"
+                                 ValueExpression="@(() => Registro.Paciente.DistritoId)">
+                        <option value="">--Seleccione--</option>
+                        @foreach (var x in PacienteDistritoList)
+                        {
+                            <option value="@x.Id">@x.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Registro.Paciente.DistritoId)" class="text-danger"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Corregimiento</label>
+                    <InputSelect TValue="int?" class="form-select"
+                                 @bind-Value="@Registro.Paciente.CorregimientoId">
+                        <option value="">--Seleccione--</option>
+                        @foreach (var x in PacienteCorregimientoList)
+                        {
+                            <option value="@x.Id">@x.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Registro.Paciente.CorregimientoId)" class="text-danger"/>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label">Region de salud</label>
+                    <InputSelect TValue="int?" class="form-select"
+                                 @bind-Value="@Registro.Paciente.RegionSaludId">
+                        <option value="">--Seleccione--</option>
+                        @foreach (var x in PacienteRegionesList)
+                        {
+                            <option value="@x.Id">@x.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Registro.Paciente.RegionSaludId)" class="text-danger"/>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Barriada, edificio, calle, número de casa o apartamento</label>
+                    <InputTextArea @bind-Value="Registro.Paciente.DireccionExacta" class="form-control"/>
+                    <ValidationMessage For="@(() => Registro.Paciente.DireccionExacta)"/>
+                </div>
+                <!-- Instalacion de salud -->
+                <div class="col-sm-4">
+                    <label class="form-label">Instalación de salud donde es atendido</label>
+
+                    <AutoComplete @bind-Value="InstalacionFilterPaciente"
+                                  TItem="ListSustModel"
+                                  DataProvider="AutoCompleteDataProvider"
+                                  OnChanged="OnAutoCompletePacienteChanged"
+                                  PropertyName="Name"
+                                  class="form-control mb-2"
+                                  Placeholder="Busque por instalación de salud"
+                                  disabled="@MostrarOtraInstalacionPaciente"/>
+
+                    <ValidationMessage For="@(() => Registro.Paciente.InstalacionSaludId)" class="text-danger"/>
+                </div>
+               
+                <div class="form-check mb-2 col-sm-2">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="otraInstalacionPacienteCheckbox"
+                           checked="@MostrarOtraInstalacionPaciente"
+                           @onchange="(e) => OnMostrarOtraInstalacionPacienteChanged.InvokeAsync(e)"/>
+                    <label class="form-check-label" for="otraInstalacionPacienteCheckbox">
+                        Mi instalación no aparece en la lista
+                    </label>
+                </div>
+                @if (MostrarOtraInstalacionPaciente)
+                {
+                    <div class="mb-2">
+                        <InputText class="form-control"
+                                   @bind-Value="Registro.Paciente.InstalacionSaludPersonalizada"
+                                   placeholder="Especifique el nombre de la instalación de salud"/>
+                        <ValidationMessage For="@(() => Registro.Paciente.InstalacionSaludPersonalizada)" class="text-danger"/>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <label class="form-label">¿Requiere acompañante autorizado?</label>
+        <div class="d-flex gap-4">
+            <InputRadioGroup @bind-Value="Registro.Paciente.RequiereAcompanante">
+                <div class="form-check form-check-inline">
+                    <InputRadio class="form-check-input" Value="@EnumViewModel.RequiereAcompanante.Si" id="reqSi"/>
+                    <label class="form-check-label" for="reqSi">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <InputRadio class="form-check-input" Value="@EnumViewModel.RequiereAcompanante.No" id="reqNo"/>
+                    <label class="form-check-label" for="reqNo">No</label>
+                </div>
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => Registro.Paciente.RequiereAcompanante)"/>
+        </div>
+    </div>
+
+    @if (Registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
+    {
+        <div class="col-12">
+            <label class="form-label">Especifique el motivo</label>
+            <div class="d-flex gap-4">
+                <InputRadioGroup @bind-Value="Registro.Paciente.MotivoRequerimientoAcompanante">
+                    <div class="form-check form-check-inline">
+                        <InputRadio class="form-check-input"
+                                    Value="@EnumViewModel.MotivoRequerimientoAcompanante.PacienteDiscapacidad"
+                                    id="motivoDiscapacidad"/>
+                        <label class="form-check-label" for="motivoDiscapacidad">Mayor de edad con discapacidad</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <InputRadio class="form-check-input"
+                                    Value="@EnumViewModel.MotivoRequerimientoAcompanante.PacienteMenorEdad"
+                                    id="motivoMenorEdad"/>
+                        <label class="form-check-label" for="motivoMenorEdad">Menor de edad</label>
+                    </div>
+                </InputRadioGroup>
+                <ValidationMessage For="@(() => Registro.Paciente.MotivoRequerimientoAcompanante)"/>
+            </div>
+        </div>
+
+        @if (Registro.Paciente.MotivoRequerimientoAcompanante == EnumViewModel.MotivoRequerimientoAcompanante.PacienteDiscapacidad)
+        {
+            <div class="col-sm-6">
+                <label for="TipoDiscapacidad" class="form-label">Especifique la discapacidad</label>
+                <InputText id="TipoDiscapacidad"
+                           class="form-control"
+                           @bind-Value="Registro.Paciente.TipoDiscapacidad"/>
+                <ValidationMessage For="@(() => Registro.Paciente.TipoDiscapacidad)"/>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public SolicitudCannabisFormViewModel Registro { get; set; } = default!;
+    [Parameter] public List<ListSustModel> PacienteProvinciasList { get; set; } = new();
+    [Parameter] public List<ListSustModel> PacienteDistritoList { get; set; } = new();
+    [Parameter] public List<ListSustModel> PacienteCorregimientoList { get; set; } = new();
+    [Parameter] public List<ListSustModel> PacienteRegionesList { get; set; } = new();
+    [Parameter] public bool MostrarOtraInstalacionPaciente { get; set; }
+    [Parameter] public string InstalacionFilterPaciente { get; set; } = string.Empty;
+    [Parameter] public EventCallback<int> OnPacienteProvinciaChanged { get; set; }
+    [Parameter] public EventCallback<int> OnPacienteDistritoChanged { get; set; }
+    [Parameter] public EventCallback<ListSustModel?> OnAutoCompletePacienteChanged { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnMostrarOtraInstalacionPacienteChanged { get; set; }
+    [Parameter] public AutoCompleteDataProviderDelegate<ListSustModel> AutoCompleteDataProvider { get; set; } = default!;
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+    private ValidationMessageStore? messageStore;
+
+    protected override void OnInitialized()
+    {
+        if (EditContext != null)
+        {
+            messageStore = new ValidationMessageStore(EditContext);
+        }
+    }
+
+    public async Task<bool> ValidateAsync()
+    {
+        if (EditContext == null) return false;
+
+        messageStore?.Clear();
+        var subModel = Registro.Paciente;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        // Validaciones adicionales
+        if (Registro.Paciente.ProvinciaId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.ProvinciaId)),
+                "La provincia es requerida.");
+            isValid = false;
+        }
+
+        if (Registro.Paciente.DistritoId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.DistritoId)),
+                "El distrito es requerido.");
+            isValid = false;
+        }
+
+        if (Registro.Paciente.RegionSaludId == null)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.RegionSaludId)),
+                "La región de salud es requerida.");
+            isValid = false;
+        }
+
+        if (Registro.Paciente.InstalacionSaludId == null && !MostrarOtraInstalacionPaciente)
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludId)),
+                "Seleccione o especifique una instalación de salud donde es atendido.");
+            isValid = false;
+        }
+
+        if (MostrarOtraInstalacionPaciente && string.IsNullOrEmpty(Registro.Paciente.InstalacionSaludPersonalizada))
+        {
+            messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludPersonalizada)),
+                "Especifique el nombre de la instalación de salud donde es atendido.");
+            isValid = false;
+        }
+
+        EditContext?.NotifyValidationStateChanged();
+        return await Task.FromResult(isValid);
+    }
+}

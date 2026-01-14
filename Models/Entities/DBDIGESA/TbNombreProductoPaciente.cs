@@ -39,11 +39,19 @@ public partial class TbNombreProductoPaciente
 
     public int? ViaAdministracionId { get; set; }
 
+    public bool? EsProductoPrincipal { get; set; }
+
+    public int? Orden { get; set; }
+
+    public int? SolicitudId { get; set; }
+
     public virtual TbFormaFarmaceutica? FormaFarmaceuticaNavigation { get; set; }
 
     public virtual TbPaciente? Paciente { get; set; }
 
     public virtual TbUnidades? ProductoUnidadNavigation { get; set; }
+
+    public virtual TbSolRegCannabis? Solicitud { get; set; }
 
     public virtual TbViaAdministracion? ViaAdministracion { get; set; }
 }

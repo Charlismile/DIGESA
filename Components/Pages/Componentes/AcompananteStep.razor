@@ -1,0 +1,137 @@
+﻿@using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
+@using System.ComponentModel.DataAnnotations
+@using DIGESA.Models.CannabisModels.Formularios
+
+<div class="card px-0 mb-1">
+    <div class="card-header custom-card-header2 fw-bold">Datos del Acompañante Autorizado</div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-sm-3">
+                <label>Primer Nombre</label>
+                <InputText @bind-Value="Registro.Acompanante!.PrimerNombre" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.PrimerNombre)"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Segundo Nombre</label>
+                <InputText @bind-Value="Registro.Acompanante.SegundoNombre" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.SegundoNombre)"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Primer Apellido</label>
+                <InputText @bind-Value="Registro.Acompanante.PrimerApellido" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.PrimerApellido)"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Segundo Apellido</label>
+                <InputText @bind-Value="Registro.Acompanante.SegundoApellido" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.SegundoApellido)"/>
+            </div>
+            <div class="col-3">
+                <label>Tipo de Documento</label>
+                <div class="d-flex gap-4">
+                    <InputRadioGroup @bind-Value="Registro.Acompanante.TipoDocumento">
+                        <div class="form-check">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.TipoDocumento.Cedula"
+                                        id="Cedula"/>
+                            <label class="form-check-label" for="Cedula">Cédula</label>
+                        </div>
+                        <div class="form-check">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.TipoDocumento.Pasaporte"
+                                        id="Pasaporte"/>
+                            <label class="form-check-label" for="Pasaporte">Pasaporte</label>
+                        </div>
+                    </InputRadioGroup>
+                </div>
+                <ValidationMessage For="@(() => Registro.Acompanante.TipoDocumento)"/>
+            </div>
+            <div class="col-sm-3">
+                <label for="numeroDocumento">Número de Documento</label>
+                <InputText id="numeroDocumento" class="form-control"
+                           @bind-Value="Registro.Acompanante.NumeroDocumento"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.NumeroDocumento)"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Nacionalidad</label>
+                <InputText @bind-Value="Registro.Acompanante.Nacionalidad" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.Nacionalidad)"/>
+            </div>
+            <div class="col-3">
+                <label>Parentesco</label>
+                <div class="d-flex gap-4">
+                    <InputRadioGroup @bind-Value="Registro.Acompanante.Parentesco">
+                        <div class="form-check">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.Parentesco.Madre" id="Madre"/>
+                            <label class="form-check-label" for="Madre">Madre con patria potestad</label>
+                        </div>
+                        <div class="form-check">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.Parentesco.Padre" id="Padre"/>
+                            <label class="form-check-label" for="Padre">Padre con patria potestad</label>
+                        </div>
+                        <div class="form-check">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.Parentesco.Tutor" id="Tutor"/>
+                            <label class="form-check-label" for="Tutor">Tutor designado</label>
+                        </div>
+                    </InputRadioGroup>
+                </div>
+                <ValidationMessage For="@(() => Registro.Acompanante.Parentesco)"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Teléfono Móvil</label>
+                <InputText @bind-Value="Registro.Acompanante.TelefonoMovil" class="form-control"/>
+                <ValidationMessage For="@(() => Registro.Acompanante.TelefonoMovil)"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public SolicitudCannabisFormViewModel Registro { get; set; } = default!;
+    
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+    private ValidationMessageStore? messageStore;
+
+    protected override void OnInitialized()
+    {
+        if (EditContext != null)
+        {
+            messageStore = new ValidationMessageStore(EditContext);
+        }
+    }
+
+    public async Task<bool> ValidateAsync()
+    {
+        if (Registro.Acompanante == null) return true;
+        if (EditContext == null) return false;
+
+        messageStore?.Clear();
+        var subModel = Registro.Acompanante;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        EditContext?.NotifyValidationStateChanged();
+        return await Task.FromResult(isValid);
+    }
+}

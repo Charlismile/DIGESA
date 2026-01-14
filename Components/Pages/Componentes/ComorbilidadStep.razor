@@ -1,0 +1,91 @@
+﻿@using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
+@using System.ComponentModel.DataAnnotations
+@using DIGESA.Models.CannabisModels.Formularios
+
+<div class="card px-0 mb-1">
+    <div class="card-header custom-card-header2 fw-bold">Datos de otras enfermedades que padece el paciente</div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-4">
+                <label class="mb-2">¿Padece de otra enfermedad? </label>
+                <div class="d-flex gap-4">
+                    <InputRadioGroup @bind-Value="Registro.Comorbilidad.TieneComorbilidadEnum" class="d-flex gap-3">
+                        <div class="form-check form-check-inline">
+                            <InputRadio class="form-check-input" Value="@EnumViewModel.TieneComorbilidad.Si"
+                                        id="comorbilidadSi"/>
+                            <label class="form-check-label" for="comorbilidadSi">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <InputRadio class="form-check-input" Value="@EnumViewModel.TieneComorbilidad.No"
+                                        id="comorbilidadNo"/>
+                            <label class="form-check-label" for="comorbilidadNo">No</label>
+                        </div>
+                    </InputRadioGroup>
+                    <ValidationMessage For="@(() => Registro.Comorbilidad.TieneComorbilidadEnum)"/>
+                </div>
+            </div>
+            
+            @if (Registro.Comorbilidad.TieneComorbilidadEnum == EnumViewModel.TieneComorbilidad.Si)
+            {
+                <div class="col-6">
+                    <label class="form-label">Nombre de diagnostico</label>
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Comorbilidad.NombreDiagnostico"/>
+                    <ValidationMessage For="@(() => Registro.Comorbilidad.NombreDiagnostico)"/>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Tratamientos</label>
+                    <InputTextArea class="form-control"
+                                   @bind-Value="Registro.Comorbilidad.DetalleTratamiento"/>
+                    <ValidationMessage For="@(() => Registro.Comorbilidad.DetalleTratamiento)"/>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public SolicitudCannabisFormViewModel Registro { get; set; } = default!;
+    
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+    private ValidationMessageStore? messageStore;
+
+    protected override void OnInitialized()
+    {
+        if (EditContext != null)
+        {
+            messageStore = new ValidationMessageStore(EditContext);
+        }
+    }
+
+    public async Task<bool> ValidateAsync()
+    {
+        if (EditContext == null) return false;
+
+        messageStore?.Clear();
+        var subModel = Registro.Comorbilidad;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        EditContext?.NotifyValidationStateChanged();
+        return await Task.FromResult(isValid);
+    }
+}

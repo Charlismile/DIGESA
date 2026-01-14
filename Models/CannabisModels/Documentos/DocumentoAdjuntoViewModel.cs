@@ -9,4 +9,15 @@ public class DocumentoAdjuntoViewModel
 
     public IBrowserFile Archivo { get; set; }
     public bool Obligatorio { get; set; }
+    
+    public List<IBrowserFile> CedulaPaciente { get; set; } = new();
+    public List<IBrowserFile> CertificacionMedica { get; set; } = new();
+    public List<IBrowserFile> FotoPaciente { get; set; } = new();
+    public List<IBrowserFile> CedulaAcompanante { get; set; } = new();
+    public List<IBrowserFile> SentenciaTutor { get; set; } = new();
+    public List<IBrowserFile> Antecedentes { get; set; } = new();
+    public List<IBrowserFile> IdentidadMenor { get; set; } = new();
+    public List<IBrowserFile> ConsentimientoPadres { get; set; } = new();
+    public List<IBrowserFile> CertificadoNacimientoMenor { get; set; } = new();
+    public List<IBrowserFile> FotoAcompanante { get; set; } = new();
 }

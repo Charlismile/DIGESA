@@ -1,0 +1,173 @@
+﻿@using DIGESA.Models.CannabisModels
+@using DIGESA.Models.CannabisModels.Common
+@using BlazorBootstrap
+@using System.ComponentModel.DataAnnotations
+@using DIGESA.Models.CannabisModels.Formularios
+
+<div class="card px-0 mb-1">
+    <div class="card-header custom-card-header2 fw-bold">Datos del Medico que prescribe</div>
+    <div class="card-body">
+        <div class="row g-3">
+            <!-- DATOS DEL MEDICO -->
+            <div class="col-sm-3">
+                <label class="form-label">Primer Nombre</label>
+                <InputText class="form-control" @bind-Value="Registro.Medico.PrimerNombre"/>
+                <ValidationMessage For="@(() => Registro.Medico.PrimerNombre)"/>
+            </div>
+            <div class="col-sm-3">
+                <label class="form-label">Primer Apellido</label>
+                <InputText class="form-control" @bind-Value="Registro.Medico.PrimerApellido"/>
+                <ValidationMessage For="@(() => Registro.Medico.PrimerApellido)"/>
+            </div>
+            <div class="col-sm-3">
+                <label class="form-label">Número de registro de idoneidad</label>
+                <InputText class="form-control" @bind-Value="Registro.Medico.MedicoIdoneidad"/>
+                <ValidationMessage For="@(() => Registro.Medico.MedicoIdoneidad)"/>
+            </div>
+            <div class="col-sm-3">
+                <label class="form-label">Número de contacto del medico</label>
+                <InputText class="form-control" @bind-Value="Registro.Medico.TelefonoPersonal"/>
+                <ValidationMessage For="@(() => Registro.Medico.TelefonoPersonal)"/>
+            </div>
+            <div class="col-6">
+                <label class="form-label">Disciplina del medico</label>
+                <div class="d-flex gap-4">
+                    <InputRadioGroup @bind-Value="Registro.Medico.MedicoDisciplina" class="d-flex gap-3">
+                        <div class="form-check form-check-inline">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.MedicoDisciplina.General"
+                                        id="General"/>
+                            <label class="form-check-label" for="General">Médico General</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.MedicoDisciplina.Odontologo"
+                                        id="Odontologo"/>
+                            <label class="form-check-label" for="Odontologo">Odontólogo</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <InputRadio class="form-check-input"
+                                        Value="@EnumViewModel.MedicoDisciplina.Especialista"
+                                        id="Especialista"/>
+                            <label class="form-check-label" for="Especialista">Médico especialista, especifique</label>
+                        </div>
+                    </InputRadioGroup>
+                    <ValidationMessage For="@(() => Registro.Medico.MedicoDisciplina)"/>
+                </div>
+                @if (Registro.Medico.MedicoDisciplina == EnumViewModel.MedicoDisciplina.Especialista)
+                {
+                    <div class="mt-3">
+                        <label for="DetalleMedico" class="form-label">Especifique</label>
+                        <InputText id="DetalleMedico"
+                                   class="form-control"
+                                   @bind-Value="Registro.Medico.DetalleEspecialidad"/>
+                        <ValidationMessage For="@(() => Registro.Medico.DetalleEspecialidad)"/>
+                    </div>
+                }
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Instalación de salud donde labora el médico</label>
+
+                <AutoComplete @bind-Value="InstalacionFilterMedico"
+                              TItem="ListSustModel"
+                              DataProvider="AutoCompleteDataProvider"
+                              OnChanged="OnAutoCompleteMedicoChanged"
+                              PropertyName="Name"
+                              class="form-control mb-2"
+                              Placeholder="Busque por instalación de salud"
+                              disabled="@MostrarOtraInstalacionMedico"/>
+
+                <ValidationMessage For="@(() => Registro.Medico.InstalacionSaludId)" class="text-danger"/>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="otraInstalacionMedicoCheckbox"
+                       checked="@MostrarOtraInstalacionMedico"
+                       @onchange="(e) => OnMostrarOtraInstalacionMedicoChanged.InvokeAsync(e)"/>
+                <label class="form-check-label" for="otraInstalacionMedicoCheckbox">
+                    Mi instalación no aparece en la lista
+                </label>
+            </div>
+
+            @if (MostrarOtraInstalacionMedico)
+            {
+                <div class="mb-2">
+                    <InputText class="form-control"
+                               @bind-Value="Registro.Medico.InstalacionSaludPersonalizada"
+                               placeholder="Especifique el nombre de la instalación de salud"/>
+                    <ValidationMessage For="@(() => Registro.Medico.InstalacionSaludPersonalizada)" class="text-danger"/>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public SolicitudCannabisFormViewModel Registro { get; set; } = default!;
+    [Parameter] public bool MostrarOtraInstalacionMedico { get; set; }
+    [Parameter] public string InstalacionFilterMedico { get; set; } = string.Empty;
+    [Parameter] public EventCallback<ListSustModel?> OnAutoCompleteMedicoChanged { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnMostrarOtraInstalacionMedicoChanged { get; set; }
+    [Parameter] public AutoCompleteDataProviderDelegate<ListSustModel> AutoCompleteDataProvider { get; set; } = default!;    
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+    private ValidationMessageStore? messageStore;
+
+    protected override void OnInitialized()
+    {
+        if (EditContext != null)
+        {
+            messageStore = new ValidationMessageStore(EditContext);
+        }
+    }
+
+    public async Task<bool> ValidateAsync()
+    {
+        if (EditContext == null) return false;
+
+        messageStore?.Clear();
+        var subModel = Registro.Medico;
+        var results = new List<ValidationResult>();
+        var ctx = new ValidationContext(subModel, serviceProvider: null, items: null);
+
+        bool isValid = Validator.TryValidateObject(subModel, ctx, results, validateAllProperties: true);
+
+        foreach (var r in results)
+        {
+            if (r.MemberNames != null && r.MemberNames.Any())
+            {
+                foreach (var member in r.MemberNames)
+                {
+                    messageStore?.Add(new FieldIdentifier(subModel, member), r.ErrorMessage);
+                }
+            }
+            else
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, string.Empty), r.ErrorMessage);
+            }
+        }
+
+        if (MostrarOtraInstalacionMedico)
+        {
+            if (string.IsNullOrWhiteSpace(Registro.Medico.InstalacionSaludPersonalizada))
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludPersonalizada)),
+                    "Especifique el nombre de la instalación de salud.");
+                isValid = false;
+            }
+        }
+        else
+        {
+            if (subModel.InstalacionSaludId == null)
+            {
+                messageStore?.Add(new FieldIdentifier(subModel, nameof(subModel.InstalacionSaludId)),
+                    "Seleccione una instalación de salud de la lista.");
+                isValid = false;
+            }
+        }
+
+        EditContext?.NotifyValidationStateChanged();
+        return await Task.FromResult(isValid);
+    }
+}
