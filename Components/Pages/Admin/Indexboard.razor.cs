@@ -1,5 +1,6 @@
 ﻿using BlazorBootstrap;
 using DIGESA.Data;
+using DIGESA.Models.CannabisModels.Reportes;
 using DIGESA.Models.Entities.DBDIGESA;
 using DIGESA.Repositorios.Interfaces;
 using DIGESA.Repositorios.InterfacesCannabis;
@@ -133,13 +134,7 @@ public partial class Indexboard : ComponentBase
                 Borde = "#6c757d"
             };
     }
-
-    private void IrA(string route)
-    {
-        if (!string.IsNullOrWhiteSpace(route))
-            NavigationManager.NavigateTo(route);
-    }
-
+    
     private void IrAPanelEstado(byte estado)
     {
         NavigationManager.NavigateTo($"/Admin/Solicitudes?estado={estado}");

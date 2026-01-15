@@ -89,6 +89,8 @@ builder.Services.AddScoped<ISolicitudCannabisService, SolicitudCannabisService>(
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<ICalendarioLaboralService, CalendarioLaboralService>();
 builder.Services.AddScoped<IServicioRenovaciones, ServicioRenovaciones>();
+builder.Services.AddScoped<IExcelExportService, ExcelExportService>();
+
 
 
 // Servicios comunes

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t7oqXmwafh4OsrtlwXDkqt7umREKjYpPtOMDFkfe208=",
+  "Hash": "kCFDhh3hBSWtUPZQF51C2Hqk7k+WhPQdjgQD3SV+n6w=",
   "Source": "DIGESA",
   "BasePath": "_content/DIGESA",
   "Mode": "Default",
@@ -430,8 +430,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "o7tn6y36tj",
-      "Integrity": "pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=",
+      "Fingerprint": "d3o17rcmqf",
+      "Integrity": "OSN44cfXCMFN21O8l2aFRvHbVq5dt1Wv9ZMX/lTwfdA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\custom.css"
@@ -645,6 +645,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\download.js",
+      "SourceId": "DIGESA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\",
+      "BasePath": "_content/DIGESA",
+      "RelativePath": "js/download#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "im4uut3nn3",
+      "Integrity": "6tQCBF+Dx3dyXnoa6Xfq4FWJ3AD8rnjYB0ELrSpahro=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\download.js"
     },
     {
       "Identity": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\sidebar.js",
@@ -2338,7 +2359,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10889"
+          "Value": "11243"
         },
         {
           "Name": "Content-Type",
@@ -2346,11 +2367,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=\""
+          "Value": "\"OSN44cfXCMFN21O8l2aFRvHbVq5dt1Wv9ZMX/lTwfdA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 14 Jan 2026 15:36:13 GMT"
+          "Value": "Thu, 15 Jan 2026 20:55:12 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2360,12 +2381,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE="
+          "Value": "sha256-OSN44cfXCMFN21O8l2aFRvHbVq5dt1Wv9ZMX/lTwfdA="
         }
       ]
     },
     {
-      "Route": "css/custom.o7tn6y36tj.css",
+      "Route": "css/custom.d3o17rcmqf.css",
       "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\css\\custom.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2375,7 +2396,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10889"
+          "Value": "11243"
         },
         {
           "Name": "Content-Type",
@@ -2383,11 +2404,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE=\""
+          "Value": "\"OSN44cfXCMFN21O8l2aFRvHbVq5dt1Wv9ZMX/lTwfdA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 14 Jan 2026 15:36:13 GMT"
+          "Value": "Thu, 15 Jan 2026 20:55:12 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2397,7 +2418,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o7tn6y36tj"
+          "Value": "d3o17rcmqf"
         },
         {
           "Name": "label",
@@ -2405,7 +2426,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-pDGQ4dd3sXMTZS20UHm0ABba+AFofhh3zmtnM+zrshE="
+          "Value": "sha256-OSN44cfXCMFN21O8l2aFRvHbVq5dt1Wv9ZMX/lTwfdA="
         }
       ]
     },
@@ -3398,6 +3419,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-Wq4aWW1rQdJ+6oAgy1JQc9IBjHL9T3MKfXTBNqOv02c="
+        }
+      ]
+    },
+    {
+      "Route": "js/download.im4uut3nn3.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\download.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "354"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6tQCBF+Dx3dyXnoa6Xfq4FWJ3AD8rnjYB0ELrSpahro=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 15 Jan 2026 14:39:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "im4uut3nn3"
+        },
+        {
+          "Name": "label",
+          "Value": "js/download.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6tQCBF+Dx3dyXnoa6Xfq4FWJ3AD8rnjYB0ELrSpahro="
+        }
+      ]
+    },
+    {
+      "Route": "js/download.js",
+      "AssetFile": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\download.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "354"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6tQCBF+Dx3dyXnoa6Xfq4FWJ3AD8rnjYB0ELrSpahro=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 15 Jan 2026 14:39:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6tQCBF+Dx3dyXnoa6Xfq4FWJ3AD8rnjYB0ELrSpahro="
         }
       ]
     },

@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\js\\bootstrap.bundle.min.js.map"
     },
     {
+      "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\download.js",
+      "PackagePath": "staticwebassets\\js\\download.js"
+    },
+    {
       "Id": "C:\\Users\\cabernalo\\Documents\\PROJECT GIT\\DIGESA\\wwwroot\\js\\sidebar.js",
       "PackagePath": "staticwebassets\\js\\sidebar.js"
     },

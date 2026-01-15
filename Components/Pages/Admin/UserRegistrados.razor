@@ -1,11 +1,14 @@
 ﻿@page "/Admin/UserRegistrados"
 @using DIGESA.Data
 @using DIGESA.Repositorios.Interfaces
+@using DIGESA.Repositorios.InterfacesCannabis
 @using Microsoft.AspNetCore.Authorization
 
 @attribute [Authorize (Roles = "Administrador")]
 @attribute [StreamRendering]
 @inject IUserData _UserService
+@inject IExcelExportService ExcelService
+@inject IJSRuntime JS
 
 <div class="container-fluid py-4">
     <div class="card shadow-sm">
@@ -17,6 +20,10 @@
             <NavLink class="btn btn-light" href="/Admin/Create" Match="NavLinkMatch.All">
                 <i class="fa-solid fa-user-plus me-1"></i>Registrar
             </NavLink>
+            <button class="btn btn-success"
+                    @onclick="ExportarUsuariosExcel">
+                <i class="fa-solid fa-file-excel"></i> Excel
+            </button>
         </div>
         <div class="card-body">
             <!-- Filtro compacto con botón al lado -->
@@ -74,6 +81,3 @@
     </div>
 </div>
 
-@code {
-
-}

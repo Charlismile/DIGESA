@@ -8,6 +8,8 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
+@inject IExcelExportService ExcelService
+
 
 <div class="card shadow-sm p-3">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -15,11 +17,16 @@
             <i class="fa-solid fa-file-medical"></i> Lista de Solicitudes
         </h5>
         
+        <button class="btn btn-success btn-sm"
+                @onclick="ExportarExcelSolicitudes">
+            <i class="fa-solid fa-file-excel"></i> Exportar Excel
+        </button>jh
+
         <div class="input-group input-group-sm" style="width: 260px;">
             <input type="text"
                    class="form-control"
                    placeholder="Buscar por cédula"
-                   @bind="DocumentoBusqueda" />
+                   @bind="DocumentoBusqueda"/>
 
             @if (!string.IsNullOrWhiteSpace(DocumentoBusqueda))
             {
@@ -38,8 +45,6 @@
                 <i class="bi bi-search"></i>
             </button>
         </div>
-
-
 
         <div class="d-flex align-items-center gap-2">
             <label for="estadoSelect" class="form-label mb-0">Filtrar por estado:</label>
@@ -135,7 +140,7 @@
                                     title="Ver detalles">
                                 <i class="bi bi-clipboard2-check"></i>
                             </button>
-                            
+
                             <!-- Botón Evaluar (solo para Pendiente) -->
                             @if (item.EstadoSolicitud?.Equals("Pendiente", StringComparison.OrdinalIgnoreCase) == true)
                             {
@@ -297,14 +302,14 @@
                 </div>
                 <div class="modal-body">
                     <EditForm Model="ModeloEvaluacion" OnValidSubmit="AbrirModalConfirmacion">
-                        <DataAnnotationsValidator />
+                        <DataAnnotationsValidator/>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Comentario:</label>
-                            <InputTextArea @bind-Value="ModeloEvaluacion.Comentario" 
-                                         class="form-control" 
-                                         rows="4"
-                                         placeholder="Ingrese un comentario sobre la evaluación..." />
-                            <ValidationMessage For="@(() => ModeloEvaluacion.Comentario)" />
+                            <InputTextArea @bind-Value="ModeloEvaluacion.Comentario"
+                                           class="form-control"
+                                           rows="4"
+                                           placeholder="Ingrese un comentario sobre la evaluación..."/>
+                            <ValidationMessage For="@(() => ModeloEvaluacion.Comentario)"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Decisión:</label>
@@ -313,10 +318,10 @@
                                 <option value="Aprobada">Aprobar</option>
                                 <option value="Rechazada">Rechazar</option>
                             </InputSelect>
-                            <ValidationMessage For="@(() => ModeloEvaluacion.Decision)" />
+                            <ValidationMessage For="@(() => ModeloEvaluacion.Decision)"/>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" 
+                            <button type="submit"
                                     class="btn btn-primary"
                                     disabled="@(!ModeloEvaluacion.EsValido)">
                                 <i class="bi bi-send"></i>
@@ -362,6 +367,7 @@
         </div>
     </div>
 }
+<DynamicModal @ref="ModalForm"/>
 
 @code {
     private List<PacienteListadoViewModel>? SolicitudesLista;
@@ -372,11 +378,13 @@
     private bool MostrarModalDetalle = false;
     private bool MostrarModalEvaluacion = false;
     private bool MostrarModalConfirmacion = false;
-    
+
     private string? DocumentoBusqueda;
 
     // Modelo para evaluación
     private ModeloEvaluacion ModeloEvaluacion = new();
+
+    private DynamicModal? ModalForm;
 
     private readonly List<string> EstadosDisponibles = new()
     {
@@ -495,8 +503,8 @@
         else
         {
             resultado = await SolicitudService.RechazarSolicitudAsync(
-                SolicitudSeleccionadaId, 
-                ModeloEvaluacion.Comentario, 
+                SolicitudSeleccionadaId,
+                ModeloEvaluacion.Comentario,
                 usuario);
         }
 
@@ -504,7 +512,7 @@
         {
             Mensaje = $"Solicitud {ModeloEvaluacion.Decision.ToLower()} correctamente.";
             await CargarSolicitudesAsync();
-            
+
             // Mostrar notificación de éxito
             await JS.InvokeVoidAsync("alert", Mensaje);
         }
@@ -517,9 +525,27 @@
         StateHasChanged();
     }
 
-    private async Task FiltrarPorEstado(ChangeEventArgs e)
+    private async Task ExportarExcelSolicitudes()
     {
-        EstadoSeleccionado = e.Value?.ToString();
-        await CargarSolicitudesAsync();
+        if (SolicitudesLista == null || !SolicitudesLista.Any())
+        {
+            ModalForm.ShowWarning("No hay datos para exportar.");
+            return;
+        }
+
+        var bytes = await ExcelService.ExportSolicitudesAsync(
+            SolicitudesLista,
+            EstadoSeleccionado,
+            DocumentoBusqueda);
+
+        var base64 = Convert.ToBase64String(bytes);
+
+        await JS.InvokeVoidAsync(
+            "downloadFileFromBytes",
+            $"Solicitudes_{DateTime.Now:yyyyMMddHHmm}.xlsx",
+            base64);
+
+        ModalForm.ShowSuccess("El archivo Excel fue generado correctamente.");
     }
+
 }
