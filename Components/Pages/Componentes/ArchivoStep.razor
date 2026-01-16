@@ -444,14 +444,31 @@
 
 @code {
     [Parameter] public string TipoTramite { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> TipoTramiteChanged { get; set; }
     [Parameter] public DocumentoAdjuntoViewModel Documentos { get; set; } = new();
     [Parameter] public EventCallback<(InputFileChangeEventArgs e, string campo)> OnFileChange { get; set; }
     
     [CascadingParameter] private EditContext? EditContext { get; set; }
 
+    private string _tipoTramiteInternal = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (TipoTramite != _tipoTramiteInternal)
+        {
+            _tipoTramiteInternal = TipoTramite;
+        }
+    }
+
+    private async Task OnTipoTramiteChanged(ChangeEventArgs e)
+    {
+        _tipoTramiteInternal = e.Value?.ToString() ?? string.Empty;
+        await TipoTramiteChanged.InvokeAsync(_tipoTramiteInternal);
+    }
+
     public async Task<bool> ValidateAsync()
     {
-        if (string.IsNullOrEmpty(TipoTramite))
+        if (string.IsNullOrEmpty(_tipoTramiteInternal))
         {
             return false;
         }
@@ -459,7 +476,7 @@
         // Validación básica según el tipo de trámite
         bool isValid = true;
         
-        switch (TipoTramite)
+        switch (_tipoTramiteInternal)
         {
             case "MayorPaciente":
                 isValid = Documentos.CedulaPaciente.Any() && 

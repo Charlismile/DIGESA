@@ -17,7 +17,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
     {
         _context = context;
     }
-    
+
     public async Task<int> CrearSolicitudAsync(SolicitudCannabisFormViewModel model)
     {
         var validator = new SolicitudCannabisDomainValidator();
@@ -111,49 +111,48 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             .Include(s => s.Paciente)
             .ThenInclude(p => p.Provincia)
             .Include(s => s.EstadoSolicitud)
-            .Select(s => new
+            .Select(s => new PacienteListadoViewModel
             {
-                s.Id,
-                PrimerNombre = s.Paciente.PrimerNombre,
-                PrimerApellido = s.Paciente.PrimerApellido,
-                s.Paciente.DocumentoCedula,
+                Id = s.Id,
+                NombreCompleto =
+                    (s.Paciente.PrimerNombre ?? "") + " " +
+                    (s.Paciente.SegundoNombre ?? "") + " " +
+                    (s.Paciente.PrimerApellido ?? "") + " " +
+                    (s.Paciente.SegundoApellido ?? ""),
+
+                TipoDocumento = s.Paciente.TipoDocumento ?? "Cédula",
+
+                // Obtener el documento correcto según el tipo
+                Documento = s.Paciente.TipoDocumento == "Pasaporte"
+                    ? s.Paciente.DocumentoPasaporte
+                    : s.Paciente.DocumentoCedula,
+
                 Provincia = s.Paciente.Provincia != null
                     ? s.Paciente.Provincia.NombreProvincia
                     : null,
+
                 Edad = s.Paciente.FechaNacimiento.HasValue
                     ? FechasCarnetHelper.CalcularEdad(
                         s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
                     : 0,
-                FechaNacimiento = s.Paciente.FechaNacimiento,
-                s.FechaSolicitud,
-                s.FechaVencimientoCarnet,
-                EstadoSolicitud = s.EstadoSolicitud.NombreEstado,
-                s.NumeroCarnet,
-                CarnetActivo = s.CarnetActivo ?? false
+
+                FechaNacimiento = s.Paciente.FechaNacimiento.HasValue
+                    ? s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
+                    : DateTime.MinValue,
+
+                FechaSolicitud = s.FechaSolicitud,
+                FechaVencimiento = s.FechaVencimientoCarnet,
+
+                EstadoSolicitud = NormalizarEstado(s.EstadoSolicitud.NombreEstado),
+                NumeroCarnet = s.NumeroCarnet,
+                CarnetActivo = s.CarnetActivo ?? false,
+
+                Telefono = s.Paciente.TelefonoLaboral ?? "No registrado",
+                Celular = s.Paciente.TelefonoPersonal ?? "No registrado"
             })
             .ToListAsync();
-        
-        return data.Select(s => new PacienteListadoViewModel
-        {
-            Id = s.Id,
-            NombreCompleto =
-                (s.PrimerNombre ?? "") + " " +
-                (s.PrimerApellido ?? ""),
-            Documento = s.DocumentoCedula,
-            Provincia = s.Provincia ?? "—",
-            Edad = s.FechaNacimiento.HasValue
-                ? FechasCarnetHelper.CalcularEdad(
-                    s.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
-                : 0,
-            FechaNacimiento = s.FechaNacimiento.HasValue
-                ? s.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
-                : DateTime.MinValue,
-            FechaSolicitud = s.FechaSolicitud,
-            FechaVencimiento = s.FechaVencimientoCarnet,
-            EstadoSolicitud = NormalizarEstado(s.EstadoSolicitud),
-            NumeroCarnet = s.NumeroCarnet,
-            CarnetActivo = s.CarnetActivo,
-        }).ToList();
+
+        return data;
     }
 
 
@@ -203,6 +202,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         await _context.SaveChangesAsync();
         return true;
     }
+
     public async Task<Dictionary<string, int>> ObtenerConteoPorEstadoAsync()
     {
         return await _context.TbSolRegCannabis
@@ -216,7 +216,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             })
             .ToDictionaryAsync(x => x.Estado, x => x.Cantidad);
     }
-    
+
     //APROBAR SOLICITUD CON COMENTARIO OPCIONAL
     public async Task<bool> AprobarSolicitudAsync(int id, string usuario, string? comentario = null)
     {
@@ -226,7 +226,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         var ahora = DateTime.Now;
         var hoy = DateTime.Today;
 
-        solicitud.EstadoSolicitudId = 2; 
+        solicitud.EstadoSolicitudId = 2;
         solicitud.FechaAprobacion = ahora;
         solicitud.FechaEmisionCarnet = DateTime.Now;
         solicitud.FechaVencimientoCarnet = DateTime.Now.AddYears(2);
@@ -242,7 +242,7 @@ public class SolicitudCannabisService : ISolicitudCannabisService
         return true;
     }
 
-    
+
     // obtener listado detalle
     public async Task<PacienteListadoViewModel?> ObtenerDetalleListadoAsync(int id)
     {
@@ -255,8 +255,18 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             .Select(s => new PacienteListadoViewModel
             {
                 Id = s.Id,
-                NombreCompleto = s.Paciente.PrimerNombre + " " + s.Paciente.PrimerApellido,
-                Documento = s.Paciente.DocumentoCedula,
+                NombreCompleto =
+                    (s.Paciente.PrimerNombre ?? "") + " " +
+                    (s.Paciente.SegundoNombre ?? "") + " " +
+                    (s.Paciente.PrimerApellido ?? "") + " " +
+                    (s.Paciente.SegundoApellido ?? ""),
+
+                TipoDocumento = s.Paciente.TipoDocumento ?? "Cédula",
+
+                Documento = s.Paciente.TipoDocumento == "Pasaporte"
+                    ? s.Paciente.DocumentoPasaporte
+                    : s.Paciente.DocumentoCedula,
+
                 FechaNacimiento = s.Paciente.FechaNacimiento.HasValue
                     ? s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
                     : DateTime.MinValue,
@@ -265,13 +275,17 @@ public class SolicitudCannabisService : ISolicitudCannabisService
                     ? FechasCarnetHelper.CalcularEdad(
                         s.Paciente.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
                     : 0,
+
                 Provincia = s.Paciente.Provincia != null
                     ? s.Paciente.Provincia.NombreProvincia
                     : "—",
+
                 Celular = s.Paciente.TelefonoPersonal ?? "No registrado",
                 Telefono = s.Paciente.TelefonoLaboral ?? "No registrado",
+
                 FechaSolicitud = s.FechaSolicitud,
                 FechaVencimiento = s.FechaVencimientoCarnet,
+
                 EstadoSolicitud = NormalizarEstado(s.EstadoSolicitud.NombreEstado),
                 NumeroCarnet = s.NumeroCarnet,
                 CarnetActivo = s.CarnetActivo ?? false
@@ -288,5 +302,51 @@ public class SolicitudCannabisService : ISolicitudCannabisService
             "rechazada" => "Rechazada",
             _ => estado
         };
+    }
+// Método alternativo si prefieres una sola consulta optimizada
+    public async Task<List<PacienteListadoViewModel>> ObtenerSolicitudesOptimizadoAsync()
+    {
+        var query = from s in _context.TbSolRegCannabis
+            join p in _context.TbPaciente on s.PacienteId equals p.Id
+            join e in _context.TbEstadoSolicitud on s.EstadoSolicitudId equals e.IdEstado
+            join prov in _context.TbProvincia on p.ProvinciaId equals prov.Id into provJoin
+            from provincia in provJoin.DefaultIfEmpty()
+            select new PacienteListadoViewModel
+            {
+                Id = s.Id,
+                NombreCompleto =
+                    (p.PrimerNombre ?? "") + " " +
+                    (p.SegundoNombre ?? "") + " " +
+                    (p.PrimerApellido ?? "") + " " +
+                    (p.SegundoApellido ?? ""),
+
+                TipoDocumento = p.TipoDocumento ?? "Cédula",
+                Documento = p.TipoDocumento == "Pasaporte"
+                    ? p.DocumentoPasaporte
+                    : p.DocumentoCedula,
+
+                Provincia = provincia != null ? provincia.NombreProvincia : null,
+
+                Edad = p.FechaNacimiento.HasValue
+                    ? FechasCarnetHelper.CalcularEdad(
+                        p.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue))
+                    : 0,
+
+                FechaNacimiento = p.FechaNacimiento.HasValue
+                    ? p.FechaNacimiento.Value.ToDateTime(TimeOnly.MinValue)
+                    : DateTime.MinValue,
+
+                FechaSolicitud = s.FechaSolicitud,
+                FechaVencimiento = s.FechaVencimientoCarnet,
+
+                EstadoSolicitud = NormalizarEstado(e.NombreEstado),
+                NumeroCarnet = s.NumeroCarnet,
+                CarnetActivo = s.CarnetActivo ?? false,
+
+                Telefono = p.TelefonoLaboral ?? "No registrado",
+                Celular = p.TelefonoPersonal ?? "No registrado"
+            };
+
+        return await query.ToListAsync();
     }
 }

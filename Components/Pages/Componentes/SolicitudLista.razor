@@ -16,11 +16,11 @@
         <h5 class="mb-2 mb-md-0">
             <i class="fa-solid fa-file-medical"></i> Lista de Solicitudes
         </h5>
-        
+
         <button class="btn btn-success btn-sm"
                 @onclick="ExportarExcelSolicitudes">
             <i class="fa-solid fa-file-excel"></i> Exportar Excel
-        </button>jh
+        </button>
 
         <div class="input-group input-group-sm" style="width: 260px;">
             <input type="text"
@@ -83,7 +83,7 @@
             <tr>
                 <th>N° Solicitud</th>
                 <th>Paciente</th>
-                <th>Cédula</th>
+                <th>Documento</th> 
                 <th>Fecha Solicitud</th>
                 <th>Fecha vencimiento</th>
                 <th>Estado</th>
@@ -96,7 +96,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.NombreCompleto</td>
-                    <td>@item.Documento</td>
+                    <td>@item.DocumentoFormateado</td> <!-- Usar la propiedad formateada -->
                     <td>@item.FechaSolicitud?.ToString("dd/MM/yyyy")</td>
                     <td>
                         @if (item.FechaVencimiento.HasValue)
@@ -122,15 +122,15 @@
                         }
                     </td>
                     <td>
-                        <span class="badge @(item.EstadoSolicitud switch
-                                           {
-                                               "Pendiente" => "bg-warning text-dark",
-                                               "Aprobada" => "bg-success",
-                                               "Rechazada" => "bg-danger",
-                                               _ => "bg-secondary"
-                                           })">
-                            @item.EstadoSolicitud
-                        </span>
+                <span class="badge @(item.EstadoSolicitud switch
+                                   {
+                                       "Pendiente" => "bg-warning text-dark",
+                                       "Aprobada" => "bg-success",
+                                       "Rechazada" => "bg-danger",
+                                       _ => "bg-secondary"
+                                   })">
+                    @item.EstadoSolicitud
+                </span>
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Acciones">
@@ -140,7 +140,6 @@
                                     title="Ver detalles">
                                 <i class="bi bi-clipboard2-check"></i>
                             </button>
-
                             <!-- Botón Evaluar (solo para Pendiente) -->
                             @if (item.EstadoSolicitud?.Equals("Pendiente", StringComparison.OrdinalIgnoreCase) == true)
                             {
@@ -182,7 +181,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Documento:</label>
-                                <p class="form-control-plaintext">@DetalleSolicitud.Documento</p>
+                                <p class="form-control-plaintext">@DetalleSolicitud.DocumentoFormateado</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Fecha de Nacimiento:</label>
@@ -417,7 +416,7 @@
         if (!string.IsNullOrWhiteSpace(DocumentoBusqueda))
         {
             todas = todas
-                .Where(s => s.Documento != null &&
+                .Where(s => !string.IsNullOrEmpty(s.Documento) &&
                             s.Documento.Contains(DocumentoBusqueda.Trim(),
                                 StringComparison.OrdinalIgnoreCase))
                 .ToList();

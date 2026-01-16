@@ -10,7 +10,8 @@
         <div class="row g-3">
             <!-- Diagnóstico -->
             <div class="col-12">
-                <label class="mb-2">Seleccione diagnóstico(s) que justifica el uso de cannabis medicinal y sus derivados</label>
+                <label class="mb-2">Seleccione diagnóstico(s) que justifica el uso de cannabis medicinal y sus
+                    derivados</label>
                 <div class="row">
                     @foreach (var diag in PacienteDiagnosticoList)
                     {
@@ -59,7 +60,7 @@
                                 <h6 class="mb-0">@(index == 0 ? "PRODUCTO PRINCIPAL" : $"PRODUCTO ADICIONAL {index}")</h6>
                                 @if (index > 0)
                                 {
-                                    <button type="button" 
+                                    <button type="button"
                                             class="btn btn-sm btn-danger"
                                             @onclick="() => EliminarProducto(index)">
                                         <i class="bi bi-trash"></i> Eliminar
@@ -73,23 +74,27 @@
                                 <div class="col-6">
                                     <label class="mb-2">Principio activo</label>
                                     <div class="d-flex gap-4">
+                                        <!-- Reemplazar en la sección de Principio Activo para cada producto -->
                                         <InputRadioGroup @bind-Value="producto.NombreProductoEnum" class="d-flex gap-3">
                                             <div class="form-check form-check-inline">
                                                 <InputRadio class="form-check-input"
                                                             Value="@EnumViewModel.NombreProductoE.CBD" 
-                                                            id="@($"CBD_{index}")"/>
+                                                            id="@($"CBD_{index}")"
+                                                            name="@($"NombreProductoEnum_{index}")"/>
                                                 <label class="form-check-label" for="@($"CBD_{index}")">CBD (Cannabidiol)</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <InputRadio class="form-check-input"
                                                             Value="@EnumViewModel.NombreProductoE.THC" 
-                                                            id="@($"THC_{index}")"/>
+                                                            id="@($"THC_{index}")"
+                                                            name="@($"NombreProductoEnum_{index}")"/>
                                                 <label class="form-check-label" for="@($"THC_{index}")">THC (delta-9-tetrahidrocannabinol)</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <InputRadio class="form-check-input"
                                                             Value="@EnumViewModel.NombreProductoE.OTRO" 
-                                                            id="@($"Otro_{index}")"/>
+                                                            id="@($"Otro_{index}")"
+                                                            name="@($"NombreProductoEnum_{index}")"/>
                                                 <label class="form-check-label" for="@($"Otro_{index}")">Otro</label>
                                             </div>
                                         </InputRadioGroup>
@@ -124,7 +129,8 @@
                                                            id="@($"forma_{forma.Id}_{index}")"
                                                            checked="@producto.SelectedFormaIds.Contains(forma.Id)"
                                                            @onchange="e => HandleFormaCheckboxChanged(e, forma.Id, index)"/>
-                                                    <label class="form-check-label" for="@($"forma_{forma.Id}_{index}")">@forma.Nombre</label>
+                                                    <label class="form-check-label"
+                                                           for="@($"forma_{forma.Id}_{index}")">@forma.Nombre</label>
                                                 </div>
                                             </div>
                                         }
@@ -161,7 +167,7 @@
                                                    type="checkbox"
                                                    id="@($"concCBD_{index}")"
                                                    checked="@producto.ConcentracionesSeleccionadas.Contains(EnumViewModel.ConcentracionE.CBD)"
-                                                   @onchange="e => HandleConcentracionCheckboxChanged(e, EnumViewModel.ConcentracionE.CBD, index)" />
+                                                   @onchange="e => HandleConcentracionCheckboxChanged(e, EnumViewModel.ConcentracionE.CBD, index)"/>
                                             <label class="form-check-label" for="@($"concCBD_{index}")">CBD</label>
                                         </div>
 
@@ -170,7 +176,7 @@
                                                    type="checkbox"
                                                    id="@($"concTHC_{index}")"
                                                    checked="@producto.ConcentracionesSeleccionadas.Contains(EnumViewModel.ConcentracionE.THC)"
-                                                   @onchange="e => HandleConcentracionCheckboxChanged(e, EnumViewModel.ConcentracionE.THC, index)" />
+                                                   @onchange="e => HandleConcentracionCheckboxChanged(e, EnumViewModel.ConcentracionE.THC, index)"/>
                                             <label class="form-check-label" for="@($"concTHC_{index}")">THC</label>
                                         </div>
 
@@ -178,8 +184,9 @@
                                             <input class="form-check-input"
                                                    type="checkbox"
                                                    id="@($"concOtro_{index}")"
-                                                   @bind="producto.IsOtraConcentracionSelected" />
-                                            <label class="form-check-label" for="@($"concOtro_{index}")">Otro(s) cannabinoide</label>
+                                                   @bind="producto.IsOtraConcentracionSelected"/>
+                                            <label class="form-check-label" for="@($"concOtro_{index}")">Otro(s)
+                                                cannabinoide</label>
                                         </div>
                                     </div>
 
@@ -188,12 +195,12 @@
                                         <div class="mt-2">
                                             <InputText class="form-control"
                                                        placeholder="Especifique"
-                                                       @bind-Value="producto.NombreOtraConcentracion" />
-                                            <ValidationMessage For="@(() => producto.NombreOtraConcentracion)" />
+                                                       @bind-Value="producto.NombreOtraConcentracion"/>
+                                            <ValidationMessage For="@(() => producto.NombreOtraConcentracion)"/>
                                         </div>
                                     }
 
-                                    <ValidationMessage For="@(() => producto.ConcentracionesSeleccionadas)" />
+                                    <ValidationMessage For="@(() => producto.ConcentracionesSeleccionadas)"/>
                                 </div>
 
                                 <div class="col-4 col-sm-4">
@@ -243,7 +250,8 @@
                                                            id="@($"via_{via.Id}_{index}")"
                                                            checked="@producto.SelectedViaAdmIds.Contains(via.Id)"
                                                            @onchange="e => HandleViaAdmCheckboxChanged(e, via.Id, index)"/>
-                                                    <label class="form-check-label" for="@($"via_{via.Id}_{index}")">@via.Nombre</label>
+                                                    <label class="form-check-label"
+                                                           for="@($"via_{via.Id}_{index}")">@via.Nombre</label>
                                                 </div>
                                             </div>
                                         }
@@ -280,7 +288,8 @@
                                     <ValidationMessage For="@(() => producto.DetDosisPaciente)"/>
                                 </div>
                                 <div class="col-12">
-                                    <label>¿Cuántas veces al día utiliza el medicamento y durante cuánto tiempo al mes?</label>
+                                    <label>¿Cuántas veces al día utiliza el medicamento y durante cuánto tiempo al
+                                        mes?</label>
                                 </div>
                                 <div class="col-2">
                                     <label class="form-label">Frecuencia de la dosis (Veces al día)</label>
@@ -299,36 +308,47 @@
                                     <ValidationMessage For="@(() => producto.DosisDuracion)"/>
                                 </div>
 
-                                <!-- dosis rescate -->
+                                <!-- Reemplaza la sección de dosis rescate con esto: -->
                                 <div class="col-12">
                                     <label>¿Utiliza dosis de rescate?</label>
                                     <div class="d-flex gap-4">
                                         <div class="form-check">
-                                            <input type="checkbox"
+                                            <input type="radio"
                                                    class="form-check-input"
                                                    id="@($"chkSi_{index}")"
+                                                   name="@($"dosisRescate_{index}")"
                                                    checked="@(producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si)"
-                                                   @onchange="() => { producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.Si; StateHasChanged(); }"/>
+                                                   @onchange="() => { 
+                                                       producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.Si; 
+                                                       StateHasChanged(); 
+                                                   }"/>
                                             <label class="form-check-label" for="@($"chkSi_{index}")">Si</label>
                                         </div>
-                                        @if (producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si)
-                                        {
-                                            <div class="mt-2 col-9">
-                                                <InputText class="form-control" placeholder="Especifique"
-                                                           @bind-Value="producto.DetDosisRescate"/>
-                                                <ValidationMessage For="@(() => producto.DetDosisRescate)"/>
-                                            </div>
-                                        }
+
                                         <div class="form-check">
-                                            <input type="checkbox"
+                                            <input type="radio"
                                                    class="form-check-input"
                                                    id="@($"chkNo_{index}")"
+                                                   name="@($"dosisRescate_{index}")"
                                                    checked="@(producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.No)"
-                                                   @onchange="() => { producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.No; StateHasChanged(); }"/>
+                                                   @onchange="() => { 
+                                                       producto.UsaDosisRescateEnum = EnumViewModel.UsaDosisRescate.No; 
+                                                       producto.DetDosisRescate = null;
+                                                       StateHasChanged(); 
+                                                   }"/>
                                             <label class="form-check-label" for="@($"chkNo_{index}")">No</label>
                                         </div>
-                                        <ValidationMessage For="@(() => producto.UsaDosisRescateEnum)"/>
                                     </div>
+                                    <ValidationMessage For="@(() => producto.UsaDosisRescateEnum)"/>
+
+                                    @if (producto.UsaDosisRescateEnum == EnumViewModel.UsaDosisRescate.Si)
+                                    {
+                                        <div class="mt-2 col-9">
+                                            <InputText class="form-control" placeholder="Especifique"
+                                                       @bind-Value="producto.DetDosisRescate"/>
+                                            <ValidationMessage For="@(() => producto.DetDosisRescate)"/>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -342,7 +362,7 @@
                     <input class="form-check-input"
                            type="checkbox"
                            id="usaMultiplesMedicamentos"
-                           @bind="Registro.Producto.UsaMultiplesMedicamentos" />
+                           @bind="Registro.Producto.UsaMultiplesMedicamentos"/>
                     <label class="form-check-label fw-bold" for="usaMultiplesMedicamentos">
                         ¿Utiliza más de un medicamento o producto de cannabis?
                     </label>
@@ -351,7 +371,7 @@
                 @if (Registro.Producto.UsaMultiplesMedicamentos)
                 {
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" 
+                        <button type="button"
                                 class="btn btn-success btn-sm"
                                 @onclick="AgregarProducto">
                             <i class="bi bi-plus-circle"></i> Agregar otro producto
@@ -370,7 +390,7 @@
     [Parameter] public List<ListSustModel> ProductoUnidadList { get; set; } = new();
     [Parameter] public List<TbViaAdministracion> ProductoViaConsumoList { get; set; } = new();
     [Parameter] public EventCallback<ChangeEventArgs> OnUnidadSeleccionadaChanged { get; set; }
-    
+
     [CascadingParameter] private EditContext? EditContext { get; set; }
     private ValidationMessageStore? messageStore;
 
@@ -406,7 +426,7 @@
     {
         bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
         var producto = Registro.Producto.Productos[productoIndex];
-        
+
         if (isChecked)
         {
             if (!producto.SelectedFormaIds.Contains(categoryId))
@@ -422,7 +442,7 @@
     {
         bool isChecked = e.Value?.ToString()?.ToLower() == "true" || e.Value?.ToString() == "on";
         var producto = Registro.Producto.Productos[productoIndex];
-        
+
         if (isChecked)
         {
             if (!producto.SelectedViaAdmIds.Contains(categoryId))
@@ -445,7 +465,7 @@
         {
             producto.ProductoUnidadId = null;
         }
-        
+
         // Llamar al callback original si existe
         await OnUnidadSeleccionadaChanged.InvokeAsync(e);
     }
@@ -486,14 +506,14 @@
         if (EditContext == null) return false;
 
         messageStore?.Clear();
-        
+
         // Validar Diagnóstico
         var diagnosticoModel = Registro.Diagnostico;
         var diagResults = new List<ValidationResult>();
         var diagCtx = new ValidationContext(diagnosticoModel);
-        
+
         bool isValid = Validator.TryValidateObject(diagnosticoModel, diagCtx, diagResults, true);
-        
+
         foreach (var r in diagResults)
         {
             if (r.MemberNames != null && r.MemberNames.Any())
@@ -511,10 +531,10 @@
             var producto = Registro.Producto.Productos[i];
             var prodResults = new List<ValidationResult>();
             var prodCtx = new ValidationContext(producto);
-            
+
             bool prodIsValid = Validator.TryValidateObject(producto, prodCtx, prodResults, true);
             isValid = isValid && prodIsValid;
-            
+
             foreach (var r in prodResults)
             {
                 if (r.MemberNames != null && r.MemberNames.Any())
@@ -551,7 +571,7 @@
                     prefix + "Seleccione o especifique una vía de administración.");
                 isValid = false;
             }
-            
+
             if (producto.ConcentracionesSeleccionadas.Count == 0 &&
                 string.IsNullOrWhiteSpace(producto.NombreOtraConcentracion))
             {
@@ -567,4 +587,5 @@
         EditContext?.NotifyValidationStateChanged();
         return await Task.FromResult(isValid);
     }
+
 }

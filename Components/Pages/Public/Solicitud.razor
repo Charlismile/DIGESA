@@ -2,7 +2,7 @@
 @using DIGESA.Components.Pages.Componentes
 @using DIGESA.Models.CannabisModels
 
-<EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit"> @* Quitar el await *@
+<EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit"> 
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="container-fluid my-4">
@@ -68,7 +68,7 @@
                             <AcompananteStep @ref="acompananteComponent"
                                              Registro="@registro" />
                         }
-                        else if (CurrentStepNumber == 3)
+                        else if (CurrentStepNumber == 3 || (CurrentStepNumber == 2 && registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si))
                         {
                             <MedicoStep @ref="medicoComponent"
                                         Registro="@registro"
@@ -97,6 +97,7 @@
                         {
                             <ArchivoStep @ref="archivosComponent"
                                          TipoTramite="@tipoTramite"
+                                         TipoTramiteChanged="@(async (value) => tipoTramite = value)"
                                          Documentos="@documentos"
                                          OnFileChange="@HandleFileChange" />
                         }

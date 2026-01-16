@@ -242,7 +242,15 @@ public partial class Solicitud : ComponentBase
     {
         if (CurrentStepNumber > 1)
         {
-            CurrentStepNumber--;
+            // Si vamos al paso 2 pero no requiere acompañante, ir al paso 1
+            if (CurrentStepNumber == 3 && registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si)
+            {
+                CurrentStepNumber = 1;
+            }
+            else
+            {
+                CurrentStepNumber--;
+            }
         }
     }
 
@@ -268,9 +276,20 @@ public partial class Solicitud : ComponentBase
             {
                 case 1:
                     isValid = pacienteComponent != null && await pacienteComponent.ValidateAsync();
+                    if (isValid)
+                    {
+                        // Si no requiere acompañante, saltar al paso 3 directamente
+                        if (registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si)
+                        {
+                            CurrentStepNumber = 3;
+                            return;
+                        }
+                    }
+
                     break;
                 case 2:
-                    if (acompananteComponent != null)
+                    if (acompananteComponent != null &&
+                        registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si)
                         isValid = await acompananteComponent.ValidateAsync();
                     break;
                 case 3:
@@ -295,7 +314,35 @@ public partial class Solicitud : ComponentBase
                 return;
             }
 
-            CurrentStepNumber++;
+            // Actualizar la lógica de navegación entre pasos
+            int nextStep = CurrentStepNumber;
+
+            // Si estamos en el paso 1 y no requiere acompañante, saltar al paso 3
+            if (CurrentStepNumber == 1 && registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si)
+            {
+                nextStep = 3;
+            }
+            else if (CurrentStepNumber == 2 &&
+                     registro.Paciente.RequiereAcompanante != EnumViewModel.RequiereAcompanante.Si)
+            {
+                // Si por algún motivo estamos en el paso 2 sin requerir acompañante, ir al paso 3
+                nextStep = 3;
+            }
+            else
+            {
+                // Avanzar normalmente
+                nextStep = CurrentStepNumber + 1;
+            }
+
+            // Asegurarse de no saltarse el paso 4 (diagnóstico)
+            if (nextStep == 4)
+            {
+                CurrentStepNumber = 4;
+            }
+            else if (nextStep <= Steps.Count)
+            {
+                CurrentStepNumber = nextStep;
+            }
         }
         finally
         {
@@ -390,11 +437,32 @@ public partial class Solicitud : ComponentBase
     {
         try
         {
+            // Primero validar todos los pasos
             bool allValid = await ValidateAllSteps();
             if (!allValid)
             {
                 ModalForm.ShowError("Por favor, complete todos los campos requeridos correctamente.");
                 return;
+            }
+
+            // Validar específicamente el tipo de trámite
+            if (string.IsNullOrEmpty(tipoTramite))
+            {
+                ModalForm.ShowError("Debe seleccionar el tipo de trámite antes de continuar.");
+                CurrentStepNumber = 6; // Ir al paso de archivos
+                StateHasChanged();
+                return;
+            }
+
+            // Validar que se hayan subido los archivos requeridos según el tipo de trámite
+            if (archivosComponent != null)
+            {
+                bool archivosValidos = await archivosComponent.ValidateAsync();
+                if (!archivosValidos)
+                {
+                    ModalForm.ShowError("Debe subir todos los documentos requeridos según el tipo de trámite seleccionado.");
+                    return;
+                }
             }
 
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -433,8 +501,8 @@ public partial class Solicitud : ComponentBase
                         ? registro.Paciente.NumeroDocumento
                         : null,
                     Nacionalidad = registro.Paciente.Nacionalidad,
-                    FechaNacimiento = registro.Paciente.FechaNacimiento.HasValue 
-                        ? DateOnly.FromDateTime(registro.Paciente.FechaNacimiento.Value) 
+                    FechaNacimiento = registro.Paciente.FechaNacimiento.HasValue
+                        ? DateOnly.FromDateTime(registro.Paciente.FechaNacimiento.Value)
                         : null,
                     Sexo = registro.Paciente.Sexo.ToString(),
                     RequiereAcompanante = registro.Paciente.RequiereAcompanante == EnumViewModel.RequiereAcompanante.Si,
@@ -464,14 +532,14 @@ public partial class Solicitud : ComponentBase
                 {
                     PacienteId = paciente.Id,
                     FechaSolicitud = fechaActual,
-                    EstadoSolicitudId = 1, 
+                    EstadoSolicitudId = 1,
                     EsRenovacion = registro.EsRenovacion,
                     FechaRevision = null,
                     NumSolSecuencia = numeroSecuencia,
                     NumSolAnio = fechaActual.Year,
                     NumSolMes = fechaActual.Month,
                     NumSolCompleta = numeroCompleto,
-                    CreadaPor = "Usuario Sistema", 
+                    CreadaPor = "Usuario Sistema",
                     ModificadaEn = DateOnly.FromDateTime(fechaActual),
                     ModificadaPor = "Usuario Sistema",
                     FechaAprobacion = null,
@@ -642,7 +710,7 @@ public partial class Solicitud : ComponentBase
             var anioActual = DateTime.Now.Year;
             var secuencia = await _context.TbSolSecuencia
                 .FirstOrDefaultAsync(s => s.IdEntidad == 1 && s.Anio == anioActual);
-        
+
             if (secuencia == null)
             {
                 secuencia = new TbSolSecuencia
@@ -658,7 +726,7 @@ public partial class Solicitud : ComponentBase
             {
                 secuencia.Numeracion++;
             }
-        
+
             await _context.SaveChangesAsync();
             return secuencia.Numeracion ?? 1;
         }
@@ -685,7 +753,7 @@ public partial class Solicitud : ComponentBase
             };
             _context.TbPacienteDiagnostico.Add(diag);
         }
-    
+
         // Guardar diagnóstico "Otro" si existe
         if (!string.IsNullOrEmpty(diagnostico.NombreOtroDiagnostico))
         {
@@ -698,7 +766,7 @@ public partial class Solicitud : ComponentBase
             };
             _context.TbPacienteDiagnostico.Add(diagOtro);
         }
-    
+
         await _context.SaveChangesAsync();
     }
 
@@ -747,7 +815,7 @@ public partial class Solicitud : ComponentBase
     // Método para guardar comorbilidad
     private async Task GuardarComorbilidadAsync(int pacienteId, ComorbilidadViewModel comorbilidad)
     {
-        if (comorbilidad.TieneComorbilidadEnum == EnumViewModel.TieneComorbilidad.Si && 
+        if (comorbilidad.TieneComorbilidadEnum == EnumViewModel.TieneComorbilidad.Si &&
             !string.IsNullOrEmpty(comorbilidad.NombreDiagnostico))
         {
             var comorbilidadEntity = new TbPacienteComorbilidad
@@ -755,10 +823,10 @@ public partial class Solicitud : ComponentBase
                 PacienteId = pacienteId,
                 NombreDiagnostico = comorbilidad.NombreDiagnostico,
                 DetalleTratamiento = comorbilidad.DetalleTratamiento,
-                FechaDiagnostico = DateOnly.FromDateTime(DateTime.Now), 
+                FechaDiagnostico = DateOnly.FromDateTime(DateTime.Now),
                 TieneComorbilidad = true
             };
-        
+
             _context.TbPacienteComorbilidad.Add(comorbilidadEntity);
             await _context.SaveChangesAsync();
         }
@@ -773,11 +841,11 @@ public partial class Solicitud : ComponentBase
             {
                 SolRegCannabisId = solicitudId,
                 Detalle = "Declaración jurada de veracidad de información",
-                Fecha = DateOnly.FromDateTime(DateTime.Now), 
+                Fecha = DateOnly.FromDateTime(DateTime.Now),
                 NombreDeclarante = registro.Paciente.NombreCompleto,
                 Aceptada = true
             };
-        
+
             _context.TbDeclaracionJurada.Add(declaracionEntity);
             await _context.SaveChangesAsync();
         }
@@ -928,7 +996,7 @@ public partial class Solicitud : ComponentBase
         {
             var tipo = _context.TbTipoDocumentoAdjunto
                 .FirstOrDefault(t => t.Nombre.Trim().ToLower() == nombreTipo.ToLower());
-        
+
             return tipo?.Id ?? 0;
         }
         catch (Exception ex)
